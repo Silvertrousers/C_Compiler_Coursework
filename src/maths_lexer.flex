@@ -42,6 +42,7 @@ while           { return T_WHILE; }
 [:]             { return T_COLON; }
 [\;]            { return T_SEMICOLON; }
 [!]             { return T_LOGICAL_NOT; }
+[%]             { return T_MODULO; }
 
 [1-9][0-9]* { yylval.number=strtod(yytext, 0); return T_DEC_INT; }
 [0][0-7]*   { yylval.number=strtod(yytext, 0); return T_OCTAL_INT; }
