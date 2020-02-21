@@ -8,6 +8,18 @@ extern "C" int fileno(FILE *stream);
 %}
 
 %%
+
+char            { return T_CHAR; }
+double          { return T_DOUBLE; }
+else            { return T_ELSE; }
+float           { return T_FLOAT; }
+for             { return T_FOR; }
+if              { return T_IF; }
+int             { return T_INT; }
+long            { return T_LONG; }
+return          { return T_RETURN; }
+while           { return T_WHILE; }
+
 [*]             { return T_TIMES; }
 [/]             { return T_DIVIDE; }
 [+]             { return T_PLUS; }
@@ -17,12 +29,9 @@ extern "C" int fileno(FILE *stream);
 [(]             { return T_LBRACKET; }
 [)]             { return T_RBRACKET; }
 
-log             { return T_LOG; }
-exp             { return T_EXP; }
-sqrt            { return T_SQRT; }
-
-[0-9]+([.][0-9]*)? { yylval.number=strtod(yytext, 0); return T_NUMBER; }
-[a-z]+          { yylval.string=new std::string(yytext); return T_VARIABLE; }
+[1-9][0-9]* { yylval.number=strtod(yytext, 0); return T_DEC_INT; }
+[0][0-7]*   { yylval.number=strtod(yytext, 0); return T_OCTAL_INT; }
+[a-zA-Z_][a-zA-Z0-9_]*          { yylval.string=new std::string(yytext); return T_IDENTIFIER; }
 
 [ \t\r\n]+		{;}
 
