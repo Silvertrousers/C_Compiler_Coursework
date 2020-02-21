@@ -36,11 +36,12 @@ while           { return T_WHILE; }
 [=]             { return T_EQUALS; }
 [&]             { return T_AND; }
 [|]             { return T_OR; }
-[~]             { return T_NOT; }
+[~]             { return T_BITWISE_NOT; }
 [\.]            { return T_DOT; }      //MIGHT WANT TO RELOCATE ONCE WE HAVE DECIMALS
 [,]             { return T_COMMA; }
 [:]             { return T_COLON; }
 [\;]            { return T_SEMICOLON; }
+[!]             { return T_LOGICAL_NOT; }
 
 [1-9][0-9]* { yylval.number=strtod(yytext, 0); return T_DEC_INT; }
 [0][0-7]*   { yylval.number=strtod(yytext, 0); return T_OCTAL_INT; }
