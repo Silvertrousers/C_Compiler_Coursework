@@ -25,9 +25,20 @@ while           { return T_WHILE; }
 [+]             { return T_PLUS; }
 [\^]            { return T_EXPONENT; }
 [-]             { return T_MINUS; }
-
 [(]             { return T_LBRACKET; }
 [)]             { return T_RBRACKET; }
+[\[]            { return T_LSQ_BRACKET; }
+[\]]            { return T_RSQ_BRACKET; }
+[<]             { return T_LESS_THAN; }
+[>]             { return T_GREATER_THAN; }
+[=]             { return T_EQUALS; }
+[&]             { return T_AND; }
+[|]             { return T_OR; }
+[~]             { return T_NOT; }
+[\.]            { return T_DOT; }      //MIGHT WANT TO RELOCATE ONCE WE HAVE DECIMALS
+[,]             { return T_COMMA; }
+[:]             { return T_COLON; }
+[\;]            { return T_SEMICOLON; }
 
 [1-9][0-9]* { yylval.number=strtod(yytext, 0); return T_DEC_INT; }
 [0][0-7]*   { yylval.number=strtod(yytext, 0); return T_OCTAL_INT; }
