@@ -33,7 +33,7 @@ while           { return T_WHILE; }
 [\]]            { return T_RSQ_BRACKET; }
 [<]             { return T_LESS_THAN; }
 [>]             { return T_GREATER_THAN; }
-[=]             { return T_EQUALS; }
+[\=]             { return T_EQUALS; }
 [&]             { return T_AND; }
 [|]             { return T_OR; }
 [~]             { return T_BITWISE_NOT; }
@@ -42,7 +42,7 @@ while           { return T_WHILE; }
 [:]             { return T_COLON; }
 [\;]            { return T_SEMICOLON; }
 [!]             { return T_LOGICAL_NOT; }
-[%]             { return T_MODULO; }
+[\%]             { return T_MODULO; }
 [\?]            { return T_QUESTION; }
 
 [1-9][0-9]* { yylval.number=strtod(yytext, 0); return T_DEC_INT; }
