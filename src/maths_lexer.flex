@@ -9,6 +9,8 @@ extern "C" int fileno(FILE *stream);
 
 %%
 
+[“][.]*[“]      { return T_STRING; }
+
 char            { return T_CHAR; }
 double          { return T_DOUBLE; }
 else            { return T_ELSE; }
