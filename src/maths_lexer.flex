@@ -31,6 +31,8 @@ while           { return T_WHILE; }
 [)]             { return T_RBRACKET; }
 [\[]            { return T_LSQ_BRACKET; }
 [\]]            { return T_RSQ_BRACKET; }
+[\{]            { return T_LCURLY_BRACKET; }
+[\}]            { return T_RCURLY_BRACKET; }
 [<]             { return T_LESS_THAN; }
 [>]             { return T_GREATER_THAN; }
 [\=]             { return T_EQUALS; }
