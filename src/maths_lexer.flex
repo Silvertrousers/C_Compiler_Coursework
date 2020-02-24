@@ -69,6 +69,7 @@ while           { return T_WHILE; }
 [(][)]          { return T_EMPTY_BRACKETS; }
 [(]             { return T_LBRACKET; }
 [)]             { return T_RBRACKET; }
+[\[][\]]        { return T_ESQ_BRACKETS; }
 [\[]            { return T_LSQ_BRACKET; }
 [\]]            { return T_RSQ_BRACKET; }
 [\{][\}]        { return T_ECURLY_BRACKETS; }

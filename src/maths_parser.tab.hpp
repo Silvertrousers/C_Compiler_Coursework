@@ -140,11 +140,14 @@ extern int yydebug;
     T_LCURLY_BRACKET = 334,
     T_EMPTY_BRACKETS = 335,
     T_ECURLY_BRACKETS = 336,
-    T_DEC_INT = 337,
-    T_OCTAL_INT = 338,
-    T_IDENTIFIER = 339,
-    T_STRING = 340,
-    T_ENUM_CONSTANT = 341
+    T_ESQ_BRACKETS = 337,
+    T_DEC_INT = 338,
+    T_OCTAL_INT = 339,
+    T_IDENTIFIER = 340,
+    T_STRING = 341,
+    T_ENUM_CONSTANT = 342,
+    T_DEREFERENCE = 343,
+    T_CUSTOM_TYPE = 344
   };
 #endif
 
@@ -160,7 +163,7 @@ union YYSTYPE
   double number;
   std::string *string;
 
-#line 164 "src/maths_parser.tab.hpp" /* yacc.c:1909  */
+#line 167 "src/maths_parser.tab.hpp" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;
