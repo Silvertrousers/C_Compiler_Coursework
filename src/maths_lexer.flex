@@ -25,8 +25,10 @@ while           { return T_WHILE; }
 [*]             { return T_TIMES; }
 [/]             { return T_DIVIDE; }
 [+]             { return T_PLUS; }
+[+][+]          { return T_INCREMENT}
 [\^]            { return T_EXPONENT; }
 [-]             { return T_MINUS; }
+[-][-]          { return T_DECREMENT}
 [(]             { return T_LBRACKET; }
 [)]             { return T_RBRACKET; }
 [\[]            { return T_LSQ_BRACKET; }
@@ -34,8 +36,10 @@ while           { return T_WHILE; }
 [\{]            { return T_LCURLY_BRACKET; }
 [\}]            { return T_RCURLY_BRACKET; }
 [<]             { return T_LESS_THAN; }
+[<][<]          {return T_LEFT_SHIFT}
 [>]             { return T_GREATER_THAN; }
-[\=]             { return T_EQUALS; }
+[>][>]          { return T_RIGHT_SHIFT; }
+[\=]            { return T_EQUALS; }
 [&]             { return T_AND; }
 [|]             { return T_OR; }
 [~]             { return T_BITWISE_NOT; }

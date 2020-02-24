@@ -76,27 +76,29 @@ extern int yydebug;
     T_PLUS = 270,
     T_MINUS = 271,
     T_EXPONENT = 272,
-    T_LESS_THAN = 273,
-    T_GREATER_THAN = 274,
-    T_EQUALS = 275,
-    T_AND = 276,
-    T_OR = 277,
-    T_BITWISE_NOT = 278,
-    T_LOGICAL_NOT = 279,
-    T_MODULO = 280,
-    T_COMMA = 281,
-    T_DOT = 282,
-    T_COLON = 283,
-    T_SEMICOLON = 284,
-    T_QUESTION = 285,
-    T_LBRACKET = 286,
-    T_RBRACKET = 287,
-    T_LSQ_BRACKET = 288,
-    T_RSQ_BRACKET = 289,
-    T_DEC_INT = 290,
-    T_OCTAL_INT = 291,
-    T_IDENTIFIER = 292,
-    T_STRING = 293
+    T_DECREMENT = 273,
+    T_INCREMENT = 274,
+    T_LESS_THAN = 275,
+    T_GREATER_THAN = 276,
+    T_EQUALS = 277,
+    T_AND = 278,
+    T_OR = 279,
+    T_BITWISE_NOT = 280,
+    T_LOGICAL_NOT = 281,
+    T_MODULO = 282,
+    T_COMMA = 283,
+    T_DOT = 284,
+    T_COLON = 285,
+    T_SEMICOLON = 286,
+    T_QUESTION = 287,
+    T_LBRACKET = 288,
+    T_RBRACKET = 289,
+    T_LSQ_BRACKET = 290,
+    T_RSQ_BRACKET = 291,
+    T_DEC_INT = 292,
+    T_OCTAL_INT = 293,
+    T_IDENTIFIER = 294,
+    T_STRING = 295
   };
 #endif
 
@@ -111,7 +113,7 @@ union YYSTYPE
   double number;
   std::string *string;
 
-#line 115 "src/maths_parser.tab.hpp" /* yacc.c:1909  */
+#line 117 "src/maths_parser.tab.hpp" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;
