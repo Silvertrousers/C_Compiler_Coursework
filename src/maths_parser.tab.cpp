@@ -546,22 +546,22 @@ static const yytype_uint16 yyrline[] =
      111,   112,   114,   115,   116,   117,   118,   120,   121,   122,
      123,   125,   126,   129,   130,   131,   132,   133,   134,   135,
      136,   138,   139,   141,   142,   143,   144,   146,   147,   149,
-     149,   149,   149,   149,   149,   151,   152,   154,   155,   156,
-     157,   159,   160,   161,   163,   164,   165,   167,   168,   169,
-     170,   171,   172,   173,   174,   176,   177,   179,   180,   182,
-     183,   185,   186,   188,   189,   191,   192,   194,   195,   197,
-     197,   197,   197,   198,   198,   199,   199,   200,   200,   200,
-     202,   204,   204,   209,   209,   211,   212,   213,   214,   215,
-     216,   218,   219,   221,   222,   224,   224,   224,   224,   224,
-     226,   226,   226,   226,   227,   227,   227,   227,   227,   228,
-     229,   230,   232,   233,   234,   235,   235,   237,   238,   240,
-     242,   243,   244,   245,   247,   248,   250,   251,   252,   254,
-     255,   256,   258,   259,   261,   262,   264,   264,   266,   267,
-     269,   270,   271,   272,   273,   274,   275,   278,   279,   280,
-     281,   283,   284,   286,   287,   289,   290,   292,   293,   294,
-     296,   297,   299,   300,   302,   303,   304,   306,   307,   308,
-     309,   310,   311,   312,   313,   314,   316,   318,   319,   320,
-     322,   323
+     150,   151,   152,   153,   154,   156,   157,   159,   160,   161,
+     162,   164,   165,   166,   168,   169,   170,   172,   173,   174,
+     175,   176,   177,   178,   179,   181,   182,   184,   185,   187,
+     188,   190,   191,   193,   194,   196,   197,   199,   200,   202,
+     203,   204,   205,   206,   207,   208,   209,   210,   211,   212,
+     214,   216,   216,   221,   221,   223,   224,   225,   226,   227,
+     228,   230,   231,   233,   234,   236,   237,   238,   239,   240,
+     242,   243,   244,   245,   246,   247,   248,   249,   250,   251,
+     252,   253,   255,   256,   257,   258,   259,   261,   262,   264,
+     266,   267,   268,   269,   271,   272,   274,   275,   276,   278,
+     279,   280,   282,   283,   285,   286,   288,   288,   290,   291,
+     293,   294,   295,   296,   297,   298,   299,   302,   303,   304,
+     305,   307,   308,   310,   311,   313,   314,   316,   317,   318,
+     320,   321,   323,   324,   326,   327,   328,   330,   331,   332,
+     333,   334,   335,   336,   337,   338,   340,   342,   343,   344,
+     346,   347
 };
 #endif
 
@@ -1864,50 +1864,218 @@ yyreduce:
 #line 1865 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
+  case 4:
+#line 66 "src/maths_parser.y" /* yacc.c:1646  */
+    {fprintf(stderr, "FUNCTION DECLARATION");}
+#line 1871 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+    break;
+
   case 11:
 #line 75 "src/maths_parser.y" /* yacc.c:1646  */
     {fprintf(stderr, "CompoundStatement ");}
-#line 1871 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+#line 1877 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 12:
 #line 76 "src/maths_parser.y" /* yacc.c:1646  */
     {fprintf(stderr, "ExpressionStatement ");}
-#line 1877 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+#line 1883 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 13:
 #line 77 "src/maths_parser.y" /* yacc.c:1646  */
     {fprintf(stderr, "SelectionStatement ");}
-#line 1883 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+#line 1889 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 14:
 #line 78 "src/maths_parser.y" /* yacc.c:1646  */
     {fprintf(stderr, "IterationStatement ");}
-#line 1889 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+#line 1895 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+    break;
+
+  case 29:
+#line 99 "src/maths_parser.y" /* yacc.c:1646  */
+    {fprintf(stderr, "T_IF");}
+#line 1901 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+    break;
+
+  case 30:
+#line 100 "src/maths_parser.y" /* yacc.c:1646  */
+    {fprintf(stderr, "T_IF T_ELSE");}
+#line 1907 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+    break;
+
+  case 32:
+#line 103 "src/maths_parser.y" /* yacc.c:1646  */
+    {fprintf(stderr, "T_WHILE");}
+#line 1913 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+    break;
+
+  case 45:
+#line 117 "src/maths_parser.y" /* yacc.c:1646  */
+    {fprintf(stderr, "T_RETURN");}
+#line 1919 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+    break;
+
+  case 46:
+#line 118 "src/maths_parser.y" /* yacc.c:1646  */
+    {fprintf(stderr, "T_RETURN ;");}
+#line 1925 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 47:
 #line 120 "src/maths_parser.y" /* yacc.c:1646  */
-    {fprintf(stderr, "Identifier ");}
-#line 1895 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+    {fprintf(stderr, "IDENTIFIER ");}
+#line 1931 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+    break;
+
+  case 49:
+#line 122 "src/maths_parser.y" /* yacc.c:1646  */
+    {fprintf(stderr, "T_STRING ");}
+#line 1937 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+    break;
+
+  case 51:
+#line 125 "src/maths_parser.y" /* yacc.c:1646  */
+    {fprintf(stderr, "T_DEC_INT ");}
+#line 1943 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 52:
 #line 126 "src/maths_parser.y" /* yacc.c:1646  */
     {(yyval.number) = (yyvsp[0].number); }
-#line 1901 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+#line 1949 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+    break;
+
+  case 69:
+#line 149 "src/maths_parser.y" /* yacc.c:1646  */
+    {fprintf(stderr, "T_AND");}
+#line 1955 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+    break;
+
+  case 70:
+#line 150 "src/maths_parser.y" /* yacc.c:1646  */
+    {fprintf(stderr, "T_TIMES");}
+#line 1961 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+    break;
+
+  case 71:
+#line 151 "src/maths_parser.y" /* yacc.c:1646  */
+    {fprintf(stderr, "T_PLUS");}
+#line 1967 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+    break;
+
+  case 72:
+#line 152 "src/maths_parser.y" /* yacc.c:1646  */
+    {fprintf(stderr, "T_MINUS");}
+#line 1973 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+    break;
+
+  case 73:
+#line 153 "src/maths_parser.y" /* yacc.c:1646  */
+    {fprintf(stderr, "T_BITWISE_NOT");}
+#line 1979 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+    break;
+
+  case 74:
+#line 154 "src/maths_parser.y" /* yacc.c:1646  */
+    {fprintf(stderr, "T_LOGICAL_NOT");}
+#line 1985 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+    break;
+
+  case 109:
+#line 202 "src/maths_parser.y" /* yacc.c:1646  */
+    {fprintf(stderr, "T_EQUALS");}
+#line 1991 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+    break;
+
+  case 110:
+#line 203 "src/maths_parser.y" /* yacc.c:1646  */
+    {fprintf(stderr, "T_TIMES_EQUALS");}
+#line 1997 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+    break;
+
+  case 111:
+#line 204 "src/maths_parser.y" /* yacc.c:1646  */
+    {fprintf(stderr, "T_DIVIDE_EQUALS");}
+#line 2003 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+    break;
+
+  case 112:
+#line 205 "src/maths_parser.y" /* yacc.c:1646  */
+    {fprintf(stderr, "T_MODULO_EQUALS");}
+#line 2009 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+    break;
+
+  case 113:
+#line 206 "src/maths_parser.y" /* yacc.c:1646  */
+    {fprintf(stderr, "T_PLUS_EQUALS");}
+#line 2015 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+    break;
+
+  case 114:
+#line 207 "src/maths_parser.y" /* yacc.c:1646  */
+    {fprintf(stderr, "T_MINUS_EQUALS");}
+#line 2021 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+    break;
+
+  case 115:
+#line 208 "src/maths_parser.y" /* yacc.c:1646  */
+    {fprintf(stderr, "T_LEFT_SHIFT_EQUALS");}
+#line 2027 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+    break;
+
+  case 116:
+#line 209 "src/maths_parser.y" /* yacc.c:1646  */
+    {fprintf(stderr, "T_RIGHT_SHIFT_EQUALS");}
+#line 2033 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+    break;
+
+  case 117:
+#line 210 "src/maths_parser.y" /* yacc.c:1646  */
+    {fprintf(stderr, "T_AND_EQUALS");}
+#line 2039 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+    break;
+
+  case 118:
+#line 211 "src/maths_parser.y" /* yacc.c:1646  */
+    {fprintf(stderr, "T_XOR_EQUALS");}
+#line 2045 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+    break;
+
+  case 119:
+#line 212 "src/maths_parser.y" /* yacc.c:1646  */
+    {fprintf(stderr, "T_OR_EQUALS");}
+#line 2051 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 121:
-#line 204 "src/maths_parser.y" /* yacc.c:1646  */
+#line 216 "src/maths_parser.y" /* yacc.c:1646  */
     {fprintf(stderr, "ExpressionFound! ");}
-#line 1907 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+#line 2057 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+    break;
+
+  case 135:
+#line 236 "src/maths_parser.y" /* yacc.c:1646  */
+    {fprintf(stderr, "T_TYPEDEF");}
+#line 2063 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+    break;
+
+  case 140:
+#line 242 "src/maths_parser.y" /* yacc.c:1646  */
+    {fprintf(stderr, "T_VOID");}
+#line 2069 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+    break;
+
+  case 143:
+#line 245 "src/maths_parser.y" /* yacc.c:1646  */
+    {fprintf(stderr, "T_INT");}
+#line 2075 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
 
-#line 1911 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+#line 2079 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -2135,7 +2303,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 327 "src/maths_parser.y" /* yacc.c:1906  */
+#line 351 "src/maths_parser.y" /* yacc.c:1906  */
 
 
 const Statement *g_root; // Definition of variable (to match declaration earlier)

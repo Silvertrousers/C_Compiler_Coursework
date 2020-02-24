@@ -17,4 +17,16 @@
 
 extern const Statement *parseAST();
 
+class ast_node {
+private:
+  /* data */
+
+public:
+  std::string node_type;
+  std::string value;
+  std::vector<ast_node*> branches;
+  ast_node (arguments);
+  virtual ~name_t ();
+};
+
 #endif
