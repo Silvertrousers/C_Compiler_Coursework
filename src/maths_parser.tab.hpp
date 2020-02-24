@@ -85,20 +85,37 @@ extern int yydebug;
     T_OR = 279,
     T_BITWISE_NOT = 280,
     T_LOGICAL_NOT = 281,
-    T_MODULO = 282,
-    T_COMMA = 283,
-    T_DOT = 284,
-    T_COLON = 285,
-    T_SEMICOLON = 286,
-    T_QUESTION = 287,
-    T_LBRACKET = 288,
-    T_RBRACKET = 289,
-    T_LSQ_BRACKET = 290,
-    T_RSQ_BRACKET = 291,
-    T_DEC_INT = 292,
-    T_OCTAL_INT = 293,
-    T_IDENTIFIER = 294,
-    T_STRING = 295
+    T_MODULO_EQUALS = 282,
+    T_LEFT_SHIFT_EQUALS = 283,
+    T_RIGHT_SHIFT_EQUALS = 284,
+    T_NOT_EQUALS_EQUALS = 285,
+    T_EQUALS_EQUALS = 286,
+    T_PLUS_EQUALS = 287,
+    T_MINUS_EQUALS = 288,
+    T_TIMES_EQUALS = 289,
+    T_DIVIDE_EQUALS = 290,
+    T_LESS_THAN_OR_EQUAL_TO = 291,
+    T_GREATER_THAN_OR_EQUAL_TO = 292,
+    T_AND_EQUALS = 293,
+    T_OR_EQUALS = 294,
+    T_XOR_EQUALS = 295,
+    T_ARROW = 296,
+    T_RIGHT_SHIFT = 297,
+    T_LEFT_SHIFT = 298,
+    T_MODULO = 299,
+    T_COMMA = 300,
+    T_DOT = 301,
+    T_COLON = 302,
+    T_SEMICOLON = 303,
+    T_QUESTION = 304,
+    T_LBRACKET = 305,
+    T_RBRACKET = 306,
+    T_LSQ_BRACKET = 307,
+    T_RSQ_BRACKET = 308,
+    T_DEC_INT = 309,
+    T_OCTAL_INT = 310,
+    T_IDENTIFIER = 311,
+    T_STRING = 312
   };
 #endif
 
@@ -113,7 +130,7 @@ union YYSTYPE
   double number;
   std::string *string;
 
-#line 117 "src/maths_parser.tab.hpp" /* yacc.c:1909  */
+#line 134 "src/maths_parser.tab.hpp" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;
