@@ -1,32 +1,28 @@
 #ifndef ast_hpp
 #define ast_hpp
+#include <vector>
+#include <string>
 
-#include "ast/ast_expression.hpp"
-#include "ast/ast_statement.hpp"
-#include "ast/ast_primitives.hpp"
-#include "ast/ast_operators.hpp"
-#include "ast/ast_unary.hpp"
-#include "ast/ast_functions.hpp"
+class ast_node{
 
-#include "ast_new_node_types/ast_keyword.hpp"
-#include "ast_new_node_types/ast_identifier.hpp"
-#include "ast_new_node_types/ast_constant.hpp"
-#include "ast_new_node_types/ast_string_literal.hpp"
-#include "ast_new_node_types/ast_operator.hpp"
-#include "ast_new_node_types/ast_punctuator.hpp"
+  public:
+    std::string node_type;
+    std::string value;
+    std::vector<ast_node*> branches;
 
-extern const Statement *parseAST();
+    ast_node(std::string _node_type, std::string _value, std::vector<ast_node*> _branches) :
+      node_type(_node_type),
+      value(_value),
+      branches(_branches)
+    {}
 
-class ast_node {
-private:
-  /* data */
+    ast_node(std::string _node_type, std::string _value) :
+      node_type(_node_type),
+      value(_value)
+    {}
 
-public:
-  std::string node_type;
-  std::string value;
-  std::vector<ast_node*> branches;
-  ast_node (arguments);
-  virtual ~name_t ();
+    ~ast_node();
 };
 
+extern const ast_node *parseAST();
 #endif

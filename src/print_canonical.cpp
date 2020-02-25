@@ -2,10 +2,10 @@
 
 int main()
 {
-    const Statement *ast=parseAST();
-
-    ast->print(std::cout);
-    std::cout<<std::endl;
+    const ast_node *ast=parseAST();
+    //
+    // ast->print(std::cout);
+    // std::cout<<std::endl;
 
     return 0;
 }

@@ -4,6 +4,7 @@
 
 int main(int argc, char *argv[])
 {
+  /*
     std::map<std::string,double> bindings;
 
     // Grab the pairs of bindings from argv
@@ -12,13 +13,13 @@ int main(int argc, char *argv[])
     }
 
     // Parse the AST
-    const Statement *ast=parseAST();
+    const ast_node *ast=parseAST();
 
     // evaluate it with the bindings given
     double res=ast->evaluate(bindings);
 
     // Print it out
     std::cout << std::fixed << std::setprecision(6) << res << std::endl;
-
+    */
     return 0;
 }

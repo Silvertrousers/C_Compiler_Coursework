@@ -3,7 +3,7 @@
 
   #include <cassert>
 
-  extern const Statement *g_root; // A way of getting the AST out
+  extern const ast_node *g_root; // A way of getting the AST out
 
   //! This is to fix problems when generating C++
   // We are declaring the functions provided by Flex, so
@@ -15,10 +15,8 @@
 // Represents the value associated with any kind of
 // AST node.
 %union{
-  const Statement *stmt;
-  const Expression *expr;
-  double number;
-  std::string *string;
+  const ast_node* nodePtr;
+  std::string string;
 }
 
 %token T_AUTO T_BREAK T_CASE T_CHAR T_CONST T_CONTINUE T_DEFAULT T_DO T_DOUBLE
@@ -39,37 +37,40 @@
 %token T_DEC_INT T_OCTAL_INT T_IDENTIFIER T_STRING T_ENUM_CONSTANT
 %token T_DEREFERENCE T_CUSTOM_TYPE
 
-%type <stmt> STATEMENT
-%type <expr> EXPR PRIMARY_EXPRESSION
-%type <number> CONSTANT T_DEC_INT T_OCTAL_INT
-%type <string> T_STRING T_IDENTIFIER
-%type <declare> DECLARATION
+%type<nodePtr> PROGRAM TRANSLATION_UNIT EXTERNAL_DECLARATION FUNCTION_DECLARATION STATEMENT LABELED_STATEMENT COMPOUND_STATEMENT
+%type<nodePtr> POSTFIX_EXPRESSION ARGUMENT_EXPRESSION_LIST UNARY_EXPRESSION UNARY_OPERATOR
+%type<nodePtr> MULTIPLICATIVE_EXPRESSION ADDITIVE_EXPRESSION SHIFT_EXPRESSION RELATIONAL_EXPRESSION EQUALITY_EXPRESSION
+%type<nodePtr> AND_EXPRESSION EXCLUSIVE_OR_EXPRESSION INCLUSIVE_OR_EXPRESSION LOGICAL_AND_EXPRESSION LOGICAL_OR_EXPRESSION
+%type<nodePtr> CONDITIONAL_EXPRESSION ASSIGNMENT_EXPRESSION ASSIGNMENT_OPERATOR CONSTANT_EXPRESSION EXPR CONSTANT
+%type<nodePtr> DECLARATION DECLARATION_SPECIFIERS INIT_DECLARATOR_LIST INIT_DECLARATOR STORAGE_CLASS_SPECIFIER TYPE_SPECIFIER
+%type<nodePtr> STRUCT_OR_UNION_SPECIFIER STRUCT_OR_UNION STRUCT_DECLARATION_LIST STRUCT_DECLARATION SPECIFIER_QUALIFIER_LIST
+%type<nodePtr> STRUCT_DECLARATOR_LIST STRUCT_DECLARATOR ENUM_SPECIFIER ENUMERATOR_LIST ENUMERATOR TYPE_QUALIFIER
+%type<nodePtr> DECLARATOR DIRECT_DECLARATOR POINTER TYPE_QUALIFIER_LIST PARAMETER_TYPE_LIST PARAMETER_LIST PARAMETER_DECLARATION
+%type<nodePtr> IDENTIFIER_LIST TYPE_NAME ABSTRACT_DECLARATOR DIRECT_ABSTRACT_DECLARATOR TYPEDEF_NAME INITIALIZER INITIALIZER_LIST
+
+
+%type<string> T_OCTAL_INT T_DEC_INT
 
 %left T_PLUS T_MINUS
 %left T_DIVIDE T_TIMES
 %right T_EXPONENT
 
-%start TRANSLATION_UNIT
+%start PROGRAM
 
 %%
 
-/* The TODO notes a are just a guide, and are non-exhaustive.
-   The expectation is that you do each one, then compile and test.
-   Testing should be done using patterns that target the specific
-   feature; the testbench is there to make sure that you haven't
-   broken anything while you added it.
-*/
+PROGRAM : TRANSLATION_UNIT { g_root = $1; }
 
-TRANSLATION_UNIT : EXTERNAL_DECLARATION {fprintf(stderr, "BYE ");}
+TRANSLATION_UNIT : EXTERNAL_DECLARATION {std::vector<ast_node> vect{NULL, $1}; $$ = new ast_node("TRANSLATION_UNIT","", vect);}
                  | TRANSLATION_UNIT EXTERNAL_DECLARATION
 
 EXTERNAL_DECLARATION : FUNCTION_DECLARATION {fprintf(stderr, "FUNCTION DECLARATION");}
                      | DECLARATION
 
-FUNCTION_DECLARATION : DECLARATION_SPECIFIERS DECLARATOR DECLARATION_LIST COMPOUND_STATEMENT
-                     | DECLARATION_SPECIFIERS DECLARATOR COMPOUND_STATEMENT
-                     | DECLARATOR DECLARATION_LIST COMPOUND_STATEMENT
-                     | DECLARATOR COMPOUND_STATEMENT
+FUNCTION_DECLARATION : DECLARATION_SPECIFIERS DECLARATOR DECLARATION_LIST COMPOUND_STATEMENT /*int f(args) {stuff}*/
+                     | DECLARATION_SPECIFIERS DECLARATOR COMPOUND_STATEMENT /*int f() {stuff}, declarator can be an identifier with empty brackets after it*/
+                     | DECLARATOR DECLARATION_LIST COMPOUND_STATEMENT /*f(){stuff}*/
+                     | DECLARATOR COMPOUND_STATEMENT /*f{stuff}*/
 
 STATEMENT : LABELED_STATEMENT
           | COMPOUND_STATEMENT {fprintf(stderr, "CompoundStatement ");}
@@ -122,8 +123,8 @@ PRIMARY_EXPRESSION : T_IDENTIFIER {fprintf(stderr, "IDENTIFIER ");}
              | T_STRING {fprintf(stderr, "T_STRING ");}
              | T_LBRACKET EXPR T_RBRACKET
 
-CONSTANT : T_DEC_INT {fprintf(stderr, "T_DEC_INT ");}
-         | T_OCTAL_INT {$$ = $1; }
+CONSTANT : T_DEC_INT { $$ = new ast_node("CONSTANT", $1); }
+         | T_OCTAL_INT { $$ = new ast_node("CONSTANT", $1); }
 
 
 POSTFIX_EXPRESSION : PRIMARY_EXPRESSION
@@ -154,7 +155,7 @@ UNARY_OPERATOR : T_AND {fprintf(stderr, "T_AND");}
                | T_LOGICAL_NOT {fprintf(stderr, "T_LOGICAL_NOT");}
 
 CAST_EXPRESSION : UNARY_EXPRESSION
-| T_LBRACKET TYPE_NAME T_RBRACKET CAST_EXPRESSION
+                | T_LBRACKET TYPE_NAME T_RBRACKET CAST_EXPRESSION
 
 MULTIPLICATIVE_EXPRESSION : CAST_EXPRESSION
                           | MULTIPLICATIVE_EXPRESSION T_TIMES CAST_EXPRESSION
@@ -217,7 +218,6 @@ EXPR : ASSIGNMENT_EXPRESSION {fprintf(stderr, "ExpressionFound! ");}| EXPR T_COM
 
 
 
-
 DECLARATION : DECLARATION_SPECIFIERS  | DECLARATION_SPECIFIERS INIT_DECLARATOR_LIST
 
 DECLARATION_SPECIFIERS : STORAGE_CLASS_SPECIFIER
@@ -257,6 +257,7 @@ STRUCT_OR_UNION_SPECIFIER : STRUCT_OR_UNION T_IDENTIFIER
                           | STRUCT_OR_UNION T_IDENTIFIER T_LCURLY_BRACKET STRUCT_DECLARATION_LIST T_RCURLY_BRACKET
 STRUCT_OR_UNION : T_STRUCT
                 | T_UNION
+
 
 STRUCT_DECLARATION_LIST : STRUCT_DECLARATION
                         | STRUCT_DECLARATION_LIST STRUCT_DECLARATION
@@ -350,9 +351,9 @@ INITIALIZER_LIST : INITIALIZER
 
 %%
 
-const Statement *g_root; // Definition of variable (to match declaration earlier)
+const ast_node *g_root; // Definition of variable (to match declaration earlier)
 
-const Statement *parseAST()
+const ast_node *parseAST()
 {
   g_root=0;
   yyparse();
