@@ -40,7 +40,7 @@
 extern int yydebug;
 #endif
 /* "%code requires" blocks.  */
-#line 1 "src/maths_parser.y" /* yacc.c:1909  */
+#line 2 "src/maths_parser.y" /* yacc.c:1909  */
 
   #include "ast.hpp"
 
@@ -156,7 +156,7 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 17 "src/maths_parser.y" /* yacc.c:1909  */
+#line 18 "src/maths_parser.y" /* yacc.c:1909  */
 
   const Statement *stmt;
   const Expression *expr;
