@@ -27,6 +27,7 @@ ast_node::ast_node(std::string _node_type, std::string _value, std::vector<ast_n
 ast_node::ast_node(std::string _node_type, std::string _value){
   node_type = _node_type;
   value = _value;
+  branches = {};
 }
 
 #endif
