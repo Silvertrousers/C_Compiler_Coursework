@@ -1264,17 +1264,17 @@ YY_RULE_SETUP
 case 82:
 YY_RULE_SETUP
 #line 97 "src/maths_lexer.flex"
-{ yylval.number=strtod(yytext, 0); return T_DEC_INT; }
+{ yylval._text=new std::string(yytext); return T_DEC_INT; }
 	YY_BREAK
 case 83:
 YY_RULE_SETUP
 #line 98 "src/maths_lexer.flex"
-{ yylval.number=strtod(yytext, 0); return T_OCTAL_INT; }
+{ yylval._text=new std::string(yytext); return T_OCTAL_INT; }
 	YY_BREAK
 case 84:
 YY_RULE_SETUP
 #line 99 "src/maths_lexer.flex"
-{ yylval.string=new std::string(yytext); return T_IDENTIFIER; }
+{ yylval._text=new std::string(yytext); return T_IDENTIFIER; }
 	YY_BREAK
 case 85:
 /* rule 85 can match eol */

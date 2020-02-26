@@ -212,7 +212,7 @@ union YYSTYPE
 #line 17 "src/maths_parser.y" /* yacc.c:355  */
 
   ast_node* nodePtr;
-  std::string _text;
+  std::string* _text;
 
 #line 218 "src/maths_parser.tab.cpp" /* yacc.c:355  */
 };
@@ -1892,7 +1892,7 @@ yyreduce:
 
   case 48:
 #line 136 "src/maths_parser.y" /* yacc.c:1646  */
-    {(yyval.nodePtr) = new ast_node("PRIMARY_EXPRESSION",(yyvsp[0]._text));}
+    {(yyval.nodePtr) = new ast_node("PRIMARY_EXPRESSION", *(yyvsp[0]._text));}
 #line 1897 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
@@ -1910,13 +1910,13 @@ yyreduce:
 
   case 52:
 #line 141 "src/maths_parser.y" /* yacc.c:1646  */
-    {(yyval.nodePtr) = new ast_node("CONSTANT", (yyvsp[0]._text)); }
+    {(yyval.nodePtr) = new ast_node("CONSTANT", *(yyvsp[0]._text)); }
 #line 1915 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 53:
 #line 142 "src/maths_parser.y" /* yacc.c:1646  */
-    {(yyval.nodePtr) = new ast_node("CONSTANT", (yyvsp[0]._text)); }
+    {(yyval.nodePtr) = new ast_node("CONSTANT", *(yyvsp[0]._text)); }
 #line 1921 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 

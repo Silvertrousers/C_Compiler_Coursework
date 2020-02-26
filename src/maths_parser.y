@@ -16,7 +16,7 @@
 // AST node.
 %union{
   ast_node* nodePtr;
-  std::string _text;
+  std::string* _text;
 }
 
 %token T_AUTO T_BREAK T_CASE T_CHAR T_CONST T_CONTINUE T_DEFAULT T_DO T_DOUBLE
@@ -133,13 +133,13 @@ JUMP_STATEMENT : T_GOTO T_IDENTIFIER T_SEMICOLON
                | T_RETURN EXPR T_SEMICOLON
                | T_RETURN T_SEMICOLON
 
-PRIMARY_EXPRESSION : T_IDENTIFIER {$$ = new ast_node("PRIMARY_EXPRESSION",$1);}
+PRIMARY_EXPRESSION : T_IDENTIFIER {$$ = new ast_node("PRIMARY_EXPRESSION", *$1);}
                    | CONSTANT {$$ = new ast_node("PRIMARY_EXPRESSION","",std::vector<ast_node*>{$1});}
                    | T_STRING
                    | T_LBRACKET EXPR T_RBRACKET {$$ = new ast_node("PRIMARY_EXPRESSION","",std::vector<ast_node*>{$2});}
 
-CONSTANT : T_DEC_INT   {$$ = new ast_node("CONSTANT", $1); }
-         | T_OCTAL_INT {$$ = new ast_node("CONSTANT", $1); }
+CONSTANT : T_DEC_INT   {$$ = new ast_node("CONSTANT", *$1); }
+         | T_OCTAL_INT {$$ = new ast_node("CONSTANT", *$1); }
 
 
 POSTFIX_EXPRESSION : PRIMARY_EXPRESSION
