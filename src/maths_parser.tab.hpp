@@ -158,7 +158,7 @@ union YYSTYPE
 {
 #line 17 "src/maths_parser.y" /* yacc.c:1909  */
 
-  const ast_node* nodePtr;
+  ast_node *nodePtr;
   std::string string;
 
 #line 165 "src/maths_parser.tab.hpp" /* yacc.c:1909  */
