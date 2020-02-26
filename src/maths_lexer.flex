@@ -94,9 +94,9 @@ while           { return T_WHILE; }
 [\%]             { return T_MODULO; }
 [\?]            { return T_QUESTION; }
 
-[1-9][0-9]* { yylval.number=strtod(yytext, 0); return T_DEC_INT; }
-[0][0-7]*   { yylval.number=strtod(yytext, 0); return T_OCTAL_INT; }
-[a-zA-Z_][a-zA-Z0-9_]*          { yylval.string=new std::string(yytext); return T_IDENTIFIER; }
+[1-9][0-9]* { yylval._text=new std::string(yytext); return T_DEC_INT; }
+[0][0-7]*   { yylval._text=new std::string(yytext); return T_OCTAL_INT; }
+[a-zA-Z_][a-zA-Z0-9_]*          { yylval._text=new std::string(yytext); return T_IDENTIFIER; }
 
 [ \t\r\n]+		{;}
 
