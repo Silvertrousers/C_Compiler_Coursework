@@ -14,12 +14,12 @@ class ast_node{
       node_type(_node_type),
       value(_value),
       branches(_branches)
-    {}
+    {};
 
     ast_node(std::string _node_type, std::string _value) :
       node_type(_node_type),
       value(_value)
-    {}
+    {};
 
     ~ast_node();
 };
