@@ -99,15 +99,12 @@ extern int yydebug;
 
   #include <cassert>
 
-  extern const ast_node *g_root; // A way of getting the AST out
+  extern const ast_node *g_root;
 
-  //! This is to fix problems when generating C++
-  // We are declaring the functions provided by Flex, so
-  // that Bison generated code can call them.
   int yylex(void);
   void yyerror(const char *);
 
-#line 111 "src/maths_parser.tab.cpp" /* yacc.c:355  */
+#line 108 "src/maths_parser.tab.cpp" /* yacc.c:355  */
 
 /* Token type.  */
 #ifndef YYTOKENTYPE
@@ -209,12 +206,12 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 17 "src/maths_parser.y" /* yacc.c:355  */
+#line 12 "src/maths_parser.y" /* yacc.c:355  */
 
   ast_node* nodePtr;
   std::string* _text;
 
-#line 218 "src/maths_parser.tab.cpp" /* yacc.c:355  */
+#line 215 "src/maths_parser.tab.cpp" /* yacc.c:355  */
 };
 
 typedef union YYSTYPE YYSTYPE;
@@ -231,7 +228,7 @@ int yyparse (void);
 
 /* Copy the second part of user declarations.  */
 
-#line 235 "src/maths_parser.tab.cpp" /* yacc.c:358  */
+#line 232 "src/maths_parser.tab.cpp" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -537,29 +534,29 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint16 yyrline[] =
 {
-       0,    77,    77,    79,    80,    82,    83,    85,    86,    87,
-      88,    90,    91,    92,    93,    94,    95,    97,    98,    99,
-     101,   102,   103,   104,   106,   107,   109,   110,   112,   113,
-     115,   116,   117,   119,   120,   121,   122,   123,   124,   125,
-     126,   127,   128,   130,   131,   132,   133,   134,   136,   137,
-     138,   139,   141,   142,   145,   146,   147,   148,   149,   150,
-     151,   152,   154,   155,   157,   158,   159,   160,   162,   163,
-     165,   165,   165,   165,   165,   165,   167,   168,   170,   171,
-     172,   173,   175,   176,   177,   179,   180,   181,   183,   184,
-     185,   186,   187,   188,   189,   190,   192,   193,   195,   196,
-     198,   199,   201,   202,   204,   205,   207,   208,   210,   211,
-     213,   213,   213,   213,   214,   214,   215,   215,   216,   216,
-     216,   218,   220,   221,   223,   223,   225,   226,   227,   228,
-     229,   230,   232,   233,   235,   236,   238,   238,   238,   238,
-     238,   240,   240,   240,   240,   241,   241,   241,   241,   241,
-     242,   243,   244,   246,   247,   248,   249,   249,   251,   252,
-     254,   256,   257,   258,   259,   261,   262,   264,   265,   266,
-     268,   269,   270,   272,   273,   275,   276,   278,   278,   280,
-     281,   283,   284,   285,   286,   287,   288,   289,   292,   293,
-     294,   295,   297,   298,   300,   301,   303,   304,   306,   307,
-     308,   310,   311,   313,   314,   316,   317,   318,   320,   321,
-     322,   323,   324,   325,   326,   327,   328,   330,   332,   333,
-     334,   336,   337
+       0,    72,    72,    74,    75,    77,    78,    80,    81,    82,
+      83,    85,    86,    87,    88,    89,    90,    92,    93,    94,
+      96,    97,    98,    99,   101,   102,   104,   105,   107,   108,
+     110,   111,   112,   114,   115,   116,   117,   118,   119,   120,
+     121,   122,   123,   125,   126,   127,   128,   129,   131,   132,
+     133,   134,   136,   137,   140,   141,   142,   143,   144,   145,
+     146,   147,   149,   150,   152,   153,   154,   155,   157,   158,
+     160,   160,   160,   160,   160,   160,   162,   163,   165,   166,
+     167,   168,   170,   171,   172,   174,   175,   176,   178,   179,
+     180,   181,   182,   183,   184,   185,   187,   188,   190,   191,
+     193,   194,   196,   197,   199,   200,   202,   203,   205,   206,
+     208,   208,   208,   208,   209,   209,   210,   210,   211,   211,
+     211,   213,   215,   216,   218,   218,   220,   221,   222,   223,
+     224,   225,   227,   228,   230,   231,   233,   233,   233,   233,
+     233,   235,   235,   235,   235,   236,   236,   236,   236,   236,
+     237,   238,   239,   241,   242,   243,   244,   244,   246,   247,
+     249,   251,   252,   253,   254,   256,   257,   259,   260,   261,
+     263,   264,   265,   267,   268,   270,   271,   273,   273,   275,
+     276,   278,   279,   280,   281,   282,   283,   284,   287,   288,
+     289,   290,   292,   293,   295,   296,   298,   299,   301,   302,
+     303,   305,   306,   308,   309,   311,   312,   313,   315,   316,
+     317,   318,   319,   320,   321,   322,   323,   325,   327,   328,
+     329,   331,   332
 };
 #endif
 
@@ -1854,80 +1851,44 @@ yyreduce:
   YY_REDUCE_PRINT (yyn);
   switch (yyn)
     {
-        case 3:
-#line 79 "src/maths_parser.y" /* yacc.c:1646  */
-    {(yyval.nodePtr) = new ast_node("TRANSLATION_UNIT","",std::vector<ast_node*>{(yyvsp[0].nodePtr)});}
-#line 1861 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
-    break;
-
-  case 4:
-#line 80 "src/maths_parser.y" /* yacc.c:1646  */
-    {(yyval.nodePtr) = new ast_node("TRANSLATION_UNIT","", std::vector<ast_node*>{(yyvsp[-1].nodePtr), (yyvsp[0].nodePtr)});}
-#line 1867 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+        case 2:
+#line 72 "src/maths_parser.y" /* yacc.c:1646  */
+    { g_root = (yyvsp[0].nodePtr); }
+#line 1858 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 12:
-#line 91 "src/maths_parser.y" /* yacc.c:1646  */
+#line 86 "src/maths_parser.y" /* yacc.c:1646  */
     {fprintf(stderr, "CompoundStatement ");}
-#line 1873 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+#line 1864 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 13:
-#line 92 "src/maths_parser.y" /* yacc.c:1646  */
+#line 87 "src/maths_parser.y" /* yacc.c:1646  */
     {fprintf(stderr, "ExpressionStatement ");}
-#line 1879 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+#line 1870 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 14:
-#line 93 "src/maths_parser.y" /* yacc.c:1646  */
+#line 88 "src/maths_parser.y" /* yacc.c:1646  */
     {fprintf(stderr, "SelectionStatement ");}
-#line 1885 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+#line 1876 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 15:
-#line 94 "src/maths_parser.y" /* yacc.c:1646  */
+#line 89 "src/maths_parser.y" /* yacc.c:1646  */
     {fprintf(stderr, "IterationStatement ");}
-#line 1891 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
-    break;
-
-  case 48:
-#line 136 "src/maths_parser.y" /* yacc.c:1646  */
-    {(yyval.nodePtr) = new ast_node("PRIMARY_EXPRESSION", *(yyvsp[0]._text));}
-#line 1897 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
-    break;
-
-  case 49:
-#line 137 "src/maths_parser.y" /* yacc.c:1646  */
-    {(yyval.nodePtr) = new ast_node("PRIMARY_EXPRESSION","",std::vector<ast_node*>{(yyvsp[0].nodePtr)});}
-#line 1903 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
-    break;
-
-  case 51:
-#line 139 "src/maths_parser.y" /* yacc.c:1646  */
-    {(yyval.nodePtr) = new ast_node("PRIMARY_EXPRESSION","",std::vector<ast_node*>{(yyvsp[-1].nodePtr)});}
-#line 1909 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
-    break;
-
-  case 52:
-#line 141 "src/maths_parser.y" /* yacc.c:1646  */
-    {(yyval.nodePtr) = new ast_node("CONSTANT", *(yyvsp[0]._text)); }
-#line 1915 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
-    break;
-
-  case 53:
-#line 142 "src/maths_parser.y" /* yacc.c:1646  */
-    {(yyval.nodePtr) = new ast_node("CONSTANT", *(yyvsp[0]._text)); }
-#line 1921 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+#line 1882 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 122:
-#line 220 "src/maths_parser.y" /* yacc.c:1646  */
+#line 215 "src/maths_parser.y" /* yacc.c:1646  */
     {fprintf(stderr, "ExpressionFound! ");}
-#line 1927 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+#line 1888 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
 
-#line 1931 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+#line 1892 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -2155,10 +2116,10 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 342 "src/maths_parser.y" /* yacc.c:1906  */
+#line 337 "src/maths_parser.y" /* yacc.c:1906  */
 
 
-const ast_node *g_root; // Definition of variable (to match declaration earlier)
+const ast_node *g_root;
 
 const ast_node *parseAST()
 {

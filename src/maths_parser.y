@@ -3,17 +3,12 @@
 
   #include <cassert>
 
-  extern const ast_node *g_root; // A way of getting the AST out
+  extern const ast_node *g_root;
 
-  //! This is to fix problems when generating C++
-  // We are declaring the functions provided by Flex, so
-  // that Bison generated code can call them.
   int yylex(void);
   void yyerror(const char *);
 }
 
-// Represents the value associated with any kind of
-// AST node.
 %union{
   ast_node* nodePtr;
   std::string* _text;
@@ -74,10 +69,10 @@
 %start PROGRAM
 
 %%
-PROGRAM : TRANSLATION_UNIT
+PROGRAM : TRANSLATION_UNIT { g_root = $1; }
 
-TRANSLATION_UNIT : EXTERNAL_DECLARATION {$$ = new ast_node("TRANSLATION_UNIT","",std::vector<ast_node*>{$1});}
-                 | TRANSLATION_UNIT EXTERNAL_DECLARATION {$$ = new ast_node("TRANSLATION_UNIT","", std::vector<ast_node*>{$1, $2});}
+TRANSLATION_UNIT : EXTERNAL_DECLARATION /*{$$ = new ast_node("TRANSLATION_UNIT","",std::vector<ast_node*>{$1});}*/
+                 | TRANSLATION_UNIT EXTERNAL_DECLARATION /*{$$ = new ast_node("TRANSLATION_UNIT","", std::vector<ast_node*>{$1, $2});}*/
 
 EXTERNAL_DECLARATION : FUNCTION_DECLARATION
                      | DECLARATION
@@ -133,13 +128,13 @@ JUMP_STATEMENT : T_GOTO T_IDENTIFIER T_SEMICOLON
                | T_RETURN EXPR T_SEMICOLON
                | T_RETURN T_SEMICOLON
 
-PRIMARY_EXPRESSION : T_IDENTIFIER {$$ = new ast_node("PRIMARY_EXPRESSION", *$1);}
-                   | CONSTANT {$$ = new ast_node("PRIMARY_EXPRESSION","",std::vector<ast_node*>{$1});}
+PRIMARY_EXPRESSION : T_IDENTIFIER /*{$$ = new ast_node("PRIMARY_EXPRESSION", *$1);}*/
+                   | CONSTANT /*{$$ = new ast_node("PRIMARY_EXPRESSION","",std::vector<ast_node*>{$1});}*/
                    | T_STRING
-                   | T_LBRACKET EXPR T_RBRACKET {$$ = new ast_node("PRIMARY_EXPRESSION","",std::vector<ast_node*>{$2});}
+                   | T_LBRACKET EXPR T_RBRACKET /*{$$ = new ast_node("PRIMARY_EXPRESSION","",std::vector<ast_node*>{$2});}*/
 
-CONSTANT : T_DEC_INT   {$$ = new ast_node("CONSTANT", *$1); }
-         | T_OCTAL_INT {$$ = new ast_node("CONSTANT", *$1); }
+CONSTANT : T_DEC_INT   /*{$$ = new ast_node("CONSTANT", *$1); }*/
+         | T_OCTAL_INT/* {$$ = new ast_node("CONSTANT", *$1); } */
 
 
 POSTFIX_EXPRESSION : PRIMARY_EXPRESSION
@@ -341,7 +336,7 @@ INITIALIZER_LIST : INITIALIZER
 
 %%
 
-const ast_node *g_root; // Definition of variable (to match declaration earlier)
+const ast_node *g_root;
 
 const ast_node *parseAST()
 {

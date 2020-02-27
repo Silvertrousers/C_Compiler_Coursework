@@ -1,0 +1,17 @@
+src/maths_lexer.yy.o: In function `std::iterator_traits<ast_node* const*>::iterator_category std::__iterator_category<ast_node* const*>(ast_node* const* const&)':
+/home/cmg1418/Desktop/langproc-2019-cw-The-Complier/include/ast.hpp:21: multiple definition of `ast_node::ast_node(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::vector<ast_node*, std::allocator<ast_node*> >)'
+src/maths_parser.tab.o:/home/cmg1418/Desktop/langproc-2019-cw-The-Complier/include/ast.hpp:21: first defined here
+
+src/maths_lexer.yy.o: In function `std::iterator_traits<ast_node* const*>::iterator_category std::__iterator_category<ast_node* const*>(ast_node* const* const&)':
+/home/cmg1418/Desktop/langproc-2019-cw-The-Complier/include/ast.hpp:21: multiple definition of `ast_node::ast_node(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::vector<ast_node*, std::allocator<ast_node*> >)'
+src/maths_parser.tab.o:/home/cmg1418/Desktop/langproc-2019-cw-The-Complier/include/ast.hpp:21: first defined here
+
+src/maths_lexer.yy.o: In function `ast_node::ast_node(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)':
+/home/cmg1418/Desktop/langproc-2019-cw-The-Complier/include/ast.hpp:27: multiple definition of `ast_node::ast_node(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)'
+src/maths_parser.tab.o:/home/cmg1418/Desktop/langproc-2019-cw-The-Complier/include/ast.hpp:27: first defined here
+
+src/maths_lexer.yy.o: In function `ast_node::ast_node(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)':
+/home/cmg1418/Desktop/langproc-2019-cw-The-Complier/include/ast.hpp:27: multiple definition of `ast_node::ast_node(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)'
+src/maths_parser.tab.o:/home/cmg1418/Desktop/langproc-2019-cw-The-Complier/include/ast.hpp:27: first defined here
+collect2: error: ld returned 1 exit status
+make: *** [bin/print_canonical] Error 1

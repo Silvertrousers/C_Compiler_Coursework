@@ -573,7 +573,7 @@ int yy_flex_debug = 0;
 char *yytext;
 #line 1 "src/maths_lexer.flex"
 #line 4 "src/maths_lexer.flex"
-// Avoid error "error: `fileno' was not declared in this scope"
+
 extern "C" int fileno(FILE *stream);
 
 #include "maths_parser.tab.hpp"
