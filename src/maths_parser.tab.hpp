@@ -42,7 +42,7 @@ extern int yydebug;
 /* "%code requires" blocks.  */
 #line 1 "src/maths_parser.y" /* yacc.c:1909  */
 
-  #include "ast.hpp"
+  #include "./ast.hpp"
 
   #include <cassert>
 

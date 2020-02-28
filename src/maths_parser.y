@@ -1,5 +1,5 @@
 %code requires{
-  #include "ast.hpp"
+  #include "./ast.hpp"
 
   #include <cassert>
 
@@ -71,8 +71,8 @@
 %%
 PROGRAM : TRANSLATION_UNIT { g_root = $1; }
 
-TRANSLATION_UNIT : EXTERNAL_DECLARATION /*{$$ = new ast_node("TRANSLATION_UNIT","",std::vector<ast_node*>{$1});}*/
-                 | TRANSLATION_UNIT EXTERNAL_DECLARATION /*{$$ = new ast_node("TRANSLATION_UNIT","", std::vector<ast_node*>{$1, $2});}*/
+TRANSLATION_UNIT : EXTERNAL_DECLARATION {$$ = new ast_node("TRANSLATION_UNIT","",std::vector<ast_node*>{$1});}
+                 | TRANSLATION_UNIT EXTERNAL_DECLARATION {$$ = new ast_node("TRANSLATION_UNIT","", std::vector<ast_node*>{$1, $2});}
 
 EXTERNAL_DECLARATION : FUNCTION_DECLARATION
                      | DECLARATION
@@ -128,13 +128,13 @@ JUMP_STATEMENT : T_GOTO T_IDENTIFIER T_SEMICOLON
                | T_RETURN EXPR T_SEMICOLON
                | T_RETURN T_SEMICOLON
 
-PRIMARY_EXPRESSION : T_IDENTIFIER /*{$$ = new ast_node("PRIMARY_EXPRESSION", *$1);}*/
-                   | CONSTANT /*{$$ = new ast_node("PRIMARY_EXPRESSION","",std::vector<ast_node*>{$1});}*/
+PRIMARY_EXPRESSION : T_IDENTIFIER {$$ = new ast_node("PRIMARY_EXPRESSION", *$1);}
+                   | CONSTANT {$$ = new ast_node("PRIMARY_EXPRESSION","",std::vector<ast_node*>{$1});}
                    | T_STRING
-                   | T_LBRACKET EXPR T_RBRACKET /*{$$ = new ast_node("PRIMARY_EXPRESSION","",std::vector<ast_node*>{$2});}*/
+                   | T_LBRACKET EXPR T_RBRACKET {$$ = new ast_node("PRIMARY_EXPRESSION","",std::vector<ast_node*>{$2});}
 
-CONSTANT : T_DEC_INT   /*{$$ = new ast_node("CONSTANT", *$1); }*/
-         | T_OCTAL_INT/* {$$ = new ast_node("CONSTANT", *$1); } */
+CONSTANT : T_DEC_INT   {$$ = new ast_node("CONSTANT", *$1); }
+         | T_OCTAL_INT {$$ = new ast_node("CONSTANT", *$1); }
 
 
 POSTFIX_EXPRESSION : PRIMARY_EXPRESSION

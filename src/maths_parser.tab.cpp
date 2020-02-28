@@ -95,7 +95,7 @@ extern int yydebug;
 /* "%code requires" blocks.  */
 #line 1 "src/maths_parser.y" /* yacc.c:355  */
 
-  #include "ast.hpp"
+  #include "./ast.hpp"
 
   #include <cassert>
 
@@ -1857,38 +1857,80 @@ yyreduce:
 #line 1858 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
+  case 3:
+#line 74 "src/maths_parser.y" /* yacc.c:1646  */
+    {(yyval.nodePtr) = new ast_node("TRANSLATION_UNIT","",std::vector<ast_node*>{(yyvsp[0].nodePtr)});}
+#line 1864 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+    break;
+
+  case 4:
+#line 75 "src/maths_parser.y" /* yacc.c:1646  */
+    {(yyval.nodePtr) = new ast_node("TRANSLATION_UNIT","", std::vector<ast_node*>{(yyvsp[-1].nodePtr), (yyvsp[0].nodePtr)});}
+#line 1870 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+    break;
+
   case 12:
 #line 86 "src/maths_parser.y" /* yacc.c:1646  */
     {fprintf(stderr, "CompoundStatement ");}
-#line 1864 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+#line 1876 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 13:
 #line 87 "src/maths_parser.y" /* yacc.c:1646  */
     {fprintf(stderr, "ExpressionStatement ");}
-#line 1870 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+#line 1882 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 14:
 #line 88 "src/maths_parser.y" /* yacc.c:1646  */
     {fprintf(stderr, "SelectionStatement ");}
-#line 1876 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+#line 1888 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 15:
 #line 89 "src/maths_parser.y" /* yacc.c:1646  */
     {fprintf(stderr, "IterationStatement ");}
-#line 1882 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+#line 1894 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+    break;
+
+  case 48:
+#line 131 "src/maths_parser.y" /* yacc.c:1646  */
+    {(yyval.nodePtr) = new ast_node("PRIMARY_EXPRESSION", *(yyvsp[0]._text));}
+#line 1900 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+    break;
+
+  case 49:
+#line 132 "src/maths_parser.y" /* yacc.c:1646  */
+    {(yyval.nodePtr) = new ast_node("PRIMARY_EXPRESSION","",std::vector<ast_node*>{(yyvsp[0].nodePtr)});}
+#line 1906 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+    break;
+
+  case 51:
+#line 134 "src/maths_parser.y" /* yacc.c:1646  */
+    {(yyval.nodePtr) = new ast_node("PRIMARY_EXPRESSION","",std::vector<ast_node*>{(yyvsp[-1].nodePtr)});}
+#line 1912 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+    break;
+
+  case 52:
+#line 136 "src/maths_parser.y" /* yacc.c:1646  */
+    {(yyval.nodePtr) = new ast_node("CONSTANT", *(yyvsp[0]._text)); }
+#line 1918 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+    break;
+
+  case 53:
+#line 137 "src/maths_parser.y" /* yacc.c:1646  */
+    {(yyval.nodePtr) = new ast_node("CONSTANT", *(yyvsp[0]._text)); }
+#line 1924 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 122:
 #line 215 "src/maths_parser.y" /* yacc.c:1646  */
     {fprintf(stderr, "ExpressionFound! ");}
-#line 1888 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+#line 1930 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
 
-#line 1892 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+#line 1934 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
