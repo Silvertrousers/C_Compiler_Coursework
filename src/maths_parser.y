@@ -212,55 +212,68 @@ ASSIGNMENT_OPERATOR : T_EQUALS | T_TIMES_EQUALS | T_DIVIDE_EQUALS | T_MODULO_EQU
                     | T_LEFT_SHIFT_EQUALS | T_RIGHT_SHIFT_EQUALS
                     | T_AND_EQUALS | T_XOR_EQUALS | T_OR_EQUALS
 
-CONSTANT_EXPRESSION   : CONDITIONAL_EXPRESSION
+CONSTANT_EXPRESSION   : CONDITIONAL_EXPRESSION { $$ = $1; }
 
 EXPR : ASSIGNMENT_EXPRESSION {fprintf(stderr, "ExpressionFound! ");}
      | EXPR T_COMMA ASSIGNMENT_EXPRESSION
 
 DECLARATION : DECLARATION_SPECIFIERS T_SEMICOLON | DECLARATION_SPECIFIERS INIT_DECLARATOR_LIST T_SEMICOLON
 
-DECLARATION_SPECIFIERS : STORAGE_CLASS_SPECIFIER
+DECLARATION_SPECIFIERS : STORAGE_CLASS_SPECIFIER { $$ = $1; }
                        | STORAGE_CLASS_SPECIFIER DECLARATION_SPECIFIERS
-                       | TYPE_SPECIFIER
+                       | TYPE_SPECIFIER { $$ = $1; }
                        | TYPE_SPECIFIER DECLARATION_SPECIFIERS
-                       | TYPE_QUALIFIER
+                       | TYPE_QUALIFIER { $$ = $1; }
                        | TYPE_QUALIFIER DECLARATION_SPECIFIERS
 
-INIT_DECLARATOR_LIST : INIT_DECLARATOR
-                     | INIT_DECLARATOR_LIST T_COMMA INIT_DECLARATOR
+INIT_DECLARATOR_LIST : INIT_DECLARATOR { $$ = $1; }
+                     | INIT_DECLARATOR_LIST T_COMMA INIT_DECLARATOR {$$ = new ast_node("INIT_DECLARATOR_LIST","",std::vector<ast_node*>{$1, $3},std::vector<std::string>{"INIT_DECLARATOR_LIST","INIT_DECLARATOR"});}
 
-INIT_DECLARATOR : DECLARATOR
-                | DECLARATOR T_EQUALS INITIALIZER
+INIT_DECLARATOR : DECLARATOR { $$ = $1; }
+                | DECLARATOR T_EQUALS INITIALIZER {$$ = new ast_node("INIT_DECLARATOR","",std::vector<ast_node*>{$1, $3},std::vector<std::string>{"DECLARATOR","INITIALIZER"});}
 
-STORAGE_CLASS_SPECIFIER : T_TYPEDEF | T_EXTERN | T_STATIC | T_AUTO | T_REGISTER
+STORAGE_CLASS_SPECIFIER : T_TYPEDEF { $$ = new ast_node("STORAGE_CLASS_SPECIFIER", *$1);}
+                        | T_EXTERN { $$ = new ast_node("STORAGE_CLASS_SPECIFIER", *$1);}
+                        | T_STATIC { $$ = new ast_node("STORAGE_CLASS_SPECIFIER", *$1);}
+                        | T_AUTO { $$ = new ast_node("STORAGE_CLASS_SPECIFIER", *$1);}
+                        | T_REGISTER { $$ = new ast_node("STORAGE_CLASS_SPECIFIER", *$1);}
 
-TYPE_SPECIFIER : T_VOID | T_CHAR | T_SHORT | T_INT
-               | T_LONG | T_FLOAT | T_DOUBLE | T_SIGNED | T_UNSIGNED
-               | STRUCT_OR_UNION_SPECIFIER
-               | ENUM_SPECIFIER
-               | TYPEDEF_NAME
+TYPE_SPECIFIER : T_VOID { $$ = new ast_node("TYPE_SPECIFIER", *$1);}
+               | T_CHAR { $$ = new ast_node("TYPE_SPECIFIER", *$1);}
+               | T_SHORT { $$ = new ast_node("TYPE_SPECIFIER", *$1);}
+               | T_INT { $$ = new ast_node("TYPE_SPECIFIER", *$1);}
+               | T_LONG { $$ = new ast_node("TYPE_SPECIFIER", *$1);}
+               | T_FLOAT { $$ = new ast_node("TYPE_SPECIFIER", *$1);}
+               | T_DOUBLE { $$ = new ast_node("TYPE_SPECIFIER", *$1);}
+               | T_SIGNED { $$ = new ast_node("TYPE_SPECIFIER", *$1);}
+               | T_UNSIGNED { $$ = new ast_node("TYPE_SPECIFIER", *$1);}
+               | STRUCT_OR_UNION_SPECIFIER { $$ = $1; }
+               | ENUM_SPECIFIER { $$ = $1; }
+               | TYPEDEF_NAME { $$ = $1; }
 
-STRUCT_OR_UNION_SPECIFIER : STRUCT_OR_UNION IDENTIFIER
-                          | STRUCT_OR_UNION T_LCURLY_BRACKET STRUCT_DECLARATION_LIST T_RCURLY_BRACKET
-                          | STRUCT_OR_UNION IDENTIFIER T_LCURLY_BRACKET STRUCT_DECLARATION_LIST T_RCURLY_BRACKET
-STRUCT_OR_UNION : T_STRUCT | T_UNION
+STRUCT_OR_UNION_SPECIFIER : STRUCT_OR_UNION IDENTIFIER {$$ = new ast_node("STRUCT_OR_UNION_SPECIFIER","",std::vector<ast_node*>{$1, $2},std::vector<std::string>{"STRUCT_OR_UNION","IDENTIFIER"});}
+                          | STRUCT_OR_UNION T_LCURLY_BRACKET STRUCT_DECLARATION_LIST T_RCURLY_BRACKET {$$ = new ast_node("STRUCT_OR_UNION_SPECIFIER","",std::vector<ast_node*>{$1, NULL, $4},std::vector<std::string>{"STRUCT_OR_UNION", "IDENTIFIER", "STRUCT_DECLARATION_LIST"});}
+                          | STRUCT_OR_UNION IDENTIFIER T_LCURLY_BRACKET STRUCT_DECLARATION_LIST T_RCURLY_BRACKET {$$ = new ast_node("STRUCT_OR_UNION_SPECIFIER","",std::vector<ast_node*>{$1, $2, $4},std::vector<std::string>{"STRUCT_OR_UNION", "IDENTIFIER", "STRUCT_DECLARATION_LIST"});}
 
-STRUCT_DECLARATION_LIST : STRUCT_DECLARATION
-                        | STRUCT_DECLARATION_LIST STRUCT_DECLARATION
+STRUCT_OR_UNION : T_STRUCT { $$ = new ast_node("STRUCT_OR_UNION", *$1);}
+                | T_UNION  { $$ = new ast_node("STRUCT_OR_UNION", *$1);}
 
-STRUCT_DECLARATION : SPECIFIER_QUALIFIER_LIST STRUCT_DECLARATOR_LIST
+STRUCT_DECLARATION_LIST : STRUCT_DECLARATION {$$ = $1;}
+                        | STRUCT_DECLARATION_LIST STRUCT_DECLARATION {$$ = new ast_node("STRUCT_DECLARATION_LIST","",std::vector<ast_node*>{$1, $2},std::vector<std::string>{"STRUCT_DECLARATION_LIST","STRUCT_DECLARATION"});}
 
-SPECIFIER_QUALIFIER_LIST : TYPE_SPECIFIER
-                         | TYPE_SPECIFIER SPECIFIER_QUALIFIER_LIST
-                         | TYPE_QUALIFIER
-                         | TYPE_QUALIFIER SPECIFIER_QUALIFIER_LIST
+STRUCT_DECLARATION : SPECIFIER_QUALIFIER_LIST STRUCT_DECLARATOR_LIST {$$ = new ast_node("STRUCT_DECLARATION","",std::vector<ast_node*>{$1, $2},std::vector<std::string>{"SPECIFIER_QUALIFIER_LIST","STRUCT_DECLARATOR_LIST"});}
 
-STRUCT_DECLARATOR_LIST : STRUCT_DECLARATOR
-                       | STRUCT_DECLARATOR_LIST T_COMMA STRUCT_DECLARATOR
+SPECIFIER_QUALIFIER_LIST : TYPE_SPECIFIER { $$ = $1; }
+                         | TYPE_SPECIFIER SPECIFIER_QUALIFIER_LIST {$$ = new ast_node("SPECIFIER_QUALIFIER_LIST","",std::vector<ast_node*>{$1, $2},std::vector<std::string>{"TYPE_SPECIFIER","SPECIFIER_QUALIFIER_LIST"});}
+                         | TYPE_QUALIFIER { $$ = $1; }
+                         | TYPE_QUALIFIER SPECIFIER_QUALIFIER_LIST {$$ = new ast_node("SPECIFIER_QUALIFIER_LIST","",std::vector<ast_node*>{$1, $2},std::vector<std::string>{"TYPE_QUALIFIER","SPECIFIER_QUALIFIER_LIST"});}
 
-STRUCT_DECLARATOR : DECLARATOR
-                  | DECLARATOR T_COLON CONSTANT_EXPRESSION
-                  | T_COLON CONSTANT_EXPRESSION
+STRUCT_DECLARATOR_LIST : STRUCT_DECLARATOR {$$ = $1;}
+                       | STRUCT_DECLARATOR_LIST T_COMMA STRUCT_DECLARATOR {$$ = new ast_node("STRUCT_DECLARATOR_LIST","",std::vector<ast_node*>{$1, $2},std::vector<std::string>{"STRUCT_DECLARATOR_LIST","STRUCT_DECLARATOR"});}
+
+STRUCT_DECLARATOR : DECLARATOR { $$  =$1; }
+                  | DECLARATOR T_COLON CONSTANT_EXPRESSION  {$$ = new ast_node("STRUCT_DECLARATOR","",std::vector<ast_node*>{$1, $2},std::vector<std::string>{"DECLARATOR","CONSTANT_EXPRESSION"});}
+                  | T_COLON CONSTANT_EXPRESSION  {$$ = new ast_node("STRUCT_DECLARATOR","",std::vector<ast_node*>{NULL, $2},std::vector<std::string>{"DECLARATOR","CONSTANT_EXPRESSION"});}
 
 ENUM_SPECIFIER : ENUM IDENTIFIER                                                   {$$ = new ast_node("ENUMERATOR_LIST","",std::vector<ast_node*>{$1, $2},std::vector<std::string>{"ENUM","IDENTIFIER"});}
                | ENUM IDENTIFIER T_LCURLY_BRACKET ENUMERATOR_LIST T_RCURLY_BRACKET {$$ = new ast_node("ENUMERATOR_LIST","",std::vector<ast_node*>{$1,$2, $3},std::vector<std::string>{"ENUM","IDENTIFIER","ENUMERATOR_LIST"});}
