@@ -71,49 +71,51 @@
 %%
 PROGRAM : TRANSLATION_UNIT { g_root = $1; }
 
-TRANSLATION_UNIT : EXTERNAL_DECLARATION {$$ = new ast_node("TRANSLATION_UNIT","",std::vector<ast_node*>{$1});}
-                 | TRANSLATION_UNIT EXTERNAL_DECLARATION {$$ = new ast_node("TRANSLATION_UNIT","", std::vector<ast_node*>{$1, $2});}
+TRANSLATION_UNIT : EXTERNAL_DECLARATION {$$ = $1;}
+                 | TRANSLATION_UNIT EXTERNAL_DECLARATION {$$ = new ast_node("TRANSLATION_UNIT","", std::vector<ast_node*>{$1, $2}, std::vector<std::string>{"TRANSLATION_UNIT", "EXTERNAL_DECLARATION"});}
 
-EXTERNAL_DECLARATION : FUNCTION_DECLARATION
-                     | DECLARATION
+EXTERNAL_DECLARATION : FUNCTION_DECLARATION {$$ = $1;}
+                     | DECLARATION {$$ = new ast_node("EXTERNAL_DECLARATION","", std::vector<ast_node*>{$1});}
 
-FUNCTION_DECLARATION : DECLARATION_SPECIFIERS DECLARATOR DECLARATION_LIST COMPOUND_STATEMENT
-                     | DECLARATION_SPECIFIERS DECLARATOR COMPOUND_STATEMENT
-                     | DECLARATOR DECLARATION_LIST COMPOUND_STATEMENT
-                     | DECLARATOR COMPOUND_STATEMENT
+FUNCTION_DECLARATION : DECLARATION_SPECIFIERS DECLARATOR DECLARATION_LIST COMPOUND_STATEMENT {$$ = new ast_node("FUNCTION_DECLARATION","", std::vector<ast_node*>{$1, $2, $3, $4}, std::vector<std::string>{"DECLARATION_SPECIFIERS", "DECLARATOR", "DECLARATION_LIST", "COMPOUND_STATEMENT"});}
+                     | DECLARATION_SPECIFIERS DECLARATOR COMPOUND_STATEMENT {$$ = new ast_node("FUNCTION_DECLARATION","", std::vector<ast_node*>{$1, $2, NULL, $3}, std::vector<std::string>{"DECLARATION_SPECIFIERS", "DECLARATOR", "DECLARATION_LIST", "COMPOUND_STATEMENT"});}
+                     | DECLARATOR DECLARATION_LIST COMPOUND_STATEMENT {$$ = new ast_node("TRANSLATION_UNIT","", std::vector<ast_node*>{NULL, $1, $2, $3}, std::vector<std::string>{"DECLARATION_SPECIFIERS", "DECLARATOR", "DECLARATION_LIST", "COMPOUND_STATEMENT"});}
+                     | DECLARATOR COMPOUND_STATEMENT {$$ = new ast_node("TRANSLATION_UNIT","", std::vector<ast_node*>{NULL, $1, NULL, $2}, std::vector<std::string>{"DECLARATION_SPECIFIERS", "DECLARATOR", "DECLARATION_LIST", "COMPOUND_STATEMENT"});}
 
-STATEMENT : LABELED_STATEMENT
-          | COMPOUND_STATEMENT {fprintf(stderr, "CompoundStatement ");}
-          | EXPRESSION_STATEMENT {fprintf(stderr, "ExpressionStatement ");}
-          | SELECTION_STATEMENT {fprintf(stderr, "SelectionStatement ");}
-          | ITERATION_STATEMENT {fprintf(stderr, "IterationStatement ");}
-          | JUMP_STATEMENT
+STATEMENT : LABELED_STATEMENT {$$ = $1;}
+          | COMPOUND_STATEMENT {$$ = $1;}
+          | EXPRESSION_STATEMENT {$$ = $1;}
+          | SELECTION_STATEMENT {$$ = $1;}
+          | ITERATION_STATEMENT {$$ = $1;}
+          | JUMP_STATEMENT {$$ = $1;}
 
-LABELED_STATEMENT : IDENTIFIER T_COLON STATEMENT
-                  | T_CASE CONSTANT_EXPRESSION T_COLON STATEMENT
-                  | T_DEFAULT T_COLON STATEMENT
+LABELED_STATEMENT : IDENTIFIER T_COLON STATEMENT {$$ = new ast_node("LABELED_STATEMENT","", std::vector<ast_node*>{$1, $3}, std::vector<std::string>{"IDENTIFIER", "STATEMENT"});}
+                  | T_CASE CONSTANT_EXPRESSION T_COLON STATEMENT {$$ = new ast_node("LABELED_STATEMENT","", std::vector<ast_node*>{$1, $2, $4}, std::vector<std::string>{"T_CASE", "CONSTANT_EXPRESSION", "STATEMENT"});}
+                  | T_DEFAULT T_COLON STATEMENT {$$ = new ast_node("LABELED_STATEMENT","", std::vector<ast_node*>{$1, $3}, std::vector<std::string>{"T_DEFAULT", "STATEMENT"});}
 
-COMPOUND_STATEMENT : T_LCURLY_BRACKET DECLARATION_LIST STATEMENT_LIST T_RCURLY_BRACKET
-                   | T_LCURLY_BRACKET STATEMENT_LIST T_RCURLY_BRACKET
-                   | T_LCURLY_BRACKET DECLARATION_LIST T_RCURLY_BRACKET
-                   | T_ECURLY_BRACKETS
+IDENTIFIER : T_IDENTIFIER {$$ = new ast_node("IDENTIFIER", *$1);}
 
-DECLARATION_LIST : DECLARATION
-                 | DECLARATION_LIST DECLARATION
+COMPOUND_STATEMENT : T_LCURLY_BRACKET DECLARATION_LIST STATEMENT_LIST T_RCURLY_BRACKET {$$ = new ast_node("COMPOUND_STATEMENT","", std::vector<ast_node*>{$2, $3}, std::vector<std::string>{"DECLARATION_LIST", "STATEMENT_LIST"});}
+                   | T_LCURLY_BRACKET STATEMENT_LIST T_RCURLY_BRACKET {$$ = new ast_node("COMPOUND_STATEMENT","", std::vector<ast_node*>{NULL, $2}, std::vector<std::string>{"DECLARATION_LIST", "STATEMENT_LIST"});}
+                   | T_LCURLY_BRACKET DECLARATION_LIST T_RCURLY_BRACKET {$$ = new ast_node("COMPOUND_STATEMENT","", std::vector<ast_node*>{$2, NULL}, std::vector<std::string>{"DECLARATION_LIST", "STATEMENT_LIST"});}
+                   | T_ECURLY_BRACKETS {$$ = new ast_node("COMPOUND_STATEMENT","");}
 
-STATEMENT_LIST : STATEMENT
-               | STATEMENT_LIST STATEMENT
+DECLARATION_LIST : DECLARATION { $$ = $1; }
+                 | DECLARATION_LIST DECLARATION {$$ = new ast_node("DECLARATION_LIST","", std::vector<ast_node*>{$1, $2}, std::vector<std::string>{"DECLARATION_LIST", "DECLARATION"});}
 
-EXPRESSION_STATEMENT : EXPR T_SEMICOLON
-                     | T_SEMICOLON
+STATEMENT_LIST : STATEMENT { $$ = $1; }
+               | STATEMENT_LIST STATEMENT {$$ = new ast_node("STATEMENT_LIST","", std::vector<ast_node*>{$1, $2}, std::vector<std::string>{"STATEMENT_LIST", "STATEMENT"});}
 
-SELECTION_STATEMENT : T_IF T_LBRACKET EXPR T_RBRACKET STATEMENT
-                    | T_IF T_LBRACKET EXPR T_RBRACKET STATEMENT T_ELSE STATEMENT
-                    | T_SWITCH T_LBRACKET EXPR T_RBRACKET STATEMENT
+EXPRESSION_STATEMENT : EXPR T_SEMICOLON { $$ = $1; }
+                     | T_SEMICOLON {$$ = new ast_node("EXPRESSION_STATEMENT", "")}
 
-ITERATION_STATEMENT : T_WHILE T_LBRACKET EXPR T_RBRACKET STATEMENT
-                    | T_DO STATEMENT T_WHILE T_LBRACKET EXPR T_RBRACKET T_SEMICOLON
-                    | T_FOR T_LBRACKET EXPR T_SEMICOLON EXPR T_SEMICOLON EXPR T_RBRACKET STATEMENT
+SELECTION_STATEMENT : T_IF T_LBRACKET EXPR T_RBRACKET STATEMENT {$$ = new ast_node("SELECTION_STATEMENT","", std::vector<ast_node*>{$1, $3, $5, NULL, NULL}, std::vector<std::string>{"T_IF", "EXPR", "STATEMENT", "T_ELSE", "STATEMENT"});}
+                    | T_IF T_LBRACKET EXPR T_RBRACKET STATEMENT T_ELSE STATEMENT {$$ = new ast_node("SELECTION_STATEMENT","", std::vector<ast_node*>{$1, $3, $5, $6, $7}, std::vector<std::string>{"T_IF", "EXPR", "STATEMENT", "T_ELSE", "STATEMENT"});}
+                    | T_SWITCH T_LBRACKET EXPR T_RBRACKET STATEMENT {$$ = new ast_node("SELECTION_STATEMENT","", std::vector<ast_node*>{$1, $3, $5, NULL, NULL}, std::vector<std::string>{"T_SWITCH", "EXPR", "STATEMENT", "T_ELSE", "STATEMENT"});}
+
+ITERATION_STATEMENT : T_WHILE T_LBRACKET EXPR T_RBRACKET STATEMENT {$$ = new ast_node("ITERATION_STATEMENT","", std::vector<ast_node*>{$1, $3, NULL, NULL, NULL, $5}, std::vector<std::string>{"T_WHILE", "EXPR", "EXPR", "EXPR", "T_DO", "STATEMENT"});}
+                    | T_DO STATEMENT T_WHILE T_LBRACKET EXPR T_RBRACKET T_SEMICOLON {$$ = new ast_node("ITERATION_STATEMENT","", std::vector<ast_node*>{$3, $5, NULL, NULL, $1, $2}, std::vector<std::string>{"T_WHILE", "EXPR", "EXPR", "EXPR", "T_DO", "STATEMENT"});}
+                    | T_FOR T_LBRACKET EXPR T_SEMICOLON EXPR T_SEMICOLON EXPR T_RBRACKET STATEMENT {$$ = new ast_node("ITERATION_STATEMENT","", std::vector<ast_node*>{$1, $3, $5, $7, NULL, $9}, std::vector<std::string>{"T_FOR", "EXPR", "EXPR", "EXPR", "T_DO", "STATEMENT"});}
                     | T_FOR T_LBRACKET T_SEMICOLON EXPR T_SEMICOLON EXPR T_RBRACKET STATEMENT
                     | T_FOR T_LBRACKET EXPR T_SEMICOLON T_SEMICOLON EXPR T_RBRACKET STATEMENT
                     | T_FOR T_LBRACKET EXPR T_SEMICOLON EXPR T_SEMICOLON T_RBRACKET STATEMENT
