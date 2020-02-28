@@ -116,24 +116,24 @@ SELECTION_STATEMENT : T_IF T_LBRACKET EXPR T_RBRACKET STATEMENT {$$ = new ast_no
 ITERATION_STATEMENT : T_WHILE T_LBRACKET EXPR T_RBRACKET STATEMENT {$$ = new ast_node("ITERATION_STATEMENT","", std::vector<ast_node*>{$1, $3, NULL, NULL, NULL, $5}, std::vector<std::string>{"T_WHILE", "EXPR", "EXPR", "EXPR", "T_DO", "STATEMENT"});}
                     | T_DO STATEMENT T_WHILE T_LBRACKET EXPR T_RBRACKET T_SEMICOLON {$$ = new ast_node("ITERATION_STATEMENT","", std::vector<ast_node*>{$3, $5, NULL, NULL, $1, $2}, std::vector<std::string>{"T_WHILE", "EXPR", "EXPR", "EXPR", "T_DO", "STATEMENT"});}
                     | T_FOR T_LBRACKET EXPR T_SEMICOLON EXPR T_SEMICOLON EXPR T_RBRACKET STATEMENT {$$ = new ast_node("ITERATION_STATEMENT","", std::vector<ast_node*>{$1, $3, $5, $7, NULL, $9}, std::vector<std::string>{"T_FOR", "EXPR", "EXPR", "EXPR", "T_DO", "STATEMENT"});}
-                    | T_FOR T_LBRACKET T_SEMICOLON EXPR T_SEMICOLON EXPR T_RBRACKET STATEMENT
-                    | T_FOR T_LBRACKET EXPR T_SEMICOLON T_SEMICOLON EXPR T_RBRACKET STATEMENT
-                    | T_FOR T_LBRACKET EXPR T_SEMICOLON EXPR T_SEMICOLON T_RBRACKET STATEMENT
-                    | T_FOR T_LBRACKET T_SEMICOLON T_SEMICOLON EXPR T_RBRACKET STATEMENT
-                    | T_FOR T_LBRACKET T_SEMICOLON EXPR T_SEMICOLON T_RBRACKET STATEMENT
-                    | T_FOR T_LBRACKET EXPR T_SEMICOLON T_SEMICOLON T_RBRACKET STATEMENT
-                    | T_FOR T_LBRACKET T_SEMICOLON T_SEMICOLON T_RBRACKET STATEMENT
+                    | T_FOR T_LBRACKET T_SEMICOLON EXPR T_SEMICOLON EXPR T_RBRACKET STATEMENT {$$ = new ast_node("ITERATION_STATEMENT","", std::vector<ast_node*>{$1, NULL, $4, $6, NULL, $8}, std::vector<std::string>{"T_FOR", "EXPR", "EXPR", "EXPR", "T_DO", "STATEMENT"});}
+                    | T_FOR T_LBRACKET EXPR T_SEMICOLON T_SEMICOLON EXPR T_RBRACKET STATEMENT {$$ = new ast_node("ITERATION_STATEMENT","", std::vector<ast_node*>{$1, $3, NULL, $6, NULL, $8}, std::vector<std::string>{"T_FOR", "EXPR", "EXPR", "EXPR", "T_DO", "STATEMENT"});}
+                    | T_FOR T_LBRACKET EXPR T_SEMICOLON EXPR T_SEMICOLON T_RBRACKET STATEMENT {$$ = new ast_node("ITERATION_STATEMENT","", std::vector<ast_node*>{$1, $3, $5, NULL, NULL, $8}, std::vector<std::string>{"T_FOR", "EXPR", "EXPR", "EXPR", "T_DO", "STATEMENT"});}
+                    | T_FOR T_LBRACKET T_SEMICOLON T_SEMICOLON EXPR T_RBRACKET STATEMENT {$$ = new ast_node("ITERATION_STATEMENT","", std::vector<ast_node*>{$1, NULL, NULL, $5, NULL, $7}, std::vector<std::string>{"T_FOR", "EXPR", "EXPR", "EXPR", "T_DO", "STATEMENT"});}
+                    | T_FOR T_LBRACKET T_SEMICOLON EXPR T_SEMICOLON T_RBRACKET STATEMENT {$$ = new ast_node("ITERATION_STATEMENT","", std::vector<ast_node*>{$1, NULL, $4, NULL, NULL, $7}, std::vector<std::string>{"T_FOR", "EXPR", "EXPR", "EXPR", "T_DO", "STATEMENT"});}
+                    | T_FOR T_LBRACKET EXPR T_SEMICOLON T_SEMICOLON T_RBRACKET STATEMENT {$$ = new ast_node("ITERATION_STATEMENT","", std::vector<ast_node*>{$1, $3, NULL, NULL, NULL, $7}, std::vector<std::string>{"T_FOR", "EXPR", "EXPR", "EXPR", "T_DO", "STATEMENT"});}
+                    | T_FOR T_LBRACKET T_SEMICOLON T_SEMICOLON T_RBRACKET STATEMENT {$$ = new ast_node("ITERATION_STATEMENT","", std::vector<ast_node*>{$1, NULL, NULL, NULL, NULL, $6}, std::vector<std::string>{"T_FOR", "EXPR", "EXPR", "EXPR", "T_DO", "STATEMENT"});}
 
-JUMP_STATEMENT : T_GOTO IDENTIFIER T_SEMICOLON
-               | T_CONTINUE T_SEMICOLON
-               | T_BREAK T_SEMICOLON
-               | T_RETURN EXPR T_SEMICOLON
-               | T_RETURN T_SEMICOLON
+JUMP_STATEMENT : T_GOTO IDENTIFIER T_SEMICOLON {$$ = new ast_node("JUMP_STATEMENT","", std::vector<ast_node*>{$1, $2}, std::vector<std::string>{"T_GOTO", "IDENTIFIER"});}
+               | T_CONTINUE T_SEMICOLON {$$ = $1;}
+               | T_BREAK T_SEMICOLON {$$ = $1;}
+               | T_RETURN EXPR T_SEMICOLON {$$ = new ast_node("JUMP_STATEMENT","", std::vector<ast_node*>{$1, $2}, std::vector<std::string>{"T_RETURN", "EXPR"});}
+               | T_RETURN T_SEMICOLON {$$ = $1;}
 
-PRIMARY_EXPRESSION : IDENTIFIER {$$ = new ast_node("PRIMARY_EXPRESSION", *$1);}
-                   | CONSTANT {$$ = new ast_node("PRIMARY_EXPRESSION","",std::vector<ast_node*>{$1});}
-                   | T_STRING
-                   | T_LBRACKET EXPR T_RBRACKET {$$ = new ast_node("PRIMARY_EXPRESSION","",std::vector<ast_node*>{$2});}
+PRIMARY_EXPRESSION : IDENTIFIER {$$ = $1}
+                   | CONSTANT {$$ = new ast_node("PRIMARY_EXPRESSION","", std::vector<ast_node*>{$1}, std::vector<std::string>{"CONSTANT"});}
+                   | T_STRING {$$ = new ast_node("PRIMARY_EXPRESSION",*$1);}
+                   | T_LBRACKET EXPR T_RBRACKET {$$ = $2;}
 
 CONSTANT : T_DEC_INT   {$$ = new ast_node("CONSTANT", *$1); }
          | T_OCTAL_INT {$$ = new ast_node("CONSTANT", *$1); }
