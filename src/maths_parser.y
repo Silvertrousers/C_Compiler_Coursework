@@ -42,7 +42,7 @@
 %type<nodePtr> STRUCT_DECLARATOR_LIST STRUCT_DECLARATOR ENUM_SPECIFIER ENUMERATOR_LIST ENUMERATOR TYPE_QUALIFIER
 %type<nodePtr> DECLARATOR DIRECT_DECLARATOR POINTER TYPE_QUALIFIER_LIST PARAMETER_TYPE_LIST PARAMETER_LIST PARAMETER_DECLARATION
 %type<nodePtr> IDENTIFIER_LIST TYPE_NAME ABSTRACT_DECLARATOR DIRECT_ABSTRACT_DECLARATOR TYPEDEF_NAME INITIALIZER INITIALIZER_LIST
-%type<nodePtr> SIZE_OF GOTO RETURN FOR WHILE DO SWITCH IF ELSE IDENTIFIER ENUM ENUM_CONSTANT DEREFERENCE ELIPSIS
+%type<nodePtr> SIZE_OF GOTO RETURN FOR WHILE DO SWITCH IF ELSE IDENTIFIER ENUM ENUM_CONSTANT DEREFERENCE ELIPSIS CASE DEFAULT
 
 
 %type<_text> T_AUTO T_BREAK T_CASE T_CHAR T_CONST T_CONTINUE T_DEFAULT T_DO T_DOUBLE
@@ -73,15 +73,29 @@
 PROGRAM : TRANSLATION_UNIT { g_root = $1; }
 
 TRANSLATION_UNIT : EXTERNAL_DECLARATION {$$ = $1;}
-                 | TRANSLATION_UNIT EXTERNAL_DECLARATION {$$ = new ast_node("TRANSLATION_UNIT","", std::vector<ast_node*>{$1, $2}, std::vector<std::string>{"TRANSLATION_UNIT", "EXTERNAL_DECLARATION"});}
+                 | TRANSLATION_UNIT EXTERNAL_DECLARATION { std::vector<ast_node*> branches = {$1, $2};
+                                                           std::vector<std::string> branch_notes = {"TRANSLATION_UNIT", "EXTERNAL_DECLARATION"};
+                                                           $$ = new ast_node("TRANSLATION_UNIT","", branches, branch_notes);}
 
 EXTERNAL_DECLARATION : FUNCTION_DECLARATION {$$ = $1;}
-                     | DECLARATION {$$ = new ast_node("EXTERNAL_DECLARATION","", std::vector<ast_node*>{$1});}
+                     | DECLARATION {$$ = $1; }
 
-FUNCTION_DECLARATION : DECLARATION_SPECIFIERS DECLARATOR DECLARATION_LIST COMPOUND_STATEMENT {$$ = new ast_node("FUNCTION_DECLARATION","", std::vector<ast_node*>{$1, $2, $3, $4}, std::vector<std::string>{"DECLARATION_SPECIFIERS", "DECLARATOR", "DECLARATION_LIST", "COMPOUND_STATEMENT"});}
-                     | DECLARATION_SPECIFIERS DECLARATOR COMPOUND_STATEMENT {$$ = new ast_node("FUNCTION_DECLARATION","", std::vector<ast_node*>{$1, $2, NULL, $3}, std::vector<std::string>{"DECLARATION_SPECIFIERS", "DECLARATOR", "DECLARATION_LIST", "COMPOUND_STATEMENT"});}
-                     | DECLARATOR DECLARATION_LIST COMPOUND_STATEMENT {$$ = new ast_node("TRANSLATION_UNIT","", std::vector<ast_node*>{NULL, $1, $2, $3}, std::vector<std::string>{"DECLARATION_SPECIFIERS", "DECLARATOR", "DECLARATION_LIST", "COMPOUND_STATEMENT"});}
-                     | DECLARATOR COMPOUND_STATEMENT {$$ = new ast_node("TRANSLATION_UNIT","", std::vector<ast_node*>{NULL, $1, NULL, $2}, std::vector<std::string>{"DECLARATION_SPECIFIERS", "DECLARATOR", "DECLARATION_LIST", "COMPOUND_STATEMENT"});}
+
+FUNCTION_DECLARATION : DECLARATION_SPECIFIERS DECLARATOR DECLARATION_LIST COMPOUND_STATEMENT { std::vector<ast_node*> branches = {$1, $2, $3, $4};
+                                                                                               std::vector<std::string> branch_notes = {"DECLARATION_SPECIFIERS", "DECLARATOR", "DECLARATION_LIST", "COMPOUND_STATEMENT"};
+                                                                                               $$ = new ast_node("FUNCTION_DECLARATION","", branches, branch_notes);}
+
+                     | DECLARATION_SPECIFIERS DECLARATOR COMPOUND_STATEMENT {   std::vector<ast_node*> branches = {$1, $2, NULL, $3};
+                                                                                std::vector<std::string> branch_notes = {"DECLARATION_SPECIFIERS", "DECLARATOR", "DECLARATION_LIST", "COMPOUND_STATEMENT"};
+                                                                                $$ = new ast_node("FUNCTION_DECLARATION","", branches, branch_notes);}
+
+                     | DECLARATOR DECLARATION_LIST COMPOUND_STATEMENT {         std::vector<ast_node*> branches = {NULL, $1, $2, $3};
+                                                                                std::vector<std::string> branch_notes = {"DECLARATION_SPECIFIERS", "DECLARATOR", "DECLARATION_LIST", "COMPOUND_STATEMENT"};
+                                                                                $$ = new ast_node("FUNCTION_DECLARATION","", branches, branch_notes);}
+
+                     | DECLARATOR COMPOUND_STATEMENT {                          std::vector<ast_node*> branches = {NULL, $1,NULL, $2};
+                                                                                std::vector<std::string> branch_notes = {"DECLARATION_SPECIFIERS", "DECLARATOR", "DECLARATION_LIST", "COMPOUND_STATEMENT"};
+                                                                                $$ = new ast_node("FUNCTION_DECLARATION","", branches, branch_notes);}
 
 STATEMENT : LABELED_STATEMENT {$$ = $1;}
           | COMPOUND_STATEMENT {$$ = $1;}
@@ -90,53 +104,123 @@ STATEMENT : LABELED_STATEMENT {$$ = $1;}
           | ITERATION_STATEMENT {$$ = $1;}
           | JUMP_STATEMENT {$$ = $1;}
 
-LABELED_STATEMENT : IDENTIFIER T_COLON STATEMENT {$$ = new ast_node("LABELED_STATEMENT","", std::vector<ast_node*>{$1, $3}, std::vector<std::string>{"IDENTIFIER", "STATEMENT"});}
-                  | T_CASE CONSTANT_EXPRESSION T_COLON STATEMENT {$$ = new ast_node("LABELED_STATEMENT","", std::vector<ast_node*>{$1, $2, $4}, std::vector<std::string>{"T_CASE", "CONSTANT_EXPRESSION", "STATEMENT"});}
-                  | T_DEFAULT T_COLON STATEMENT {$$ = new ast_node("LABELED_STATEMENT","", std::vector<ast_node*>{$1, $3}, std::vector<std::string>{"T_DEFAULT", "STATEMENT"});}
+LABELED_STATEMENT : IDENTIFIER T_COLON STATEMENT {                              std::vector<ast_node*> branches = {$1, $3};
+                                                                                std::vector<std::string> branch_notes = {"IDENTIFIER", "STATEMENT"};
+                                                                                $$ = new ast_node("LABELED_STATEMENT","", branches, branch_notes);}
 
+                  | CASE CONSTANT_EXPRESSION T_COLON STATEMENT {                std::vector<ast_node*> branches = {$1, $2, $4};
+                                                                                std::vector<std::string> branch_notes = {"T_CASE", "CONSTANT_EXPRESSION", "STATEMENT"};
+                                                                                $$ = new ast_node("LABELED_STATEMENT","", branches, branch_notes);}
+
+                  | DEFAULT T_COLON STATEMENT {                                 std::vector<ast_node*> branches = {$1, $3};
+                                                                                std::vector<std::string> branch_notes = {"T_DEFAULT", "STATEMENT"};
+                                                                                $$ = new ast_node("LABELED_STATEMENT","", branches, branch_notes);}
+
+DEFAULT : T_DEFAULT {$$ = new ast_node("DEFAULT", *$1);}
+CASE : T_CASE {$$ = new ast_node("CASE", *$1);}
 IDENTIFIER : T_IDENTIFIER {$$ = new ast_node("IDENTIFIER", *$1);}
 
-COMPOUND_STATEMENT : T_LCURLY_BRACKET DECLARATION_LIST STATEMENT_LIST T_RCURLY_BRACKET {$$ = new ast_node("COMPOUND_STATEMENT","", std::vector<ast_node*>{$2, $3}, std::vector<std::string>{"DECLARATION_LIST", "STATEMENT_LIST"});}
-                   | T_LCURLY_BRACKET STATEMENT_LIST T_RCURLY_BRACKET {$$ = new ast_node("COMPOUND_STATEMENT","", std::vector<ast_node*>{NULL, $2}, std::vector<std::string>{"DECLARATION_LIST", "STATEMENT_LIST"});}
-                   | T_LCURLY_BRACKET DECLARATION_LIST T_RCURLY_BRACKET {$$ = new ast_node("COMPOUND_STATEMENT","", std::vector<ast_node*>{$2, NULL}, std::vector<std::string>{"DECLARATION_LIST", "STATEMENT_LIST"});}
+COMPOUND_STATEMENT : T_LCURLY_BRACKET DECLARATION_LIST STATEMENT_LIST T_RCURLY_BRACKET {  std::vector<ast_node*> branches = {$2, $3};
+                                                                                          std::vector<std::string> branch_notes = {"DECLARATION_LIST", "STATEMENT_LIST"};
+                                                                                          $$ = new ast_node("COMPOUND_STATEMENT","", branches, branch_notes);}
+
+                   | T_LCURLY_BRACKET STATEMENT_LIST T_RCURLY_BRACKET {                   std::vector<ast_node*> branches = {NULL, $2};
+                                                                                          std::vector<std::string> branch_notes = {"DECLARATION_LIST", "STATEMENT_LIST"};
+                                                                                          $$ = new ast_node("COMPOUND_STATEMENT","", branches, branch_notes);}
+
+                   | T_LCURLY_BRACKET DECLARATION_LIST T_RCURLY_BRACKET {                 std::vector<ast_node*> branches = {$2, NULL};
+                                                                                          std::vector<std::string> branch_notes = {"DECLARATION_LIST", "STATEMENT_LIST"};
+                                                                                          $$ = new ast_node("COMPOUND_STATEMENT","", branches, branch_notes);}
                    | T_ECURLY_BRACKETS {$$ = new ast_node("COMPOUND_STATEMENT","");}
 
 DECLARATION_LIST : DECLARATION { $$ = $1; }
-                 | DECLARATION_LIST DECLARATION {$$ = new ast_node("DECLARATION_LIST","", std::vector<ast_node*>{$1, $2}, std::vector<std::string>{"DECLARATION_LIST", "DECLARATION"});}
+                 | DECLARATION_LIST DECLARATION {                               std::vector<ast_node*> branches = {$1, $2};
+                                                                                std::vector<std::string> branch_notes = {"DECLARATION_LIST", "DECLARATION"};
+                                                                                $$ = new ast_node("DECLARATION_LIST","", branches, branch_notes);}
 
 STATEMENT_LIST : STATEMENT { $$ = $1; }
-               | STATEMENT_LIST STATEMENT {$$ = new ast_node("STATEMENT_LIST","", std::vector<ast_node*>{$1, $2}, std::vector<std::string>{"STATEMENT_LIST", "STATEMENT"});}
+               | STATEMENT_LIST STATEMENT {                                     std::vector<ast_node*> branches = {$1, $2};
+                                                                                std::vector<std::string> branch_notes = {"STATEMENT_LIST", "STATEMENT"};
+                                                                                $$ = new ast_node("STATEMENT_LIST","", branches, branch_notes);}
 
-EXPRESSION_STATEMENT : EXPR T_SEMICOLON { $$ = $1; }
-                     | T_SEMICOLON {$$ = new ast_node("EXPRESSION_STATEMENT", "")}
+EXPRESSION_STATEMENT : EXPR T_SEMICOLON { $$ = $1;}
+                     | T_SEMICOLON
 
-SELECTION_STATEMENT : IF T_LBRACKET EXPR T_RBRACKET STATEMENT {$$ = new ast_node("SELECTION_STATEMENT","", std::vector<ast_node*>{$1, $3, $5, NULL, NULL}, std::vector<std::string>{"T_IF", "EXPR", "STATEMENT", "T_ELSE", "STATEMENT"});}
-                    | IF T_LBRACKET EXPR T_RBRACKET STATEMENT ELSE STATEMENT {$$ = new ast_node("SELECTION_STATEMENT","", std::vector<ast_node*>{$1, $3, $5, $6, $7}, std::vector<std::string>{"T_IF", "EXPR", "STATEMENT", "T_ELSE", "STATEMENT"});}
-                    | SWITCH T_LBRACKET EXPR T_RBRACKET STATEMENT {$$ = new ast_node("SELECTION_STATEMENT","", std::vector<ast_node*>{$1, $3, $5, NULL, NULL}, std::vector<std::string>{"T_SWITCH", "EXPR", "STATEMENT", "T_ELSE", "STATEMENT"});}
+SELECTION_STATEMENT : IF T_LBRACKET EXPR T_RBRACKET STATEMENT {                 std::vector<ast_node*> branches = {$1, $3, $5, NULL, NULL};
+                                                                                std::vector<std::string> branch_notes = {"T_IF", "EXPR", "STATEMENT", "T_ELSE", "STATEMENT"};
+                                                                                $$ = new ast_node("SELECTION_STATEMENT","", branches, branch_notes);}
+
+                    | IF T_LBRACKET EXPR T_RBRACKET STATEMENT ELSE STATEMENT {  std::vector<ast_node*> branches = {$1, $3, $5, $6, $7};
+                                                                                std::vector<std::string> branch_notes = {"T_IF", "EXPR", "STATEMENT", "T_ELSE", "STATEMENT"};
+                                                                                $$ = new ast_node("SELECTION_STATEMENT","", branches, branch_notes);}
+
+                    | SWITCH T_LBRACKET EXPR T_RBRACKET STATEMENT {             std::vector<ast_node*> branches = {$1, $3, $5, NULL, NULL};
+                                                                                std::vector<std::string> branch_notes = {"T_SWITCH", "EXPR", "STATEMENT", "T_ELSE", "STATEMENT"};
+                                                                                $$ = new ast_node("SELECTION_STATEMENT","", branches, branch_notes);}
 
 SWITCH : T_SWITCH {$$ = new ast_node("T_SWITCH", *$1);}
 IF : T_IF {$$ = new ast_node("T_IF", *$1);}
 ELSE : T_ELSE {$$ = new ast_node("T_ELSE", *$1);}
 
-ITERATION_STATEMENT : WHILE T_LBRACKET EXPR T_RBRACKET STATEMENT {$$ = new ast_node("ITERATION_STATEMENT","", std::vector<ast_node*>{$1, $3, NULL, NULL, NULL, $5}, std::vector<std::string>{"T_WHILE", "EXPR", "EXPR", "EXPR", "T_DO", "STATEMENT"});}
-                    | DO STATEMENT WHILE T_LBRACKET EXPR T_RBRACKET T_SEMICOLON {$$ = new ast_node("ITERATION_STATEMENT","", std::vector<ast_node*>{$3, $5, NULL, NULL, $1, $2}, std::vector<std::string>{"T_WHILE", "EXPR", "EXPR", "EXPR", "T_DO", "STATEMENT"});}
-                    | FOR T_LBRACKET EXPR T_SEMICOLON EXPR T_SEMICOLON EXPR T_RBRACKET STATEMENT {$$ = new ast_node("ITERATION_STATEMENT","", std::vector<ast_node*>{$1, $3, $5, $7, $9}, std::vector<std::string>{"T_FOR", "EXPR", "EXPR", "EXPR", "STATEMENT"});}
-                    | FOR T_LBRACKET T_SEMICOLON EXPR T_SEMICOLON EXPR T_RBRACKET STATEMENT {$$ = new ast_node("ITERATION_STATEMENT","", std::vector<ast_node*>{$1, NULL, $4, $6, $8}, std::vector<std::string>{"T_FOR", "EXPR", "EXPR", "EXPR", "STATEMENT"});}
-                    | FOR T_LBRACKET EXPR T_SEMICOLON T_SEMICOLON EXPR T_RBRACKET STATEMENT {$$ = new ast_node("ITERATION_STATEMENT","", std::vector<ast_node*>{$1, $3, NULL, $6, $8}, std::vector<std::string>{"T_FOR", "EXPR", "EXPR", "EXPR", "STATEMENT"});}
-                    | FOR T_LBRACKET EXPR T_SEMICOLON EXPR T_SEMICOLON T_RBRACKET STATEMENT {$$ = new ast_node("ITERATION_STATEMENT","", std::vector<ast_node*>{$1, $3, $5, NULL, $8}, std::vector<std::string>{"T_FOR", "EXPR", "EXPR", "EXPR", "STATEMENT"});}
-                    | FOR T_LBRACKET T_SEMICOLON T_SEMICOLON EXPR T_RBRACKET STATEMENT {$$ = new ast_node("ITERATION_STATEMENT","", std::vector<ast_node*>{$1, NULL, NULL, $5, $7}, std::vector<std::string>{"T_FOR", "EXPR", "EXPR", "EXPR", "STATEMENT"});}
-                    | FOR T_LBRACKET T_SEMICOLON EXPR T_SEMICOLON T_RBRACKET STATEMENT {$$ = new ast_node("ITERATION_STATEMENT","", std::vector<ast_node*>{$1, NULL, $4, NULL, $7}, std::vector<std::string>{"T_FOR", "EXPR", "EXPR", "EXPR", "STATEMENT"});}
-                    | FOR T_LBRACKET EXPR T_SEMICOLON T_SEMICOLON T_RBRACKET STATEMENT {$$ = new ast_node("ITERATION_STATEMENT","", std::vector<ast_node*>{$1, $3, NULL, NULL, $7}, std::vector<std::string>{"T_FOR", "EXPR", "EXPR", "EXPR", "STATEMENT"});}
-                    | FOR T_LBRACKET T_SEMICOLON T_SEMICOLON T_RBRACKET STATEMENT {$$ = new ast_node("ITERATION_STATEMENT","", std::vector<ast_node*>{$1, NULL, NULL, NULL, $6}, std::vector<std::string>{"T_FOR", "EXPR", "EXPR", "EXPR", "STATEMENT"});}
+ITERATION_STATEMENT : WHILE T_LBRACKET EXPR T_RBRACKET STATEMENT {              std::vector<ast_node*> branches = {$1, $3, NULL, NULL, NULL, $5};
+                                                                                std::vector<std::string> branch_notes = {"T_WHILE", "EXPR", "EXPR", "EXPR", "T_DO", "STATEMENT"};
+                                                                                $$ = new ast_node("ITERATION_STATEMENT","", branches, branch_notes);}
+
+                    | DO STATEMENT WHILE T_LBRACKET EXPR T_RBRACKET T_SEMICOLON { std::vector<ast_node*> branches = {$3, $5, NULL, NULL, $1, $2};
+                                                                                  std::vector<std::string> branch_notes = {"T_WHILE", "EXPR", "EXPR", "EXPR", "T_DO", "STATEMENT"};
+                                                                                  $$ = new ast_node("ITERATION_STATEMENT","", branches, branch_notes);}
+
+                    | FOR T_LBRACKET EXPR T_SEMICOLON EXPR T_SEMICOLON EXPR T_RBRACKET STATEMENT { std::vector<ast_node*> branches = {$1, $3, $5, $7, $9};
+                                                                                                   std::vector<std::string> branch_notes = {"T_FOR", "EXPR", "EXPR", "EXPR", "STATEMENT"};
+                                                                                                   $$ = new ast_node("ITERATION_STATEMENT","", branches, branch_notes);}
+
+                    | FOR T_LBRACKET T_SEMICOLON EXPR T_SEMICOLON EXPR T_RBRACKET STATEMENT { std::vector<ast_node*> branches = {$1, NULL, $4, $6, $8};
+                                                                                              std::vector<std::string> branch_notes = {"T_FOR", "EXPR", "EXPR", "EXPR", "STATEMENT"};
+                                                                                              $$ = new ast_node("ITERATION_STATEMENT","", branches, branch_notes);}
+
+                    | FOR T_LBRACKET EXPR T_SEMICOLON T_SEMICOLON EXPR T_RBRACKET STATEMENT { std::vector<ast_node*> branches = {$1, $3, NULL, $6, $8};
+                                                                                              std::vector<std::string> branch_notes = {"T_FOR", "EXPR", "EXPR", "EXPR", "STATEMENT"};
+                                                                                              $$ = new ast_node("ITERATION_STATEMENT","", branches, branch_notes);}
+
+                    | FOR T_LBRACKET EXPR T_SEMICOLON EXPR T_SEMICOLON T_RBRACKET STATEMENT { std::vector<ast_node*> branches = {$1, $3, $5, NULL, $8};
+                                                                                              std::vector<std::string> branch_notes = {"T_FOR", "EXPR", "EXPR", "EXPR", "STATEMENT"};
+                                                                                              $$ = new ast_node("ITERATION_STATEMENT","", branches, branch_notes);}
+
+                    | FOR T_LBRACKET T_SEMICOLON T_SEMICOLON EXPR T_RBRACKET STATEMENT { std::vector<ast_node*> branches = {$1, NULL, NULL, $5, $7};
+                                                                                         std::vector<std::string> branch_notes = {"T_FOR", "EXPR", "EXPR", "EXPR", "STATEMENT"};
+                                                                                         $$ = new ast_node("ITERATION_STATEMENT","", branches, branch_notes);}
+
+                    | FOR T_LBRACKET T_SEMICOLON EXPR T_SEMICOLON T_RBRACKET STATEMENT { std::vector<ast_node*> branches = {$1, NULL, $4, NULL, $7};
+                                                                                         std::vector<std::string> branch_notes = {"T_FOR", "EXPR", "EXPR", "EXPR", "STATEMENT"};
+                                                                                         $$ = new ast_node("ITERATION_STATEMENT","", branches, branch_notes);}
+
+                    | FOR T_LBRACKET EXPR T_SEMICOLON T_SEMICOLON T_RBRACKET STATEMENT { std::vector<ast_node*> branches = {$1, $3, NULL, NULL, $7};
+                                                                                         std::vector<std::string> branch_notes = {"T_FOR", "EXPR", "EXPR", "EXPR", "STATEMENT"};
+                                                                                         $$ = new ast_node("ITERATION_STATEMENT","", branches, branch_notes);}
+
+                    | FOR T_LBRACKET T_SEMICOLON T_SEMICOLON T_RBRACKET STATEMENT { std::vector<ast_node*> branches = {$1, NULL, NULL, NULL, $6};
+                                                                                    std::vector<std::string> branch_notes = {"T_FOR", "EXPR", "EXPR", "EXPR", "STATEMENT"};
+                                                                                    $$ = new ast_node("ITERATION_STATEMENT","", branches, branch_notes);}
+
 FOR : T_FOR {$$ = new ast_node("T_FOR", *$1);}
 WHILE : T_WHILE {$$ = new ast_node("T_WHILE", *$1);}
 DO : T_DO {$$ = new ast_node("T_DO", *$1);}
 
-JUMP_STATEMENT : GOTO IDENTIFIER T_SEMICOLON {$$ = new ast_node("JUMP_STATEMENT", *$1);}
+JUMP_STATEMENT : GOTO IDENTIFIER T_SEMICOLON {                                  std::vector<ast_node*> branches = {$1, $2};
+                                                                                std::vector<std::string> branch_notes = {"GOTO", "IDENTIFIER"};
+                                                                                $$ = new ast_node("JUMP_STATEMENT","", branches, branch_notes);}
+
                | T_CONTINUE T_SEMICOLON {$$ = new ast_node("JUMP_STATEMENT", *$1);}
                | T_BREAK T_SEMICOLON {$$ = new ast_node("JUMP_STATEMENT", *$1);}
-               | RETURN EXPR T_SEMICOLON {$$ = new ast_node("JUMP_STATEMENT", "", std::vector<ast_node*>{$1, $2},std::vector<std::string>{"RETURN", "EXPR"});}
-               | RETURN T_SEMICOLON {$$ = new ast_node("JUMP_STATEMENT", "",std::vector<ast_node*>{$1, NULL},std::vector<std::string>{"RETURN", "EXPR"});}
+
+               | RETURN EXPR T_SEMICOLON {                                      std::vector<ast_node*> branches = {$1, $2};
+                                                                                std::vector<std::string> branch_notes = {"RETURN", "EXPR"};
+                                                                                $$ = new ast_node("JUMP_STATEMENT","", branches, branch_notes);}
+
+               | RETURN T_SEMICOLON {                                           std::vector<ast_node*> branches = {$1, NULL};
+                                                                                std::vector<std::string> branch_notes = {"RETURN", "EXPR"};
+                                                                                $$ = new ast_node("JUMP_STATEMENT","", branches, branch_notes);}
+
 
 GOTO : T_GOTO { $$ = new ast_node("GOTO", *$1);}
 RETURN : T_RETURN {$$ = new ast_node("RETURN", *$1);}
@@ -144,31 +228,69 @@ RETURN : T_RETURN {$$ = new ast_node("RETURN", *$1);}
 PRIMARY_EXPRESSION : IDENTIFIER { $$ = $1; }
                    | CONSTANT {$$ = $1;}
                    | T_STRING {$$ = new ast_node("PRIMARY_EXPRESSION", *$1);}
-                   | T_LBRACKET EXPR T_RBRACKET {$$ = new ast_node("PRIMARY_EXPRESSION","",std::vector<ast_node*>{$2});}
+
+                   | T_LBRACKET EXPR T_RBRACKET {                               std::vector<ast_node*> branches = {$2};
+                                                                                std::vector<std::string> branch_notes = {"EXPR"};
+                                                                                $$ = new ast_node("JUMP_STATEMENT","", branches, branch_notes);}
 
 CONSTANT : T_DEC_INT   {$$ = new ast_node("CONSTANT", *$1); }
          | T_OCTAL_INT {$$ = new ast_node("CONSTANT", *$1); }
 
 
 POSTFIX_EXPRESSION : PRIMARY_EXPRESSION { $$  = $1;}
-                   | POSTFIX_EXPRESSION T_LSQ_BRACKET EXPR T_RSQ_BRACKET {$$ = new ast_node("POSTFIX_EXPRESSION","",std::vector<ast_node*>{$1, $3},std::vector<std::string>{"POSTFIX_EXPRESSION", "EXPR"});}
-                   | POSTFIX_EXPRESSION T_EMPTY_BRACKETS {$$ = new ast_node("POSTFIX_EXPRESSION","",std::vector<ast_node*>{$1, NULL},std::vector<std::string>{"POSTFIX_EXPRESSION", "ARGUMENT_EXPRESSION_LIST"});}
-                   | POSTFIX_EXPRESSION T_LBRACKET ARGUMENT_EXPRESSION_LIST T_RBRACKET {$$ = new ast_node("POSTFIX_EXPRESSION","",std::vector<ast_node*>{$1, $3},std::vector<std::string>{"POSTFIX_EXPRESSION", "ARGUMENT_EXPRESSION_LIST"});}
-                   | POSTFIX_EXPRESSION T_DOT IDENTIFIER {$$ = new ast_node("POSTFIX_EXPRESSION",".",std::vector<ast_node*>{$1, $3},std::vector<std::string>{"POSTFIX_EXPRESSION", "IDENTIFIER"});}
-                   | POSTFIX_EXPRESSION T_ARROW IDENTIFIER {$$ = new ast_node("POSTFIX_EXPRESSION","->",std::vector<ast_node*>{$1, $3},std::vector<std::string>{"POSTFIX_EXPRESSION", "IDENTIFIER"});}
-                   | POSTFIX_EXPRESSION T_INCREMENT {$$ = new ast_node("POSTFIX_EXPRESSION","++",std::vector<ast_node*>{$1},std::vector<std::string>{"POSTFIX_EXPRESSION"});}
-                   | POSTFIX_EXPRESSION T_DECREMENT {$$ = new ast_node("POSTFIX_EXPRESSION","--",std::vector<ast_node*>{$1},std::vector<std::string>{"POSTFIX_EXPRESSION"});}
+                   | POSTFIX_EXPRESSION T_LSQ_BRACKET EXPR T_RSQ_BRACKET {      std::vector<ast_node*> branches = {$1, $3};
+                                                                                std::vector<std::string> branch_notes = {"POSTFIX_EXPRESSION", "EXPR"};
+                                                                                $$ = new ast_node("POSTFIX_EXPRESSION","", branches, branch_notes);}
+
+                   | POSTFIX_EXPRESSION T_EMPTY_BRACKETS {                      std::vector<ast_node*> branches = {$1, NULL};
+                                                                                std::vector<std::string> branch_notes = {"POSTFIX_EXPRESSION", "ARGUMENT_EXPRESSION_LIST"};
+                                                                                $$ = new ast_node("POSTFIX_EXPRESSION","", branches, branch_notes);}
+
+                   | POSTFIX_EXPRESSION T_LBRACKET ARGUMENT_EXPRESSION_LIST T_RBRACKET { std::vector<ast_node*> branches = {$1, $3};
+                                                                                         std::vector<std::string> branch_notes = {"POSTFIX_EXPRESSION", "ARGUMENT_EXPRESSION_LIST"};
+                                                                                         $$ = new ast_node("POSTFIX_EXPRESSION","", branches, branch_notes);}
+
+                   | POSTFIX_EXPRESSION T_DOT IDENTIFIER {                      std::vector<ast_node*> branches = {$1, $3};
+                                                                                std::vector<std::string> branch_notes = {"POSTFIX_EXPRESSION", "ARGUMENT_EXPRESSION_LIST"};
+                                                                                $$ = new ast_node("POSTFIX_EXPRESSION",".", branches, branch_notes);}
+
+                   | POSTFIX_EXPRESSION T_ARROW IDENTIFIER {                    std::vector<ast_node*> branches = {$1, $3};
+                                                                                std::vector<std::string> branch_notes = {"POSTFIX_EXPRESSION", "IDENTIFIER"};
+                                                                                $$ = new ast_node("POSTFIX_EXPRESSION","->", branches, branch_notes);}
+
+                   | POSTFIX_EXPRESSION T_INCREMENT {                           std::vector<ast_node*> branches = {$1};
+                                                                                std::vector<std::string> branch_notes = {"POSTFIX_EXPRESSION"};
+                                                                                $$ = new ast_node("POSTFIX_EXPRESSION","++", branches, branch_notes);}
+
+                   | POSTFIX_EXPRESSION T_DECREMENT {                           std::vector<ast_node*> branches = {$1};
+                                                                                std::vector<std::string> branch_notes = {"POSTFIX_EXPRESSION"};
+                                                                                $$ = new ast_node("POSTFIX_EXPRESSION","--", branches, branch_notes);}
 
 ARGUMENT_EXPRESSION_LIST : ASSIGNMENT_EXPRESSION { $$  = $1;}
-                         | ARGUMENT_EXPRESSION_LIST T_COMMA ASSIGNMENT_EXPRESSION {$$ = new ast_node("ARGUMENT_EXPRESSION_LIST","",std::vector<ast_node*>{$1},std::vector<std::string>{"ARGUMENT_EXPRESSION_LIST", "ASSIGNMENT_EXPRESSION"});}
+                         | ARGUMENT_EXPRESSION_LIST T_COMMA ASSIGNMENT_EXPRESSION {   std::vector<ast_node*> branches = {$1, $3};
+                                                                                      std::vector<std::string> branch_notes = {"ARGUMENT_EXPRESSION_LIST", "ASSIGNMENT_EXPRESSION"};
+                                                                                      $$ = new ast_node("ARGUMENT_EXPRESSION_LIST","", branches, branch_notes);}
 
 UNARY_EXPRESSION : POSTFIX_EXPRESSION { $$  = $1;}
-                 | T_INCREMENT UNARY_EXPRESSION {$$ = new ast_node("UNARY_EXPRESSION","++",std::vector<ast_node*>{$1},std::vector<std::string>{"UNARY_OPERATOR"});}
-                 | T_DECREMENT UNARY_EXPRESSION {$$ = new ast_node("UNARY_EXPRESSION","--",std::vector<ast_node*>{$1},std::vector<std::string>{"UNARY_OPERATOR"});}
-                 | UNARY_OPERATOR CAST_EXPRESSION {$$ = new ast_node("UNARY_EXPRESSION","",std::vector<ast_node*>{$1, $2},std::vector<std::string>{"UNARY_OPERATOR","CAST_EXPRESSION"});}
+                 | T_INCREMENT UNARY_EXPRESSION {                               std::vector<ast_node*> branches = {$2};
+                                                                                std::vector<std::string> branch_notes = {"UNARY_OPERATOR"};
+                                                                                $$ = new ast_node("UNARY_EXPRESSION","++", branches, branch_notes);}
 
-                 | SIZE_OF UNARY_EXPRESSION {$$ = new ast_node("UNARY_EXPRESSION","",std::vector<ast_node*>{$1, $2},std::vector<std::string>{"SIZE_OF","UNARY_EXPRESSION"});}
-                 | SIZE_OF T_LBRACKET TYPE_NAME T_RBRACKET {$$ = new ast_node("UNARY_EXPRESSION","",std::vector<ast_node*>{$1, $3},std::vector<std::string>{"SIZE_OF","TYPE_NAME"});}
+                 | T_DECREMENT UNARY_EXPRESSION {                               std::vector<ast_node*> branches = {$2};
+                                                                                std::vector<std::string> branch_notes = {"UNARY_OPERATOR"};
+                                                                                $$ = new ast_node("UNARY_EXPRESSION","--", branches, branch_notes);}
+
+                 | UNARY_OPERATOR CAST_EXPRESSION {                             std::vector<ast_node*> branches = {$1, $2};
+                                                                                std::vector<std::string> branch_notes = {"UNARY_OPERATOR","CAST_EXPRESSION"};
+                                                                                $$ = new ast_node("UNARY_EXPRESSION","", branches, branch_notes);}
+
+                 | SIZE_OF UNARY_EXPRESSION {                                   std::vector<ast_node*> branches = {$1, $2};
+                                                                                std::vector<std::string> branch_notes = {"SIZE_OF","UNARY_EXPRESSION"};
+                                                                                $$ = new ast_node("UNARY_EXPRESSION","", branches, branch_notes);}
+
+                 | SIZE_OF T_LBRACKET TYPE_NAME T_RBRACKET {                    std::vector<ast_node*> branches = {$1, $3};
+                                                                                std::vector<std::string> branch_notes = {"SIZE_OF","TYPE_NAME"};
+                                                                                $$ = new ast_node("UNARY_EXPRESSION","", branches, branch_notes);}
 
 SIZE_OF : T_SIZEOF { $$ = new ast_node("SIZE_OF", *$1);}
 
@@ -180,51 +302,101 @@ UNARY_OPERATOR : T_AND { $$ = new ast_node("UNARY_OPERATOR",*$1);}
                | T_LOGICAL_NOT { $$ = new ast_node("UNARY_OPERATOR",*$1);}
 
 CAST_EXPRESSION : UNARY_EXPRESSION { $$  = $1;}
-                | T_LBRACKET TYPE_NAME T_RBRACKET CAST_EXPRESSION {$$ = new ast_node("MULTIPLICATIVE_EXPRESSION","*",std::vector<ast_node*>{$2, $4},std::vector<std::string>{"TYPE_NAME","CAST_EXPRESSION"});}
+                | T_LBRACKET TYPE_NAME T_RBRACKET CAST_EXPRESSION {             std::vector<ast_node*> branches = {$2, $4};
+                                                                                std::vector<std::string> branch_notes = {"TYPE_NAME","CAST_EXPRESSION"};
+                                                                                $$ = new ast_node("MULTIPLICATIVE_EXPRESSION","", branches, branch_notes);}
 
 MULTIPLICATIVE_EXPRESSION : CAST_EXPRESSION { $$  = $1;}
-                          | MULTIPLICATIVE_EXPRESSION T_TIMES CAST_EXPRESSION {$$ = new ast_node("MULTIPLICATIVE_EXPRESSION","*",std::vector<ast_node*>{$1, $3},std::vector<std::string>{"MULTIPLICATIVE_EXPRESSION","CAST_EXPRESSION"});}
-                          | MULTIPLICATIVE_EXPRESSION T_DIVIDE CAST_EXPRESSION {$$ = new ast_node("MULTIPLICATIVE_EXPRESSION","/",std::vector<ast_node*>{$1, $3},std::vector<std::string>{"MULTIPLICATIVE_EXPRESSION","CAST_EXPRESSION"});}
-                          | MULTIPLICATIVE_EXPRESSION T_MODULO CAST_EXPRESSION {$$ = new ast_node("MULTIPLICATIVE_EXPRESSION","%",std::vector<ast_node*>{$1, $3},std::vector<std::string>{"MULTIPLICATIVE_EXPRESSION","CAST_EXPRESSION"});}
+                          | MULTIPLICATIVE_EXPRESSION T_TIMES CAST_EXPRESSION { std::vector<ast_node*> branches = {$1, $3};
+                                                                                std::vector<std::string> branch_notes = {"MULTIPLICATIVE_EXPRESSION","CAST_EXPRESSION"};
+                                                                                $$ = new ast_node("MULTIPLICATIVE_EXPRESSION","*", branches, branch_notes);}
+
+                          | MULTIPLICATIVE_EXPRESSION T_DIVIDE CAST_EXPRESSION {std::vector<ast_node*> branches = {$1, $3};
+                                                                                std::vector<std::string> branch_notes = {"MULTIPLICATIVE_EXPRESSION","CAST_EXPRESSION"};
+                                                                                $$ = new ast_node("MULTIPLICATIVE_EXPRESSION","/", branches, branch_notes);}
+
+                          | MULTIPLICATIVE_EXPRESSION T_MODULO CAST_EXPRESSION {std::vector<ast_node*> branches = {$1, $3};
+                                                                                std::vector<std::string> branch_notes = {"MULTIPLICATIVE_EXPRESSION","CAST_EXPRESSION"};
+                                                                                $$ = new ast_node("MULTIPLICATIVE_EXPRESSION","", branches, branch_notes);}
 
 ADDITIVE_EXPRESSION : MULTIPLICATIVE_EXPRESSION { $$  = $1;}
-                    | ADDITIVE_EXPRESSION T_PLUS MULTIPLICATIVE_EXPRESSION {$$ = new ast_node("ADDITIVE_EXPRESSION","+",std::vector<ast_node*>{$1, $3},std::vector<std::string>{"ADDITIVE_EXPRESSION","MULTIPLICATIVE_EXPRESSION"});}
-                    | ADDITIVE_EXPRESSION T_MINUS MULTIPLICATIVE_EXPRESSION {$$ = new ast_node("ADDITIVE_EXPRESSION","-",std::vector<ast_node*>{$1, $3},std::vector<std::string>{"ADDITIVE_EXPRESSION","MULTIPLICATIVE_EXPRESSION"});}
+                    | ADDITIVE_EXPRESSION T_PLUS MULTIPLICATIVE_EXPRESSION {    std::vector<ast_node*> branches = {$1, $3};
+                                                                                std::vector<std::string> branch_notes = {"ADDITIVE_EXPRESSION","MULTIPLICATIVE_EXPRESSION"};
+                                                                                $$ = new ast_node("ADDITIVE_EXPRESSION","+", branches, branch_notes);}
+
+                    | ADDITIVE_EXPRESSION T_MINUS MULTIPLICATIVE_EXPRESSION {   std::vector<ast_node*> branches = {$1, $3};
+                                                                                std::vector<std::string> branch_notes = {"ADDITIVE_EXPRESSION","MULTIPLICATIVE_EXPRESSION"};
+                                                                                $$ = new ast_node("ADDITIVE_EXPRESSION","-", branches, branch_notes);}
 
 SHIFT_EXPRESSION : ADDITIVE_EXPRESSION { $$  = $1;}
-                 | SHIFT_EXPRESSION T_LEFT_SHIFT ADDITIVE_EXPRESSION {$$ = new ast_node("RELATIONAL_EXPRESSION","<<",std::vector<ast_node*>{$1, $3},std::vector<std::string>{"SHIFT_EXPRESSION","ADDITIVE_EXPRESSION"});}
-                 | SHIFT_EXPRESSION T_RIGHT_SHIFT ADDITIVE_EXPRESSION {$$ = new ast_node("RELATIONAL_EXPRESSION",">>",std::vector<ast_node*>{$1, $3},std::vector<std::string>{"SHIFT_EXPRESSION","ADDITIVE_EXPRESSION"});}
+                 | SHIFT_EXPRESSION T_LEFT_SHIFT ADDITIVE_EXPRESSION {          std::vector<ast_node*> branches = {$1, $3};
+                                                                                std::vector<std::string> branch_notes = {"SHIFT_EXPRESSION","ADDITIVE_EXPRESSION"};
+                                                                                $$ = new ast_node("ADDITIVE_EXPRESSION","<<", branches, branch_notes);}
+
+                 | SHIFT_EXPRESSION T_RIGHT_SHIFT ADDITIVE_EXPRESSION {         std::vector<ast_node*> branches = {$1, $3};
+                                                                                std::vector<std::string> branch_notes = {"SHIFT_EXPRESSION","ADDITIVE_EXPRESSION"};
+                                                                                $$ = new ast_node("ADDITIVE_EXPRESSION",">>", branches, branch_notes);}
 
 RELATIONAL_EXPRESSION : SHIFT_EXPRESSION { $$  = $1;}
-                      | RELATIONAL_EXPRESSION T_LESS_THAN SHIFT_EXPRESSION {$$ = new ast_node("RELATIONAL_EXPRESSION","<",std::vector<ast_node*>{$1, $3},std::vector<std::string>{"RELATIONAL_EXPRESSION","SHIFT_EXPRESSION"});}
-                      | RELATIONAL_EXPRESSION T_GREATER_THAN SHIFT_EXPRESSION {$$ = new ast_node("RELATIONAL_EXPRESSION",">",std::vector<ast_node*>{$1, $3},std::vector<std::string>{"RELATIONAL_EXPRESSION","SHIFT_EXPRESSION"});}
-                      | RELATIONAL_EXPRESSION T_LESS_THAN_OR_EQUAL_TO SHIFT_EXPRESSION {$$ = new ast_node("RELATIONAL_EXPRESSION","<=",std::vector<ast_node*>{$1, $3},std::vector<std::string>{"RELATIONAL_EXPRESSION","SHIFT_EXPRESSION"});}
-                      | RELATIONAL_EXPRESSION T_GREATER_THAN_OR_EQUAL_TO SHIFT_EXPRESSION {$$ = new ast_node("RELATIONAL_EXPRESSION",">=",std::vector<ast_node*>{$1, $3},std::vector<std::string>{"RELATIONAL_EXPRESSION","SHIFT_EXPRESSION"});}
+                      | RELATIONAL_EXPRESSION T_LESS_THAN SHIFT_EXPRESSION {    std::vector<ast_node*> branches = {$1, $3};
+                                                                                std::vector<std::string> branch_notes = {"RELATIONAL_EXPRESSION","SHIFT_EXPRESSION"};
+                                                                                $$ = new ast_node("RELATIONAL_EXPRESSION","<", branches, branch_notes);}
+
+                      | RELATIONAL_EXPRESSION T_GREATER_THAN SHIFT_EXPRESSION { std::vector<ast_node*> branches = {$1, $3};
+                                                                                std::vector<std::string> branch_notes = {"RELATIONAL_EXPRESSION","SHIFT_EXPRESSION"};
+                                                                                $$ = new ast_node("RELATIONAL_EXPRESSION",">", branches, branch_notes);}
+
+                      | RELATIONAL_EXPRESSION T_LESS_THAN_OR_EQUAL_TO SHIFT_EXPRESSION {    std::vector<ast_node*> branches = {$1, $3};
+                                                                                            std::vector<std::string> branch_notes = {"RELATIONAL_EXPRESSION","SHIFT_EXPRESSION"};
+                                                                                            $$ = new ast_node("RELATIONAL_EXPRESSION","<=", branches, branch_notes);}
+
+                      | RELATIONAL_EXPRESSION T_GREATER_THAN_OR_EQUAL_TO SHIFT_EXPRESSION {    std::vector<ast_node*> branches = {$1, $3};
+                                                                                               std::vector<std::string> branch_notes = {"RELATIONAL_EXPRESSION","SHIFT_EXPRESSION"};
+                                                                                               $$ = new ast_node("RELATIONAL_EXPRESSION",">=", branches, branch_notes);}
 
 EQUALITY_EXPRESSION : RELATIONAL_EXPRESSION { $$  = $1;}
-                    | EQUALITY_EXPRESSION T_EQUALS_EQUALS RELATIONAL_EXPRESSION {$$ = new ast_node("EQUALITY_EXPRESSION","==",std::vector<ast_node*>{$1, $3},std::vector<std::string>{"EQUALITY_EXPRESSION","RELATIONAL_EXPRESSION"});}
-                    | EQUALITY_EXPRESSION T_NOT_EQUALS_EQUALS RELATIONAL_EXPRESSION {$$ = new ast_node("EQUALITY_EXPRESSION","!=",std::vector<ast_node*>{$1, $3},std::vector<std::string>{"EQUALITY_EXPRESSION","RELATIONAL_EXPRESSION"});}
+                    | EQUALITY_EXPRESSION T_EQUALS_EQUALS RELATIONAL_EXPRESSION {  std::vector<ast_node*> branches = {$1, $3};
+                                                                                   std::vector<std::string> branch_notes = {"EQUALITY_EXPRESSION","RELATIONAL_EXPRESSION"};
+                                                                                   $$ = new ast_node("EQUALITY_EXPRESSION","==", branches, branch_notes);}
+
+                    | EQUALITY_EXPRESSION T_NOT_EQUALS_EQUALS RELATIONAL_EXPRESSION {  std::vector<ast_node*> branches = {$1, $3};
+                                                                                       std::vector<std::string> branch_notes = {"EQUALITY_EXPRESSION","RELATIONAL_EXPRESSION"};
+                                                                                       $$ = new ast_node("EQUALITY_EXPRESSION","!=", branches, branch_notes);}
 
 AND_EXPRESSION : EQUALITY_EXPRESSION { $$  = $1;}
-               | AND_EXPRESSION T_AND EQUALITY_EXPRESSION {$$ = new ast_node("AND_EXPRESSION","",std::vector<ast_node*>{$1, $3},std::vector<std::string>{"AND_EXPRESSION","EQUALITY_EXPRESSION"});}
+               | AND_EXPRESSION T_AND EQUALITY_EXPRESSION {                     std::vector<ast_node*> branches = {$1, $3};
+                                                                                std::vector<std::string> branch_notes = {"AND_EXPRESSION","EQUALITY_EXPRESSION"};
+                                                                                $$ = new ast_node("AND_EXPRESSION","", branches, branch_notes);}
 
 EXCLUSIVE_OR_EXPRESSION : AND_EXPRESSION { $$  = $1;}
-                        | EXCLUSIVE_OR_EXPRESSION T_EXPONENT AND_EXPRESSION {$$ = new ast_node("EXCLUSIVE_OR_EXPRESSION","",std::vector<ast_node*>{$1, $3},std::vector<std::string>{"EXCLUSIVE_OR_EXPRESSION","AND_EXPRESSION"});}
+                        | EXCLUSIVE_OR_EXPRESSION T_EXPONENT AND_EXPRESSION {   std::vector<ast_node*> branches = {$1, $3};
+                                                                                std::vector<std::string> branch_notes = {"EXCLUSIVE_OR_EXPRESSION","AND_EXPRESSION"};
+                                                                                $$ = new ast_node("EXCLUSIVE_OR_EXPRESSION","", branches, branch_notes);}
 
 INCLUSIVE_OR_EXPRESSION : EXCLUSIVE_OR_EXPRESSION { $$  = $1;}
-                        | INCLUSIVE_OR_EXPRESSION T_OR EXCLUSIVE_OR_EXPRESSION {$$ = new ast_node("INCLUSIVE_OR_EXPRESSION","",std::vector<ast_node*>{$1, $3},std::vector<std::string>{"INCLUSIVE_OR_EXPRESSION","EXCLUSIVE_OR_EXPRESSION"});}
+                        | INCLUSIVE_OR_EXPRESSION T_OR EXCLUSIVE_OR_EXPRESSION {std::vector<ast_node*> branches = {$1, $3};
+                                                                                std::vector<std::string> branch_notes = {"INCLUSIVE_OR_EXPRESSION","EXCLUSIVE_OR_EXPRESSION"};
+                                                                                $$ = new ast_node("INCLUSIVE_OR_EXPRESSION","", branches, branch_notes);}
 
 LOGICAL_AND_EXPRESSION : INCLUSIVE_OR_EXPRESSION { $$  = $1;}
-                       | LOGICAL_AND_EXPRESSION T_AND_AND INCLUSIVE_OR_EXPRESSION {$$ = new ast_node("LOGICAL_AND_EXPRESSION","",std::vector<ast_node*>{$1, $3},std::vector<std::string>{"LOGICAL_AND_EXPRESSION","INCLUSIVE_OR_EXPRESSION"});}
+                       | LOGICAL_AND_EXPRESSION T_AND_AND INCLUSIVE_OR_EXPRESSION {     std::vector<ast_node*> branches = {$1, $3};
+                                                                                        std::vector<std::string> branch_notes = {"LOGICAL_AND_EXPRESSION","INCLUSIVE_OR_EXPRESSION"};
+                                                                                        $$ = new ast_node("LOGICAL_AND_EXPRESSION","", branches, branch_notes);}
 
 LOGICAL_OR_EXPRESSION  : LOGICAL_AND_EXPRESSION { $$  = $1;}
-                       | LOGICAL_OR_EXPRESSION T_OR_OR LOGICAL_AND_EXPRESSION {$$ = new ast_node("LOGICAL_OR_EXPRESSION","",std::vector<ast_node*>{$1, $3},std::vector<std::string>{"LOGICAL_OR_EXPRESSION","LOGICAL_AND_EXPRESSION"});}
+                       | LOGICAL_OR_EXPRESSION T_OR_OR LOGICAL_AND_EXPRESSION {         std::vector<ast_node*> branches = {$1, $3};
+                                                                                        std::vector<std::string> branch_notes = {"LOGICAL_OR_EXPRESSION","LOGICAL_AND_EXPRESSION"};
+                                                                                        $$ = new ast_node("LOGICAL_OR_EXPRESSION","", branches, branch_notes);}
 
 CONDITIONAL_EXPRESSION : LOGICAL_OR_EXPRESSION { $$  = $1;}
-                       | LOGICAL_OR_EXPRESSION T_QUESTION EXPR T_COLON CONDITIONAL_EXPRESSION {$$ = new ast_node("CONDITIONAL_EXPRESSION","",std::vector<ast_node*>{$1, $3, $5},std::vector<std::string>{"LOGICAL_OR_EXPRESSION","EXPR", "CONDITIONAL_EXPRESSION"});}
+                       | LOGICAL_OR_EXPRESSION T_QUESTION EXPR T_COLON CONDITIONAL_EXPRESSION {   std::vector<ast_node*> branches = {$1, $3, $5};
+                                                                                                  std::vector<std::string> branch_notes = {"LOGICAL_OR_EXPRESSION","EXPR", "CONDITIONAL_EXPRESSION"};
+                                                                                                  $$ = new ast_node("CONDITIONAL_EXPRESSION","", branches, branch_notes);}
 
 ASSIGNMENT_EXPRESSION : CONDITIONAL_EXPRESSION { $$ = $1; }
-                      | UNARY_EXPRESSION ASSIGNMENT_OPERATOR ASSIGNMENT_EXPRESSION {$$ = new ast_node("ASSIGNMENT_EXPRESSION","",std::vector<ast_node*>{$1, $2, $3},std::vector<std::string>{"UNARY_EXPRESSION","ASSIGNMENT_OPERATOR", "ASSIGNMENT_EXPRESSION"});}
+                      | UNARY_EXPRESSION ASSIGNMENT_OPERATOR ASSIGNMENT_EXPRESSION {   std::vector<ast_node*> branches = {$1, $2, $3};
+                                                                                       std::vector<std::string> branch_notes = {"UNARY_EXPRESSION","ASSIGNMENT_OPERATOR", "ASSIGNMENT_EXPRESSION"};
+                                                                                       $$ = new ast_node("ASSIGNMENT_EXPRESSION","", branches, branch_notes);}
 
 ASSIGNMENT_OPERATOR : T_EQUALS { $$ = new ast_node("ASSIGNMENT_OPERATOR", *$1);}
                     | T_TIMES_EQUALS { $$ = new ast_node("ASSIGNMENT_OPERATOR", *$1);}
@@ -241,23 +413,42 @@ ASSIGNMENT_OPERATOR : T_EQUALS { $$ = new ast_node("ASSIGNMENT_OPERATOR", *$1);}
 CONSTANT_EXPRESSION : CONDITIONAL_EXPRESSION { $$ = $1; }
 
 EXPR : ASSIGNMENT_EXPRESSION { $$ = $1; }
-     | EXPR T_COMMA ASSIGNMENT_EXPRESSION {$$ = new ast_node("EXPR","",std::vector<ast_node*>{$1, $3},std::vector<std::string>{"EXPR","ASSIGNMENT_EXPRESSION"});}
+     | EXPR T_COMMA ASSIGNMENT_EXPRESSION {                                     std::vector<ast_node*> branches = {$1, $3};
+                                                                                std::vector<std::string> branch_notes = {"EXPR","ASSIGNMENT_EXPRESSION"};
+                                                                                $$ = new ast_node("EXPR","", branches, branch_notes);}
 
-DECLARATION : DECLARATION_SPECIFIERS T_SEMICOLON {$$ = new ast_node("DECLARATION","",std::vector<ast_node*>{$1, NULL},std::vector<std::string>{"DECLARATION_SPECIFIERS","INIT_DECLARATOR_LIST"});}
-            | DECLARATION_SPECIFIERS INIT_DECLARATOR_LIST T_SEMICOLON {$$ = new ast_node("DECLARATION","",std::vector<ast_node*>{$1, $2},std::vector<std::string>{"DECLARATION_SPECIFIERS","INIT_DECLARATOR_LIST"});}
+DECLARATION : DECLARATION_SPECIFIERS T_SEMICOLON {                              std::vector<ast_node*> branches = {$1, NULL};
+                                                                                std::vector<std::string> branch_notes = {"DECLARATION_SPECIFIERS","INIT_DECLARATOR_LIST"};
+                                                                                $$ = new ast_node("DECLARATION","", branches, branch_notes);}
+
+            | DECLARATION_SPECIFIERS INIT_DECLARATOR_LIST T_SEMICOLON {         std::vector<ast_node*> branches = {$1, $2};
+                                                                                std::vector<std::string> branch_notes = {"DECLARATION_SPECIFIERS","INIT_DECLARATOR_LIST"};
+                                                                                $$ = new ast_node("DECLARATION","", branches, branch_notes);}
 
 DECLARATION_SPECIFIERS : STORAGE_CLASS_SPECIFIER { $$ = $1; }
-                       | STORAGE_CLASS_SPECIFIER DECLARATION_SPECIFIERS {$$ = new ast_node("DECLARATION_SPECIFIERS","",std::vector<ast_node*>{$1, $2},std::vector<std::string>{"STORAGE_CLASS_SPECIFIER","DECLARATION_SPECIFIERS"});}
+                       | STORAGE_CLASS_SPECIFIER DECLARATION_SPECIFIERS {       std::vector<ast_node*> branches = {$1, $2};
+                                                                                std::vector<std::string> branch_notes = {"STORAGE_CLASS_SPECIFIER","DECLARATION_SPECIFIERS"};
+                                                                                $$ = new ast_node("DECLARATION_SPECIFIERS","", branches, branch_notes);}
+
                        | TYPE_SPECIFIER { $$ = $1; }
-                       | TYPE_SPECIFIER DECLARATION_SPECIFIERS {$$ = new ast_node("DECLARATION_SPECIFIERS","",std::vector<ast_node*>{$1, $2},std::vector<std::string>{"TYPE_SPECIFIER","DECLARATION_SPECIFIERS"});}
+                       | TYPE_SPECIFIER DECLARATION_SPECIFIERS {                std::vector<ast_node*> branches = {$1, $2};
+                                                                                std::vector<std::string> branch_notes = {"TYPE_SPECIFIER","DECLARATION_SPECIFIERS"};
+                                                                                $$ = new ast_node("DECLARATION_SPECIFIERS","", branches, branch_notes);}
+
                        | TYPE_QUALIFIER { $$ = $1; }
-                       | TYPE_QUALIFIER DECLARATION_SPECIFIERS {$$ = new ast_node("DECLARATION_SPECIFIERS","",std::vector<ast_node*>{$1, $2},std::vector<std::string>{"TYPE_QUALIFIER","DECLARATION_SPECIFIERS"});}
+                       | TYPE_QUALIFIER DECLARATION_SPECIFIERS {                std::vector<ast_node*> branches = {$1, $2};
+                                                                                std::vector<std::string> branch_notes = {"TYPE_QUALIFIER","DECLARATION_SPECIFIERS"};
+                                                                                $$ = new ast_node("DECLARATION_SPECIFIERS","", branches, branch_notes);}
 
 INIT_DECLARATOR_LIST : INIT_DECLARATOR { $$ = $1; }
-                     | INIT_DECLARATOR_LIST T_COMMA INIT_DECLARATOR {$$ = new ast_node("INIT_DECLARATOR_LIST","",std::vector<ast_node*>{$1, $3},std::vector<std::string>{"INIT_DECLARATOR_LIST","INIT_DECLARATOR"});}
+                     | INIT_DECLARATOR_LIST T_COMMA INIT_DECLARATOR {           std::vector<ast_node*> branches = {$1, $3};
+                                                                                std::vector<std::string> branch_notes = {"INIT_DECLARATOR_LIST","INIT_DECLARATOR"};
+                                                                                $$ = new ast_node("INIT_DECLARATOR_LIST","", branches, branch_notes);}
 
 INIT_DECLARATOR : DECLARATOR { $$ = $1; }
-                | DECLARATOR T_EQUALS INITIALIZER {$$ = new ast_node("INIT_DECLARATOR","",std::vector<ast_node*>{$1, $3},std::vector<std::string>{"DECLARATOR","INITIALIZER"});}
+                | DECLARATOR T_EQUALS INITIALIZER {                             std::vector<ast_node*> branches = {$1, $3};
+                                                                                std::vector<std::string> branch_notes = {"DECLARATOR","INITIALIZER"};
+                                                                                $$ = new ast_node("INIT_DECLARATOR","", branches, branch_notes);}
 
 STORAGE_CLASS_SPECIFIER : T_TYPEDEF { $$ = new ast_node("STORAGE_CLASS_SPECIFIER", *$1);}
                         | T_EXTERN { $$ = new ast_node("STORAGE_CLASS_SPECIFIER", *$1);}
@@ -278,41 +469,79 @@ TYPE_SPECIFIER : T_VOID { $$ = new ast_node("TYPE_SPECIFIER", *$1);}
                | ENUM_SPECIFIER { $$ = $1; }
                | TYPEDEF_NAME { $$ = $1; }
 
-STRUCT_OR_UNION_SPECIFIER : STRUCT_OR_UNION IDENTIFIER {$$ = new ast_node("STRUCT_OR_UNION_SPECIFIER","",std::vector<ast_node*>{$1, $2},std::vector<std::string>{"STRUCT_OR_UNION","IDENTIFIER"});}
-                          | STRUCT_OR_UNION T_LCURLY_BRACKET STRUCT_DECLARATION_LIST T_RCURLY_BRACKET {$$ = new ast_node("STRUCT_OR_UNION_SPECIFIER","",std::vector<ast_node*>{$1, NULL, $4},std::vector<std::string>{"STRUCT_OR_UNION", "IDENTIFIER", "STRUCT_DECLARATION_LIST"});}
-                          | STRUCT_OR_UNION IDENTIFIER T_LCURLY_BRACKET STRUCT_DECLARATION_LIST T_RCURLY_BRACKET {$$ = new ast_node("STRUCT_OR_UNION_SPECIFIER","",std::vector<ast_node*>{$1, $2, $4},std::vector<std::string>{"STRUCT_OR_UNION", "IDENTIFIER", "STRUCT_DECLARATION_LIST"});}
+STRUCT_OR_UNION_SPECIFIER : STRUCT_OR_UNION IDENTIFIER {                        std::vector<ast_node*> branches = {$1, $2};
+                                                                                std::vector<std::string> branch_notes = {"STRUCT_OR_UNION","IDENTIFIER"};
+                                                                                $$ = new ast_node("STRUCT_OR_UNION_SPECIFIER","", branches, branch_notes);}
+
+                          | STRUCT_OR_UNION T_LCURLY_BRACKET STRUCT_DECLARATION_LIST T_RCURLY_BRACKET {   std::vector<ast_node*> branches = {$1, NULL, $3};
+                                                                                                          std::vector<std::string> branch_notes = {"STRUCT_OR_UNION", "IDENTIFIER", "STRUCT_DECLARATION_LIST"};
+                                                                                                          $$ = new ast_node("STRUCT_OR_UNION_SPECIFIER","", branches, branch_notes);}
+
+                          | STRUCT_OR_UNION IDENTIFIER T_LCURLY_BRACKET STRUCT_DECLARATION_LIST T_RCURLY_BRACKET {  std::vector<ast_node*> branches = {$1, $2, $4};
+                                                                                                                    std::vector<std::string> branch_notes = {"STRUCT_OR_UNION", "IDENTIFIER", "STRUCT_DECLARATION_LIST"};
+                                                                                                                    $$ = new ast_node("STRUCT_OR_UNION_SPECIFIER","", branches, branch_notes);}
 
 STRUCT_OR_UNION : T_STRUCT { $$ = new ast_node("STRUCT_OR_UNION", *$1);}
                 | T_UNION  { $$ = new ast_node("STRUCT_OR_UNION", *$1);}
 
 STRUCT_DECLARATION_LIST : STRUCT_DECLARATION {$$ = $1;}
-                        | STRUCT_DECLARATION_LIST STRUCT_DECLARATION {$$ = new ast_node("STRUCT_DECLARATION_LIST","",std::vector<ast_node*>{$1, $2},std::vector<std::string>{"STRUCT_DECLARATION_LIST","STRUCT_DECLARATION"});}
+                        | STRUCT_DECLARATION_LIST STRUCT_DECLARATION {          std::vector<ast_node*> branches = {$1, $2};
+                                                                                std::vector<std::string> branch_notes = {"STRUCT_DECLARATION_LIST","STRUCT_DECLARATION"};
+                                                                                $$ = new ast_node("STRUCT_DECLARATION_LIST","", branches, branch_notes);}
 
-STRUCT_DECLARATION : SPECIFIER_QUALIFIER_LIST STRUCT_DECLARATOR_LIST {$$ = new ast_node("STRUCT_DECLARATION","",std::vector<ast_node*>{$1, $2},std::vector<std::string>{"SPECIFIER_QUALIFIER_LIST","STRUCT_DECLARATOR_LIST"});}
+STRUCT_DECLARATION : SPECIFIER_QUALIFIER_LIST STRUCT_DECLARATOR_LIST {          std::vector<ast_node*> branches = {$1, $2};
+                                                                                std::vector<std::string> branch_notes = {"SPECIFIER_QUALIFIER_LIST","STRUCT_DECLARATOR_LIST"};
+                                                                                $$ = new ast_node("STRUCT_DECLARATION","", branches, branch_notes);}
 
 SPECIFIER_QUALIFIER_LIST : TYPE_SPECIFIER { $$ = $1; }
-                         | TYPE_SPECIFIER SPECIFIER_QUALIFIER_LIST {$$ = new ast_node("SPECIFIER_QUALIFIER_LIST","",std::vector<ast_node*>{$1, $2},std::vector<std::string>{"TYPE_SPECIFIER","SPECIFIER_QUALIFIER_LIST"});}
+
+                         | TYPE_SPECIFIER SPECIFIER_QUALIFIER_LIST {            std::vector<ast_node*> branches = {$1, $2};
+                                                                                std::vector<std::string> branch_notes = {"TYPE_SPECIFIER","SPECIFIER_QUALIFIER_LIST"};
+                                                                                $$ = new ast_node("SPECIFIER_QUALIFIER_LIST","", branches, branch_notes);}
+
                          | TYPE_QUALIFIER { $$ = $1; }
-                         | TYPE_QUALIFIER SPECIFIER_QUALIFIER_LIST {$$ = new ast_node("SPECIFIER_QUALIFIER_LIST","",std::vector<ast_node*>{$1, $2},std::vector<std::string>{"TYPE_QUALIFIER","SPECIFIER_QUALIFIER_LIST"});}
+
+                         | TYPE_QUALIFIER SPECIFIER_QUALIFIER_LIST {            std::vector<ast_node*> branches = {$1, $2};
+                                                                                std::vector<std::string> branch_notes = {"TYPE_QUALIFIER","SPECIFIER_QUALIFIER_LIST"};
+                                                                                $$ = new ast_node("SPECIFIER_QUALIFIER_LIST","", branches, branch_notes);}
 
 STRUCT_DECLARATOR_LIST : STRUCT_DECLARATOR {$$ = $1;}
-                       | STRUCT_DECLARATOR_LIST T_COMMA STRUCT_DECLARATOR {$$ = new ast_node("STRUCT_DECLARATOR_LIST","",std::vector<ast_node*>{$1, $2},std::vector<std::string>{"STRUCT_DECLARATOR_LIST","STRUCT_DECLARATOR"});}
+                       | STRUCT_DECLARATOR_LIST T_COMMA STRUCT_DECLARATOR {     std::vector<ast_node*> branches = {$1, $3};
+                                                                                std::vector<std::string> branch_notes = {"STRUCT_DECLARATOR_LIST","STRUCT_DECLARATOR"};
+                                                                                $$ = new ast_node("STRUCT_DECLARATOR_LIST","", branches, branch_notes);}
 
 STRUCT_DECLARATOR : DECLARATOR { $$  =$1; }
-                  | DECLARATOR T_COLON CONSTANT_EXPRESSION  {$$ = new ast_node("STRUCT_DECLARATOR","",std::vector<ast_node*>{$1, $2},std::vector<std::string>{"DECLARATOR","CONSTANT_EXPRESSION"});}
-                  | T_COLON CONSTANT_EXPRESSION  {$$ = new ast_node("STRUCT_DECLARATOR","",std::vector<ast_node*>{NULL, $2},std::vector<std::string>{"DECLARATOR","CONSTANT_EXPRESSION"});}
+                  | DECLARATOR T_COLON CONSTANT_EXPRESSION  {                   std::vector<ast_node*> branches = {$1, $3};
+                                                                                std::vector<std::string> branch_notes = {"DECLARATOR","CONSTANT_EXPRESSION"};
+                                                                                $$ = new ast_node("STRUCT_DECLARATOR","", branches, branch_notes);}
 
-ENUM_SPECIFIER : ENUM IDENTIFIER                                                   {$$ = new ast_node("ENUMERATOR_LIST","",std::vector<ast_node*>{$1, $2},std::vector<std::string>{"ENUM","IDENTIFIER"});}
-               | ENUM IDENTIFIER T_LCURLY_BRACKET ENUMERATOR_LIST T_RCURLY_BRACKET {$$ = new ast_node("ENUMERATOR_LIST","",std::vector<ast_node*>{$1,$2, $3},std::vector<std::string>{"ENUM","IDENTIFIER","ENUMERATOR_LIST"});}
-               | ENUM T_LCURLY_BRACKET ENUMERATOR_LIST T_RCURLY_BRACKET            {$$ = new ast_node("ENUMERATOR_LIST","",std::vector<ast_node*>{$1, $3},std::vector<std::string>{"ENUM","ENUMERATOR_LIST"});}
+                  | T_COLON CONSTANT_EXPRESSION  {                              std::vector<ast_node*> branches = {NULL, $2};
+                                                                                std::vector<std::string> branch_notes = {"DECLARATOR","CONSTANT_EXPRESSION"};
+                                                                                $$ = new ast_node("STRUCT_DECLARATOR","", branches, branch_notes);}
+
+ENUM_SPECIFIER : ENUM IDENTIFIER                 {                              std::vector<ast_node*> branches = {$1};
+                                                                                std::vector<std::string> branch_notes = {"ENUM","IDENTIFIER"};
+                                                                                $$ = new ast_node("ENUMERATOR_LIST","", branches, branch_notes);}
+
+               | ENUM IDENTIFIER T_LCURLY_BRACKET ENUMERATOR_LIST T_RCURLY_BRACKET {  std::vector<ast_node*> branches = {$1, $2, $4};
+                                                                                      std::vector<std::string> branch_notes = {"ENUM","IDENTIFIER","ENUMERATOR_LIST"};
+                                                                                      $$ = new ast_node("ENUMERATOR_LIST","", branches, branch_notes);}
+
+               | ENUM T_LCURLY_BRACKET ENUMERATOR_LIST T_RCURLY_BRACKET    {    std::vector<ast_node*> branches = {$1, NULL, $3};
+                                                                                std::vector<std::string> branch_notes = {"ENUM","IDENTIFIER","ENUMERATOR_LIST"};
+                                                                                $$ = new ast_node("ENUMERATOR_LIST","", branches, branch_notes);}
 
 ENUM : T_ENUM { $$ = new ast_node("ENUM",*$1);}
 
 ENUMERATOR_LIST : ENUMERATOR {$$ = $1;}
-                | ENUMERATOR_LIST T_COMMA ENUMERATOR {$$ = new ast_node("ENUMERATOR_LIST","",std::vector<ast_node*>{$1, $3},std::vector<std::string>{"ENUMERATOR_LIST","ENUMERATOR"});}
+                | ENUMERATOR_LIST T_COMMA ENUMERATOR {                          std::vector<ast_node*> branches = {$1, $3};
+                                                                                std::vector<std::string> branch_notes = {"ENUMERATOR_LIST","ENUMERATOR"};
+                                                                                $$ = new ast_node("ENUMERATOR_LIST","", branches, branch_notes);}
 
 ENUMERATOR : ENUM_CONSTANT { $$ = $1;}
-           | ENUM_CONSTANT T_EQUALS CONSTANT_EXPRESSION {$$ = new ast_node("ENUMERATOR","Note: branches[0] = branches[1]",std::vector<ast_node*>{$1, $2},std::vector<std::string>{"ENUM_CONSTANT","CONSTANT_EXPRESSION"});}
+           | ENUM_CONSTANT T_EQUALS CONSTANT_EXPRESSION {                       std::vector<ast_node*> branches = {$1, $3};
+                                                                                std::vector<std::string> branch_notes = {"ENUM_CONSTANT","CONSTANT_EXPRESSION"};
+                                                                                $$ = new ast_node("ENUMERATOR","", branches, branch_notes);}
 
 ENUM_CONSTANT : T_ENUM_CONSTANT { $$ = new ast_node("ENUMERATOR",*$1);}
 
@@ -320,69 +549,143 @@ TYPE_QUALIFIER : T_CONST { $$ = new ast_node("TYPE_QUALIFIER",*$1);}
                | T_VOLATILE { $$ = new ast_node("TYPE_QUALIFIER",*$1);}
 
 DECLARATOR : DIRECT_DECLARATOR { $$ = $1; }
-           | POINTER DIRECT_DECLARATOR {$$ = new ast_node("DECLARATOR","",std::vector<ast_node*>{$1, $2},std::vector<std::string>{"POINTER","DIRECT_DECLARATOR"});}
+           | POINTER DIRECT_DECLARATOR {                                        std::vector<ast_node*> branches = {$1, $2};
+                                                                                std::vector<std::string> branch_notes = {"POINTER","DIRECT_DECLARATOR"};
+                                                                                $$ = new ast_node("DECLARATOR","", branches, branch_notes);}
 
 DIRECT_DECLARATOR : IDENTIFIER {$$ = $1; }
+
                   | T_LBRACKET DECLARATOR T_RBRACKET {$$ = $2;}
-                  | DIRECT_DECLARATOR T_ESQ_BRACKETS {$$ = new ast_node("TYPE_QUALIFIER_LIST","",std::vector<ast_node*>{$1, NULL},std::vector<std::string>{"DIRECT_DECLARATOR","CONSTANT_EXPRESSION"});}
-                  | DIRECT_DECLARATOR T_LSQ_BRACKET CONSTANT_EXPRESSION T_RSQ_BRACKET {$$ = new ast_node("TYPE_QUALIFIER_LIST","",std::vector<ast_node*>{$1, $3},std::vector<std::string>{"DIRECT_DECLARATOR","CONSTANT_EXPRESSION"});}
-                  | DIRECT_DECLARATOR T_LBRACKET PARAMETER_TYPE_LIST T_RBRACKET {$$ = new ast_node("TYPE_QUALIFIER_LIST","",std::vector<ast_node*>{$1, $3},std::vector<std::string>{"DIRECT_DECLARATOR","PARAMETER_TYPE_LIST"});}
-                  | DIRECT_DECLARATOR T_EMPTY_BRACKETS                          {$$ = new ast_node("TYPE_QUALIFIER_LIST","",std::vector<ast_node*>{$1, NULL},std::vector<std::string>{"DIRECT_DECLARATOR","IDENTIFIER_LIST"});}
-                  | DIRECT_DECLARATOR T_LBRACKET IDENTIFIER_LIST T_RBRACKET     {$$ = new ast_node("TYPE_QUALIFIER_LIST","",std::vector<ast_node*>{$1, $3},std::vector<std::string>{"DIRECT_DECLARATOR","IDENTIFIER_LIST"});}
+
+                  | DIRECT_DECLARATOR T_ESQ_BRACKETS {                          std::vector<ast_node*> branches = {$1, NULL};
+                                                                                std::vector<std::string> branch_notes = {"DIRECT_DECLARATOR","CONSTANT_EXPRESSION"};
+                                                                                $$ = new ast_node("TYPE_QUALIFIER_LIST","", branches, branch_notes);}
+
+                  | DIRECT_DECLARATOR T_LSQ_BRACKET CONSTANT_EXPRESSION T_RSQ_BRACKET {       std::vector<ast_node*> branches = {$1, $3};
+                                                                                              std::vector<std::string> branch_notes = {"DIRECT_DECLARATOR","CONSTANT_EXPRESSION"};
+                                                                                              $$ = new ast_node("TYPE_QUALIFIER_LIST","", branches, branch_notes);}
+
+                  | DIRECT_DECLARATOR T_LBRACKET PARAMETER_TYPE_LIST T_RBRACKET {      std::vector<ast_node*> branches = {$1, $3};
+                                                                                       std::vector<std::string> branch_notes = {"DIRECT_DECLARATOR","PARAMETER_TYPE_LIST"};
+                                                                                       $$ = new ast_node("TYPE_QUALIFIER_LIST","", branches, branch_notes);}
+
+                  | DIRECT_DECLARATOR T_EMPTY_BRACKETS                   {      std::vector<ast_node*> branches = {$1, NULL};
+                                                                                std::vector<std::string> branch_notes = {"DIRECT_DECLARATOR","IDENTIFIER_LIST"};
+                                                                                $$ = new ast_node("TYPE_QUALIFIER_LIST","", branches, branch_notes);}
+
+                  | DIRECT_DECLARATOR T_LBRACKET IDENTIFIER_LIST T_RBRACKET   { std::vector<ast_node*> branches = {$1, $3};
+                                                                                std::vector<std::string> branch_notes = {"DIRECT_DECLARATOR","IDENTIFIER_LIST"};
+                                                                                $$ = new ast_node("TYPE_QUALIFIER_LIST","", branches, branch_notes);}
 
 /*THE TIMES TOKEN HERE SHOULD BE REPLACED WITH A T_DEREFERENCE token*/
 POINTER : DEREFERENCE {$$ = $1;}
-        | DEREFERENCE TYPE_QUALIFIER_LIST {$$ = new ast_node("TYPE_QUALIFIER_LIST","",std::vector<ast_node*>{$1, $2},std::vector<std::string>{"DEREFERENCE","TYPE_QUALIFIER_LIST"});}
-        | DEREFERENCE POINTER             {$$ = new ast_node("TYPE_QUALIFIER_LIST","",std::vector<ast_node*>{$1, $2},std::vector<std::string>{"DEREFERENCE","POINTER"});}
-        | DEREFERENCE TYPE_QUALIFIER_LIST POINTER {$$ = new ast_node("TYPE_QUALIFIER_LIST","",std::vector<ast_node*>{$1, $2, $3},std::vector<std::string>{"DEREFERENCE","TYPE_QUALIFIER_LIST", "POINTER"});}
+        | DEREFERENCE TYPE_QUALIFIER_LIST {                                     std::vector<ast_node*> branches = {$1, $2};
+                                                                                std::vector<std::string> branch_notes = {"DEREFERENCE","TYPE_QUALIFIER_LIST"};
+                                                                                $$ = new ast_node("POINTER","", branches, branch_notes);}
+
+        | DEREFERENCE POINTER             {                                     std::vector<ast_node*> branches = {$1, $2};
+                                                                                std::vector<std::string> branch_notes = {"DEREFERENCE","POINTER"};
+                                                                                $$ = new ast_node("POINTER","", branches, branch_notes);}
+
+        | DEREFERENCE TYPE_QUALIFIER_LIST POINTER {                             std::vector<ast_node*> branches = {$1, $2, $3};
+                                                                                std::vector<std::string> branch_notes = {"DEREFERENCE","TYPE_QUALIFIER_LIST", "POINTER"};
+                                                                                $$ = new ast_node("POINTER","", branches, branch_notes);}
 
 DEREFERENCE : T_DEREFERENCE { $$ = new ast_node("DEREFERENCE","");}
 
 TYPE_QUALIFIER_LIST : TYPE_QUALIFIER { $$ = $1; }
-                    | TYPE_QUALIFIER_LIST TYPE_QUALIFIER {$$ = new ast_node("TYPE_QUALIFIER_LIST","",std::vector<ast_node*>{$1, $2},std::vector<std::string>{"TYPE_QUALIFIER_LIST","TYPE_QUALIFIER"});}
+                    | TYPE_QUALIFIER_LIST TYPE_QUALIFIER {                      std::vector<ast_node*> branches = {$1, $2};
+                                                                                std::vector<std::string> branch_notes = {"TYPE_QUALIFIER_LIST","TYPE_QUALIFIER"};
+                                                                                $$ = new ast_node("TYPE_QUALIFIER_LIST","", branches, branch_notes);}
 
 PARAMETER_TYPE_LIST : PARAMETER_LIST { $$ = $1; }
-                    | PARAMETER_LIST T_COMMA ELIPSIS  {$$ = new ast_node("PARAMETER_TYPE_LIST","",std::vector<ast_node*>{$1, $3},std::vector<std::string>{"PARAMETER_LIST","PARAMETER_DECLARATION"});}
+                    | PARAMETER_LIST T_COMMA ELIPSIS  {                         std::vector<ast_node*> branches = {$1, $3};
+                                                                                std::vector<std::string> branch_notes = {"PARAMETER_LIST","ELIPSIS"};
+                                                                                $$ = new ast_node("PARAMETER_TYPE_LIST","", branches, branch_notes);}
 
 ELIPSIS : T_DOT T_DOT T_DOT {$$ = new ast_node("ELIPSIS","...");}
 
 PARAMETER_LIST : PARAMETER_DECLARATION { $$ = $1; }
-               | PARAMETER_LIST T_COMMA PARAMETER_DECLARATION {$$ = new ast_node("PARAMETER_LIST","",std::vector<ast_node*>{$1, $3},std::vector<std::string>{"PARAMETER_LIST","PARAMETER_DECLARATION"});}
+               | PARAMETER_LIST T_COMMA PARAMETER_DECLARATION {                 std::vector<ast_node*> branches = {$1, $3};
+                                                                                std::vector<std::string> branch_notes = {"PARAMETER_LIST","PARAMETER_DECLARATION"};
+                                                                                $$ = new ast_node("PARAMETER_LIST","", branches, branch_notes);}
 
-PARAMETER_DECLARATION : DECLARATION_SPECIFIERS DECLARATOR {$$ = new ast_node("PARAMETER_DECLARATION","",std::vector<ast_node*>{$1, $2},std::vector<std::string>{"DECLARATION_SPECIFIERS","DECLARATOR"});}
+PARAMETER_DECLARATION : DECLARATION_SPECIFIERS DECLARATOR {                     std::vector<ast_node*> branches = {$1, $2};
+                                                                                std::vector<std::string> branch_notes = {"DECLARATION_SPECIFIERS","DECLARATOR"};
+                                                                                $$ = new ast_node("PARAMETER_DECLARATION","", branches, branch_notes);}
+
                       | DECLARATION_SPECIFIERS { $$ = $1; }
-                      | DECLARATION_SPECIFIERS ABSTRACT_DECLARATOR {$$ = new ast_node("PARAMETER_DECLARATION","",std::vector<ast_node*>{$1, $2},std::vector<std::string>{"DECLARATION_SPECIFIERS","ABSTRACT_DECLARATOR"});}
+
+                      | DECLARATION_SPECIFIERS ABSTRACT_DECLARATOR {            std::vector<ast_node*> branches = {$1, $2};
+                                                                                std::vector<std::string> branch_notes = {"DECLARATION_SPECIFIERS","ABSTRACT_DECLARATOR"};
+                                                                                $$ = new ast_node("PARAMETER_DECLARATION","", branches, branch_notes);}
 
 IDENTIFIER_LIST : IDENTIFIER { $$ = $1; }
-                | IDENTIFIER_LIST T_COMMA IDENTIFIER  {$$ = new ast_node("IDENTIFIER_LIST","",std::vector<ast_node*>{$1, $3},std::vector<std::string>{"IDENTIFIER_LIST","IDENTIFIER"});}
+                | IDENTIFIER_LIST T_COMMA IDENTIFIER  {                         std::vector<ast_node*> branches = {$1, $3};
+                                                                                std::vector<std::string> branch_notes = {"IDENTIFIER_LIST","IDENTIFIER"};
+                                                                                $$ = new ast_node("IDENTIFIER_LIST","", branches, branch_notes);}
 
 IDENTIFIER : T_IDENTIFIER {$$ = new ast_node("IDENTIFIER",*$1);}
 
 TYPE_NAME : SPECIFIER_QUALIFIER_LIST { $$ = $1; }
-          | SPECIFIER_QUALIFIER_LIST ABSTRACT_DECLARATOR {$$ = new ast_node("TYPE_NAME","",std::vector<ast_node*>{$1, $2},std::vector<std::string>{"SPECIFIER_QUALIFIER_LIST","ABSTRACT_DECLARATOR"});}
+          | SPECIFIER_QUALIFIER_LIST ABSTRACT_DECLARATOR {                      std::vector<ast_node*> branches = {$1, $2};
+                                                                                std::vector<std::string> branch_notes = {"SPECIFIER_QUALIFIER_LIST","ABSTRACT_DECLARATOR"};
+                                                                                $$ = new ast_node("TYPE_NAME","", branches, branch_notes);}
 
 ABSTRACT_DECLARATOR : POINTER { $$ = $1; }
-                    | POINTER DIRECT_ABSTRACT_DECLARATOR {$$ = new ast_node("ABSTRACT_DECLARATOR","",std::vector<ast_node*>{$1, $2},std::vector<std::string>{"POINTER","DIRECT_ABSTRACT_DECLARATOR"});}
+
+                    | POINTER DIRECT_ABSTRACT_DECLARATOR {                      std::vector<ast_node*> branches = {$1, $2};
+                                                                                std::vector<std::string> branch_notes = {"POINTER","DIRECT_ABSTRACT_DECLARATOR"};
+                                                                                $$ = new ast_node("ABSTRACT_DECLARATOR","", branches, branch_notes);}
+
                     | DIRECT_ABSTRACT_DECLARATOR  { $$ = $1; }
 
 DIRECT_ABSTRACT_DECLARATOR : T_LBRACKET ABSTRACT_DECLARATOR T_RBRACKET { $$ = $2; }
-                           | DIRECT_ABSTRACT_DECLARATOR T_LSQ_BRACKET CONSTANT_EXPRESSION T_RSQ_BRACKET {$$ = new ast_node("DIRECT_ABSTRACT_DECLARATOR","",std::vector<ast_node*>{$1, $2},std::vector<std::string>{"DIRECT_ABSTRACT_DECLARATOR","CONSTANT_EXPRESSION"});}
-                           | T_LSQ_BRACKET CONSTANT_EXPRESSION T_RSQ_BRACKET {$$ = new ast_node("DIRECT_ABSTRACT_DECLARATOR","",std::vector<ast_node*>{NULL, $2},std::vector<std::string>{"DIRECT_ABSTRACT_DECLARATOR","CONSTANT_EXPRESSION"});}
-                           | DIRECT_ABSTRACT_DECLARATOR T_ESQ_BRACKETS {$$ = new ast_node("DIRECT_ABSTRACT_DECLARATOR","",std::vector<ast_node*>{$1, NULL},std::vector<std::string>{"DIRECT_ABSTRACT_DECLARATOR","CONSTANT_EXPRESSION"});}
+
+                           | DIRECT_ABSTRACT_DECLARATOR T_LSQ_BRACKET CONSTANT_EXPRESSION T_RSQ_BRACKET {    std::vector<ast_node*> branches = {$1, $3};
+                                                                                                             std::vector<std::string> branch_notes = {"DIRECT_ABSTRACT_DECLARATOR","CONSTANT_EXPRESSION"};
+                                                                                                             $$ = new ast_node("DIRECT_ABSTRACT_DECLARATOR","", branches, branch_notes);}
+
+                           | T_LSQ_BRACKET CONSTANT_EXPRESSION T_RSQ_BRACKET {  std::vector<ast_node*> branches = {NULL, $2};
+                                                                                std::vector<std::string> branch_notes = {"DIRECT_ABSTRACT_DECLARATOR","CONSTANT_EXPRESSION"};
+                                                                                $$ = new ast_node("DIRECT_ABSTRACT_DECLARATOR","", branches, branch_notes);}
+
+                           | DIRECT_ABSTRACT_DECLARATOR T_ESQ_BRACKETS {        std::vector<ast_node*> branches = {$1, NULL};
+                                                                                std::vector<std::string> branch_notes = {"DIRECT_ABSTRACT_DECLARATOR","CONSTANT_EXPRESSION"};
+                                                                                $$ = new ast_node("DIRECT_ABSTRACT_DECLARATOR","", branches, branch_notes);}
+
                            | T_ESQ_BRACKETS {$$ = new ast_node("DIRECT_ABSTRACT_DECLARATOR","");}
-                           | DIRECT_ABSTRACT_DECLARATOR T_LBRACKET PARAMETER_TYPE_LIST T_RBRACKET {$$ = new ast_node("DIRECT_ABSTRACT_DECLARATOR","",std::vector<ast_node*>{$1, $2},std::vector<std::string>{"DIRECT_ABSTRACT_DECLARATOR","PARAMETER_TYPE_LIST"});}
-                           | T_LBRACKET PARAMETER_TYPE_LIST T_RBRACKET {$$ = new ast_node("DIRECT_ABSTRACT_DECLARATOR","",std::vector<ast_node*>{NULL, $2},std::vector<std::string>{"DIRECT_ABSTRACT_DECLARATOR","PARAMETER_TYPE_LIST"});}
-                           | DIRECT_ABSTRACT_DECLARATOR T_EMPTY_BRACKETS {$$ = new ast_node("DIRECT_ABSTRACT_DECLARATOR","",std::vector<ast_node*>{$1, NULL},std::vector<std::string>{"DIRECT_ABSTRACT_DECLARATOR","PARAMETER_TYPE_LIST"});}
+
+                           | DIRECT_ABSTRACT_DECLARATOR T_LBRACKET PARAMETER_TYPE_LIST T_RBRACKET {   std::vector<ast_node*> branches = {$1, $3};
+                                                                                                      std::vector<std::string> branch_notes = {"DIRECT_ABSTRACT_DECLARATOR","PARAMETER_TYPE_LIST"};
+                                                                                                      $$ = new ast_node("DIRECT_ABSTRACT_DECLARATOR","", branches, branch_notes);}
+
+                           | T_LBRACKET PARAMETER_TYPE_LIST T_RBRACKET {        std::vector<ast_node*> branches = {NULL, $2};
+                                                                                std::vector<std::string> branch_notes = {"DIRECT_ABSTRACT_DECLARATOR","PARAMETER_TYPE_LIST"};
+                                                                                $$ = new ast_node("DIRECT_ABSTRACT_DECLARATOR","", branches, branch_notes);}
+
+                           | DIRECT_ABSTRACT_DECLARATOR T_EMPTY_BRACKETS {      std::vector<ast_node*> branches = {$1, NULL};
+                                                                                std::vector<std::string> branch_notes = {"DIRECT_ABSTRACT_DECLARATOR","PARAMETER_TYPE_LIST"};
+                                                                                $$ = new ast_node("DIRECT_ABSTRACT_DECLARATOR","", branches, branch_notes);}
+
                            | T_EMPTY_BRACKETS {$$ = new ast_node("DIRECT_ABSTRACT_DECLARATOR","");}
 
-TYPEDEF_NAME : T_CUSTOM_TYPE {$$ = new ast_node("TYPEDEF_NAME",*$1,std::vector<ast_node*>{},std::vector<std::string>{});}
+TYPEDEF_NAME : T_CUSTOM_TYPE {$$ = new ast_node("TYPEDEF_NAME",*$1);}
 
 INITIALIZER : ASSIGNMENT_EXPRESSION { $$ = $1; }
-            | T_LCURLY_BRACKET INITIALIZER_LIST T_RCURLY_BRACKET {$$ = new ast_node("INITIALIZER","",std::vector<ast_node*>{$2},std::vector<std::string>{"INITIALIZER_LIST"});}
-            | T_LCURLY_BRACKET INITIALIZER_LIST T_COMMA T_RCURLY_BRACKET {$$ = new ast_node("INITIALIZER","",std::vector<ast_node*>{$2},std::vector<std::string>{"INITIALIZER_LIST"});}
+
+            | T_LCURLY_BRACKET INITIALIZER_LIST T_RCURLY_BRACKET {              std::vector<ast_node*> branches = {$2};
+                                                                                std::vector<std::string> branch_notes = {"INITIALIZER_LIST"};
+                                                                                $$ = new ast_node("INITIALIZER","", branches, branch_notes);}
+
+            | T_LCURLY_BRACKET INITIALIZER_LIST T_COMMA T_RCURLY_BRACKET {      std::vector<ast_node*> branches = {$2};
+                                                                                std::vector<std::string> branch_notes = {"INITIALIZER_LIST"};
+                                                                                $$ = new ast_node("INITIALIZER","", branches, branch_notes);}
 
 INITIALIZER_LIST : INITIALIZER {$$ = $1;}
-                 | INITIALIZER_LIST T_COMMA INITIALIZER {$$ = new ast_node("INITIALIZER_LIST","",std::vector<ast_node*>{$1, $2},std::vector<std::string>{"INITIALIZER_LIST","INITIALIZER"});}
+                 | INITIALIZER_LIST T_COMMA INITIALIZER {                       std::vector<ast_node*> branches = {$1, $3};
+                                                                                std::vector<std::string> branch_notes = {"INITIALIZER_LIST","INITIALIZER"};
+                                                                                $$ = new ast_node("INITIALIZER_LIST","", branches, branch_notes);}
 
 
 
