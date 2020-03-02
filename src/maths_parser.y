@@ -118,7 +118,6 @@ LABELED_STATEMENT : IDENTIFIER T_COLON STATEMENT {                              
 
 DEFAULT : T_DEFAULT {$$ = new ast_node("DEFAULT", *$1);}
 CASE : T_CASE {$$ = new ast_node("CASE", *$1);}
-IDENTIFIER : T_IDENTIFIER {$$ = new ast_node("IDENTIFIER", *$1);}
 
 COMPOUND_STATEMENT : T_LCURLY_BRACKET DECLARATION_LIST STATEMENT_LIST T_RCURLY_BRACKET {  std::vector<ast_node*> branches = {$2, $3};
                                                                                           std::vector<std::string> branch_notes = {"DECLARATION_LIST", "STATEMENT_LIST"};
@@ -577,7 +576,6 @@ DIRECT_DECLARATOR : IDENTIFIER {$$ = $1; }
                                                                                 std::vector<std::string> branch_notes = {"DIRECT_DECLARATOR","IDENTIFIER_LIST"};
                                                                                 $$ = new ast_node("TYPE_QUALIFIER_LIST","", branches, branch_notes);}
 
-/*THE TIMES TOKEN HERE SHOULD BE REPLACED WITH A T_DEREFERENCE token*/
 POINTER : DEREFERENCE {$$ = $1;}
         | DEREFERENCE TYPE_QUALIFIER_LIST {                                     std::vector<ast_node*> branches = {$1, $2};
                                                                                 std::vector<std::string> branch_notes = {"DEREFERENCE","TYPE_QUALIFIER_LIST"};
@@ -668,7 +666,7 @@ DIRECT_ABSTRACT_DECLARATOR : T_LBRACKET ABSTRACT_DECLARATOR T_RBRACKET { $$ = $2
                                                                                 std::vector<std::string> branch_notes = {"DIRECT_ABSTRACT_DECLARATOR","PARAMETER_TYPE_LIST"};
                                                                                 $$ = new ast_node("DIRECT_ABSTRACT_DECLARATOR","", branches, branch_notes);}
 
-                           | T_EMPTY_BRACKETS {$$ = new ast_node("DIRECT_ABSTRACT_DECLARATOR","");}
+                           | T_EMPTY_BRACKETS                                   {$$ = new ast_node("DIRECT_ABSTRACT_DECLARATOR","");}
 
 TYPEDEF_NAME : T_CUSTOM_TYPE {$$ = new ast_node("TYPEDEF_NAME",*$1);}
 
