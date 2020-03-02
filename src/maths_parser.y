@@ -66,6 +66,8 @@
 %left T_PLUS T_MINUS
 %left T_DIVIDE T_TIMES
 %right T_EXPONENT
+%precedence T_IF
+%precedence T_ELSE
 
 %start PROGRAM
 
@@ -75,6 +77,7 @@ PROGRAM : TRANSLATION_UNIT { g_root = $1; }
 TRANSLATION_UNIT : EXTERNAL_DECLARATION {$$ = $1;}
                  | TRANSLATION_UNIT EXTERNAL_DECLARATION { std::vector<ast_node*> branches = {$1, $2};
                                                            std::vector<std::string> branch_notes = {"TRANSLATION_UNIT", "EXTERNAL_DECLARATION"};
+                                                           fprintf(stderr,"hihihihih");
                                                            $$ = new ast_node("TRANSLATION_UNIT","", branches, branch_notes);}
 
 EXTERNAL_DECLARATION : FUNCTION_DECLARATION {$$ = $1;}
@@ -143,7 +146,7 @@ STATEMENT_LIST : STATEMENT { $$ = $1; }
                                                                                 $$ = new ast_node("STATEMENT_LIST","", branches, branch_notes);}
 
 EXPRESSION_STATEMENT : EXPR T_SEMICOLON { $$ = $1;}
-                     | T_SEMICOLON
+                     | T_SEMICOLON { $$ = NULL; }
 
 SELECTION_STATEMENT : IF T_LBRACKET EXPR T_RBRACKET STATEMENT {                 std::vector<ast_node*> branches = {$1, $3, $5, NULL, NULL};
                                                                                 std::vector<std::string> branch_notes = {"T_IF", "EXPR", "STATEMENT", "T_ELSE", "STATEMENT"};
@@ -424,17 +427,17 @@ DECLARATION : DECLARATION_SPECIFIERS T_SEMICOLON {                              
                                                                                 std::vector<std::string> branch_notes = {"DECLARATION_SPECIFIERS","INIT_DECLARATOR_LIST"};
                                                                                 $$ = new ast_node("DECLARATION","", branches, branch_notes);}
 
-DECLARATION_SPECIFIERS : STORAGE_CLASS_SPECIFIER { $$ = $1; }
+DECLARATION_SPECIFIERS : STORAGE_CLASS_SPECIFIER { fprintf(stderr,"yoyooyoyoyoy"); $$ = $1; }
                        | STORAGE_CLASS_SPECIFIER DECLARATION_SPECIFIERS {       std::vector<ast_node*> branches = {$1, $2};
                                                                                 std::vector<std::string> branch_notes = {"STORAGE_CLASS_SPECIFIER","DECLARATION_SPECIFIERS"};
                                                                                 $$ = new ast_node("DECLARATION_SPECIFIERS","", branches, branch_notes);}
 
-                       | TYPE_SPECIFIER { $$ = $1; }
+                       | TYPE_SPECIFIER { fprintf(stderr,"type spec"); $$ = $1; }
                        | TYPE_SPECIFIER DECLARATION_SPECIFIERS {                std::vector<ast_node*> branches = {$1, $2};
                                                                                 std::vector<std::string> branch_notes = {"TYPE_SPECIFIER","DECLARATION_SPECIFIERS"};
                                                                                 $$ = new ast_node("DECLARATION_SPECIFIERS","", branches, branch_notes);}
 
-                       | TYPE_QUALIFIER { $$ = $1; }
+                       | TYPE_QUALIFIER { fprintf(stderr,"type qual"); $$ = $1; }
                        | TYPE_QUALIFIER DECLARATION_SPECIFIERS {                std::vector<ast_node*> branches = {$1, $2};
                                                                                 std::vector<std::string> branch_notes = {"TYPE_QUALIFIER","DECLARATION_SPECIFIERS"};
                                                                                 $$ = new ast_node("DECLARATION_SPECIFIERS","", branches, branch_notes);}
