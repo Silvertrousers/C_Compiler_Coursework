@@ -32,16 +32,17 @@
 %token T_DEC_INT T_OCTAL_INT T_IDENTIFIER T_STRING T_ENUM_CONSTANT
 %token T_DEREFERENCE T_CUSTOM_TYPE
 
-%type<nodePtr> PROGRAM TRANSLATION_UNIT EXTERNAL_DECLARATION FUNCTION_DECLARATION STATEMENT LABELED_STATEMENT JUMP_STATEMENT COMPOUND_STATEMENT PRIMARY_EXPRESSION IDENTIFIER
-%type<nodePtr> POSTFIX_EXPRESSION ARGUMENT_EXPRESSION_LIST UNARY_EXPRESSION UNARY_OPERATOR ENUM ENUM_CONSTANT
-%type<nodePtr> MULTIPLICATIVE_EXPRESSION ADDITIVE_EXPRESSION SHIFT_EXPRESSION RELATIONAL_EXPRESSION EQUALITY_EXPRESSION
+%type<nodePtr> PROGRAM TRANSLATION_UNIT EXTERNAL_DECLARATION FUNCTION_DECLARATION STATEMENT LABELED_STATEMENT JUMP_STATEMENT COMPOUND_STATEMENT PRIMARY_EXPRESSION ITERATION_STATEMENT
+%type<nodePtr> POSTFIX_EXPRESSION ARGUMENT_EXPRESSION_LIST UNARY_EXPRESSION UNARY_OPERATOR STATEMENT_LIST EXPRESSION_STATEMENT SELECTION_STATEMENT
+%type<nodePtr> MULTIPLICATIVE_EXPRESSION ADDITIVE_EXPRESSION SHIFT_EXPRESSION RELATIONAL_EXPRESSION EQUALITY_EXPRESSION CAST_EXPRESSION
 %type<nodePtr> AND_EXPRESSION EXCLUSIVE_OR_EXPRESSION INCLUSIVE_OR_EXPRESSION LOGICAL_AND_EXPRESSION LOGICAL_OR_EXPRESSION
 %type<nodePtr> CONDITIONAL_EXPRESSION ASSIGNMENT_EXPRESSION ASSIGNMENT_OPERATOR CONSTANT_EXPRESSION EXPR CONSTANT
-%type<nodePtr> DECLARATION DECLARATION_SPECIFIERS INIT_DECLARATOR_LIST INIT_DECLARATOR STORAGE_CLASS_SPECIFIER TYPE_SPECIFIER
+%type<nodePtr> DECLARATION DECLARATION_SPECIFIERS INIT_DECLARATOR_LIST INIT_DECLARATOR STORAGE_CLASS_SPECIFIER TYPE_SPECIFIER DECLARATION_LIST
 %type<nodePtr> STRUCT_OR_UNION_SPECIFIER STRUCT_OR_UNION STRUCT_DECLARATION_LIST STRUCT_DECLARATION SPECIFIER_QUALIFIER_LIST
 %type<nodePtr> STRUCT_DECLARATOR_LIST STRUCT_DECLARATOR ENUM_SPECIFIER ENUMERATOR_LIST ENUMERATOR TYPE_QUALIFIER
-%type<nodePtr> DECLARATOR DIRECT_DECLARATOR POINTER TYPE_QUALIFIER_LIST PARAMETER_TYPE_LIST PARAMETER_LIST PARAMETER_DECLARATION DEREFERENCE
+%type<nodePtr> DECLARATOR DIRECT_DECLARATOR POINTER TYPE_QUALIFIER_LIST PARAMETER_TYPE_LIST PARAMETER_LIST PARAMETER_DECLARATION
 %type<nodePtr> IDENTIFIER_LIST TYPE_NAME ABSTRACT_DECLARATOR DIRECT_ABSTRACT_DECLARATOR TYPEDEF_NAME INITIALIZER INITIALIZER_LIST
+%type<nodePtr> SIZE_OF GOTO RETURN FOR WHILE DO SWITCH IF ELSE IDENTIFIER ENUM ENUM_CONSTANT DEREFERENCE ELIPSIS
 
 
 %type<_text> T_AUTO T_BREAK T_CASE T_CHAR T_CONST T_CONTINUE T_DEFAULT T_DO T_DOUBLE
@@ -109,30 +110,40 @@ STATEMENT_LIST : STATEMENT { $$ = $1; }
 EXPRESSION_STATEMENT : EXPR T_SEMICOLON { $$ = $1; }
                      | T_SEMICOLON {$$ = new ast_node("EXPRESSION_STATEMENT", "")}
 
-SELECTION_STATEMENT : T_IF T_LBRACKET EXPR T_RBRACKET STATEMENT {$$ = new ast_node("SELECTION_STATEMENT","", std::vector<ast_node*>{$1, $3, $5, NULL, NULL}, std::vector<std::string>{"T_IF", "EXPR", "STATEMENT", "T_ELSE", "STATEMENT"});}
-                    | T_IF T_LBRACKET EXPR T_RBRACKET STATEMENT T_ELSE STATEMENT {$$ = new ast_node("SELECTION_STATEMENT","", std::vector<ast_node*>{$1, $3, $5, $6, $7}, std::vector<std::string>{"T_IF", "EXPR", "STATEMENT", "T_ELSE", "STATEMENT"});}
-                    | T_SWITCH T_LBRACKET EXPR T_RBRACKET STATEMENT {$$ = new ast_node("SELECTION_STATEMENT","", std::vector<ast_node*>{$1, $3, $5, NULL, NULL}, std::vector<std::string>{"T_SWITCH", "EXPR", "STATEMENT", "T_ELSE", "STATEMENT"});}
+SELECTION_STATEMENT : IF T_LBRACKET EXPR T_RBRACKET STATEMENT {$$ = new ast_node("SELECTION_STATEMENT","", std::vector<ast_node*>{$1, $3, $5, NULL, NULL}, std::vector<std::string>{"T_IF", "EXPR", "STATEMENT", "T_ELSE", "STATEMENT"});}
+                    | IF T_LBRACKET EXPR T_RBRACKET STATEMENT ELSE STATEMENT {$$ = new ast_node("SELECTION_STATEMENT","", std::vector<ast_node*>{$1, $3, $5, $6, $7}, std::vector<std::string>{"T_IF", "EXPR", "STATEMENT", "T_ELSE", "STATEMENT"});}
+                    | SWITCH T_LBRACKET EXPR T_RBRACKET STATEMENT {$$ = new ast_node("SELECTION_STATEMENT","", std::vector<ast_node*>{$1, $3, $5, NULL, NULL}, std::vector<std::string>{"T_SWITCH", "EXPR", "STATEMENT", "T_ELSE", "STATEMENT"});}
 
-ITERATION_STATEMENT : T_WHILE T_LBRACKET EXPR T_RBRACKET STATEMENT {$$ = new ast_node("ITERATION_STATEMENT","", std::vector<ast_node*>{$1, $3, NULL, NULL, NULL, $5}, std::vector<std::string>{"T_WHILE", "EXPR", "EXPR", "EXPR", "T_DO", "STATEMENT"});}
-                    | T_DO STATEMENT T_WHILE T_LBRACKET EXPR T_RBRACKET T_SEMICOLON {$$ = new ast_node("ITERATION_STATEMENT","", std::vector<ast_node*>{$3, $5, NULL, NULL, $1, $2}, std::vector<std::string>{"T_WHILE", "EXPR", "EXPR", "EXPR", "T_DO", "STATEMENT"});}
-                    | T_FOR T_LBRACKET EXPR T_SEMICOLON EXPR T_SEMICOLON EXPR T_RBRACKET STATEMENT {$$ = new ast_node("ITERATION_STATEMENT","", std::vector<ast_node*>{$1, $3, $5, $7, NULL, $9}, std::vector<std::string>{"T_FOR", "EXPR", "EXPR", "EXPR", "T_DO", "STATEMENT"});}
-                    | T_FOR T_LBRACKET T_SEMICOLON EXPR T_SEMICOLON EXPR T_RBRACKET STATEMENT
-                    | T_FOR T_LBRACKET EXPR T_SEMICOLON T_SEMICOLON EXPR T_RBRACKET STATEMENT
-                    | T_FOR T_LBRACKET EXPR T_SEMICOLON EXPR T_SEMICOLON T_RBRACKET STATEMENT
-                    | T_FOR T_LBRACKET T_SEMICOLON T_SEMICOLON EXPR T_RBRACKET STATEMENT
-                    | T_FOR T_LBRACKET T_SEMICOLON EXPR T_SEMICOLON T_RBRACKET STATEMENT
-                    | T_FOR T_LBRACKET EXPR T_SEMICOLON T_SEMICOLON T_RBRACKET STATEMENT
-                    | T_FOR T_LBRACKET T_SEMICOLON T_SEMICOLON T_RBRACKET STATEMENT
+SWITCH : T_SWITCH {$$ = new ast_node("T_SWITCH", *$1);}
+IF : T_IF {$$ = new ast_node("T_IF", *$1);}
+ELSE : T_ELSE {$$ = new ast_node("T_ELSE", *$1);}
 
-JUMP_STATEMENT : T_GOTO IDENTIFIER T_SEMICOLON
-               | T_CONTINUE T_SEMICOLON
-               | T_BREAK T_SEMICOLON
-               | T_RETURN EXPR T_SEMICOLON
-               | T_RETURN T_SEMICOLON
+ITERATION_STATEMENT : WHILE T_LBRACKET EXPR T_RBRACKET STATEMENT {$$ = new ast_node("ITERATION_STATEMENT","", std::vector<ast_node*>{$1, $3, NULL, NULL, NULL, $5}, std::vector<std::string>{"T_WHILE", "EXPR", "EXPR", "EXPR", "T_DO", "STATEMENT"});}
+                    | DO STATEMENT WHILE T_LBRACKET EXPR T_RBRACKET T_SEMICOLON {$$ = new ast_node("ITERATION_STATEMENT","", std::vector<ast_node*>{$3, $5, NULL, NULL, $1, $2}, std::vector<std::string>{"T_WHILE", "EXPR", "EXPR", "EXPR", "T_DO", "STATEMENT"});}
+                    | FOR T_LBRACKET EXPR T_SEMICOLON EXPR T_SEMICOLON EXPR T_RBRACKET STATEMENT {$$ = new ast_node("ITERATION_STATEMENT","", std::vector<ast_node*>{$1, $3, $5, $7, $9}, std::vector<std::string>{"T_FOR", "EXPR", "EXPR", "EXPR", "STATEMENT"});}
+                    | FOR T_LBRACKET T_SEMICOLON EXPR T_SEMICOLON EXPR T_RBRACKET STATEMENT {$$ = new ast_node("ITERATION_STATEMENT","", std::vector<ast_node*>{$1, NULL, $4, $6, $8}, std::vector<std::string>{"T_FOR", "EXPR", "EXPR", "EXPR", "STATEMENT"});}
+                    | FOR T_LBRACKET EXPR T_SEMICOLON T_SEMICOLON EXPR T_RBRACKET STATEMENT {$$ = new ast_node("ITERATION_STATEMENT","", std::vector<ast_node*>{$1, $3, NULL, $6, $8}, std::vector<std::string>{"T_FOR", "EXPR", "EXPR", "EXPR", "STATEMENT"});}
+                    | FOR T_LBRACKET EXPR T_SEMICOLON EXPR T_SEMICOLON T_RBRACKET STATEMENT {$$ = new ast_node("ITERATION_STATEMENT","", std::vector<ast_node*>{$1, $3, $5, NULL, $8}, std::vector<std::string>{"T_FOR", "EXPR", "EXPR", "EXPR", "STATEMENT"});}
+                    | FOR T_LBRACKET T_SEMICOLON T_SEMICOLON EXPR T_RBRACKET STATEMENT {$$ = new ast_node("ITERATION_STATEMENT","", std::vector<ast_node*>{$1, NULL, NULL, $5, $7}, std::vector<std::string>{"T_FOR", "EXPR", "EXPR", "EXPR", "STATEMENT"});}
+                    | FOR T_LBRACKET T_SEMICOLON EXPR T_SEMICOLON T_RBRACKET STATEMENT {$$ = new ast_node("ITERATION_STATEMENT","", std::vector<ast_node*>{$1, NULL, $4, NULL, $7}, std::vector<std::string>{"T_FOR", "EXPR", "EXPR", "EXPR", "STATEMENT"});}
+                    | FOR T_LBRACKET EXPR T_SEMICOLON T_SEMICOLON T_RBRACKET STATEMENT {$$ = new ast_node("ITERATION_STATEMENT","", std::vector<ast_node*>{$1, $3, NULL, NULL, $7}, std::vector<std::string>{"T_FOR", "EXPR", "EXPR", "EXPR", "STATEMENT"});}
+                    | FOR T_LBRACKET T_SEMICOLON T_SEMICOLON T_RBRACKET STATEMENT {$$ = new ast_node("ITERATION_STATEMENT","", std::vector<ast_node*>{$1, NULL, NULL, NULL, $6}, std::vector<std::string>{"T_FOR", "EXPR", "EXPR", "EXPR", "STATEMENT"});}
+FOR : T_FOR {$$ = new ast_node("T_FOR", *$1);}
+WHILE : T_WHILE {$$ = new ast_node("T_WHILE", *$1);}
+DO : T_DO {$$ = new ast_node("T_DO", *$1);}
 
-PRIMARY_EXPRESSION : IDENTIFIER {$$ = new ast_node("PRIMARY_EXPRESSION", *$1);}
-                   | CONSTANT {$$ = new ast_node("PRIMARY_EXPRESSION","",std::vector<ast_node*>{$1});}
-                   | T_STRING
+JUMP_STATEMENT : GOTO IDENTIFIER T_SEMICOLON {$$ = new ast_node("JUMP_STATEMENT", *$1);}
+               | T_CONTINUE T_SEMICOLON {$$ = new ast_node("JUMP_STATEMENT", *$1);}
+               | T_BREAK T_SEMICOLON {$$ = new ast_node("JUMP_STATEMENT", *$1);}
+               | RETURN EXPR T_SEMICOLON {$$ = new ast_node("JUMP_STATEMENT", "", std::vector<ast_node*>{$1, $2},std::vector<std::string>{"RETURN", "EXPR"});}
+               | RETURN T_SEMICOLON {$$ = new ast_node("JUMP_STATEMENT", "",std::vector<ast_node*>{$1, NULL},std::vector<std::string>{"RETURN", "EXPR"});}
+
+GOTO : T_GOTO { $$ = new ast_node("GOTO", *$1);}
+RETURN : T_RETURN {$$ = new ast_node("RETURN", *$1);}
+
+PRIMARY_EXPRESSION : IDENTIFIER { $$ = $1; }
+                   | CONSTANT {$$ = $1;}
+                   | T_STRING {$$ = new ast_node("PRIMARY_EXPRESSION", *$1);}
                    | T_LBRACKET EXPR T_RBRACKET {$$ = new ast_node("PRIMARY_EXPRESSION","",std::vector<ast_node*>{$2});}
 
 CONSTANT : T_DEC_INT   {$$ = new ast_node("CONSTANT", *$1); }
@@ -140,48 +151,55 @@ CONSTANT : T_DEC_INT   {$$ = new ast_node("CONSTANT", *$1); }
 
 
 POSTFIX_EXPRESSION : PRIMARY_EXPRESSION { $$  = $1;}
-                   | POSTFIX_EXPRESSION T_LSQ_BRACKET EXPR T_RSQ_BRACKET
-                   | POSTFIX_EXPRESSION T_EMPTY_BRACKETS
-                   | POSTFIX_EXPRESSION T_LBRACKET ARGUMENT_EXPRESSION_LIST T_RBRACKET
-                   | POSTFIX_EXPRESSION T_DOT IDENTIFIER
-                   | POSTFIX_EXPRESSION T_ARROW IDENTIFIER
-                   | POSTFIX_EXPRESSION T_INCREMENT
-                   | POSTFIX_EXPRESSION T_DECREMENT
+                   | POSTFIX_EXPRESSION T_LSQ_BRACKET EXPR T_RSQ_BRACKET {$$ = new ast_node("POSTFIX_EXPRESSION","",std::vector<ast_node*>{$1, $3},std::vector<std::string>{"POSTFIX_EXPRESSION", "EXPR"});}
+                   | POSTFIX_EXPRESSION T_EMPTY_BRACKETS {$$ = new ast_node("POSTFIX_EXPRESSION","",std::vector<ast_node*>{$1, NULL},std::vector<std::string>{"POSTFIX_EXPRESSION", "ARGUMENT_EXPRESSION_LIST"});}
+                   | POSTFIX_EXPRESSION T_LBRACKET ARGUMENT_EXPRESSION_LIST T_RBRACKET {$$ = new ast_node("POSTFIX_EXPRESSION","",std::vector<ast_node*>{$1, $3},std::vector<std::string>{"POSTFIX_EXPRESSION", "ARGUMENT_EXPRESSION_LIST"});}
+                   | POSTFIX_EXPRESSION T_DOT IDENTIFIER {$$ = new ast_node("POSTFIX_EXPRESSION",".",std::vector<ast_node*>{$1, $3},std::vector<std::string>{"POSTFIX_EXPRESSION", "IDENTIFIER"});}
+                   | POSTFIX_EXPRESSION T_ARROW IDENTIFIER {$$ = new ast_node("POSTFIX_EXPRESSION","->",std::vector<ast_node*>{$1, $3},std::vector<std::string>{"POSTFIX_EXPRESSION", "IDENTIFIER"});}
+                   | POSTFIX_EXPRESSION T_INCREMENT {$$ = new ast_node("POSTFIX_EXPRESSION","++",std::vector<ast_node*>{$1},std::vector<std::string>{"POSTFIX_EXPRESSION"});}
+                   | POSTFIX_EXPRESSION T_DECREMENT {$$ = new ast_node("POSTFIX_EXPRESSION","--",std::vector<ast_node*>{$1},std::vector<std::string>{"POSTFIX_EXPRESSION"});}
 
 ARGUMENT_EXPRESSION_LIST : ASSIGNMENT_EXPRESSION { $$  = $1;}
-                         | ARGUMENT_EXPRESSION_LIST T_COMMA ASSIGNMENT_EXPRESSION
+                         | ARGUMENT_EXPRESSION_LIST T_COMMA ASSIGNMENT_EXPRESSION {$$ = new ast_node("ARGUMENT_EXPRESSION_LIST","",std::vector<ast_node*>{$1},std::vector<std::string>{"ARGUMENT_EXPRESSION_LIST", "ASSIGNMENT_EXPRESSION"});}
 
 UNARY_EXPRESSION : POSTFIX_EXPRESSION { $$  = $1;}
-                 | T_INCREMENT UNARY_EXPRESSION
-                 | T_DECREMENT UNARY_EXPRESSION
-                 | UNARY_OPERATOR CAST_EXPRESSION
+                 | T_INCREMENT UNARY_EXPRESSION {$$ = new ast_node("UNARY_EXPRESSION","++",std::vector<ast_node*>{$1},std::vector<std::string>{"UNARY_OPERATOR"});}
+                 | T_DECREMENT UNARY_EXPRESSION {$$ = new ast_node("UNARY_EXPRESSION","--",std::vector<ast_node*>{$1},std::vector<std::string>{"UNARY_OPERATOR"});}
+                 | UNARY_OPERATOR CAST_EXPRESSION {$$ = new ast_node("UNARY_EXPRESSION","",std::vector<ast_node*>{$1, $2},std::vector<std::string>{"UNARY_OPERATOR","CAST_EXPRESSION"});}
 
-                 | T_SIZEOF UNARY_EXPRESSION
-                 | T_SIZEOF T_LBRACKET TYPE_NAME T_RBRACKET
+                 | SIZE_OF UNARY_EXPRESSION {$$ = new ast_node("UNARY_EXPRESSION","",std::vector<ast_node*>{$1, $2},std::vector<std::string>{"SIZE_OF","UNARY_EXPRESSION"});}
+                 | SIZE_OF T_LBRACKET TYPE_NAME T_RBRACKET {$$ = new ast_node("UNARY_EXPRESSION","",std::vector<ast_node*>{$1, $3},std::vector<std::string>{"SIZE_OF","TYPE_NAME"});}
 
-UNARY_OPERATOR : T_AND | T_TIMES | T_PLUS| T_MINUS | T_BITWISE_NOT | T_LOGICAL_NOT
+SIZE_OF : T_SIZEOF { $$ = new ast_node("SIZE_OF", *$1);}
+
+UNARY_OPERATOR : T_AND { $$ = new ast_node("UNARY_OPERATOR",*$1);}
+               | T_TIMES { $$ = new ast_node("UNARY_OPERATOR",*$1);}
+               | T_PLUS { $$ = new ast_node("UNARY_OPERATOR",*$1);}
+               | T_MINUS { $$ = new ast_node("UNARY_OPERATOR",*$1);}
+               | T_BITWISE_NOT { $$ = new ast_node("UNARY_OPERATOR",*$1);}
+               | T_LOGICAL_NOT { $$ = new ast_node("UNARY_OPERATOR",*$1);}
 
 CAST_EXPRESSION : UNARY_EXPRESSION { $$  = $1;}
-                | T_LBRACKET TYPE_NAME T_RBRACKET CAST_EXPRESSION
+                | T_LBRACKET TYPE_NAME T_RBRACKET CAST_EXPRESSION {$$ = new ast_node("MULTIPLICATIVE_EXPRESSION","*",std::vector<ast_node*>{$2, $4},std::vector<std::string>{"TYPE_NAME","CAST_EXPRESSION"});}
 
 MULTIPLICATIVE_EXPRESSION : CAST_EXPRESSION { $$  = $1;}
-                          | MULTIPLICATIVE_EXPRESSION T_TIMES CAST_EXPRESSION
-                          | MULTIPLICATIVE_EXPRESSION T_DIVIDE CAST_EXPRESSION
-                          | MULTIPLICATIVE_EXPRESSION T_MODULO CAST_EXPRESSION
+                          | MULTIPLICATIVE_EXPRESSION T_TIMES CAST_EXPRESSION {$$ = new ast_node("MULTIPLICATIVE_EXPRESSION","*",std::vector<ast_node*>{$1, $3},std::vector<std::string>{"MULTIPLICATIVE_EXPRESSION","CAST_EXPRESSION"});}
+                          | MULTIPLICATIVE_EXPRESSION T_DIVIDE CAST_EXPRESSION {$$ = new ast_node("MULTIPLICATIVE_EXPRESSION","/",std::vector<ast_node*>{$1, $3},std::vector<std::string>{"MULTIPLICATIVE_EXPRESSION","CAST_EXPRESSION"});}
+                          | MULTIPLICATIVE_EXPRESSION T_MODULO CAST_EXPRESSION {$$ = new ast_node("MULTIPLICATIVE_EXPRESSION","%",std::vector<ast_node*>{$1, $3},std::vector<std::string>{"MULTIPLICATIVE_EXPRESSION","CAST_EXPRESSION"});}
 
 ADDITIVE_EXPRESSION : MULTIPLICATIVE_EXPRESSION { $$  = $1;}
-                    | ADDITIVE_EXPRESSION T_PLUS MULTIPLICATIVE_EXPRESSION
-                    | ADDITIVE_EXPRESSION T_MINUS MULTIPLICATIVE_EXPRESSION
+                    | ADDITIVE_EXPRESSION T_PLUS MULTIPLICATIVE_EXPRESSION {$$ = new ast_node("ADDITIVE_EXPRESSION","+",std::vector<ast_node*>{$1, $3},std::vector<std::string>{"ADDITIVE_EXPRESSION","MULTIPLICATIVE_EXPRESSION"});}
+                    | ADDITIVE_EXPRESSION T_MINUS MULTIPLICATIVE_EXPRESSION {$$ = new ast_node("ADDITIVE_EXPRESSION","-",std::vector<ast_node*>{$1, $3},std::vector<std::string>{"ADDITIVE_EXPRESSION","MULTIPLICATIVE_EXPRESSION"});}
 
 SHIFT_EXPRESSION : ADDITIVE_EXPRESSION { $$  = $1;}
-                 | SHIFT_EXPRESSION T_LEFT_SHIFT ADDITIVE_EXPRESSION
-                 | SHIFT_EXPRESSION T_RIGHT_SHIFT ADDITIVE_EXPRESSION
+                 | SHIFT_EXPRESSION T_LEFT_SHIFT ADDITIVE_EXPRESSION {$$ = new ast_node("RELATIONAL_EXPRESSION","<<",std::vector<ast_node*>{$1, $3},std::vector<std::string>{"SHIFT_EXPRESSION","ADDITIVE_EXPRESSION"});}
+                 | SHIFT_EXPRESSION T_RIGHT_SHIFT ADDITIVE_EXPRESSION {$$ = new ast_node("RELATIONAL_EXPRESSION",">>",std::vector<ast_node*>{$1, $3},std::vector<std::string>{"SHIFT_EXPRESSION","ADDITIVE_EXPRESSION"});}
 
 RELATIONAL_EXPRESSION : SHIFT_EXPRESSION { $$  = $1;}
-                      | RELATIONAL_EXPRESSION T_LESS_THAN SHIFT_EXPRESSION
-                      | RELATIONAL_EXPRESSION T_GREATER_THAN SHIFT_EXPRESSION
-                      | RELATIONAL_EXPRESSION T_LESS_THAN_OR_EQUAL_TO SHIFT_EXPRESSION
-                      | RELATIONAL_EXPRESSION T_GREATER_THAN_OR_EQUAL_TO SHIFT_EXPRESSION
+                      | RELATIONAL_EXPRESSION T_LESS_THAN SHIFT_EXPRESSION {$$ = new ast_node("RELATIONAL_EXPRESSION","<",std::vector<ast_node*>{$1, $3},std::vector<std::string>{"RELATIONAL_EXPRESSION","SHIFT_EXPRESSION"});}
+                      | RELATIONAL_EXPRESSION T_GREATER_THAN SHIFT_EXPRESSION {$$ = new ast_node("RELATIONAL_EXPRESSION",">",std::vector<ast_node*>{$1, $3},std::vector<std::string>{"RELATIONAL_EXPRESSION","SHIFT_EXPRESSION"});}
+                      | RELATIONAL_EXPRESSION T_LESS_THAN_OR_EQUAL_TO SHIFT_EXPRESSION {$$ = new ast_node("RELATIONAL_EXPRESSION","<=",std::vector<ast_node*>{$1, $3},std::vector<std::string>{"RELATIONAL_EXPRESSION","SHIFT_EXPRESSION"});}
+                      | RELATIONAL_EXPRESSION T_GREATER_THAN_OR_EQUAL_TO SHIFT_EXPRESSION {$$ = new ast_node("RELATIONAL_EXPRESSION",">=",std::vector<ast_node*>{$1, $3},std::vector<std::string>{"RELATIONAL_EXPRESSION","SHIFT_EXPRESSION"});}
 
 EQUALITY_EXPRESSION : RELATIONAL_EXPRESSION { $$  = $1;}
                     | EQUALITY_EXPRESSION T_EQUALS_EQUALS RELATIONAL_EXPRESSION {$$ = new ast_node("EQUALITY_EXPRESSION","==",std::vector<ast_node*>{$1, $3},std::vector<std::string>{"EQUALITY_EXPRESSION","RELATIONAL_EXPRESSION"});}
@@ -318,7 +336,7 @@ POINTER : DEREFERENCE {$$ = $1;}
         | DEREFERENCE POINTER             {$$ = new ast_node("TYPE_QUALIFIER_LIST","",std::vector<ast_node*>{$1, $2},std::vector<std::string>{"DEREFERENCE","POINTER"});}
         | DEREFERENCE TYPE_QUALIFIER_LIST POINTER {$$ = new ast_node("TYPE_QUALIFIER_LIST","",std::vector<ast_node*>{$1, $2, $3},std::vector<std::string>{"DEREFERENCE","TYPE_QUALIFIER_LIST", "POINTER"});}
 
-DEREFERENCE : T_DEREFERENCE = { $$ = new ast_node("DEREFERENCE","");}
+DEREFERENCE : T_DEREFERENCE { $$ = new ast_node("DEREFERENCE","");}
 
 TYPE_QUALIFIER_LIST : TYPE_QUALIFIER { $$ = $1; }
                     | TYPE_QUALIFIER_LIST TYPE_QUALIFIER {$$ = new ast_node("TYPE_QUALIFIER_LIST","",std::vector<ast_node*>{$1, $2},std::vector<std::string>{"TYPE_QUALIFIER_LIST","TYPE_QUALIFIER"});}
