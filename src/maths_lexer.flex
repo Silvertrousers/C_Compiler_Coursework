@@ -11,11 +11,7 @@ extern "C" int fileno(FILE *stream);
 
 ["][^"]*["]     { return T_STRING; }
 
-break           { return T_BREAK; }
-continue        { return T_CONTINUE; }
-do              { return T_DO; }
 else            { return T_ELSE; }
-for             { return T_FOR; }
 if              { return T_IF; }
 int             { return T_INT; }
 return          { return T_RETURN; }
@@ -41,7 +37,7 @@ while           { return T_WHILE; }
 [:]             { return T_COLON; }
 [\;]            { return T_SEMICOLON; }
 
-[1-9][0-9]* { yylval._text=new std::string(yytext); return T_DEC_INT; }
+[0-9]* { yylval._text=new std::string(yytext); return T_DEC_INT; }
 [a-zA-Z_][a-zA-Z0-9_]*          { yylval._text=new std::string(yytext); return T_IDENTIFIER; }
 
 [ \t\r\n]+		{;}
