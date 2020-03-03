@@ -18,15 +18,15 @@
 %token T_ELSE T_EXTERN T_FLOAT T_FOR T_GOTO T_IF T_INT T_LONG T_REGISTER T_RETURN
 %token T_SHORT T_SIGNED T_SIZEOF
 %token T_TYPEDEF T_VOID T_WHILE
-%token T_TIMES T_DIVIDE T_PLUS T_MINUS T_EXPONENT T_DECREMENT T_INCREMENT
+%token T_TIMES T_PLUS T_MINUS T_EXPONENT T_DECREMENT T_INCREMENT
 %token T_LESS_THAN T_GREATER_THAN T_EQUALS T_AND T_OR T_BITWISE_NOT T_LOGICAL_NOT
 %token T_AND_AND T_OR_OR
-%token T_MODULO_EQUALS T_LEFT_SHIFT_EQUALS T_RIGHT_SHIFT_EQUALS T_NOT_EQUALS_EQUALS T_EQUALS_EQUALS
-%token T_PLUS_EQUALS T_MINUS_EQUALS T_TIMES_EQUALS T_DIVIDE_EQUALS
+%token T_LEFT_SHIFT_EQUALS T_RIGHT_SHIFT_EQUALS T_NOT_EQUALS_EQUALS T_EQUALS_EQUALS
+%token T_PLUS_EQUALS T_MINUS_EQUALS T_TIMES_EQUALS
 %token T_LESS_THAN_OR_EQUAL_TO T_GREATER_THAN_OR_EQUAL_TO
 %token T_AND_EQUALS T_OR_EQUALS T_XOR_EQUALS
 %token T_ARROW T_RIGHT_SHIFT T_LEFT_SHIFT
-%token T_MODULO T_COMMA T_DOT T_COLON T_SEMICOLON T_QUESTION
+%token T_COMMA T_DOT T_COLON T_SEMICOLON T_QUESTION
 %token T_LBRACKET T_RBRACKET T_LSQ_BRACKET T_RSQ_BRACKET T_RCURLY_BRACKET T_LCURLY_BRACKET
 %token T_EMPTY_BRACKETS T_ECURLY_BRACKETS T_ESQ_BRACKETS
 %token T_DEC_INT T_OCTAL_INT T_IDENTIFIER T_STRING
@@ -48,22 +48,22 @@
 %type<_text> T_ELSE T_EXTERN T_FLOAT T_FOR T_GOTO T_IF T_INT T_LONG T_REGISTER T_RETURN
 %type<_text> T_SHORT T_SIGNED T_SIZEOF
 %type<_text> T_TYPEDEF T_UNION T_UNSIGNED T_VOID T_WHILE
-%type<_text> T_TIMES T_DIVIDE T_PLUS T_MINUS T_EXPONENT T_DECREMENT T_INCREMENT
+%type<_text> T_TIMES  T_PLUS T_MINUS T_EXPONENT T_DECREMENT T_INCREMENT
 %type<_text> T_LESS_THAN T_GREATER_THAN T_EQUALS T_AND T_OR T_BITWISE_NOT T_LOGICAL_NOT
 %type<_text> T_AND_AND T_OR_OR
-%type<_text> T_MODULO_EQUALS T_LEFT_SHIFT_EQUALS T_RIGHT_SHIFT_EQUALS T_NOT_EQUALS_EQUALS T_EQUALS_EQUALS
-%type<_text> T_PLUS_EQUALS T_MINUS_EQUALS T_TIMES_EQUALS T_DIVIDE_EQUALS
+%type<_text> T_LEFT_SHIFT_EQUALS T_RIGHT_SHIFT_EQUALS T_NOT_EQUALS_EQUALS T_EQUALS_EQUALS
+%type<_text> T_PLUS_EQUALS T_MINUS_EQUALS T_TIMES_EQUALS
 %type<_text> T_LESS_THAN_OR_EQUAL_TO T_GREATER_THAN_OR_EQUAL_TO
 %type<_text> T_AND_EQUALS T_OR_EQUALS T_XOR_EQUALS
 %type<_text> T_ARROW T_RIGHT_SHIFT T_LEFT_SHIFT
-%type<_text> T_MODULO T_COMMA T_DOT T_COLON T_SEMICOLON T_QUESTION
+%type<_text> T_COMMA T_DOT T_COLON T_SEMICOLON T_QUESTION
 %type<_text> T_LBRACKET T_RBRACKET T_LSQ_BRACKET T_RSQ_BRACKET T_RCURLY_BRACKET T_LCURLY_BRACKET
 %type<_text> T_EMPTY_BRACKETS T_ECURLY_BRACKETS T_ESQ_BRACKETS
 %type<_text> T_DEC_INT T_OCTAL_INT T_IDENTIFIER T_STRING
 %type<_text> T_CUSTOM_TYPE
 
 %left T_PLUS T_MINUS
-%left T_DIVIDE T_TIMES
+%left T_TIMES
 %right T_EXPONENT
 %precedence T_IF
 %precedence T_ELSE
@@ -288,14 +288,6 @@ MULTIPLICATIVE_EXPRESSION : CAST_EXPRESSION { $$  = $1;}
                                                                                 std::vector<std::string> branch_notes = {"MULTIPLICATIVE_EXPRESSION","CAST_EXPRESSION"};
                                                                                 $$ = new ast_node("MULTIPLICATIVE_EXPRESSION","*", branches, branch_notes);}
 
-                          | MULTIPLICATIVE_EXPRESSION T_DIVIDE CAST_EXPRESSION {std::vector<ast_node*> branches = {$1, $3};
-                                                                                std::vector<std::string> branch_notes = {"MULTIPLICATIVE_EXPRESSION","CAST_EXPRESSION"};
-                                                                                $$ = new ast_node("MULTIPLICATIVE_EXPRESSION","/", branches, branch_notes);}
-
-                          | MULTIPLICATIVE_EXPRESSION T_MODULO CAST_EXPRESSION {std::vector<ast_node*> branches = {$1, $3};
-                                                                                std::vector<std::string> branch_notes = {"MULTIPLICATIVE_EXPRESSION","CAST_EXPRESSION"};
-                                                                                $$ = new ast_node("MULTIPLICATIVE_EXPRESSION","", branches, branch_notes);}
-
 ADDITIVE_EXPRESSION : MULTIPLICATIVE_EXPRESSION { $$  = $1;}
                     | ADDITIVE_EXPRESSION T_PLUS MULTIPLICATIVE_EXPRESSION {    std::vector<ast_node*> branches = {$1, $3};
                                                                                 std::vector<std::string> branch_notes = {"ADDITIVE_EXPRESSION","MULTIPLICATIVE_EXPRESSION"};
@@ -306,54 +298,22 @@ ADDITIVE_EXPRESSION : MULTIPLICATIVE_EXPRESSION { $$  = $1;}
                                                                                 $$ = new ast_node("ADDITIVE_EXPRESSION","-", branches, branch_notes);}
 
 SHIFT_EXPRESSION : ADDITIVE_EXPRESSION { $$  = $1;}
-                 | SHIFT_EXPRESSION T_LEFT_SHIFT ADDITIVE_EXPRESSION {          std::vector<ast_node*> branches = {$1, $3};
-                                                                                std::vector<std::string> branch_notes = {"SHIFT_EXPRESSION","ADDITIVE_EXPRESSION"};
-                                                                                $$ = new ast_node("ADDITIVE_EXPRESSION","<<", branches, branch_notes);}
-
-                 | SHIFT_EXPRESSION T_RIGHT_SHIFT ADDITIVE_EXPRESSION {         std::vector<ast_node*> branches = {$1, $3};
-                                                                                std::vector<std::string> branch_notes = {"SHIFT_EXPRESSION","ADDITIVE_EXPRESSION"};
-                                                                                $$ = new ast_node("ADDITIVE_EXPRESSION",">>", branches, branch_notes);}
 
 RELATIONAL_EXPRESSION : SHIFT_EXPRESSION { $$  = $1;}
                       | RELATIONAL_EXPRESSION T_LESS_THAN SHIFT_EXPRESSION {    std::vector<ast_node*> branches = {$1, $3};
                                                                                 std::vector<std::string> branch_notes = {"RELATIONAL_EXPRESSION","SHIFT_EXPRESSION"};
                                                                                 $$ = new ast_node("RELATIONAL_EXPRESSION","<", branches, branch_notes);}
 
-                      | RELATIONAL_EXPRESSION T_GREATER_THAN SHIFT_EXPRESSION { std::vector<ast_node*> branches = {$1, $3};
-                                                                                std::vector<std::string> branch_notes = {"RELATIONAL_EXPRESSION","SHIFT_EXPRESSION"};
-                                                                                $$ = new ast_node("RELATIONAL_EXPRESSION",">", branches, branch_notes);}
-
-                      | RELATIONAL_EXPRESSION T_LESS_THAN_OR_EQUAL_TO SHIFT_EXPRESSION {    std::vector<ast_node*> branches = {$1, $3};
-                                                                                            std::vector<std::string> branch_notes = {"RELATIONAL_EXPRESSION","SHIFT_EXPRESSION"};
-                                                                                            $$ = new ast_node("RELATIONAL_EXPRESSION","<=", branches, branch_notes);}
-
-                      | RELATIONAL_EXPRESSION T_GREATER_THAN_OR_EQUAL_TO SHIFT_EXPRESSION {    std::vector<ast_node*> branches = {$1, $3};
-                                                                                               std::vector<std::string> branch_notes = {"RELATIONAL_EXPRESSION","SHIFT_EXPRESSION"};
-                                                                                               $$ = new ast_node("RELATIONAL_EXPRESSION",">=", branches, branch_notes);}
-
 EQUALITY_EXPRESSION : RELATIONAL_EXPRESSION { $$  = $1;}
                     | EQUALITY_EXPRESSION T_EQUALS_EQUALS RELATIONAL_EXPRESSION {  std::vector<ast_node*> branches = {$1, $3};
                                                                                    std::vector<std::string> branch_notes = {"EQUALITY_EXPRESSION","RELATIONAL_EXPRESSION"};
                                                                                    $$ = new ast_node("EQUALITY_EXPRESSION","==", branches, branch_notes);}
 
-                    | EQUALITY_EXPRESSION T_NOT_EQUALS_EQUALS RELATIONAL_EXPRESSION {  std::vector<ast_node*> branches = {$1, $3};
-                                                                                       std::vector<std::string> branch_notes = {"EQUALITY_EXPRESSION","RELATIONAL_EXPRESSION"};
-                                                                                       $$ = new ast_node("EQUALITY_EXPRESSION","!=", branches, branch_notes);}
-
 AND_EXPRESSION : EQUALITY_EXPRESSION { $$  = $1;}
-               | AND_EXPRESSION T_AND EQUALITY_EXPRESSION {                     std::vector<ast_node*> branches = {$1, $3};
-                                                                                std::vector<std::string> branch_notes = {"AND_EXPRESSION","EQUALITY_EXPRESSION"};
-                                                                                $$ = new ast_node("AND_EXPRESSION","", branches, branch_notes);}
 
 EXCLUSIVE_OR_EXPRESSION : AND_EXPRESSION { $$  = $1;}
-                        | EXCLUSIVE_OR_EXPRESSION T_EXPONENT AND_EXPRESSION {   std::vector<ast_node*> branches = {$1, $3};
-                                                                                std::vector<std::string> branch_notes = {"EXCLUSIVE_OR_EXPRESSION","AND_EXPRESSION"};
-                                                                                $$ = new ast_node("EXCLUSIVE_OR_EXPRESSION","", branches, branch_notes);}
 
 INCLUSIVE_OR_EXPRESSION : EXCLUSIVE_OR_EXPRESSION { $$  = $1;}
-                        | INCLUSIVE_OR_EXPRESSION T_OR EXCLUSIVE_OR_EXPRESSION {std::vector<ast_node*> branches = {$1, $3};
-                                                                                std::vector<std::string> branch_notes = {"INCLUSIVE_OR_EXPRESSION","EXCLUSIVE_OR_EXPRESSION"};
-                                                                                $$ = new ast_node("INCLUSIVE_OR_EXPRESSION","", branches, branch_notes);}
 
 LOGICAL_AND_EXPRESSION : INCLUSIVE_OR_EXPRESSION { $$  = $1;}
                        | LOGICAL_AND_EXPRESSION T_AND_AND INCLUSIVE_OR_EXPRESSION {     std::vector<ast_node*> branches = {$1, $3};
@@ -366,9 +326,6 @@ LOGICAL_OR_EXPRESSION  : LOGICAL_AND_EXPRESSION { $$  = $1;}
                                                                                         $$ = new ast_node("LOGICAL_OR_EXPRESSION","", branches, branch_notes);}
 
 CONDITIONAL_EXPRESSION : LOGICAL_OR_EXPRESSION { $$  = $1;}
-                       | LOGICAL_OR_EXPRESSION T_QUESTION EXPR T_COLON CONDITIONAL_EXPRESSION {   std::vector<ast_node*> branches = {$1, $3, $5};
-                                                                                                  std::vector<std::string> branch_notes = {"LOGICAL_OR_EXPRESSION","EXPR", "CONDITIONAL_EXPRESSION"};
-                                                                                                  $$ = new ast_node("CONDITIONAL_EXPRESSION","", branches, branch_notes);}
 
 ASSIGNMENT_EXPRESSION : CONDITIONAL_EXPRESSION { $$ = $1; }
                       | UNARY_EXPRESSION ASSIGNMENT_OPERATOR ASSIGNMENT_EXPRESSION {   std::vector<ast_node*> branches = {$1, $2, $3};
@@ -376,17 +333,7 @@ ASSIGNMENT_EXPRESSION : CONDITIONAL_EXPRESSION { $$ = $1; }
                                                                                        $$ = new ast_node("ASSIGNMENT_EXPRESSION","", branches, branch_notes);}
 
 ASSIGNMENT_OPERATOR : T_EQUALS { $$ = new ast_node("ASSIGNMENT_OPERATOR", *$1);}
-                    | T_TIMES_EQUALS { $$ = new ast_node("ASSIGNMENT_OPERATOR", *$1);}
-                    | T_DIVIDE_EQUALS { $$ = new ast_node("ASSIGNMENT_OPERATOR", *$1);}
-                    | T_MODULO_EQUALS { $$ = new ast_node("ASSIGNMENT_OPERATOR", *$1);}
-                    | T_PLUS_EQUALS { $$ = new ast_node("ASSIGNMENT_OPERATOR", *$1);}
-                    | T_MINUS_EQUALS { $$ = new ast_node("ASSIGNMENT_OPERATOR", *$1);}
-                    | T_LEFT_SHIFT_EQUALS { $$ = new ast_node("ASSIGNMENT_OPERATOR", *$1);}
-                    | T_RIGHT_SHIFT_EQUALS { $$ = new ast_node("ASSIGNMENT_OPERATOR", *$1);}
-                    | T_AND_EQUALS { $$ = new ast_node("ASSIGNMENT_OPERATOR", *$1);}
-                    | T_XOR_EQUALS { $$ = new ast_node("ASSIGNMENT_OPERATOR", *$1);}
-                    | T_OR_EQUALS { $$ = new ast_node("ASSIGNMENT_OPERATOR", *$1);}
-
+                    
 CONSTANT_EXPRESSION : CONDITIONAL_EXPRESSION { $$ = $1; }
 
 EXPR : ASSIGNMENT_EXPRESSION { $$ = $1; }
