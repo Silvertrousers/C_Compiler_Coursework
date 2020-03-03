@@ -1930,7 +1930,7 @@ yyreduce:
 
   case 76:
 #line 258 "src/maths_parser.y" /* yacc.c:1646  */
-    { fprintf(stderr,"type spec"); (yyval.nodePtr) = (yyvsp[0].nodePtr); }
+    { (yyval.nodePtr) = (yyvsp[0].nodePtr); }
 #line 1935 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 

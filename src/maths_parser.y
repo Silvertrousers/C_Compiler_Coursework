@@ -255,7 +255,7 @@ DECLARATION : DECLARATION_SPECIFIERS T_SEMICOLON {                              
                                                                                 std::vector<std::string> branch_notes = {"DECLARATION_SPECIFIERS","INIT_DECLARATOR_LIST"};
                                                                                 $$ = new ast_node("DECLARATION","", branches, branch_notes);}
 
-DECLARATION_SPECIFIERS : TYPE_SPECIFIER { fprintf(stderr,"type spec"); $$ = $1; }
+DECLARATION_SPECIFIERS : TYPE_SPECIFIER { $$ = $1; }
 
 
 
