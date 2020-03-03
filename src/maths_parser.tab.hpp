@@ -46,7 +46,7 @@ extern int yydebug;
 
   #include <cassert>
 
-  extern const ast_node *g_root;
+  extern ast_node *g_root;
 
   int yylex(void);
   void yyerror(const char *);

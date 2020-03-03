@@ -3,7 +3,7 @@
 
   #include <cassert>
 
-  extern const ast_node *g_root;
+  extern ast_node *g_root;
 
   int yylex(void);
   void yyerror(const char *);
@@ -159,7 +159,7 @@ PRIMARY_EXPRESSION : IDENTIFIER { $$ = $1; }
 
                    | T_LBRACKET EXPR T_RBRACKET {                               std::vector<ast_node*> branches = {$2};
                                                                                 std::vector<std::string> branch_notes = {"EXPR"};
-                                                                                $$ = new ast_node("JUMP_STATEMENT","", branches, branch_notes);}
+                                                                                $$ = new ast_node("PRIMARY_EXPRESSION","", branches, branch_notes);}
 
 CONSTANT : T_DEC_INT   {$$ = new ast_node("CONSTANT", *$1); }
 
@@ -369,9 +369,9 @@ INITIALIZER_LIST : INITIALIZER {$$ = $1;}
 
 %%
 
-const ast_node *g_root;
+ast_node *g_root;
 
-const ast_node *parseAST()
+ast_node *parseAST()
 {
   g_root=0;
   yyparse();

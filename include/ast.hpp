@@ -30,6 +30,6 @@ class ast_node{
     ~ast_node();
 };
 
-extern const ast_node *parseAST();
+extern ast_node *parseAST();
 
 #endif

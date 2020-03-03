@@ -99,7 +99,7 @@ extern int yydebug;
 
   #include <cassert>
 
-  extern const ast_node *g_root;
+  extern ast_node *g_root;
 
   int yylex(void);
   void yyerror(const char *);
@@ -1682,7 +1682,7 @@ yyreduce:
 #line 160 "src/maths_parser.y" /* yacc.c:1646  */
     {                               std::vector<ast_node*> branches = {(yyvsp[-1].nodePtr)};
                                                                                 std::vector<std::string> branch_notes = {"EXPR"};
-                                                                                (yyval.nodePtr) = new ast_node("JUMP_STATEMENT","", branches, branch_notes);}
+                                                                                (yyval.nodePtr) = new ast_node("PRIMARY_EXPRESSION","", branches, branch_notes);}
 #line 1687 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
@@ -2408,9 +2408,9 @@ yyreturn:
 #line 370 "src/maths_parser.y" /* yacc.c:1906  */
 
 
-const ast_node *g_root;
+ast_node *g_root;
 
-const ast_node *parseAST()
+ast_node *parseAST()
 {
   g_root=0;
   yyparse();
