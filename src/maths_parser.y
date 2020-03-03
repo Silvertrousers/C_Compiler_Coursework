@@ -25,7 +25,7 @@
 %token T_DEC_INT T_IDENTIFIER T_STRING
 
 
-%type<nodePtr> PROGRAM TRANSLATION_UNIT EXTERNAL_DECLARATION FUNCTION_DECLARATION STATEMENT LABELED_STATEMENT JUMP_STATEMENT COMPOUND_STATEMENT PRIMARY_EXPRESSION ITERATION_STATEMENT
+%type<nodePtr> PROGRAM TRANSLATION_UNIT EXTERNAL_DECLARATION FUNCTION_DECLARATION STATEMENT JUMP_STATEMENT COMPOUND_STATEMENT PRIMARY_EXPRESSION ITERATION_STATEMENT
 %type<nodePtr> POSTFIX_EXPRESSION ARGUMENT_EXPRESSION_LIST UNARY_EXPRESSION UNARY_OPERATOR STATEMENT_LIST EXPRESSION_STATEMENT SELECTION_STATEMENT
 %type<nodePtr> MULTIPLICATIVE_EXPRESSION ADDITIVE_EXPRESSION SHIFT_EXPRESSION RELATIONAL_EXPRESSION EQUALITY_EXPRESSION CAST_EXPRESSION
 %type<nodePtr> LOGICAL_AND_EXPRESSION LOGICAL_OR_EXPRESSION
@@ -33,7 +33,7 @@
 %type<nodePtr> DECLARATION DECLARATION_SPECIFIERS INIT_DECLARATOR_LIST INIT_DECLARATOR TYPE_SPECIFIER DECLARATION_LIST
 %type<nodePtr> SPECIFIER_QUALIFIER_LIST
 %type<nodePtr> DECLARATOR DIRECT_DECLARATOR  PARAMETER_TYPE_LIST PARAMETER_LIST PARAMETER_DECLARATION
-%type<nodePtr> IDENTIFIER_LIST TYPE_NAME ABSTRACT_DECLARATOR DIRECT_ABSTRACT_DECLARATOR INITIALIZER INITIALIZER_LIST
+%type<nodePtr> IDENTIFIER_LIST TYPE_NAME INITIALIZER INITIALIZER_LIST
 %type<nodePtr> RETURN WHILE IF ELSE IDENTIFIER
 
 
@@ -84,17 +84,11 @@ FUNCTION_DECLARATION : DECLARATION_SPECIFIERS DECLARATOR DECLARATION_LIST COMPOU
                                                                                 std::vector<std::string> branch_notes = {"DECLARATION_SPECIFIERS", "DECLARATOR", "DECLARATION_LIST", "COMPOUND_STATEMENT"};
                                                                                 $$ = new ast_node("FUNCTION_DECLARATION","", branches, branch_notes);}
 
-STATEMENT : LABELED_STATEMENT {$$ = $1;}
-          | COMPOUND_STATEMENT {$$ = $1;}
+STATEMENT : COMPOUND_STATEMENT {$$ = $1;}
           | EXPRESSION_STATEMENT {$$ = $1;}
           | SELECTION_STATEMENT {$$ = $1;}
           | ITERATION_STATEMENT {$$ = $1;}
           | JUMP_STATEMENT {$$ = $1;}
-
-LABELED_STATEMENT : IDENTIFIER T_COLON STATEMENT {                              std::vector<ast_node*> branches = {$1, $3};
-                                                                                std::vector<std::string> branch_notes = {"IDENTIFIER", "STATEMENT"};
-                                                                                $$ = new ast_node("LABELED_STATEMENT","", branches, branch_notes);}
-
 
 COMPOUND_STATEMENT : T_LCURLY_BRACKET DECLARATION_LIST STATEMENT_LIST T_RCURLY_BRACKET {  std::vector<ast_node*> branches = {$2, $3};
                                                                                           std::vector<std::string> branch_notes = {"DECLARATION_LIST", "STATEMENT_LIST"};
@@ -272,7 +266,7 @@ INIT_DECLARATOR : DECLARATOR { $$ = $1; }
 
 
 TYPE_SPECIFIER : T_VOID { $$ = new ast_node("TYPE_SPECIFIER", "void");}
-               | T_INT {fprintf(stderr,"INT"); $$ = new ast_node("TYPE_SPECIFIER", "int");}
+               | T_INT { $$ = new ast_node("TYPE_SPECIFIER", "int");}
 
 
 
@@ -315,9 +309,6 @@ PARAMETER_DECLARATION : DECLARATION_SPECIFIERS DECLARATOR {                     
 
                       | DECLARATION_SPECIFIERS { $$ = $1; }
 
-                      | DECLARATION_SPECIFIERS ABSTRACT_DECLARATOR {            std::vector<ast_node*> branches = {$1, $2};
-                                                                                std::vector<std::string> branch_notes = {"DECLARATION_SPECIFIERS","ABSTRACT_DECLARATOR"};
-                                                                                $$ = new ast_node("PARAMETER_DECLARATION","", branches, branch_notes);}
 
 IDENTIFIER_LIST : IDENTIFIER { $$ = $1; }
                 | IDENTIFIER_LIST T_COMMA IDENTIFIER  {                         std::vector<ast_node*> branches = {$1, $3};
@@ -327,27 +318,7 @@ IDENTIFIER_LIST : IDENTIFIER { $$ = $1; }
 IDENTIFIER : T_IDENTIFIER {$$ = new ast_node("IDENTIFIER",*$1);}
 
 TYPE_NAME : SPECIFIER_QUALIFIER_LIST { $$ = $1; }
-          | SPECIFIER_QUALIFIER_LIST ABSTRACT_DECLARATOR {                      std::vector<ast_node*> branches = {$1, $2};
-                                                                                std::vector<std::string> branch_notes = {"SPECIFIER_QUALIFIER_LIST","ABSTRACT_DECLARATOR"};
-                                                                                $$ = new ast_node("TYPE_NAME","", branches, branch_notes);}
 
-ABSTRACT_DECLARATOR : DIRECT_ABSTRACT_DECLARATOR  { $$ = $1; }
-
-DIRECT_ABSTRACT_DECLARATOR : T_LBRACKET ABSTRACT_DECLARATOR T_RBRACKET { $$ = $2; }
-
-                           | DIRECT_ABSTRACT_DECLARATOR T_LBRACKET PARAMETER_TYPE_LIST T_RBRACKET {   std::vector<ast_node*> branches = {$1, $3};
-                                                                                                      std::vector<std::string> branch_notes = {"DIRECT_ABSTRACT_DECLARATOR","PARAMETER_TYPE_LIST"};
-                                                                                                      $$ = new ast_node("DIRECT_ABSTRACT_DECLARATOR","", branches, branch_notes);}
-
-                           | T_LBRACKET PARAMETER_TYPE_LIST T_RBRACKET {        std::vector<ast_node*> branches = {NULL, $2};
-                                                                                std::vector<std::string> branch_notes = {"DIRECT_ABSTRACT_DECLARATOR","PARAMETER_TYPE_LIST"};
-                                                                                $$ = new ast_node("DIRECT_ABSTRACT_DECLARATOR","", branches, branch_notes);}
-
-                           | DIRECT_ABSTRACT_DECLARATOR T_EMPTY_BRACKETS {      std::vector<ast_node*> branches = {$1, NULL};
-                                                                                std::vector<std::string> branch_notes = {"DIRECT_ABSTRACT_DECLARATOR","PARAMETER_TYPE_LIST"};
-                                                                                $$ = new ast_node("DIRECT_ABSTRACT_DECLARATOR","", branches, branch_notes);}
-
-                           | T_EMPTY_BRACKETS                                   {$$ = new ast_node("DIRECT_ABSTRACT_DECLARATOR","");}
 
 INITIALIZER : ASSIGNMENT_EXPRESSION { $$ = $1; }
 

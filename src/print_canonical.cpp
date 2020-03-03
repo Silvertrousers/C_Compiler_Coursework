@@ -4,6 +4,6 @@
 int main()
 {
     ast_node *ast=parseAST();
-    ast->print_python(ast);
+    ast->print_python();
     return 0;
 }

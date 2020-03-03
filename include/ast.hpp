@@ -12,7 +12,7 @@ class ast_node{
     std::vector<std::string> branch_notes;
     std::vector<ast_node*> branches;
 
-    void print_python(ast_node* root_node);
+    void print_python();
 
     ast_node(std::string _node_type, std::string _value, std::vector<ast_node*> _branches, std::vector<std::string> _branch_notes){
       node_type = _node_type;
