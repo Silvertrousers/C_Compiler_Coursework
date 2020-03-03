@@ -168,7 +168,7 @@ ITERATION_STATEMENT : WHILE T_LBRACKET EXPR T_RBRACKET STATEMENT {              
                                                                                 std::vector<std::string> branch_notes = {"T_WHILE", "EXPR", "EXPR", "EXPR", "T_DO", "STATEMENT"};
                                                                                 $$ = new ast_node("ITERATION_STATEMENT","", branches, branch_notes);}
 
-                    | DO STATEMENT WHILE T_LBRACKET EXPR T_RBRACKET T_SEMICOLON { std:~/utww1t:vector<ast_node*> branches = {$3, $5, NULL, NULL, $1, $2};
+                    | DO STATEMENT WHILE T_LBRACKET EXPR T_RBRACKET T_SEMICOLON { std::vector<ast_node*> branches = {$3, $5, NULL, NULL, $1, $2};
                                                                                   std::vector<std::string> branch_notes = {"T_WHILE", "EXPR", "EXPR", "EXPR", "T_DO", "STATEMENT"};
                                                                                   $$ = new ast_node("ITERATION_STATEMENT","", branches, branch_notes);}
 

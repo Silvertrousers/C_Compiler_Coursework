@@ -2010,13 +2010,13 @@ yyreduce:
 
   case 20:
 #line 122 "src/maths_parser.y" /* yacc.c:1646  */
-    {(yyval.nodePtr) = new ast_node("DEFAULT", *(yyvsp[0]._text));}
+    {(yyval.nodePtr) = new ast_node("DEFAULT", "default");}
 #line 2015 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 21:
 #line 123 "src/maths_parser.y" /* yacc.c:1646  */
-    {(yyval.nodePtr) = new ast_node("CASE", *(yyvsp[0]._text));}
+    {(yyval.nodePtr) = new ast_node("CASE", "case");}
 #line 2021 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
@@ -2116,19 +2116,19 @@ yyreduce:
 
   case 35:
 #line 163 "src/maths_parser.y" /* yacc.c:1646  */
-    {(yyval.nodePtr) = new ast_node("T_SWITCH", *(yyvsp[0]._text));}
+    {(yyval.nodePtr) = new ast_node("T_SWITCH", "switch");}
 #line 2121 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 36:
 #line 164 "src/maths_parser.y" /* yacc.c:1646  */
-    {(yyval.nodePtr) = new ast_node("T_IF", *(yyvsp[0]._text));}
+    {(yyval.nodePtr) = new ast_node("T_IF", "if");}
 #line 2127 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 37:
 #line 165 "src/maths_parser.y" /* yacc.c:1646  */
-    {(yyval.nodePtr) = new ast_node("T_ELSE", *(yyvsp[0]._text));}
+    {(yyval.nodePtr) = new ast_node("T_ELSE", "else" );}
 #line 2133 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
@@ -2214,19 +2214,19 @@ yyreduce:
 
   case 48:
 #line 207 "src/maths_parser.y" /* yacc.c:1646  */
-    {(yyval.nodePtr) = new ast_node("T_FOR", *(yyvsp[0]._text));}
+    {(yyval.nodePtr) = new ast_node("T_FOR", "for");}
 #line 2219 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 49:
 #line 208 "src/maths_parser.y" /* yacc.c:1646  */
-    {(yyval.nodePtr) = new ast_node("T_WHILE", *(yyvsp[0]._text));}
+    {(yyval.nodePtr) = new ast_node("T_WHILE", "while");}
 #line 2225 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 50:
 #line 209 "src/maths_parser.y" /* yacc.c:1646  */
-    {(yyval.nodePtr) = new ast_node("T_DO", *(yyvsp[0]._text));}
+    {(yyval.nodePtr) = new ast_node("T_DO", "do");}
 #line 2231 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
@@ -2240,13 +2240,13 @@ yyreduce:
 
   case 52:
 #line 215 "src/maths_parser.y" /* yacc.c:1646  */
-    {(yyval.nodePtr) = new ast_node("JUMP_STATEMENT", *(yyvsp[-1]._text));}
+    {(yyval.nodePtr) = new ast_node("JUMP_STATEMENT", "continue");}
 #line 2245 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 53:
 #line 216 "src/maths_parser.y" /* yacc.c:1646  */
-    {(yyval.nodePtr) = new ast_node("JUMP_STATEMENT", *(yyvsp[-1]._text));}
+    {(yyval.nodePtr) = new ast_node("JUMP_STATEMENT", "break");}
 #line 2251 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
@@ -2268,13 +2268,13 @@ yyreduce:
 
   case 56:
 #line 227 "src/maths_parser.y" /* yacc.c:1646  */
-    { (yyval.nodePtr) = new ast_node("GOTO", *(yyvsp[0]._text));}
+    { (yyval.nodePtr) = new ast_node("GOTO", "goto");}
 #line 2273 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 57:
 #line 228 "src/maths_parser.y" /* yacc.c:1646  */
-    {(yyval.nodePtr) = new ast_node("RETURN", *(yyvsp[0]._text));}
+    {(yyval.nodePtr) = new ast_node("RETURN", "return");}
 #line 2279 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
@@ -2440,43 +2440,43 @@ yyreduce:
 
   case 80:
 #line 297 "src/maths_parser.y" /* yacc.c:1646  */
-    { (yyval.nodePtr) = new ast_node("SIZE_OF", *(yyvsp[0]._text));}
+    { (yyval.nodePtr) = new ast_node("SIZE_OF", "size_of");}
 #line 2445 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 81:
 #line 299 "src/maths_parser.y" /* yacc.c:1646  */
-    { (yyval.nodePtr) = new ast_node("UNARY_OPERATOR",*(yyvsp[0]._text));}
+    { (yyval.nodePtr) = new ast_node("UNARY_OPERATOR","and");}
 #line 2451 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 82:
 #line 300 "src/maths_parser.y" /* yacc.c:1646  */
-    { (yyval.nodePtr) = new ast_node("UNARY_OPERATOR",*(yyvsp[0]._text));}
+    { (yyval.nodePtr) = new ast_node("UNARY_OPERATOR","times");}
 #line 2457 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 83:
 #line 301 "src/maths_parser.y" /* yacc.c:1646  */
-    { (yyval.nodePtr) = new ast_node("UNARY_OPERATOR",*(yyvsp[0]._text));}
+    { (yyval.nodePtr) = new ast_node("UNARY_OPERATOR","plus");}
 #line 2463 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 84:
 #line 302 "src/maths_parser.y" /* yacc.c:1646  */
-    { (yyval.nodePtr) = new ast_node("UNARY_OPERATOR",*(yyvsp[0]._text));}
+    { (yyval.nodePtr) = new ast_node("UNARY_OPERATOR","minus");}
 #line 2469 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 85:
 #line 303 "src/maths_parser.y" /* yacc.c:1646  */
-    { (yyval.nodePtr) = new ast_node("UNARY_OPERATOR",*(yyvsp[0]._text));}
+    { (yyval.nodePtr) = new ast_node("UNARY_OPERATOR","bitwise_not");}
 #line 2475 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 86:
 #line 304 "src/maths_parser.y" /* yacc.c:1646  */
-    { (yyval.nodePtr) = new ast_node("UNARY_OPERATOR",*(yyvsp[0]._text));}
+    { (yyval.nodePtr) = new ast_node("UNARY_OPERATOR","logical_not");}
 #line 2481 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
@@ -2728,67 +2728,67 @@ yyreduce:
 
   case 121:
 #line 403 "src/maths_parser.y" /* yacc.c:1646  */
-    { (yyval.nodePtr) = new ast_node("ASSIGNMENT_OPERATOR", *(yyvsp[0]._text));}
+    { (yyval.nodePtr) = new ast_node("ASSIGNMENT_OPERATOR", "equals");}
 #line 2733 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 122:
 #line 404 "src/maths_parser.y" /* yacc.c:1646  */
-    { (yyval.nodePtr) = new ast_node("ASSIGNMENT_OPERATOR", *(yyvsp[0]._text));}
+    { (yyval.nodePtr) = new ast_node("ASSIGNMENT_OPERATOR", "times_equals");}
 #line 2739 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 123:
 #line 405 "src/maths_parser.y" /* yacc.c:1646  */
-    { (yyval.nodePtr) = new ast_node("ASSIGNMENT_OPERATOR", *(yyvsp[0]._text));}
+    { (yyval.nodePtr) = new ast_node("ASSIGNMENT_OPERATOR", "divide_equals");}
 #line 2745 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 124:
 #line 406 "src/maths_parser.y" /* yacc.c:1646  */
-    { (yyval.nodePtr) = new ast_node("ASSIGNMENT_OPERATOR", *(yyvsp[0]._text));}
+    { (yyval.nodePtr) = new ast_node("ASSIGNMENT_OPERATOR", "modulo_equals");}
 #line 2751 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 125:
 #line 407 "src/maths_parser.y" /* yacc.c:1646  */
-    { (yyval.nodePtr) = new ast_node("ASSIGNMENT_OPERATOR", *(yyvsp[0]._text));}
+    { (yyval.nodePtr) = new ast_node("ASSIGNMENT_OPERATOR", "plus_equals");}
 #line 2757 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 126:
 #line 408 "src/maths_parser.y" /* yacc.c:1646  */
-    { (yyval.nodePtr) = new ast_node("ASSIGNMENT_OPERATOR", *(yyvsp[0]._text));}
+    { (yyval.nodePtr) = new ast_node("ASSIGNMENT_OPERATOR", "minus_equals");}
 #line 2763 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 127:
 #line 409 "src/maths_parser.y" /* yacc.c:1646  */
-    { (yyval.nodePtr) = new ast_node("ASSIGNMENT_OPERATOR", *(yyvsp[0]._text));}
+    { (yyval.nodePtr) = new ast_node("ASSIGNMENT_OPERATOR", "left_shift_equals");}
 #line 2769 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 128:
 #line 410 "src/maths_parser.y" /* yacc.c:1646  */
-    { (yyval.nodePtr) = new ast_node("ASSIGNMENT_OPERATOR", *(yyvsp[0]._text));}
+    { (yyval.nodePtr) = new ast_node("ASSIGNMENT_OPERATOR", "right_shift_equals");}
 #line 2775 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 129:
 #line 411 "src/maths_parser.y" /* yacc.c:1646  */
-    { (yyval.nodePtr) = new ast_node("ASSIGNMENT_OPERATOR", *(yyvsp[0]._text));}
+    { (yyval.nodePtr) = new ast_node("ASSIGNMENT_OPERATOR", "and_equals");}
 #line 2781 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 130:
 #line 412 "src/maths_parser.y" /* yacc.c:1646  */
-    { (yyval.nodePtr) = new ast_node("ASSIGNMENT_OPERATOR", *(yyvsp[0]._text));}
+    { (yyval.nodePtr) = new ast_node("ASSIGNMENT_OPERATOR", "xor_equals");}
 #line 2787 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 131:
 #line 413 "src/maths_parser.y" /* yacc.c:1646  */
-    { (yyval.nodePtr) = new ast_node("ASSIGNMENT_OPERATOR", *(yyvsp[0]._text));}
+    { (yyval.nodePtr) = new ast_node("ASSIGNMENT_OPERATOR", "or_equals");}
 #line 2793 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
@@ -2830,7 +2830,7 @@ yyreduce:
 
   case 137:
 #line 430 "src/maths_parser.y" /* yacc.c:1646  */
-    { fprintf(stderr,"yoyooyoyoyoy"); (yyval.nodePtr) = (yyvsp[0].nodePtr); }
+    { (yyval.nodePtr) = (yyvsp[0].nodePtr); }
 #line 2835 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
@@ -2844,7 +2844,7 @@ yyreduce:
 
   case 139:
 #line 435 "src/maths_parser.y" /* yacc.c:1646  */
-    { fprintf(stderr,"type spec"); (yyval.nodePtr) = (yyvsp[0].nodePtr); }
+    { (yyval.nodePtr) = (yyvsp[0].nodePtr); }
 #line 2849 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
@@ -2858,7 +2858,7 @@ yyreduce:
 
   case 141:
 #line 440 "src/maths_parser.y" /* yacc.c:1646  */
-    { fprintf(stderr,"type qual"); (yyval.nodePtr) = (yyvsp[0].nodePtr); }
+    { (yyval.nodePtr) = (yyvsp[0].nodePtr); }
 #line 2863 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
@@ -2900,85 +2900,85 @@ yyreduce:
 
   case 147:
 #line 455 "src/maths_parser.y" /* yacc.c:1646  */
-    { (yyval.nodePtr) = new ast_node("STORAGE_CLASS_SPECIFIER", *(yyvsp[0]._text));}
+    { (yyval.nodePtr) = new ast_node("STORAGE_CLASS_SPECIFIER", "typedef");}
 #line 2905 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 148:
 #line 456 "src/maths_parser.y" /* yacc.c:1646  */
-    { (yyval.nodePtr) = new ast_node("STORAGE_CLASS_SPECIFIER", *(yyvsp[0]._text));}
+    { (yyval.nodePtr) = new ast_node("STORAGE_CLASS_SPECIFIER", "extern");}
 #line 2911 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 149:
 #line 457 "src/maths_parser.y" /* yacc.c:1646  */
-    { (yyval.nodePtr) = new ast_node("STORAGE_CLASS_SPECIFIER", *(yyvsp[0]._text));}
+    { (yyval.nodePtr) = new ast_node("STORAGE_CLASS_SPECIFIER", "static");}
 #line 2917 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 150:
 #line 458 "src/maths_parser.y" /* yacc.c:1646  */
-    { (yyval.nodePtr) = new ast_node("STORAGE_CLASS_SPECIFIER", *(yyvsp[0]._text));}
+    { (yyval.nodePtr) = new ast_node("STORAGE_CLASS_SPECIFIER", "auto");}
 #line 2923 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 151:
 #line 459 "src/maths_parser.y" /* yacc.c:1646  */
-    { (yyval.nodePtr) = new ast_node("STORAGE_CLASS_SPECIFIER", *(yyvsp[0]._text));}
+    { (yyval.nodePtr) = new ast_node("STORAGE_CLASS_SPECIFIER", "register");}
 #line 2929 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 152:
 #line 461 "src/maths_parser.y" /* yacc.c:1646  */
-    { (yyval.nodePtr) = new ast_node("TYPE_SPECIFIER", *(yyvsp[0]._text));}
+    { (yyval.nodePtr) = new ast_node("TYPE_SPECIFIER", "void");}
 #line 2935 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 153:
 #line 462 "src/maths_parser.y" /* yacc.c:1646  */
-    { (yyval.nodePtr) = new ast_node("TYPE_SPECIFIER", *(yyvsp[0]._text));}
+    { (yyval.nodePtr) = new ast_node("TYPE_SPECIFIER", "char");}
 #line 2941 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 154:
 #line 463 "src/maths_parser.y" /* yacc.c:1646  */
-    { (yyval.nodePtr) = new ast_node("TYPE_SPECIFIER", *(yyvsp[0]._text));}
+    { (yyval.nodePtr) = new ast_node("TYPE_SPECIFIER", "short");}
 #line 2947 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 155:
 #line 464 "src/maths_parser.y" /* yacc.c:1646  */
-    { (yyval.nodePtr) = new ast_node("TYPE_SPECIFIER", *(yyvsp[0]._text));}
+    { (yyval.nodePtr) = new ast_node("TYPE_SPECIFIER", "int");}
 #line 2953 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 156:
 #line 465 "src/maths_parser.y" /* yacc.c:1646  */
-    { (yyval.nodePtr) = new ast_node("TYPE_SPECIFIER", *(yyvsp[0]._text));}
+    { (yyval.nodePtr) = new ast_node("TYPE_SPECIFIER", "long");}
 #line 2959 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 157:
 #line 466 "src/maths_parser.y" /* yacc.c:1646  */
-    { (yyval.nodePtr) = new ast_node("TYPE_SPECIFIER", *(yyvsp[0]._text));}
+    { (yyval.nodePtr) = new ast_node("TYPE_SPECIFIER", "float");}
 #line 2965 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 158:
 #line 467 "src/maths_parser.y" /* yacc.c:1646  */
-    { (yyval.nodePtr) = new ast_node("TYPE_SPECIFIER", *(yyvsp[0]._text));}
+    { (yyval.nodePtr) = new ast_node("TYPE_SPECIFIER", "double");}
 #line 2971 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 159:
 #line 468 "src/maths_parser.y" /* yacc.c:1646  */
-    { (yyval.nodePtr) = new ast_node("TYPE_SPECIFIER", *(yyvsp[0]._text));}
+    { (yyval.nodePtr) = new ast_node("TYPE_SPECIFIER", "signed");}
 #line 2977 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 160:
 #line 469 "src/maths_parser.y" /* yacc.c:1646  */
-    { (yyval.nodePtr) = new ast_node("TYPE_SPECIFIER", *(yyvsp[0]._text));}
+    { (yyval.nodePtr) = new ast_node("TYPE_SPECIFIER", "unsigned");}
 #line 2983 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
@@ -3026,13 +3026,13 @@ yyreduce:
 
   case 167:
 #line 486 "src/maths_parser.y" /* yacc.c:1646  */
-    { (yyval.nodePtr) = new ast_node("STRUCT_OR_UNION", *(yyvsp[0]._text));}
+    { (yyval.nodePtr) = new ast_node("STRUCT_OR_UNION", "struct");}
 #line 3031 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 168:
 #line 487 "src/maths_parser.y" /* yacc.c:1646  */
-    { (yyval.nodePtr) = new ast_node("STRUCT_OR_UNION", *(yyvsp[0]._text));}
+    { (yyval.nodePtr) = new ast_node("STRUCT_OR_UNION", "union");}
 #line 3037 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
@@ -3148,7 +3148,7 @@ yyreduce:
 
   case 184:
 #line 536 "src/maths_parser.y" /* yacc.c:1646  */
-    { (yyval.nodePtr) = new ast_node("ENUM",*(yyvsp[0]._text));}
+    { (yyval.nodePtr) = new ast_node("ENUM", "enum");}
 #line 3153 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
@@ -3188,13 +3188,13 @@ yyreduce:
 
   case 190:
 #line 550 "src/maths_parser.y" /* yacc.c:1646  */
-    { (yyval.nodePtr) = new ast_node("TYPE_QUALIFIER",*(yyvsp[0]._text));}
+    { (yyval.nodePtr) = new ast_node("TYPE_QUALIFIER", "const");}
 #line 3193 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 191:
 #line 551 "src/maths_parser.y" /* yacc.c:1646  */
-    { (yyval.nodePtr) = new ast_node("TYPE_QUALIFIER",*(yyvsp[0]._text));}
+    { (yyval.nodePtr) = new ast_node("TYPE_QUALIFIER", "volatile");}
 #line 3199 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
