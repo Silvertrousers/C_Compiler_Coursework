@@ -1,10 +1,10 @@
 %code requires{
   #include "./ast.hpp"
-
+  #include "./symbol_table.hpp"
   #include <cassert>
 
   extern ast_node *g_root;
-
+  extern symbol_table *table;
   int yylex(void);
   void yyerror(const char *);
 }

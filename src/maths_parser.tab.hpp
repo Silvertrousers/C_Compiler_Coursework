@@ -43,11 +43,11 @@ extern int yydebug;
 #line 1 "src/maths_parser.y" /* yacc.c:1909  */
 
   #include "./ast.hpp"
-
+  #include "./symbol_table.hpp"
   #include <cassert>
 
   extern ast_node *g_root;
-
+  extern symbol_table *table;
   int yylex(void);
   void yyerror(const char *);
 
