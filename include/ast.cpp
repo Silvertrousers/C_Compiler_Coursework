@@ -1,6 +1,7 @@
 #include "ast.hpp"
 #include <iostream>
 #include <string>
+void tabs(int n);
 
 void ast_node::print_python(int tab_count){
   for(int i=0;i<branches.size();i++){
@@ -19,20 +20,18 @@ void ast_node::print_python(int tab_count){
 
   if(node_type == "FUNCTION_DECLARATION"){
     /*std::cout<<node_type<<std::endl;*/
+
     std::cout<<"def ";
-    branches[0]->print_python(tab_count);
-    branches[1]->print_python(tab_count);
-    branches[2]->print_python(tab_count);
+    branches[0]->print_python(tab_count);//return type
+    branches[1]->print_python(tab_count);//fn name
+    branches[2]->print_python(tab_count);//args
     std::cout<<":"<<std::endl;
-    branches[3]->print_python(tab_count + 1);
+    branches[3]->print_python(tab_count + 1);//compound statement
   }
 
   if(node_type == "STATEMENT"){
     /*std::cout<<node_type<<std::endl;*/
     std::cout<<std::endl;
-    for(int tabs = 0; tabs<tab_count;tabs++){
-      std::cout<<"tab";
-    }
   }
 
   if(node_type == "COMPOUND_STATEMENT"){
@@ -50,6 +49,7 @@ void ast_node::print_python(int tab_count){
   if(node_type == "STATEMENT_LIST"){
     /*std::cout<<node_type<<std::endl;*/
     branches[0]->print_python(tab_count);
+    std::cout<<std::endl;
     branches[1]->print_python(tab_count);
     std::cout<<std::endl;
   }
@@ -66,9 +66,12 @@ void ast_node::print_python(int tab_count){
     branches[4]->print_python(tab_count+1);//statement
   }
 
-  if(node_type == "T_IF"){ std::cout<<"if "; }
+  if(node_type == "T_IF"){
 
-  if(node_type == "T_ELSE"){std::cout<<"else:";}
+    std::cout<<"if ";
+  }
+
+  if(node_type == "T_ELSE"){ std::cout<<"else:";}
 
   if(node_type == "ITERATION_STATEMENT"){
     /*std::cout<<node_type<<std::endl;*/
@@ -87,13 +90,11 @@ void ast_node::print_python(int tab_count){
     branches[0]->print_python(tab_count);
     branches[1]->print_python(tab_count);
     std::cout<<std::endl;
-    for(int tabs = 0; tabs<tab_count;tabs++){
-      std::cout<<"tab";
-    }
   }
 
   if(node_type == "RETURN"){
     std::cout<<std::endl;
+
     std::cout<<"return ";
   }
 
@@ -103,6 +104,7 @@ void ast_node::print_python(int tab_count){
       branches[0]->print_python(tab_count);
     }
     else{
+
       std::cout<<" "<<value<<" ";
     }
   }
@@ -129,6 +131,7 @@ void ast_node::print_python(int tab_count){
   }
   if(node_type == "UNARY_OPERATOR"){
     /*std::cout<<node_type<<std::endl;*/
+
     std::cout<<" "<<value<<" ";
   }
   if(node_type == "CAST_EXPRESSION"){
@@ -195,10 +198,11 @@ void ast_node::print_python(int tab_count){
     std::cout<<std::endl;
     branches[0]->print_python(tab_count);
     branches[1]->print_python(tab_count);
-    std::cout<<std::endl;
-    for(int tabs = 0; tabs<tab_count;tabs++){
-      std::cout<<"tab";
+    if(branches[1]->node_type=="IDENTIFIER"){
+      std::cout<<" = 0";
     }
+    std::cout<<std::endl;
+
   }
   if(node_type == "DECLARATION_SPECIFIERS"){/*std::cout<<node_type<<std::endl;*/}
 
@@ -264,5 +268,11 @@ void ast_node::print_python(int tab_count){
     branches[0]->print_python(tab_count);
     std::cout<<" , ";
     branches[1]->print_python(tab_count);
+  }
+}
+
+void tabs(int n){
+  for(int tabs = 0; tabs<n;tabs++){
+    std::cout<<"tab";
   }
 }
