@@ -3,7 +3,7 @@
 if [[ "$1" != "" ]] ; then
     compiler="$1"
 else
-    compiler="bin/c_translator"
+    compiler="/bin/c_translator"
 fi
 
 have_compiler=0

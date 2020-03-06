@@ -23,7 +23,6 @@ void ast_node::print_python(int tab_count, symbol_table& table){
 
   if(node_type == "FUNCTION_DECLARATION"){
     /*std::cout<<node_type<<std::endl;*/
-
     std::cout<<"def ";
     branches[0]->print_python(tab_count, table);//return type
     branches[1]->print_python(tab_count, table);//fn name
@@ -221,8 +220,8 @@ void ast_node::print_python(int tab_count, symbol_table& table){
       if(branches[1]->node_type == "IDENTIFIER"){
         table.insert(branches[1]->value);
       }
-      else{
-        table.insert((branches[1]->branches)[1]->value);
+      if(branches[0]->node_type == "IDENTIFIER"){
+        table.insert(branches[0]->value);
       }
     }
     branches[0]->print_python(tab_count, table);
