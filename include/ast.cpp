@@ -187,7 +187,7 @@ void ast_node::print_python(int tab_count, symbol_table& table){
     branches[2]->print_python(tab_count, table);
   }
   if(node_type == "ASSIGNMENT_OPERATOR"){
-    std::cout<<" = ";
+    std::cout<<" "<<value<<" ";
   }
   if(node_type == "CONSTANT_EXPRESSION"){}
   if(node_type == "EXPR"){

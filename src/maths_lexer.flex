@@ -19,9 +19,21 @@ void            { return T_VOID; }
 while           { return T_WHILE; }
 
 [=][=]          { return T_EQUALS_EQUALS; }
+[!][=]          { return T_NOT_EQUALS_EQUALS; }
+[*][=]          { return T_TIMES_EQUALS; }
+
 [*]             { return T_TIMES; }
+[+][=]          { return T_PLUS_EQUALS; }
 [+]             { return T_PLUS; }
+[-][=]          { return T_MINUS_EQUALS; }
 [-]             { return T_MINUS; }
+[/][=]          { return T_DIVIDE_EQUALS; }
+[%][=]          { return T_MODULO_EQUALS; }
+[&[=]          { return T_AND_EQUALS; }
+[|][=]          { return T_OR_EQUALS; }
+[\^][=]          { return T_XOR_EQUALS; }
+[<][<][=]       { return T_LEFT_SHIFT_EQUALS; }
+[>][>][=]       { return T_RIGHT_SHIFT_EQUALS; }
 [(][)]          { return T_EMPTY_BRACKETS; }
 [(]             { return T_LBRACKET; }
 [)]             { return T_RBRACKET; }
@@ -29,6 +41,9 @@ while           { return T_WHILE; }
 [\{]            { return T_LCURLY_BRACKET; }
 [\}]            { return T_RCURLY_BRACKET; }
 [<]             { return T_LESS_THAN; }
+[<][=]             { return T_LESS_THAN_OR_EQUAL_TO; }
+[>]             { return T_GREATER_THAN; }
+[>][=]             { return T_GREATER_THAN_OR_EQUAL_TO; }
 [\=]            { return T_EQUALS; }
 
 [&][&]          { return T_AND_AND; }

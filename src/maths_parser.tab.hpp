@@ -69,23 +69,37 @@ extern int yydebug;
     T_PLUS = 266,
     T_MINUS = 267,
     T_LESS_THAN = 268,
-    T_EQUALS = 269,
-    T_EQUALS_EQUALS = 270,
-    T_AND_AND = 271,
-    T_OR_OR = 272,
-    T_COMMA = 273,
-    T_COLON = 274,
-    T_SEMICOLON = 275,
-    T_LBRACKET = 276,
-    T_RBRACKET = 277,
-    T_RCURLY_BRACKET = 278,
-    T_LCURLY_BRACKET = 279,
-    T_EMPTY_BRACKETS = 280,
-    T_ECURLY_BRACKETS = 281,
-    T_DEC_INT = 282,
-    T_IDENTIFIER = 283,
-    T_STRING = 284,
-    T_EXPONENT = 285
+    T_GREATER_THAN = 269,
+    T_GREATER_THAN_OR_EQUAL_TO = 270,
+    T_LESS_THAN_OR_EQUAL_TO = 271,
+    T_EQUALS = 272,
+    T_NOT_EQUALS_EQUALS = 273,
+    T_EQUALS_EQUALS = 274,
+    T_AND_AND = 275,
+    T_OR_OR = 276,
+    T_COMMA = 277,
+    T_COLON = 278,
+    T_SEMICOLON = 279,
+    T_LBRACKET = 280,
+    T_RBRACKET = 281,
+    T_RCURLY_BRACKET = 282,
+    T_LCURLY_BRACKET = 283,
+    T_EMPTY_BRACKETS = 284,
+    T_ECURLY_BRACKETS = 285,
+    T_DEC_INT = 286,
+    T_IDENTIFIER = 287,
+    T_STRING = 288,
+    T_TIMES_EQUALS = 289,
+    T_DIVIDE_EQUALS = 290,
+    T_MODULO_EQUALS = 291,
+    T_PLUS_EQUALS = 292,
+    T_AND_EQUALS = 293,
+    T_XOR_EQUALS = 294,
+    T_OR_EQUALS = 295,
+    T_MINUS_EQUALS = 296,
+    T_LEFT_SHIFT_EQUALS = 297,
+    T_RIGHT_SHIFT_EQUALS = 298,
+    T_EXPONENT = 299
   };
 #endif
 
@@ -99,7 +113,7 @@ union YYSTYPE
   ast_node* nodePtr;
   std::string* _text;
 
-#line 103 "src/maths_parser.tab.hpp" /* yacc.c:1909  */
+#line 117 "src/maths_parser.tab.hpp" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;
