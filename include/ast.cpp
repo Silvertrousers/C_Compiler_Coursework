@@ -7,6 +7,10 @@
 void tabs(int n);
 
 void ast_node::print_python(int tab_count, symbol_table& table){
+  // std::cout<<"tab count: "<<tab_count<<std::endl;
+  if(node_type == "STATEMENT" || node_type == "TYPE_SPECIFIER" || node_type == "T_IF" || node_type == "T_ELSE" || node_type == "ITERATION_STATEMENT"){
+
+  }
   for(int i=0;i<branches.size();i++){
     if(branches[i] == NULL){
       ast_node * temp = new ast_node("NULL","");
@@ -55,6 +59,7 @@ void ast_node::print_python(int tab_count, symbol_table& table){
     /*std::cout<<node_type<<std::endl;*/
     branches[0]->print_python(tab_count, table);
     std::cout<<std::endl;
+    tabs(tab_count);
     branches[1]->print_python(tab_count, table);
     std::cout<<std::endl;
   }
@@ -201,6 +206,7 @@ void ast_node::print_python(int tab_count, symbol_table& table){
   if(node_type == "DECLARATION"){
     /*std::cout<<node_type<<std::endl;*/
     std::cout<<std::endl;
+    tabs(tab_count);
     branches[0]->print_python(tab_count, table);
     branches[1]->print_python(tab_count, table);
     if(branches[1]->node_type=="IDENTIFIER"){
