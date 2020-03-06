@@ -15,7 +15,7 @@ int main()
     std::cout<<"\tret=main()"<<std::endl;
     std::cout<<"\tsys.exit(ret)"<<std::endl;
 
-    std::cout<<"List of global variables: "<<(sym_tab.symbols).size()<<std::endl;
+    std::cout<<std::endl;
     for(int i=0;i<(sym_tab.symbols).size();i++){
       std::cout<<"\t"<<sym_tab.symbols[i]<<", "<<std::endl;
     }

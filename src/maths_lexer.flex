@@ -17,7 +17,7 @@ int             { return T_INT; }
 return          { return T_RETURN; }
 void            { return T_VOID; }
 while           { return T_WHILE; }
-
+[\=]            { return T_EQUALS; }
 [=][=]          { return T_EQUALS_EQUALS; }
 [!][=]          { return T_NOT_EQUALS_EQUALS; }
 [*][=]          { return T_TIMES_EQUALS; }
@@ -44,7 +44,7 @@ while           { return T_WHILE; }
 [<][=]             { return T_LESS_THAN_OR_EQUAL_TO; }
 [>]             { return T_GREATER_THAN; }
 [>][=]             { return T_GREATER_THAN_OR_EQUAL_TO; }
-[\=]            { return T_EQUALS; }
+
 
 [&][&]          { return T_AND_AND; }
 [|][|]          { return T_OR_OR; }

@@ -230,6 +230,11 @@ void ast_node::print_python(int tab_count, symbol_table& table){
   }
   if(node_type == "INIT_DECLARATOR"){
     /*std::cout<<node_type<<std::endl;*/
+    if(tab_count == 0){
+      if(branches[0]->node_type == "IDENTIFIER"){
+        table.insert(branches[0]->value);
+      }
+    }
     branches[0]->print_python(tab_count, table);
     std::cout<<" = ";
     branches[1]->print_python(tab_count, table);

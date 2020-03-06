@@ -366,13 +366,13 @@ struct yy_trans_info
 	};
 static const flex_int16_t yy_accept[78] =
     {   0,
-       39,   39,   44,   42,   41,   41,   42,   42,   42,   18,
-       24,   25,   11,   13,   36,   15,   42,   39,   37,   38,
-       29,   18,   31,   40,   18,   42,   40,   40,   40,   40,
-       40,   27,   42,   28,   41,    9,    0,    1,   17,   34,
-       23,   10,   12,   14,   16,   39,    0,   30,    8,   32,
-        0,   40,   20,   40,    3,   40,   40,   40,   40,   26,
-       19,   35,   21,   22,   40,    4,   40,   40,   40,    2,
+       39,   39,   44,   42,   41,   41,   42,   42,   42,   19,
+       25,   26,   12,   14,   36,   16,   42,   39,   37,   38,
+       30,    8,   32,   40,   19,   42,   40,   40,   40,   40,
+       40,   28,   42,   29,   41,   10,    0,    1,   18,   34,
+       24,   11,   13,   15,   17,   39,    0,   31,    9,   33,
+        0,   40,   21,   40,    3,   40,   40,   40,   40,   27,
+       20,   35,   22,   23,   40,    4,   40,   40,   40,    2,
        40,    6,   40,   40,    7,    5,    0
     } ;
 
@@ -814,133 +814,133 @@ YY_RULE_SETUP
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
+#line 20 "src/maths_lexer.flex"
+{ return T_EQUALS; }
+	YY_BREAK
+case 9:
+YY_RULE_SETUP
 #line 21 "src/maths_lexer.flex"
 { return T_EQUALS_EQUALS; }
 	YY_BREAK
-case 9:
+case 10:
 YY_RULE_SETUP
 #line 22 "src/maths_lexer.flex"
 { return T_NOT_EQUALS_EQUALS; }
 	YY_BREAK
-case 10:
+case 11:
 YY_RULE_SETUP
 #line 23 "src/maths_lexer.flex"
 { return T_TIMES_EQUALS; }
 	YY_BREAK
-case 11:
+case 12:
 YY_RULE_SETUP
 #line 25 "src/maths_lexer.flex"
 { return T_TIMES; }
 	YY_BREAK
-case 12:
+case 13:
 YY_RULE_SETUP
 #line 26 "src/maths_lexer.flex"
 { return T_PLUS_EQUALS; }
 	YY_BREAK
-case 13:
+case 14:
 YY_RULE_SETUP
 #line 27 "src/maths_lexer.flex"
 { return T_PLUS; }
 	YY_BREAK
-case 14:
+case 15:
 YY_RULE_SETUP
 #line 28 "src/maths_lexer.flex"
 { return T_MINUS_EQUALS; }
 	YY_BREAK
-case 15:
+case 16:
 YY_RULE_SETUP
 #line 29 "src/maths_lexer.flex"
 { return T_MINUS; }
 	YY_BREAK
-case 16:
+case 17:
 YY_RULE_SETUP
 #line 30 "src/maths_lexer.flex"
 { return T_DIVIDE_EQUALS; }
 	YY_BREAK
-case 17:
+case 18:
 YY_RULE_SETUP
 #line 31 "src/maths_lexer.flex"
 { return T_MODULO_EQUALS; }
 	YY_BREAK
-case 18:
+case 19:
 YY_RULE_SETUP
 #line 32 "src/maths_lexer.flex"
 { return T_AND_EQUALS; }
 	YY_BREAK
-case 19:
+case 20:
 YY_RULE_SETUP
 #line 33 "src/maths_lexer.flex"
 { return T_OR_EQUALS; }
 	YY_BREAK
-case 20:
+case 21:
 YY_RULE_SETUP
 #line 34 "src/maths_lexer.flex"
 { return T_XOR_EQUALS; }
 	YY_BREAK
-case 21:
+case 22:
 YY_RULE_SETUP
 #line 35 "src/maths_lexer.flex"
 { return T_LEFT_SHIFT_EQUALS; }
 	YY_BREAK
-case 22:
+case 23:
 YY_RULE_SETUP
 #line 36 "src/maths_lexer.flex"
 { return T_RIGHT_SHIFT_EQUALS; }
 	YY_BREAK
-case 23:
+case 24:
 YY_RULE_SETUP
 #line 37 "src/maths_lexer.flex"
 { return T_EMPTY_BRACKETS; }
 	YY_BREAK
-case 24:
+case 25:
 YY_RULE_SETUP
 #line 38 "src/maths_lexer.flex"
 { return T_LBRACKET; }
 	YY_BREAK
-case 25:
+case 26:
 YY_RULE_SETUP
 #line 39 "src/maths_lexer.flex"
 { return T_RBRACKET; }
 	YY_BREAK
-case 26:
+case 27:
 YY_RULE_SETUP
 #line 40 "src/maths_lexer.flex"
 { return T_ECURLY_BRACKETS; }
 	YY_BREAK
-case 27:
+case 28:
 YY_RULE_SETUP
 #line 41 "src/maths_lexer.flex"
 { return T_LCURLY_BRACKET; }
 	YY_BREAK
-case 28:
+case 29:
 YY_RULE_SETUP
 #line 42 "src/maths_lexer.flex"
 { return T_RCURLY_BRACKET; }
 	YY_BREAK
-case 29:
+case 30:
 YY_RULE_SETUP
 #line 43 "src/maths_lexer.flex"
 { return T_LESS_THAN; }
 	YY_BREAK
-case 30:
+case 31:
 YY_RULE_SETUP
 #line 44 "src/maths_lexer.flex"
 { return T_LESS_THAN_OR_EQUAL_TO; }
 	YY_BREAK
-case 31:
+case 32:
 YY_RULE_SETUP
 #line 45 "src/maths_lexer.flex"
 { return T_GREATER_THAN; }
 	YY_BREAK
-case 32:
+case 33:
 YY_RULE_SETUP
 #line 46 "src/maths_lexer.flex"
 { return T_GREATER_THAN_OR_EQUAL_TO; }
-	YY_BREAK
-case 33:
-YY_RULE_SETUP
-#line 47 "src/maths_lexer.flex"
-{ return T_EQUALS; }
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
