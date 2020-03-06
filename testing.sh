@@ -2,4 +2,4 @@
 
 make clean
 make
-./bin/print_canonical
+./bin/c_translator

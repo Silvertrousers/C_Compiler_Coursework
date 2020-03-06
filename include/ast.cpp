@@ -29,6 +29,9 @@ void ast_node::print_python(int tab_count, symbol_table& table){
     branches[1]->print_python(tab_count, table);//fn name
     branches[2]->print_python(tab_count, table);//args
     std::cout<<":"<<std::endl;
+    for(int i=0;i<table.symbols.size();i++){
+      std::cout<<"global "<<table.symbols[i]<<std::endl;
+    }
     branches[3]->print_python(tab_count+1, table);//compound statement
   }
 
