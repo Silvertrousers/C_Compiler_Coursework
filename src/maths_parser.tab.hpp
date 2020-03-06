@@ -44,6 +44,8 @@ extern int yydebug;
 
   #include "./ast.hpp"
 
+  #include <string>
+  #include <cmath>
   #include <cassert>
 
   extern const ast_node *g_root;
@@ -51,7 +53,7 @@ extern int yydebug;
   int yylex(void);
   void yyerror(const char *);
 
-#line 55 "src/maths_parser.tab.hpp" /* yacc.c:1909  */
+#line 57 "src/maths_parser.tab.hpp" /* yacc.c:1909  */
 
 /* Token type.  */
 #ifndef YYTOKENTYPE
@@ -141,23 +143,13 @@ extern int yydebug;
     T_IDENTIFIER = 338,
     T_STRING = 339,
     T_DEC_INT = 340,
-    T_DEC_INT_LONG = 341,
-    T_DEC_INT_UNSIGNED = 342,
-    T_OCTAL_INT = 343,
-    T_OCTAL_INT_LONG = 344,
-    T_OCTAL_INT_UNSIGNED = 345,
-    T_HEX_INT = 346,
-    T_HEX_INT_LONG = 347,
-    T_HEX_INT_UNSIGNED = 348,
-    T_NORM_DOUBLE = 349,
-    T_NORM_FLOAT = 350,
-    T_NORM_LONG_DOUBLE = 351,
-    T_EXP_DOUBLE = 352,
-    T_EXP_FLOAT = 353,
-    T_EXP_LONG_DOUBLE = 354,
-    T_DEREFERENCE = 355,
-    T_CUSTOM_TYPE = 356,
-    T_ENUM_CONSTANT = 357
+    T_OCTAL_INT = 341,
+    T_HEX_INT = 342,
+    T_NORM_FLOAT = 343,
+    T_EXP_FLOAT = 344,
+    T_DEREFERENCE = 345,
+    T_CUSTOM_TYPE = 346,
+    T_ENUM_CONSTANT = 347
   };
 #endif
 
@@ -166,12 +158,12 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 12 "src/maths_parser.y" /* yacc.c:1909  */
+#line 14 "src/maths_parser.y" /* yacc.c:1909  */
 
   ast_node* nodePtr;
   std::string* _text;
 
-#line 175 "src/maths_parser.tab.hpp" /* yacc.c:1909  */
+#line 167 "src/maths_parser.tab.hpp" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;

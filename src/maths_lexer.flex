@@ -94,12 +94,8 @@ while           { return T_WHILE; }
 [\%]             { return T_MODULO; }
 [\?]            { return T_QUESTION; }
 
-[0-9]+[\.][0-9]+[eE][-]?[0-9]+[lL] { yylval._text=new std::string(yytext); return T_EXP_LONG_DOUBLE; }
-[0-9]+[\.][0-9]+[eE][-]?[0-9]+[fF] { yylval._text=new std::string(yytext); return T_EXP_FLOAT; }
-[0-9]+[\.][0-9]+[eE][-]?[0-9]+ { yylval._text=new std::string(yytext); return T_EXP_DOUBLE; }
-[0-9]+[\.][0-9]+[lL] { yylval._text=new std::string(yytext); return T_NORM_LONG_DOUBLE; }
-[0-9]+[\.][0-9]+[fF] { yylval._text=new std::string(yytext); return T_NORM_FLOAT; }
-[0-9]+[\.][0-9]+ { yylval._text=new std::string(yytext); return T_NORM_DOUBLE; }
+[0-9]+[\.][0-9]+[eE][-]?[0-9]+[fFlL]* { yylval._text=new std::string(yytext); return T_EXP_FLOAT; }
+[0-9]+[\.][0-9]+[fFlL]* { yylval._text=new std::string(yytext); return T_NORM_FLOAT; }
 [0][xX][0-9a-fA-F]+[lLuU]* { yylval._text=new std::string(yytext); return T_HEX_INT; }
 [1-9][0-9]*[lLuU]* { yylval._text=new std::string(yytext); return T_DEC_INT; }
 [0][0-7]*[lLuU]*   { yylval._text=new std::string(yytext); return T_OCTAL_INT; }
