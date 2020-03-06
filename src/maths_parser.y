@@ -1,6 +1,8 @@
 %code requires{
   #include "./ast.hpp"
 
+  #include <string>
+  #include <cmath>
   #include <cassert>
 
   extern const ast_node *g_root;
@@ -30,9 +32,9 @@
 %token T_LBRACKET T_RBRACKET T_LSQ_BRACKET T_RSQ_BRACKET T_RCURLY_BRACKET T_LCURLY_BRACKET
 %token T_EMPTY_BRACKETS T_ECURLY_BRACKETS T_ESQ_BRACKETS
 %token T_IDENTIFIER T_STRING
-%token T_DEC_INT T_DEC_INT_LONG T_DEC_INT_UNSIGNED
-%token T_OCTAL_INT T_OCTAL_INT_LONG T_OCTAL_INT_UNSIGNED
-%token T_HEX_INT T_HEX_INT_LONG T_HEX_INT_UNSIGNED
+%token T_DEC_INT
+%token T_OCTAL_INT
+%token T_HEX_INT
 %token T_NORM_DOUBLE T_NORM_FLOAT T_NORM_LONG_DOUBLE
 %token T_EXP_DOUBLE T_EXP_FLOAT T_EXP_LONG_DOUBLE
 %token T_DEREFERENCE T_CUSTOM_TYPE T_ENUM_CONSTANT
@@ -65,7 +67,7 @@
 %type<_text> T_MODULO T_COMMA T_DOT T_COLON T_SEMICOLON T_QUESTION
 %type<_text> T_LBRACKET T_RBRACKET T_LSQ_BRACKET T_RSQ_BRACKET T_RCURLY_BRACKET T_LCURLY_BRACKET
 %type<_text> T_EMPTY_BRACKETS T_ECURLY_BRACKETS T_ESQ_BRACKETS
-%type<_text> T_DEC_INT T_OCTAL_INT T_IDENTIFIER T_STRING T_ENUM_CONSTANT
+%type<_text> T_DEC_INT T_OCTAL_INT T_HEX_INT T_IDENTIFIER T_STRING T_ENUM_CONSTANT
 %type<_text> T_DEREFERENCE T_CUSTOM_TYPE
 
 %left T_PLUS T_MINUS
@@ -240,8 +242,10 @@ PRIMARY_EXPRESSION : IDENTIFIER { $$ = $1; }
                                                                                 std::vector<std::string> branch_notes = {"EXPR"};
                                                                                 $$ = new ast_node("JUMP_STATEMENT","", branches, branch_notes);}
 
-CONSTANT : T_DEC_INT   {$$ = new ast_node("CONSTANT", *$1); }
-         | T_OCTAL_INT {$$ = new ast_node("CONSTANT", *$1); }
+CONSTANT : T_DEC_INT   {$$ = new ast_node("CONSTANT", std::to_string((int)round(std::stoi(*$1)))); }
+         | T_OCTAL_INT {$$ = new ast_node("CONSTANT", std::to_string((int)round(std::stoi(*$1, 0, 8)))); }
+         | T_HEX_INT    {$$ = new ast_node("CONSTANT", std::to_string((int)round(std::stoi(*$1)))); }
+
 
 
 POSTFIX_EXPRESSION : PRIMARY_EXPRESSION { $$  = $1;}
