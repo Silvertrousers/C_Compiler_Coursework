@@ -1,5 +1,6 @@
 %code requires{
   #include "./ast.hpp"
+  #include "./symbol_table.hpp"
 
   #include <string>
   #include <cmath>
@@ -315,7 +316,7 @@ UNARY_OPERATOR : T_AND { $$ = new ast_node("UNARY_OPERATOR","and");}
 CAST_EXPRESSION : UNARY_EXPRESSION { $$  = $1;}
                 | T_LBRACKET TYPE_NAME T_RBRACKET CAST_EXPRESSION {             std::vector<ast_node*> branches = {$2, $4};
                                                                                 std::vector<std::string> branch_notes = {"TYPE_NAME","CAST_EXPRESSION"};
-                                                                                $$ = new ast_node("MULTIPLICATIVE_EXPRESSION","", branches, branch_notes);}
+                                                                                $$ = new ast_node("CAST_EXPRESSION","", branches, branch_notes);}
 
 MULTIPLICATIVE_EXPRESSION : CAST_EXPRESSION { $$  = $1;}
                           | MULTIPLICATIVE_EXPRESSION T_TIMES CAST_EXPRESSION { std::vector<ast_node*> branches = {$1, $3};
@@ -328,7 +329,7 @@ MULTIPLICATIVE_EXPRESSION : CAST_EXPRESSION { $$  = $1;}
 
                           | MULTIPLICATIVE_EXPRESSION T_MODULO CAST_EXPRESSION {std::vector<ast_node*> branches = {$1, $3};
                                                                                 std::vector<std::string> branch_notes = {"MULTIPLICATIVE_EXPRESSION","CAST_EXPRESSION"};
-                                                                                $$ = new ast_node("MULTIPLICATIVE_EXPRESSION","", branches, branch_notes);}
+                                                                                $$ = new ast_node("MULTIPLICATIVE_EXPRESSION","%", branches, branch_notes);}
 
 ADDITIVE_EXPRESSION : MULTIPLICATIVE_EXPRESSION { $$  = $1;}
                     | ADDITIVE_EXPRESSION T_PLUS MULTIPLICATIVE_EXPRESSION {    std::vector<ast_node*> branches = {$1, $3};
@@ -377,27 +378,27 @@ EQUALITY_EXPRESSION : RELATIONAL_EXPRESSION { $$  = $1;}
 AND_EXPRESSION : EQUALITY_EXPRESSION { $$  = $1;}
                | AND_EXPRESSION T_AND EQUALITY_EXPRESSION {                     std::vector<ast_node*> branches = {$1, $3};
                                                                                 std::vector<std::string> branch_notes = {"AND_EXPRESSION","EQUALITY_EXPRESSION"};
-                                                                                $$ = new ast_node("AND_EXPRESSION","", branches, branch_notes);}
+                                                                                $$ = new ast_node("AND_EXPRESSION","&", branches, branch_notes);}
 
 EXCLUSIVE_OR_EXPRESSION : AND_EXPRESSION { $$  = $1;}
                         | EXCLUSIVE_OR_EXPRESSION T_EXPONENT AND_EXPRESSION {   std::vector<ast_node*> branches = {$1, $3};
                                                                                 std::vector<std::string> branch_notes = {"EXCLUSIVE_OR_EXPRESSION","AND_EXPRESSION"};
-                                                                                $$ = new ast_node("EXCLUSIVE_OR_EXPRESSION","", branches, branch_notes);}
+                                                                                $$ = new ast_node("EXCLUSIVE_OR_EXPRESSION","^", branches, branch_notes);}
 
 INCLUSIVE_OR_EXPRESSION : EXCLUSIVE_OR_EXPRESSION { $$  = $1;}
                         | INCLUSIVE_OR_EXPRESSION T_OR EXCLUSIVE_OR_EXPRESSION {std::vector<ast_node*> branches = {$1, $3};
                                                                                 std::vector<std::string> branch_notes = {"INCLUSIVE_OR_EXPRESSION","EXCLUSIVE_OR_EXPRESSION"};
-                                                                                $$ = new ast_node("INCLUSIVE_OR_EXPRESSION","", branches, branch_notes);}
+                                                                                $$ = new ast_node("INCLUSIVE_OR_EXPRESSION","|", branches, branch_notes);}
 
 LOGICAL_AND_EXPRESSION : INCLUSIVE_OR_EXPRESSION { $$  = $1;}
                        | LOGICAL_AND_EXPRESSION T_AND_AND INCLUSIVE_OR_EXPRESSION {     std::vector<ast_node*> branches = {$1, $3};
                                                                                         std::vector<std::string> branch_notes = {"LOGICAL_AND_EXPRESSION","INCLUSIVE_OR_EXPRESSION"};
-                                                                                        $$ = new ast_node("LOGICAL_AND_EXPRESSION","", branches, branch_notes);}
+                                                                                        $$ = new ast_node("LOGICAL_AND_EXPRESSION","&&", branches, branch_notes);}
 
 LOGICAL_OR_EXPRESSION  : LOGICAL_AND_EXPRESSION { $$  = $1;}
                        | LOGICAL_OR_EXPRESSION T_OR_OR LOGICAL_AND_EXPRESSION {         std::vector<ast_node*> branches = {$1, $3};
                                                                                         std::vector<std::string> branch_notes = {"LOGICAL_OR_EXPRESSION","LOGICAL_AND_EXPRESSION"};
-                                                                                        $$ = new ast_node("LOGICAL_OR_EXPRESSION","", branches, branch_notes);}
+                                                                                        $$ = new ast_node("LOGICAL_OR_EXPRESSION","||", branches, branch_notes);}
 
 CONDITIONAL_EXPRESSION : LOGICAL_OR_EXPRESSION { $$  = $1;}
                        | LOGICAL_OR_EXPRESSION T_QUESTION EXPR T_COLON CONDITIONAL_EXPRESSION {   std::vector<ast_node*> branches = {$1, $3, $5};
