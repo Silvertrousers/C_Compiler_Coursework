@@ -90,8 +90,9 @@ void ast_node::print_python(int tab_count, symbol_table& table){
   if(node_type == "ITERATION_STATEMENT"){
     /*std::cout<<node_type<<std::endl;*/
     branches[0]->print_python(tab_count, table);//while
+    std::cout<<"(";
     branches[1]->print_python(tab_count, table);//expr
-    std::cout<<":"<<std::endl;
+    std::cout<<"):"<<std::endl;
     branches[2]->print_python(tab_count+1, table);//body
   }
 
