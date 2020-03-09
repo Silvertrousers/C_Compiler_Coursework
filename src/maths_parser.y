@@ -85,7 +85,6 @@ PROGRAM : TRANSLATION_UNIT { g_root = $1; }
 TRANSLATION_UNIT : EXTERNAL_DECLARATION {$$ = $1;}
                  | TRANSLATION_UNIT EXTERNAL_DECLARATION { std::vector<ast_node*> branches = {$1, $2};
                                                            std::vector<std::string> branch_notes = {"TRANSLATION_UNIT", "EXTERNAL_DECLARATION"};
-                                                           fprintf(stderr,"hihihihih");
                                                            $$ = new ast_node("TRANSLATION_UNIT","", branches, branch_notes);}
 
 EXTERNAL_DECLARATION : FUNCTION_DECLARATION {$$ = $1;}
@@ -410,17 +409,17 @@ ASSIGNMENT_EXPRESSION : CONDITIONAL_EXPRESSION { $$ = $1; }
                                                                                        std::vector<std::string> branch_notes = {"UNARY_EXPRESSION","ASSIGNMENT_OPERATOR", "ASSIGNMENT_EXPRESSION"};
                                                                                        $$ = new ast_node("ASSIGNMENT_EXPRESSION","", branches, branch_notes);}
 
-ASSIGNMENT_OPERATOR : T_EQUALS { $$ = new ast_node("ASSIGNMENT_OPERATOR", "equals");}
-                    | T_TIMES_EQUALS { $$ = new ast_node("ASSIGNMENT_OPERATOR", "times_equals");}
-                    | T_DIVIDE_EQUALS { $$ = new ast_node("ASSIGNMENT_OPERATOR", "divide_equals");}
-                    | T_MODULO_EQUALS { $$ = new ast_node("ASSIGNMENT_OPERATOR", "modulo_equals");}
-                    | T_PLUS_EQUALS { $$ = new ast_node("ASSIGNMENT_OPERATOR", "plus_equals");}
-                    | T_MINUS_EQUALS { $$ = new ast_node("ASSIGNMENT_OPERATOR", "minus_equals");}
-                    | T_LEFT_SHIFT_EQUALS { $$ = new ast_node("ASSIGNMENT_OPERATOR", "left_shift_equals");}
-                    | T_RIGHT_SHIFT_EQUALS { $$ = new ast_node("ASSIGNMENT_OPERATOR", "right_shift_equals");}
-                    | T_AND_EQUALS { $$ = new ast_node("ASSIGNMENT_OPERATOR", "and_equals");}
-                    | T_XOR_EQUALS { $$ = new ast_node("ASSIGNMENT_OPERATOR", "xor_equals");}
-                    | T_OR_EQUALS { $$ = new ast_node("ASSIGNMENT_OPERATOR", "or_equals");}
+ASSIGNMENT_OPERATOR : T_EQUALS { $$ = new ast_node("ASSIGNMENT_OPERATOR", "=");}
+                    | T_TIMES_EQUALS { $$ = new ast_node("ASSIGNMENT_OPERATOR", "*=");}
+                    | T_DIVIDE_EQUALS { $$ = new ast_node("ASSIGNMENT_OPERATOR", "/=");}
+                    | T_MODULO_EQUALS { $$ = new ast_node("ASSIGNMENT_OPERATOR", "%=");}
+                    | T_PLUS_EQUALS { $$ = new ast_node("ASSIGNMENT_OPERATOR", "+=");}
+                    | T_MINUS_EQUALS { $$ = new ast_node("ASSIGNMENT_OPERATOR", "-=");}
+                    | T_LEFT_SHIFT_EQUALS { $$ = new ast_node("ASSIGNMENT_OPERATOR", "<<=");}
+                    | T_RIGHT_SHIFT_EQUALS { $$ = new ast_node("ASSIGNMENT_OPERATOR", ">>=");}
+                    | T_AND_EQUALS { $$ = new ast_node("ASSIGNMENT_OPERATOR", "&=");}
+                    | T_XOR_EQUALS { $$ = new ast_node("ASSIGNMENT_OPERATOR", "^=");}
+                    | T_OR_EQUALS { $$ = new ast_node("ASSIGNMENT_OPERATOR", "|=");}
 
 CONSTANT_EXPRESSION : CONDITIONAL_EXPRESSION { $$ = $1; }
 
