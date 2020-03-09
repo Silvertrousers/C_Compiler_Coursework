@@ -120,7 +120,9 @@ STATEMENT_LIST : STATEMENT { $$ = $1; }
                                                                                 std::vector<std::string> branch_notes = {"STATEMENT_LIST", "STATEMENT"};
                                                                                 $$ = new ast_node("STATEMENT_LIST","", branches, branch_notes);}
 
-EXPRESSION_STATEMENT : EXPR T_SEMICOLON { $$ = $1;}
+EXPRESSION_STATEMENT : EXPR T_SEMICOLON {                                       std::vector<ast_node*> branches = {$1};
+                                                                                std::vector<std::string> branch_notes = {"EXPR"};
+                                                                                $$ = new ast_node("EXPRESSION_STATEMENT","", branches, branch_notes);}
                      | T_SEMICOLON { $$ = NULL; }
 
 SELECTION_STATEMENT : IF T_LBRACKET EXPR T_RBRACKET STATEMENT {                 std::vector<ast_node*> branches = {$1, $3, $5, NULL, NULL};

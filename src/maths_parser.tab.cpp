@@ -486,16 +486,16 @@ static const yytype_uint16 yyrline[] =
 {
        0,    65,    65,    67,    68,    72,    73,    76,    80,    84,
       88,    92,    93,    94,    95,    96,    98,   102,   106,   109,
-     113,   114,   118,   119,   123,   124,   126,   130,   134,   135,
-     137,   141,   143,   147,   153,   155,   156,   157,   159,   163,
-     165,   167,   171,   175,   176,   180,   182,   187,   188,   189,
-     191,   192,   196,   197,   201,   202,   206,   210,   212,   213,
-     217,   221,   225,   228,   229,   233,   237,   238,   242,   243,
-     247,   249,   250,   254,   255,   256,   257,   258,   259,   260,
-     261,   262,   263,   264,   268,   269,   273,   277,   281,   285,
-     286,   290,   291,   297,   298,   304,   308,   311,   313,   315,
-     319,   323,   328,   330,   331,   335,   339,   342,   343,   347,
-     349,   352,   354,   358,   362,   363
+     113,   114,   118,   119,   123,   126,   128,   132,   136,   137,
+     139,   143,   145,   149,   155,   157,   158,   159,   161,   165,
+     167,   169,   173,   177,   178,   182,   184,   189,   190,   191,
+     193,   194,   198,   199,   203,   204,   208,   212,   214,   215,
+     219,   223,   227,   230,   231,   235,   239,   240,   244,   245,
+     249,   251,   252,   256,   257,   258,   259,   260,   261,   262,
+     263,   264,   265,   266,   270,   271,   275,   279,   283,   287,
+     288,   292,   293,   299,   300,   306,   310,   313,   315,   317,
+     321,   325,   330,   332,   333,   337,   341,   344,   345,   349,
+     351,   354,   356,   360,   364,   365
 };
 #endif
 
@@ -1583,632 +1583,634 @@ yyreduce:
 
   case 24:
 #line 123 "src/maths_parser.y" /* yacc.c:1646  */
-    { (yyval.nodePtr) = (yyvsp[-1].nodePtr);}
-#line 1588 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+    {                                       std::vector<ast_node*> branches = {(yyvsp[-1].nodePtr)};
+                                                                                std::vector<std::string> branch_notes = {"EXPR"};
+                                                                                (yyval.nodePtr) = new ast_node("EXPRESSION_STATEMENT","", branches, branch_notes);}
+#line 1590 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 25:
-#line 124 "src/maths_parser.y" /* yacc.c:1646  */
+#line 126 "src/maths_parser.y" /* yacc.c:1646  */
     { (yyval.nodePtr) = NULL; }
-#line 1594 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+#line 1596 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 26:
-#line 126 "src/maths_parser.y" /* yacc.c:1646  */
+#line 128 "src/maths_parser.y" /* yacc.c:1646  */
     {                 std::vector<ast_node*> branches = {(yyvsp[-4].nodePtr), (yyvsp[-2].nodePtr), (yyvsp[0].nodePtr), NULL, NULL};
                                                                                 std::vector<std::string> branch_notes = {"T_IF", "EXPR", "STATEMENT", "T_ELSE", "STATEMENT"};
                                                                                 (yyval.nodePtr) = new ast_node("SELECTION_STATEMENT","", branches, branch_notes);}
-#line 1602 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+#line 1604 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 27:
-#line 130 "src/maths_parser.y" /* yacc.c:1646  */
+#line 132 "src/maths_parser.y" /* yacc.c:1646  */
     {  std::vector<ast_node*> branches = {(yyvsp[-6].nodePtr), (yyvsp[-4].nodePtr), (yyvsp[-2].nodePtr), (yyvsp[-1].nodePtr), (yyvsp[0].nodePtr)};
                                                                                 std::vector<std::string> branch_notes = {"T_IF", "EXPR", "STATEMENT", "T_ELSE", "STATEMENT"};
                                                                                 (yyval.nodePtr) = new ast_node("SELECTION_STATEMENT","", branches, branch_notes);}
-#line 1610 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+#line 1612 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 28:
-#line 134 "src/maths_parser.y" /* yacc.c:1646  */
+#line 136 "src/maths_parser.y" /* yacc.c:1646  */
     {(yyval.nodePtr) = new ast_node("T_IF", *(yyvsp[0]._text));}
-#line 1616 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+#line 1618 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 29:
-#line 135 "src/maths_parser.y" /* yacc.c:1646  */
+#line 137 "src/maths_parser.y" /* yacc.c:1646  */
     {(yyval.nodePtr) = new ast_node("T_ELSE", *(yyvsp[0]._text));}
-#line 1622 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+#line 1624 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 30:
-#line 137 "src/maths_parser.y" /* yacc.c:1646  */
+#line 139 "src/maths_parser.y" /* yacc.c:1646  */
     {              std::vector<ast_node*> branches = {(yyvsp[-4].nodePtr), (yyvsp[-2].nodePtr), (yyvsp[0].nodePtr)};
                                                                                 std::vector<std::string> branch_notes = {"T_WHILE", "EXPR", "STATEMENT"};
                                                                                 (yyval.nodePtr) = new ast_node("ITERATION_STATEMENT","", branches, branch_notes);}
-#line 1630 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+#line 1632 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 31:
-#line 141 "src/maths_parser.y" /* yacc.c:1646  */
+#line 143 "src/maths_parser.y" /* yacc.c:1646  */
     {(yyval.nodePtr) = new ast_node("T_WHILE", "while");}
-#line 1636 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+#line 1638 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 32:
-#line 143 "src/maths_parser.y" /* yacc.c:1646  */
+#line 145 "src/maths_parser.y" /* yacc.c:1646  */
     {                                      std::vector<ast_node*> branches = {(yyvsp[-2].nodePtr), (yyvsp[-1].nodePtr)};
                                                                                 std::vector<std::string> branch_notes = {"RETURN", "EXPR"};
                                                                                 (yyval.nodePtr) = new ast_node("JUMP_STATEMENT","", branches, branch_notes);}
-#line 1644 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+#line 1646 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 33:
-#line 147 "src/maths_parser.y" /* yacc.c:1646  */
+#line 149 "src/maths_parser.y" /* yacc.c:1646  */
     {                                           std::vector<ast_node*> branches = {(yyvsp[-1].nodePtr), NULL};
                                                                                 std::vector<std::string> branch_notes = {"RETURN", "EXPR"};
                                                                                 (yyval.nodePtr) = new ast_node("JUMP_STATEMENT","", branches, branch_notes);}
-#line 1652 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+#line 1654 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 34:
-#line 153 "src/maths_parser.y" /* yacc.c:1646  */
+#line 155 "src/maths_parser.y" /* yacc.c:1646  */
     {(yyval.nodePtr) = new ast_node("RETURN", "return");}
-#line 1658 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+#line 1660 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 35:
-#line 155 "src/maths_parser.y" /* yacc.c:1646  */
+#line 157 "src/maths_parser.y" /* yacc.c:1646  */
     { (yyval.nodePtr) = (yyvsp[0].nodePtr); }
-#line 1664 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+#line 1666 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 36:
-#line 156 "src/maths_parser.y" /* yacc.c:1646  */
+#line 158 "src/maths_parser.y" /* yacc.c:1646  */
     {(yyval.nodePtr) = (yyvsp[0].nodePtr);}
-#line 1670 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+#line 1672 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 37:
-#line 157 "src/maths_parser.y" /* yacc.c:1646  */
+#line 159 "src/maths_parser.y" /* yacc.c:1646  */
     {(yyval.nodePtr) = new ast_node("PRIMARY_EXPRESSION", *(yyvsp[0]._text));}
-#line 1676 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+#line 1678 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 38:
-#line 159 "src/maths_parser.y" /* yacc.c:1646  */
+#line 161 "src/maths_parser.y" /* yacc.c:1646  */
     {                               std::vector<ast_node*> branches = {(yyvsp[-1].nodePtr)};
                                                                                 std::vector<std::string> branch_notes = {"EXPR"};
                                                                                 (yyval.nodePtr) = new ast_node("PRIMARY_EXPRESSION","", branches, branch_notes);}
-#line 1684 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+#line 1686 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 39:
-#line 163 "src/maths_parser.y" /* yacc.c:1646  */
+#line 165 "src/maths_parser.y" /* yacc.c:1646  */
     {(yyval.nodePtr) = new ast_node("CONSTANT", *(yyvsp[0]._text)); }
-#line 1690 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+#line 1692 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 40:
-#line 165 "src/maths_parser.y" /* yacc.c:1646  */
+#line 167 "src/maths_parser.y" /* yacc.c:1646  */
     { (yyval.nodePtr)  = (yyvsp[0].nodePtr);}
-#line 1696 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+#line 1698 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 41:
-#line 167 "src/maths_parser.y" /* yacc.c:1646  */
+#line 169 "src/maths_parser.y" /* yacc.c:1646  */
     {                      std::vector<ast_node*> branches = {(yyvsp[-1].nodePtr), NULL};
                                                                                 std::vector<std::string> branch_notes = {"POSTFIX_EXPRESSION", "ARGUMENT_EXPRESSION_LIST"};
                                                                                 (yyval.nodePtr) = new ast_node("POSTFIX_EXPRESSION","", branches, branch_notes);}
-#line 1704 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+#line 1706 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 42:
-#line 171 "src/maths_parser.y" /* yacc.c:1646  */
+#line 173 "src/maths_parser.y" /* yacc.c:1646  */
     { std::vector<ast_node*> branches = {(yyvsp[-3].nodePtr), (yyvsp[-1].nodePtr)};
                                                                                          std::vector<std::string> branch_notes = {"POSTFIX_EXPRESSION", "ARGUMENT_EXPRESSION_LIST"};
                                                                                          (yyval.nodePtr) = new ast_node("POSTFIX_EXPRESSION","", branches, branch_notes);}
-#line 1712 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+#line 1714 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 43:
-#line 175 "src/maths_parser.y" /* yacc.c:1646  */
+#line 177 "src/maths_parser.y" /* yacc.c:1646  */
     { (yyval.nodePtr)  = (yyvsp[0].nodePtr);}
-#line 1718 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+#line 1720 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 44:
-#line 176 "src/maths_parser.y" /* yacc.c:1646  */
+#line 178 "src/maths_parser.y" /* yacc.c:1646  */
     {   std::vector<ast_node*> branches = {(yyvsp[-2].nodePtr), (yyvsp[0].nodePtr)};
                                                                                       std::vector<std::string> branch_notes = {"ARGUMENT_EXPRESSION_LIST", "ASSIGNMENT_EXPRESSION"};
                                                                                       (yyval.nodePtr) = new ast_node("ARGUMENT_EXPRESSION_LIST","", branches, branch_notes);}
-#line 1726 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+#line 1728 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 45:
-#line 180 "src/maths_parser.y" /* yacc.c:1646  */
+#line 182 "src/maths_parser.y" /* yacc.c:1646  */
     { (yyval.nodePtr)  = (yyvsp[0].nodePtr);}
-#line 1732 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+#line 1734 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 46:
-#line 182 "src/maths_parser.y" /* yacc.c:1646  */
+#line 184 "src/maths_parser.y" /* yacc.c:1646  */
     {                             std::vector<ast_node*> branches = {(yyvsp[-1].nodePtr), (yyvsp[0].nodePtr)};
                                                                                 std::vector<std::string> branch_notes = {"UNARY_OPERATOR","CAST_EXPRESSION"};
                                                                                 (yyval.nodePtr) = new ast_node("UNARY_EXPRESSION","", branches, branch_notes);}
-#line 1740 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+#line 1742 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 47:
-#line 187 "src/maths_parser.y" /* yacc.c:1646  */
+#line 189 "src/maths_parser.y" /* yacc.c:1646  */
     { (yyval.nodePtr) = new ast_node("UNARY_OPERATOR","*");}
-#line 1746 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+#line 1748 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 48:
-#line 188 "src/maths_parser.y" /* yacc.c:1646  */
+#line 190 "src/maths_parser.y" /* yacc.c:1646  */
     { (yyval.nodePtr) = new ast_node("UNARY_OPERATOR","+");}
-#line 1752 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+#line 1754 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 49:
-#line 189 "src/maths_parser.y" /* yacc.c:1646  */
+#line 191 "src/maths_parser.y" /* yacc.c:1646  */
     { (yyval.nodePtr) = new ast_node("UNARY_OPERATOR","-");}
-#line 1758 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+#line 1760 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 50:
-#line 191 "src/maths_parser.y" /* yacc.c:1646  */
+#line 193 "src/maths_parser.y" /* yacc.c:1646  */
     { (yyval.nodePtr)  = (yyvsp[0].nodePtr);}
-#line 1764 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+#line 1766 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 51:
-#line 192 "src/maths_parser.y" /* yacc.c:1646  */
+#line 194 "src/maths_parser.y" /* yacc.c:1646  */
     {             std::vector<ast_node*> branches = {(yyvsp[-2].nodePtr), (yyvsp[0].nodePtr)};
                                                                                 std::vector<std::string> branch_notes = {"TYPE_NAME","CAST_EXPRESSION"};
                                                                                 (yyval.nodePtr) = new ast_node("MULTIPLICATIVE_EXPRESSION","", branches, branch_notes);}
-#line 1772 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+#line 1774 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 52:
-#line 196 "src/maths_parser.y" /* yacc.c:1646  */
+#line 198 "src/maths_parser.y" /* yacc.c:1646  */
     { (yyval.nodePtr)  = (yyvsp[0].nodePtr);}
-#line 1778 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+#line 1780 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 53:
-#line 197 "src/maths_parser.y" /* yacc.c:1646  */
+#line 199 "src/maths_parser.y" /* yacc.c:1646  */
     { std::vector<ast_node*> branches = {(yyvsp[-2].nodePtr), (yyvsp[0].nodePtr)};
                                                                                 std::vector<std::string> branch_notes = {"MULTIPLICATIVE_EXPRESSION","CAST_EXPRESSION"};
                                                                                 (yyval.nodePtr) = new ast_node("MULTIPLICATIVE_EXPRESSION","*", branches, branch_notes);}
-#line 1786 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+#line 1788 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 54:
-#line 201 "src/maths_parser.y" /* yacc.c:1646  */
+#line 203 "src/maths_parser.y" /* yacc.c:1646  */
     { (yyval.nodePtr)  = (yyvsp[0].nodePtr);}
-#line 1792 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+#line 1794 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 55:
-#line 202 "src/maths_parser.y" /* yacc.c:1646  */
+#line 204 "src/maths_parser.y" /* yacc.c:1646  */
     {    std::vector<ast_node*> branches = {(yyvsp[-2].nodePtr), (yyvsp[0].nodePtr)};
                                                                                 std::vector<std::string> branch_notes = {"ADDITIVE_EXPRESSION","MULTIPLICATIVE_EXPRESSION"};
                                                                                 (yyval.nodePtr) = new ast_node("ADDITIVE_EXPRESSION","+", branches, branch_notes);}
-#line 1800 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+#line 1802 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 56:
-#line 206 "src/maths_parser.y" /* yacc.c:1646  */
+#line 208 "src/maths_parser.y" /* yacc.c:1646  */
     {   std::vector<ast_node*> branches = {(yyvsp[-2].nodePtr), (yyvsp[0].nodePtr)};
                                                                                 std::vector<std::string> branch_notes = {"ADDITIVE_EXPRESSION","MULTIPLICATIVE_EXPRESSION"};
                                                                                 (yyval.nodePtr) = new ast_node("ADDITIVE_EXPRESSION","-", branches, branch_notes);}
-#line 1808 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+#line 1810 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 57:
-#line 210 "src/maths_parser.y" /* yacc.c:1646  */
+#line 212 "src/maths_parser.y" /* yacc.c:1646  */
     { (yyval.nodePtr)  = (yyvsp[0].nodePtr);}
-#line 1814 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+#line 1816 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 58:
-#line 212 "src/maths_parser.y" /* yacc.c:1646  */
+#line 214 "src/maths_parser.y" /* yacc.c:1646  */
     { (yyval.nodePtr)  = (yyvsp[0].nodePtr);}
-#line 1820 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+#line 1822 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 59:
-#line 213 "src/maths_parser.y" /* yacc.c:1646  */
+#line 215 "src/maths_parser.y" /* yacc.c:1646  */
     {    std::vector<ast_node*> branches = {(yyvsp[-2].nodePtr), (yyvsp[0].nodePtr)};
                                                                                 std::vector<std::string> branch_notes = {"RELATIONAL_EXPRESSION","SHIFT_EXPRESSION"};
                                                                                 (yyval.nodePtr) = new ast_node("RELATIONAL_EXPRESSION","<", branches, branch_notes);}
-#line 1828 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+#line 1830 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 60:
-#line 217 "src/maths_parser.y" /* yacc.c:1646  */
+#line 219 "src/maths_parser.y" /* yacc.c:1646  */
     { std::vector<ast_node*> branches = {(yyvsp[-2].nodePtr), (yyvsp[0].nodePtr)};
                                                                                                       std::vector<std::string> branch_notes = {"RELATIONAL_EXPRESSION","SHIFT_EXPRESSION"};
                                                                                                       (yyval.nodePtr) = new ast_node("RELATIONAL_EXPRESSION",">", branches, branch_notes);}
-#line 1836 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+#line 1838 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 61:
-#line 221 "src/maths_parser.y" /* yacc.c:1646  */
+#line 223 "src/maths_parser.y" /* yacc.c:1646  */
     {    std::vector<ast_node*> branches = {(yyvsp[-2].nodePtr), (yyvsp[0].nodePtr)};
                                                                                             std::vector<std::string> branch_notes = {"RELATIONAL_EXPRESSION","SHIFT_EXPRESSION"};
                                                                                             (yyval.nodePtr) = new ast_node("RELATIONAL_EXPRESSION","<=", branches, branch_notes);}
-#line 1844 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+#line 1846 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 62:
-#line 225 "src/maths_parser.y" /* yacc.c:1646  */
+#line 227 "src/maths_parser.y" /* yacc.c:1646  */
     {    std::vector<ast_node*> branches = {(yyvsp[-2].nodePtr), (yyvsp[0].nodePtr)};
                                                                                                std::vector<std::string> branch_notes = {"RELATIONAL_EXPRESSION","SHIFT_EXPRESSION"};
                                                                                                (yyval.nodePtr) = new ast_node("RELATIONAL_EXPRESSION",">=", branches, branch_notes);}
-#line 1852 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+#line 1854 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 63:
-#line 228 "src/maths_parser.y" /* yacc.c:1646  */
+#line 230 "src/maths_parser.y" /* yacc.c:1646  */
     { (yyval.nodePtr)  = (yyvsp[0].nodePtr);}
-#line 1858 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+#line 1860 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 64:
-#line 229 "src/maths_parser.y" /* yacc.c:1646  */
+#line 231 "src/maths_parser.y" /* yacc.c:1646  */
     {  std::vector<ast_node*> branches = {(yyvsp[-2].nodePtr), (yyvsp[0].nodePtr)};
                                                                                    std::vector<std::string> branch_notes = {"EQUALITY_EXPRESSION","RELATIONAL_EXPRESSION"};
                                                                                    (yyval.nodePtr) = new ast_node("EQUALITY_EXPRESSION","==", branches, branch_notes);}
-#line 1866 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+#line 1868 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 65:
-#line 233 "src/maths_parser.y" /* yacc.c:1646  */
+#line 235 "src/maths_parser.y" /* yacc.c:1646  */
     {  std::vector<ast_node*> branches = {(yyvsp[-2].nodePtr), (yyvsp[0].nodePtr)};
                                                                                        std::vector<std::string> branch_notes = {"EQUALITY_EXPRESSION","RELATIONAL_EXPRESSION"};
                                                                                        (yyval.nodePtr) = new ast_node("EQUALITY_EXPRESSION","!=", branches, branch_notes);}
-#line 1874 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+#line 1876 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 66:
-#line 237 "src/maths_parser.y" /* yacc.c:1646  */
+#line 239 "src/maths_parser.y" /* yacc.c:1646  */
     { (yyval.nodePtr)  = (yyvsp[0].nodePtr);}
-#line 1880 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+#line 1882 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 67:
-#line 238 "src/maths_parser.y" /* yacc.c:1646  */
+#line 240 "src/maths_parser.y" /* yacc.c:1646  */
     {     std::vector<ast_node*> branches = {(yyvsp[-2].nodePtr), (yyvsp[0].nodePtr)};
                                                                                         std::vector<std::string> branch_notes = {"LOGICAL_AND_EXPRESSION","INCLUSIVE_OR_EXPRESSION"};
                                                                                         (yyval.nodePtr) = new ast_node("LOGICAL_AND_EXPRESSION","and", branches, branch_notes);}
-#line 1888 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+#line 1890 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 68:
-#line 242 "src/maths_parser.y" /* yacc.c:1646  */
+#line 244 "src/maths_parser.y" /* yacc.c:1646  */
     { (yyval.nodePtr)  = (yyvsp[0].nodePtr);}
-#line 1894 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+#line 1896 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 69:
-#line 243 "src/maths_parser.y" /* yacc.c:1646  */
+#line 245 "src/maths_parser.y" /* yacc.c:1646  */
     {         std::vector<ast_node*> branches = {(yyvsp[-2].nodePtr), (yyvsp[0].nodePtr)};
                                                                                         std::vector<std::string> branch_notes = {"LOGICAL_OR_EXPRESSION","LOGICAL_AND_EXPRESSION"};
                                                                                         (yyval.nodePtr) = new ast_node("LOGICAL_OR_EXPRESSION","or", branches, branch_notes);}
-#line 1902 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+#line 1904 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 70:
-#line 247 "src/maths_parser.y" /* yacc.c:1646  */
+#line 249 "src/maths_parser.y" /* yacc.c:1646  */
     { (yyval.nodePtr)  = (yyvsp[0].nodePtr);}
-#line 1908 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+#line 1910 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 71:
-#line 249 "src/maths_parser.y" /* yacc.c:1646  */
+#line 251 "src/maths_parser.y" /* yacc.c:1646  */
     { (yyval.nodePtr) = (yyvsp[0].nodePtr); }
-#line 1914 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+#line 1916 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 72:
-#line 250 "src/maths_parser.y" /* yacc.c:1646  */
+#line 252 "src/maths_parser.y" /* yacc.c:1646  */
     {   std::vector<ast_node*> branches = {(yyvsp[-2].nodePtr), (yyvsp[-1].nodePtr), (yyvsp[0].nodePtr)};
                                                                                        std::vector<std::string> branch_notes = {"UNARY_EXPRESSION","ASSIGNMENT_OPERATOR", "ASSIGNMENT_EXPRESSION"};
                                                                                        (yyval.nodePtr) = new ast_node("ASSIGNMENT_EXPRESSION","", branches, branch_notes);}
-#line 1922 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+#line 1924 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 73:
-#line 254 "src/maths_parser.y" /* yacc.c:1646  */
+#line 256 "src/maths_parser.y" /* yacc.c:1646  */
     { (yyval.nodePtr) = new ast_node("ASSIGNMENT_OPERATOR", "=");}
-#line 1928 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+#line 1930 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 74:
-#line 255 "src/maths_parser.y" /* yacc.c:1646  */
+#line 257 "src/maths_parser.y" /* yacc.c:1646  */
     { (yyval.nodePtr) = new ast_node("ASSIGNMENT_OPERATOR", "*=");}
-#line 1934 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+#line 1936 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 75:
-#line 256 "src/maths_parser.y" /* yacc.c:1646  */
+#line 258 "src/maths_parser.y" /* yacc.c:1646  */
     { (yyval.nodePtr) = new ast_node("ASSIGNMENT_OPERATOR", "/=");}
-#line 1940 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+#line 1942 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 76:
-#line 257 "src/maths_parser.y" /* yacc.c:1646  */
+#line 259 "src/maths_parser.y" /* yacc.c:1646  */
     { (yyval.nodePtr) = new ast_node("ASSIGNMENT_OPERATOR", "%=");}
-#line 1946 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+#line 1948 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 77:
-#line 258 "src/maths_parser.y" /* yacc.c:1646  */
+#line 260 "src/maths_parser.y" /* yacc.c:1646  */
     { (yyval.nodePtr) = new ast_node("ASSIGNMENT_OPERATOR", "+=");}
-#line 1952 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+#line 1954 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 78:
-#line 259 "src/maths_parser.y" /* yacc.c:1646  */
+#line 261 "src/maths_parser.y" /* yacc.c:1646  */
     { (yyval.nodePtr) = new ast_node("ASSIGNMENT_OPERATOR", "-=");}
-#line 1958 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+#line 1960 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 79:
-#line 260 "src/maths_parser.y" /* yacc.c:1646  */
+#line 262 "src/maths_parser.y" /* yacc.c:1646  */
     { (yyval.nodePtr) = new ast_node("ASSIGNMENT_OPERATOR", "<<=");}
-#line 1964 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+#line 1966 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 80:
-#line 261 "src/maths_parser.y" /* yacc.c:1646  */
+#line 263 "src/maths_parser.y" /* yacc.c:1646  */
     { (yyval.nodePtr) = new ast_node("ASSIGNMENT_OPERATOR", ">>=");}
-#line 1970 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+#line 1972 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 81:
-#line 262 "src/maths_parser.y" /* yacc.c:1646  */
+#line 264 "src/maths_parser.y" /* yacc.c:1646  */
     { (yyval.nodePtr) = new ast_node("ASSIGNMENT_OPERATOR", "&=");}
-#line 1976 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+#line 1978 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 82:
-#line 263 "src/maths_parser.y" /* yacc.c:1646  */
+#line 265 "src/maths_parser.y" /* yacc.c:1646  */
     { (yyval.nodePtr) = new ast_node("ASSIGNMENT_OPERATOR", "^=");}
-#line 1982 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+#line 1984 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 83:
-#line 264 "src/maths_parser.y" /* yacc.c:1646  */
+#line 266 "src/maths_parser.y" /* yacc.c:1646  */
     { (yyval.nodePtr) = new ast_node("ASSIGNMENT_OPERATOR", "|=");}
-#line 1988 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+#line 1990 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 84:
-#line 268 "src/maths_parser.y" /* yacc.c:1646  */
+#line 270 "src/maths_parser.y" /* yacc.c:1646  */
     { (yyval.nodePtr) = (yyvsp[0].nodePtr); }
-#line 1994 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+#line 1996 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 85:
-#line 269 "src/maths_parser.y" /* yacc.c:1646  */
+#line 271 "src/maths_parser.y" /* yacc.c:1646  */
     {                                     std::vector<ast_node*> branches = {(yyvsp[-2].nodePtr), (yyvsp[0].nodePtr)};
                                                                                 std::vector<std::string> branch_notes = {"EXPR","ASSIGNMENT_EXPRESSION"};
                                                                                 (yyval.nodePtr) = new ast_node("EXPR","", branches, branch_notes);}
-#line 2002 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+#line 2004 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 86:
-#line 273 "src/maths_parser.y" /* yacc.c:1646  */
+#line 275 "src/maths_parser.y" /* yacc.c:1646  */
     {                              std::vector<ast_node*> branches = {(yyvsp[-1].nodePtr), NULL};
                                                                                 std::vector<std::string> branch_notes = {"DECLARATION_SPECIFIERS","INIT_DECLARATOR_LIST"};
                                                                                 (yyval.nodePtr) = new ast_node("DECLARATION","", branches, branch_notes);}
-#line 2010 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+#line 2012 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 87:
-#line 277 "src/maths_parser.y" /* yacc.c:1646  */
+#line 279 "src/maths_parser.y" /* yacc.c:1646  */
     {         std::vector<ast_node*> branches = {(yyvsp[-2].nodePtr), (yyvsp[-1].nodePtr)};
                                                                                 std::vector<std::string> branch_notes = {"DECLARATION_SPECIFIERS","INIT_DECLARATOR_LIST"};
                                                                                 (yyval.nodePtr) = new ast_node("DECLARATION","", branches, branch_notes);}
-#line 2018 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+#line 2020 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 88:
-#line 281 "src/maths_parser.y" /* yacc.c:1646  */
+#line 283 "src/maths_parser.y" /* yacc.c:1646  */
     { (yyval.nodePtr) = (yyvsp[0].nodePtr); }
-#line 2024 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+#line 2026 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 89:
-#line 285 "src/maths_parser.y" /* yacc.c:1646  */
+#line 287 "src/maths_parser.y" /* yacc.c:1646  */
     { (yyval.nodePtr) = (yyvsp[0].nodePtr); }
-#line 2030 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+#line 2032 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 90:
-#line 286 "src/maths_parser.y" /* yacc.c:1646  */
+#line 288 "src/maths_parser.y" /* yacc.c:1646  */
     {           std::vector<ast_node*> branches = {(yyvsp[-2].nodePtr), (yyvsp[0].nodePtr)};
                                                                                 std::vector<std::string> branch_notes = {"INIT_DECLARATOR_LIST","INIT_DECLARATOR"};
                                                                                 (yyval.nodePtr) = new ast_node("INIT_DECLARATOR_LIST","", branches, branch_notes);}
-#line 2038 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+#line 2040 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 91:
-#line 290 "src/maths_parser.y" /* yacc.c:1646  */
+#line 292 "src/maths_parser.y" /* yacc.c:1646  */
     { (yyval.nodePtr) = (yyvsp[0].nodePtr); }
-#line 2044 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+#line 2046 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 92:
-#line 291 "src/maths_parser.y" /* yacc.c:1646  */
+#line 293 "src/maths_parser.y" /* yacc.c:1646  */
     {                             std::vector<ast_node*> branches = {(yyvsp[-2].nodePtr), (yyvsp[0].nodePtr)};
                                                                                 std::vector<std::string> branch_notes = {"DECLARATOR","INITIALIZER"};
                                                                                 (yyval.nodePtr) = new ast_node("INIT_DECLARATOR","", branches, branch_notes);}
-#line 2052 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+#line 2054 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 93:
-#line 297 "src/maths_parser.y" /* yacc.c:1646  */
+#line 299 "src/maths_parser.y" /* yacc.c:1646  */
     { (yyval.nodePtr) = new ast_node("TYPE_SPECIFIER", "void");}
-#line 2058 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+#line 2060 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 94:
-#line 298 "src/maths_parser.y" /* yacc.c:1646  */
+#line 300 "src/maths_parser.y" /* yacc.c:1646  */
     { (yyval.nodePtr) = new ast_node("TYPE_SPECIFIER", "int");}
-#line 2064 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+#line 2066 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 95:
-#line 304 "src/maths_parser.y" /* yacc.c:1646  */
+#line 306 "src/maths_parser.y" /* yacc.c:1646  */
     { (yyval.nodePtr) = (yyvsp[0].nodePtr); }
-#line 2070 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+#line 2072 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 96:
-#line 308 "src/maths_parser.y" /* yacc.c:1646  */
+#line 310 "src/maths_parser.y" /* yacc.c:1646  */
     { (yyval.nodePtr) = (yyvsp[0].nodePtr); }
-#line 2076 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+#line 2078 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 97:
-#line 311 "src/maths_parser.y" /* yacc.c:1646  */
+#line 313 "src/maths_parser.y" /* yacc.c:1646  */
     {(yyval.nodePtr) = (yyvsp[0].nodePtr); }
-#line 2082 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+#line 2084 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 98:
-#line 313 "src/maths_parser.y" /* yacc.c:1646  */
+#line 315 "src/maths_parser.y" /* yacc.c:1646  */
     {(yyval.nodePtr) = (yyvsp[-1].nodePtr);}
-#line 2088 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+#line 2090 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 99:
-#line 315 "src/maths_parser.y" /* yacc.c:1646  */
+#line 317 "src/maths_parser.y" /* yacc.c:1646  */
     {      std::vector<ast_node*> branches = {(yyvsp[-3].nodePtr), (yyvsp[-1].nodePtr)};
                                                                                        std::vector<std::string> branch_notes = {"DIRECT_DECLARATOR","PARAMETER_TYPE_LIST"};
                                                                                        (yyval.nodePtr) = new ast_node("DIRECT_DECLARATOR","", branches, branch_notes);}
-#line 2096 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+#line 2098 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 100:
-#line 319 "src/maths_parser.y" /* yacc.c:1646  */
+#line 321 "src/maths_parser.y" /* yacc.c:1646  */
     {      std::vector<ast_node*> branches = {(yyvsp[-1].nodePtr), NULL};
                                                                                 std::vector<std::string> branch_notes = {"DIRECT_DECLARATOR","IDENTIFIER_LIST"};
                                                                                 (yyval.nodePtr) = new ast_node("DIRECT_DECLARATOR","", branches, branch_notes);}
-#line 2104 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+#line 2106 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 101:
-#line 323 "src/maths_parser.y" /* yacc.c:1646  */
+#line 325 "src/maths_parser.y" /* yacc.c:1646  */
     { std::vector<ast_node*> branches = {(yyvsp[-3].nodePtr), (yyvsp[-1].nodePtr)};
                                                                                 std::vector<std::string> branch_notes = {"DIRECT_DECLARATOR","IDENTIFIER_LIST"};
                                                                                 (yyval.nodePtr) = new ast_node("DIRECT_DECLARATOR","", branches, branch_notes);}
-#line 2112 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+#line 2114 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 102:
-#line 328 "src/maths_parser.y" /* yacc.c:1646  */
+#line 330 "src/maths_parser.y" /* yacc.c:1646  */
     { (yyval.nodePtr) = (yyvsp[0].nodePtr); }
-#line 2118 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+#line 2120 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 103:
-#line 330 "src/maths_parser.y" /* yacc.c:1646  */
+#line 332 "src/maths_parser.y" /* yacc.c:1646  */
     { (yyval.nodePtr) = (yyvsp[0].nodePtr); }
-#line 2124 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+#line 2126 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 104:
-#line 331 "src/maths_parser.y" /* yacc.c:1646  */
+#line 333 "src/maths_parser.y" /* yacc.c:1646  */
     {                 std::vector<ast_node*> branches = {(yyvsp[-2].nodePtr), (yyvsp[0].nodePtr)};
                                                                                 std::vector<std::string> branch_notes = {"PARAMETER_LIST","PARAMETER_DECLARATION"};
                                                                                 (yyval.nodePtr) = new ast_node("PARAMETER_LIST","", branches, branch_notes);}
-#line 2132 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+#line 2134 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 105:
-#line 335 "src/maths_parser.y" /* yacc.c:1646  */
+#line 337 "src/maths_parser.y" /* yacc.c:1646  */
     {                     std::vector<ast_node*> branches = {(yyvsp[-1].nodePtr), (yyvsp[0].nodePtr)};
                                                                                 std::vector<std::string> branch_notes = {"DECLARATION_SPECIFIERS","DECLARATOR"};
                                                                                 (yyval.nodePtr) = new ast_node("PARAMETER_DECLARATION","", branches, branch_notes);}
-#line 2140 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+#line 2142 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 106:
-#line 339 "src/maths_parser.y" /* yacc.c:1646  */
+#line 341 "src/maths_parser.y" /* yacc.c:1646  */
     { (yyval.nodePtr) = (yyvsp[0].nodePtr); }
-#line 2146 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+#line 2148 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 107:
-#line 342 "src/maths_parser.y" /* yacc.c:1646  */
+#line 344 "src/maths_parser.y" /* yacc.c:1646  */
     { (yyval.nodePtr) = (yyvsp[0].nodePtr); }
-#line 2152 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+#line 2154 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 108:
-#line 343 "src/maths_parser.y" /* yacc.c:1646  */
+#line 345 "src/maths_parser.y" /* yacc.c:1646  */
     {                         std::vector<ast_node*> branches = {(yyvsp[-2].nodePtr), (yyvsp[0].nodePtr)};
                                                                                 std::vector<std::string> branch_notes = {"IDENTIFIER_LIST","IDENTIFIER"};
                                                                                 (yyval.nodePtr) = new ast_node("IDENTIFIER_LIST","", branches, branch_notes);}
-#line 2160 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+#line 2162 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 109:
-#line 347 "src/maths_parser.y" /* yacc.c:1646  */
+#line 349 "src/maths_parser.y" /* yacc.c:1646  */
     {(yyval.nodePtr) = new ast_node("IDENTIFIER",*(yyvsp[0]._text));}
-#line 2166 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+#line 2168 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 110:
-#line 349 "src/maths_parser.y" /* yacc.c:1646  */
+#line 351 "src/maths_parser.y" /* yacc.c:1646  */
     { (yyval.nodePtr) = (yyvsp[0].nodePtr); }
-#line 2172 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+#line 2174 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 111:
-#line 352 "src/maths_parser.y" /* yacc.c:1646  */
+#line 354 "src/maths_parser.y" /* yacc.c:1646  */
     { (yyval.nodePtr) = (yyvsp[0].nodePtr); }
-#line 2178 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+#line 2180 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 112:
-#line 354 "src/maths_parser.y" /* yacc.c:1646  */
+#line 356 "src/maths_parser.y" /* yacc.c:1646  */
     {              std::vector<ast_node*> branches = {(yyvsp[-1].nodePtr)};
                                                                                 std::vector<std::string> branch_notes = {"INITIALIZER_LIST"};
                                                                                 (yyval.nodePtr) = new ast_node("INITIALIZER","", branches, branch_notes);}
-#line 2186 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+#line 2188 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 113:
-#line 358 "src/maths_parser.y" /* yacc.c:1646  */
+#line 360 "src/maths_parser.y" /* yacc.c:1646  */
     {      std::vector<ast_node*> branches = {(yyvsp[-2].nodePtr)};
                                                                                 std::vector<std::string> branch_notes = {"INITIALIZER_LIST"};
                                                                                 (yyval.nodePtr) = new ast_node("INITIALIZER","", branches, branch_notes);}
-#line 2194 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+#line 2196 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 114:
-#line 362 "src/maths_parser.y" /* yacc.c:1646  */
+#line 364 "src/maths_parser.y" /* yacc.c:1646  */
     {(yyval.nodePtr) = (yyvsp[0].nodePtr);}
-#line 2200 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+#line 2202 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 115:
-#line 363 "src/maths_parser.y" /* yacc.c:1646  */
+#line 365 "src/maths_parser.y" /* yacc.c:1646  */
     {                       std::vector<ast_node*> branches = {(yyvsp[-2].nodePtr), (yyvsp[0].nodePtr)};
                                                                                 std::vector<std::string> branch_notes = {"INITIALIZER_LIST","INITIALIZER"};
                                                                                 (yyval.nodePtr) = new ast_node("INITIALIZER_LIST","", branches, branch_notes);}
-#line 2208 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+#line 2210 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
 
-#line 2212 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
+#line 2214 "src/maths_parser.tab.cpp" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -2436,7 +2438,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 370 "src/maths_parser.y" /* yacc.c:1906  */
+#line 372 "src/maths_parser.y" /* yacc.c:1906  */
 
 
 ast_node *g_root;

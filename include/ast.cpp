@@ -8,8 +8,8 @@ void tabs(int n);
 
 void ast_node::print_python(int tab_count, symbol_table& table){
   // std::cout<<"tab count: "<<tab_count<<std::endl;
-  if(node_type == "STATEMENT" || node_type == "TYPE_SPECIFIER" || node_type == "T_IF" || node_type == "T_ELSE" || node_type == "ITERATION_STATEMENT"){
-
+  if(node_type == "STATEMENT" || node_type == "T_IF" || node_type == "T_ELSE" || node_type == "ITERATION_STATEMENT"){
+    tabs(tab_count);
   }
   for(int i=0;i<branches.size();i++){
     if(branches[i] == NULL){
@@ -64,7 +64,10 @@ void ast_node::print_python(int tab_count, symbol_table& table){
     std::cout<<std::endl;
   }
 
-  if(node_type == "EXPRESSION_STATEMENT"){/*std::cout<<node_type<<std::endl;*/}
+  if(node_type == "EXPRESSION_STATEMENT"){/*std::cout<<node_type<<std::endl;*/
+    tabs(tab_count);
+    branches[0]->print_python(tab_count, table);
+  }
 
   if(node_type == "SELECTION_STATEMENT"){
     /*std::cout<<node_type<<std::endl;*/
@@ -104,7 +107,7 @@ void ast_node::print_python(int tab_count, symbol_table& table){
 
   if(node_type == "RETURN"){
     std::cout<<std::endl;
-
+    tabs(tab_count);
     std::cout<<"return ";
   }
 
@@ -300,7 +303,7 @@ void ast_node::print_python(int tab_count, symbol_table& table){
 
 void tabs(int n){
   for(int tabs = 0; tabs<n;tabs++){
-    std::cout<<"tab";
+    std::cout<<"\t";
   }
 }
 #endif
