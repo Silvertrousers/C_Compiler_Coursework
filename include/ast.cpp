@@ -33,6 +33,7 @@ void ast_node::print_python(int tab_count, symbol_table& table){
     branches[2]->print_python(tab_count, table);//args
     std::cout<<":"<<std::endl;
     for(int i=0;i<table.symbols.size();i++){
+      tabs(tab_count+1);
       std::cout<<"global "<<table.symbols[i]<<std::endl;
     }
     branches[3]->print_python(tab_count+1, table);//compound statement
@@ -59,7 +60,6 @@ void ast_node::print_python(int tab_count, symbol_table& table){
     /*std::cout<<node_type<<std::endl;*/
     branches[0]->print_python(tab_count, table);
     std::cout<<std::endl;
-    tabs(tab_count);
     branches[1]->print_python(tab_count, table);
     std::cout<<std::endl;
   }
@@ -72,8 +72,9 @@ void ast_node::print_python(int tab_count, symbol_table& table){
   if(node_type == "SELECTION_STATEMENT"){
     /*std::cout<<node_type<<std::endl;*/
     branches[0]->print_python(tab_count, table);//if
+    std::cout<<"(";
     branches[1]->print_python(tab_count, table);//expr
-    std::cout<<":"<<std::endl;
+    std::cout<<"):"<<std::endl;
     branches[2]->print_python(tab_count+1, table);//statement
     branches[3]->print_python(tab_count, table);//else
     branches[4]->print_python(tab_count+1, table);//statement
@@ -127,15 +128,18 @@ void ast_node::print_python(int tab_count, symbol_table& table){
   if(node_type == "POSTFIX_EXPRESSION"){
     /*std::cout<<node_type<<std::endl;*/
     branches[0]->print_python(tab_count, table);
+    std::cout<<"(";
     branches[1]->print_python(tab_count, table);
+    std::cout<<")";
   }
 
   if(node_type == "ARGUMENT_EXPRESSION_LIST"){
     /*std::cout<<node_type<<std::endl;*/
-    std::cout<<std::endl;
+
     branches[0]->print_python(tab_count, table);
+    std::cout<<", ";
     branches[1]->print_python(tab_count, table);
-    std::cout<<std::endl;
+
   }
   if(node_type == "UNARY_EXPRESSION"){
     /*std::cout<<node_type<<std::endl;*/
@@ -268,11 +272,11 @@ void ast_node::print_python(int tab_count, symbol_table& table){
   if(node_type == "IDENTIFIER_LIST"){
     /*std::cout<<node_type<<std::endl;*/
     branches[0]->print_python(tab_count, table);
-    std::cout<<" , ";
+    std::cout<<", ";
     branches[1]->print_python(tab_count, table);
   }
   if(node_type == "IDENTIFIER"){
-    std::cout<<" "<<value<<" ";
+    std::cout<<value;
   }
   if(node_type == "TYPE_NAME"){
     /*std::cout<<node_type<<std::endl;*/

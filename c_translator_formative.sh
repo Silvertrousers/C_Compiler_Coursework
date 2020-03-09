@@ -7,14 +7,14 @@ else
 fi
 
 have_compiler=0
-if [[ ! -f bin/c_compiler ]] ; then
+if [[ ! -f bin/c_translator ]] ; then
     >&2 echo "Warning : cannot find compiler at path ${compiler}. Only checking C reference against python reference."
     have_compiler=1
 fi
 
-input_dir="c_translator/formative"
+working="translator_tests/examples"
 
-working="tmp/formative"
+#working="tmp/formative"
 mkdir -p ${working}
 
 for i in ${input_dir}/*.c ; do
@@ -34,10 +34,11 @@ for i in ${input_dir}/*.c ; do
     if [[ ${have_compiler} -eq 0 ]] ; then
 
         # Create the DUT python version by invoking the compiler with translation flags
-        $compiler --translate $i -o ${working}/$base-got.py
+        #$compiler --translate $i -o ${working}/$base.py
+        ./bin/c_translator < $i.txt > ${working}/$base.py
 
         # Run the DUT python version
-        python ${working}/$base-got.py
+        python ${working}/$base.py
         GOT_P_OUT=$?
     fi
 

@@ -2,8 +2,9 @@
 #include <iostream>
 #include "ast.cpp"
 #include "symbol_table.cpp"
-int main()
+int main(int argc, char *argv[])
 {
+
     int tab_count = 0;
     symbol_table sym_tab;
 
