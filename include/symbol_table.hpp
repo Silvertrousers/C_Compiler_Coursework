@@ -1,3 +1,5 @@
+#ifndef symbol_table_hpp
+#define symbol_table_hpp
 #include <iostream>
 #include <vector>
 #include <string>
@@ -32,3 +34,4 @@ class symbol_table{
 //locations that contain their values
 //a similar thing should be done with mult and div
 //means that registers dont need to be kept track of, just the memory location of different identifiers
+#endif

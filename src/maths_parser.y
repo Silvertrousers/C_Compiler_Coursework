@@ -1,12 +1,11 @@
 %code requires{
   #include "./ast.hpp"
-  #include "./symbol_table.hpp"
 
   #include <string>
   #include <cmath>
   #include <cassert>
 
-  extern const ast_node *g_root;
+  extern ast_node *g_root;
 
   int yylex(void);
   void yyerror(const char *);
@@ -91,15 +90,7 @@ EXTERNAL_DECLARATION : FUNCTION_DECLARATION {$$ = $1;}
                      | DECLARATION {$$ = $1; }
 
 
-FUNCTION_DECLARATION : DECLARATION_SPECIFIERS DECLARATOR DECLARATION_LIST COMPOUND_STATEMENT { std::vector<ast_node*> branches = {$1, $2, $3, $4};
-                                                                                               std::vector<std::string> branch_notes = {"DECLARATION_SPECIFIERS", "DECLARATOR", "DECLARATION_LIST", "COMPOUND_STATEMENT"};
-                                                                                               $$ = new ast_node("FUNCTION_DECLARATION","", branches, branch_notes);}
-
-                     | DECLARATION_SPECIFIERS DECLARATOR COMPOUND_STATEMENT {   std::vector<ast_node*> branches = {$1, $2, NULL, $3};
-                                                                                std::vector<std::string> branch_notes = {"DECLARATION_SPECIFIERS", "DECLARATOR", "DECLARATION_LIST", "COMPOUND_STATEMENT"};
-                                                                                $$ = new ast_node("FUNCTION_DECLARATION","", branches, branch_notes);}
-
-                     | DECLARATOR DECLARATION_LIST COMPOUND_STATEMENT {         std::vector<ast_node*> branches = {NULL, $1, $2, $3};
+FUNCTION_DECLARATION : DECLARATION_SPECIFIERS DECLARATOR COMPOUND_STATEMENT {   std::vector<ast_node*> branches = {$1, $2, NULL, $3};
                                                                                 std::vector<std::string> branch_notes = {"DECLARATION_SPECIFIERS", "DECLARATOR", "DECLARATION_LIST", "COMPOUND_STATEMENT"};
                                                                                 $$ = new ast_node("FUNCTION_DECLARATION","", branches, branch_notes);}
 
@@ -428,9 +419,9 @@ EXPR : ASSIGNMENT_EXPRESSION { $$ = $1; }
                                                                                 std::vector<std::string> branch_notes = {"EXPR","ASSIGNMENT_EXPRESSION"};
                                                                                 $$ = new ast_node("EXPR","", branches, branch_notes);}
 
-DECLARATION : DECLARATION_SPECIFIERS T_SEMICOLON {                              std::vector<ast_node*> branches = {$1, NULL};
+DECLARATION : DECLARATION_SPECIFIERS T_SEMICOLON {                              std::vector<ast_node*> branches = {NULL, NULL};
                                                                                 std::vector<std::string> branch_notes = {"DECLARATION_SPECIFIERS","INIT_DECLARATOR_LIST"};
-                                                                                $$ = new ast_node("DECLARATION","", branches, branch_notes);}
+                                                                                $$ = new ast_node("DECLARATION","oh_dear", branches, branch_notes);}
 
             | DECLARATION_SPECIFIERS INIT_DECLARATOR_LIST T_SEMICOLON {         std::vector<ast_node*> branches = {$1, $2};
                                                                                 std::vector<std::string> branch_notes = {"DECLARATION_SPECIFIERS","INIT_DECLARATOR_LIST"};
@@ -609,10 +600,10 @@ TYPE_QUALIFIER_LIST : TYPE_QUALIFIER { $$ = $1; }
                                                                                 $$ = new ast_node("TYPE_QUALIFIER_LIST","", branches, branch_notes);}
 
 PARAMETER_TYPE_LIST : PARAMETER_LIST { $$ = $1; }
-                    | PARAMETER_LIST T_COMMA ELIPSIS  {                         std::vector<ast_node*> branches = {$1, $3};
+/*                    | PARAMETER_LIST T_COMMA ELIPSIS  {                         std::vector<ast_node*> branches = {$1, $3};
                                                                                 std::vector<std::string> branch_notes = {"PARAMETER_LIST","ELIPSIS"};
                                                                                 $$ = new ast_node("PARAMETER_TYPE_LIST","", branches, branch_notes);}
-
+*/
 ELIPSIS : T_DOT T_DOT T_DOT {$$ = new ast_node("ELIPSIS","...");}
 
 PARAMETER_LIST : PARAMETER_DECLARATION { $$ = $1; }
@@ -702,9 +693,9 @@ INITIALIZER_LIST : INITIALIZER {$$ = $1;}
 
 %%
 
-const ast_node *g_root;
+ast_node *g_root;
 
-const ast_node *parseAST()
+ast_node *parseAST()
 {
   g_root=0;
   yyparse();
