@@ -9,6 +9,8 @@ struct symbol{
   std::string type;
   std::string label;
   std::string value;
+  int numerical_value;
+  int offset;
 };
 
 class symbol_table{
@@ -19,7 +21,7 @@ class symbol_table{
 		~symbol_table();
 	private:
 		int stack_pointer;
-		int offset;
+		int var_pointer;
 		std::vector<symbol> symbols;
 		symbol null_symbol;
 		symbol_table *parent;

@@ -4,13 +4,15 @@
 
 #include "symbol_table.hpp"
 
-symbol_table::symbol_table(symbol_table *parent_scope) {
+symbol_table::symbol_table(symbol_table *parent) {
 	parent = parent_scope;
 	null_symbol.name = "";
 }
 
 void symbol_table::insert(symbol s){
-
+	var_pointer += 4;
+	s.offset = var_pointer - stack_pointer;
+	symbols.push_back(s);
 }
 
 symbol symbol_table::find_symbol(std::string in){
@@ -19,7 +21,7 @@ symbol symbol_table::find_symbol(std::string in){
       return symbols[i];
     }
   }
-  if (parent != NULL) {
+  if (parent !== NULL) {
 	  return parent->find_symbol(in);
   }
   else {
