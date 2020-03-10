@@ -146,6 +146,7 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &fp){
     if(branches[1]->branches[1] != NULL){s.value = branches[1]->branches[1]->value;}
     else{s.value = "0";}
     table.insert(s);
+    table.print_table();
   }
   if(node_type == "DECLARATION_SPECIFIERS"){/*std::cout<<node_type<<std::endl;*/}
 
