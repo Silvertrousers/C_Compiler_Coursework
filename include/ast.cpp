@@ -71,12 +71,24 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &fp){
   if(node_type == "UNARY_OPERATOR"){/*std::cout<<node_type<<std::endl;*/}
   if(node_type == "CAST_EXPRESSION"){
     /*std::cout<<node_type<<std::endl;*/
+
   }
   if(node_type == "MULTIPLICATIVE_EXPRESSION"){
     /*std::cout<<node_type<<std::endl;*/
   }
   if(node_type == "ADDITIVE_EXPRESSION"){
     /*std::cout<<node_type<<std::endl;*/
+    if(value == "+"){
+      std::cout<<"add temp1, "<<branches[0]->make_mips(table, sp, fp)<<", "<<branches[1]->make_mips(table, sp, fp)<<std::endl;
+      table.t1_free = false;
+      return "temp1";
+    }
+    if(value == "-"){
+      std::cout<<"sub r1, ";
+      std::cout<<branches[0]->make_mips(table, sp, fp);
+      std::cout<<", "<<branches[1]->make_mips(table, sp, fp)<<std::endl;
+    }
+    return "r1";
   }
   if(node_type == "SHIFT_EXPRESSION"){/*std::cout<<node_type<<std::endl;*/}
 
@@ -221,3 +233,5 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &fp){
   return "";
 }
 #endif
+
+std::string find_free_reg()
