@@ -3,8 +3,10 @@
 #include <iostream>
 #include <string>
 #include "ast.hpp"
+#include "symbol_table.hpp"
 
-std::string ast_node::make_mips(symbol_table &table, int &sp, int &fp){
+std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
+  //table.print_table();
 
   for(int i=0;i<branches.size();i++){
     if(branches[i] == NULL){
@@ -16,28 +18,27 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &fp){
     return "";
   }
   if(node_type == "TRANSLATION_UNIT"){/*std::cout<<node_type<<std::endl;*/
-
-    std::cout<<branches[0]->make_mips(table, sp, fp);
-    std::cout<<branches[1]->make_mips(table, sp, fp);
-
+    std::cout<<branches[0]->make_mips(table, sp, pc);
+    std::cout<<branches[1]->make_mips(table, sp, pc);
   }
 
   if(node_type == "EXTERNAL_DECLARATION"){/*std::cout<<node_type<<std::endl;*/}
 
   if(node_type == "FUNCTION_DECLARATION"){
+    symbol_table newscope = symbol_table(&table);
     symbol temp;
-    temp.name = branches[1]->value;
+    temp.name = branches[1]->branches[0]->value;
     temp.type = "function";
     temp.label = pc;
     table.insert(temp);
-    symbol_table new_scope(&table);
+    symbol_table new_scope = symbol_table(&newscope);
     /*std::cout<<node_type<<std::endl;*/
-    std::cout<<branches[0]->make_mips(new_scope, sp, fp);//reutrn type
-    std::cout<<branches[1]->make_mips(new_scope, sp, fp);//fn name
+    std::cout<<branches[0]->make_mips(new_scope, sp, pc);//reutrn type
     //fn name should already be in the stack
-    std::cout<<branches[2]->make_mips(new_scope, sp, fp);//arguments
+    std::cout<<branches[2]->make_mips(new_scope, sp, pc);//arguments
     //assign memory locations to labels has already been done since symbol table keeps track of stack
-    std::cout<<branches[3]->make_mips(new_scope, sp, fp);//body
+    std::cout<<temp.name<<":"<<std::endl;
+    std::cout<<branches[3]->make_mips(new_scope, sp, pc);//body
   }
 
   if(node_type == "STATEMENT"){/*std::cout<<node_type<<std::endl;*/}
@@ -45,23 +46,24 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &fp){
   if(node_type == "DEFAULT"){/*std::cout<<node_type<<std::endl;*/}
   if(node_type == "CASE"){/*std::cout<<node_type<<std::endl;*/}
   if(node_type == "COMPOUND_STATEMENT"){/*std::cout<<node_type<<std::endl;*/
-    symbol_table new_scope(&table);
-    std::cout<<branches[0]->make_mips(new_scope, sp, fp);
-    std::cout<<branches[1]->make_mips(new_scope, sp, fp);
+    symbol_table new_scope = symbol_table(&table);
+    branches[0]->make_mips(new_scope, sp, pc);
+    branches[1]->make_mips(new_scope, sp, pc);
+
   }
   if(node_type == "DECLARATION_LIST"){/*std::cout<<node_type<<std::endl;*/}
   if(node_type == "STATEMENT_LIST"){/*std::cout<<node_type<<std::endl;*/}
   if(node_type == "EXPRESSION_STATEMENT"){/*std::cout<<node_type<<std::endl;*/}
-    if(node_type == "SELECTION_STATEMENT"){/*std::cout<<node_type<<std::endl;*/
-    symbol_table new_scope(&table);
+  if(node_type == "SELECTION_STATEMENT"){/*std::cout<<node_type<<std::endl;*/
+    symbol_table new_scope = symbol_table(&table);
     if (branches[0]-> node_type == "if"){
-      std::cout<<branches[2]->make_mips(new_scope, sp, fp);
+      std::cout<<branches[2]->make_mips(new_scope, sp, pc);
       //branch if condition is not met to label else
-      std::cout<<branches[3]->make_mips(new_scope, sp, fp);
+      std::cout<<branches[3]->make_mips(new_scope, sp, pc);
       //branch to label end
       //label else
       if (branches[4]-> node_type == "else"){
-        std::cout<<branches[5]->make_mips(new_scope, sp, fp);
+        std::cout<<branches[5]->make_mips(new_scope, sp, pc);
       }
       //label end
     }
@@ -73,10 +75,10 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &fp){
   if(node_type == "ITERATION_STATEMENT"){/*std::cout<<node_type<<std::endl;*/
     symbol_table new_scope(&table);
     if (branches[0]-> node_type == "for"){
-      std::cout<<branches[1]->make_mips(new_scope, sp, fp);
-      std::cout<<branches[2]->make_mips(new_scope, sp, fp);
-      std::cout<<branches[3]->make_mips(new_scope, sp, fp);
-      std::cout<<branches[5]->make_mips(new_scope, sp, fp);
+      std::cout<<branches[1]->make_mips(new_scope, sp, pc);
+      std::cout<<branches[2]->make_mips(new_scope, sp, pc);
+      std::cout<<branches[3]->make_mips(new_scope, sp, pc);
+      std::cout<<branches[5]->make_mips(new_scope, sp, pc);
       //label end
     }
   }
@@ -109,14 +111,14 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &fp){
   if(node_type == "ADDITIVE_EXPRESSION"){
     /*std::cout<<node_type<<std::endl;*/
     if(value == "+"){
-      std::cout<<"add temp1, "<<branches[0]->make_mips(table, sp, fp)<<", "<<branches[1]->make_mips(table, sp, fp)<<std::endl;
+      std::cout<<"add temp1, "<<branches[0]->make_mips(table, sp, pc)<<", "<<branches[1]->make_mips(table, sp, pc)<<std::endl;
       table.t1_free = false;
       return "temp1";
     }
     if(value == "-"){
       std::cout<<"sub r1, ";
-      std::cout<<branches[0]->make_mips(table, sp, fp);
-      std::cout<<", "<<branches[1]->make_mips(table, sp, fp)<<std::endl;
+      std::cout<<branches[0]->make_mips(table, sp, pc);
+      std::cout<<", "<<branches[1]->make_mips(table, sp, pc)<<std::endl;
     }
     return "r1";
   }
@@ -155,15 +157,15 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &fp){
   }
   if(node_type == "DECLARATION"){
     /*std::cout<<node_type<<std::endl;*/
-    branches[0]->make_mips(table, sp, fp);
-    branches[1]->make_mips(table, sp, fp);
+    branches[0]->make_mips(table, sp, pc);
+    branches[1]->make_mips(table, sp, pc);
   }
   if(node_type == "DECLARATION_SPECIFIERS"){/*std::cout<<node_type<<std::endl;*/}
 
   if(node_type == "INIT_DECLARATOR_LIST"){
     /*std::cout<<node_type<<std::endl;*/
-    branches[0]->make_mips(table, sp, fp);
-    branches[1]->make_mips(table, sp, fp);
+    branches[0]->make_mips(table, sp, pc);
+    branches[1]->make_mips(table, sp, pc);
   }
   if(node_type == "INIT_DECLARATOR"){
     /*std::cout<<node_type<<std::endl;*/
@@ -173,7 +175,7 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &fp){
     s.value = "0";
     if(branches[1] != NULL && branches[1]->node_type != "NULL"){s.value = branches[1]->value;}
     table.insert(s);
-    table.print_table();
+    //table.print_table();
   }
   if(node_type == "STORAGE_CLASS_SPECIFIER"){
     /*std::cout<<node_type<<std::endl;*/
@@ -242,7 +244,7 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &fp){
     /*std::cout<<node_type<<std::endl;*/
   }
   if(node_type == "IDENTIFIER"){
-
+    return value;
   }
   if(node_type == "TYPE_NAME"){
     /*std::cout<<node_type<<std::endl;*/
@@ -263,5 +265,3 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &fp){
   return "";
 }
 #endif
-
-std::string find_free_reg()

@@ -131,7 +131,9 @@ COMPOUND_STATEMENT : T_LCURLY_BRACKET DECLARATION_LIST STATEMENT_LIST T_RCURLY_B
                    | T_LCURLY_BRACKET DECLARATION_LIST T_RCURLY_BRACKET {                 std::vector<ast_node*> branches = {$2, NULL};
                                                                                           std::vector<std::string> branch_notes = {"DECLARATION_LIST", "STATEMENT_LIST"};
                                                                                           $$ = new ast_node("COMPOUND_STATEMENT","", branches, branch_notes);}
-                   | T_ECURLY_BRACKETS {$$ = new ast_node("COMPOUND_STATEMENT","");}
+                   | T_ECURLY_BRACKETS {                                                  std::vector<ast_node*> branches = {NULL, NULL};
+                                                                                          std::vector<std::string> branch_notes = {"DECLARATION_LIST", "STATEMENT_LIST"};
+                                                                                          $$ = new ast_node("COMPOUND_STATEMENT","", branches, branch_notes);}
 
 DECLARATION_LIST : DECLARATION { $$ = $1; }
                  | DECLARATION_LIST DECLARATION {                               std::vector<ast_node*> branches = {$1, $2};
