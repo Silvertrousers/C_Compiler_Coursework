@@ -4,7 +4,7 @@
 #include <string>
 #include "ast.hpp"
 
-std::string ast_node::make_mips(symbol_table &table){
+std::string ast_node::make_mips(symbol_table &table, int &sp, int &fp){
 
   for(int i=0;i<branches.size();i++){
     if(branches[i] == NULL){
@@ -15,8 +15,8 @@ std::string ast_node::make_mips(symbol_table &table){
 
   if(node_type == "TRANSLATION_UNIT"){/*std::cout<<node_type<<std::endl;*/
 
-    std::cout<<branches[0]->make_mips(table);
-    std::cout<<branches[1]->make_mips(table);
+    std::cout<<branches[0]->make_mips(table, sp, fp);
+    std::cout<<branches[1]->make_mips(table, sp, fp);
 
   }
 
@@ -24,12 +24,12 @@ std::string ast_node::make_mips(symbol_table &table){
 
   if(node_type == "FUNCTION_DECLARATION"){
     /*std::cout<<node_type<<std::endl;*/
-    std::cout<<branches[0]->make_mips(table);//reutrn type
-    std::cout<<branches[1]->make_mips(table);//fn name
+    std::cout<<branches[0]->make_mips(table, sp, fp);//reutrn type
+    std::cout<<branches[1]->make_mips(table, sp, fp);//fn name
     //fn name should already be in the stack
-    std::cout<<branches[2]->make_mips(table);//arguments
+    std::cout<<branches[2]->make_mips(table, sp, fp);//arguments
     //assign memory locations to labels has already been done since symbol table keeps track of stack
-    std::cout<<branches[3]->make_mips(table);//body
+    std::cout<<branches[3]->make_mips(table, sp, fp);//body
   }
 
   if(node_type == "STATEMENT"){/*std::cout<<node_type<<std::endl;*/}
@@ -75,31 +75,31 @@ std::string ast_node::make_mips(symbol_table &table){
     /*std::cout<<node_type<<std::endl;*/
     if(value == "*"){
       std::cout<<"add r1, ";
-      std::cout<<branches[0]->make_mips(table);
-      std::cout<<", "<<branches[1]->make_mips(table)<<std::endl;
+      std::cout<<branches[0]->make_mips(table, sp, fp);
+      std::cout<<", "<<branches[1]->make_mips(table, sp, fp)<<std::endl;
     }
     if(value == "/"){
       std::cout<<"sub r1, ";
-      std::cout<<branches[0]->make_mips(table);
-      std::cout<<", "<<branches[1]->make_mips(table)<<std::endl;
+      std::cout<<branches[0]->make_mips(table, sp, fp);
+      std::cout<<", "<<branches[1]->make_mips(table, sp, fp)<<std::endl;
     }
     if(value == "%"){
       std::cout<<" r1, ";
-      std::cout<<branches[0]->make_mips(table);
-      std::cout<<", "<<branches[1]->make_mips(table)<<std::endl;
+      std::cout<<branches[0]->make_mips(table, sp, fp);
+      std::cout<<", "<<branches[1]->make_mips(table, sp, fp)<<std::endl;
     }
   }
   if(node_type == "ADDITIVE_EXPRESSION"){
     /*std::cout<<node_type<<std::endl;*/
     if(value == "+"){
       std::cout<<"add r1, ";
-      std::cout<<branches[0]->make_mips(table);
-      std::cout<<", "<<branches[1]->make_mips(table)<<std::endl;
+      std::cout<<branches[0]->make_mips(table, sp, fp);
+      std::cout<<", "<<branches[1]->make_mips(table, sp, fp)<<std::endl;
     }
     if(value == "-"){
       std::cout<<"sub r1, ";
-      std::cout<<branches[0]->make_mips(table);
-      std::cout<<", "<<branches[1]->make_mips(table)<<std::endl;
+      std::cout<<branches[0]->make_mips(table, sp, fp);
+      std::cout<<", "<<branches[1]->make_mips(table, sp, fp)<<std::endl;
     }
     return "r1";
   }
@@ -138,9 +138,11 @@ std::string ast_node::make_mips(symbol_table &table){
   }
   if(node_type == "DECLARATION"){
     /*std::cout<<node_type<<std::endl;*/
+
     symbol s;
-    s.name = branches[1]->value;
-    s.type = "int"
+    s.name = branches[1]->branches[0]->value;
+    s.type = "int";
+    s.value = branches[1]->branches[1]->value
     table.insert(s);
   }
   if(node_type == "DECLARATION_SPECIFIERS"){/*std::cout<<node_type<<std::endl;*/}

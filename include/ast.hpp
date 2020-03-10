@@ -13,7 +13,7 @@ class ast_node{
     std::vector<ast_node*> branches;
 
     void print_python(int tab_count, symbol_table &table);
-    std::string make_mips(symbol_table &table); // the string returned is the destination register
+    std::string make_mips(symbol_table &table, int &sp, int &fp); // the string returned is the destination register
 
     ast_node(std::string _node_type, std::string _value, std::vector<ast_node*> _branches, std::vector<std::string> _branch_notes){
       node_type = _node_type;
