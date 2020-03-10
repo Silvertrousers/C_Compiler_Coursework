@@ -8,6 +8,7 @@ struct symbol{
   std::string name;
   std::string type;
   std::string label;
+  std::string value;
 };
 
 class symbol_table{
