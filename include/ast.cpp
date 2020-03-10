@@ -25,25 +25,43 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &fp){
   if(node_type == "EXTERNAL_DECLARATION"){/*std::cout<<node_type<<std::endl;*/}
 
   if(node_type == "FUNCTION_DECLARATION"){
+    symbol temp;
+    temp.name = branches[1]->value;
+    temp.type = "function";
+    temp.label = pc;
+    table.insert(temp);
+    symbol_table new_scope(&table);
     /*std::cout<<node_type<<std::endl;*/
-    std::cout<<branches[0]->make_mips(table, sp, fp);//reutrn type
-    std::cout<<branches[1]->make_mips(table, sp, fp);//fn name
+    std::cout<<branches[0]->make_mips(new_scope, sp, fp);//reutrn type
+    std::cout<<branches[1]->make_mips(new_scope, sp, fp);//fn name
     //fn name should already be in the stack
-    std::cout<<branches[2]->make_mips(table, sp, fp);//arguments
+    std::cout<<branches[2]->make_mips(new_scope, sp, fp);//arguments
     //assign memory locations to labels has already been done since symbol table keeps track of stack
-    std::cout<<branches[3]->make_mips(table, sp, fp);//body
+    std::cout<<branches[3]->make_mips(new_scope, sp, fp);//body
   }
 
   if(node_type == "STATEMENT"){/*std::cout<<node_type<<std::endl;*/}
   if(node_type == "LABELED_STATEMENT"){/*std::cout<<node_type<<std::endl;*/}
   if(node_type == "DEFAULT"){/*std::cout<<node_type<<std::endl;*/}
   if(node_type == "CASE"){/*std::cout<<node_type<<std::endl;*/}
-  if(node_type == "COMPOUND_STATEMENT"){/*std::cout<<node_type<<std::endl;*/}
+  if(node_type == "COMPOUND_STATEMENT"){/*std::cout<<node_type<<std::endl;*/
+    symbol_table new_scope(&table);
+    std::cout<<branches[0]->make_mips(new_scope, sp, fp);
+    std::cout<<branches[1]->make_mips(new_scope, sp, fp);
+  }
   if(node_type == "DECLARATION_LIST"){/*std::cout<<node_type<<std::endl;*/}
   if(node_type == "STATEMENT_LIST"){/*std::cout<<node_type<<std::endl;*/}
   if(node_type == "EXPRESSION_STATEMENT"){/*std::cout<<node_type<<std::endl;*/}
   if(node_type == "SELECTION_STATEMENT"){/*std::cout<<node_type<<std::endl;*/
-
+    symbol_table new_scope(&table);
+    if (branches[0]-> node_type == "if"){
+      std::cout<<branches[2]->make_mips(new_scope, sp, fp);
+      std::cout<<branches[4]->make_mips(new_scope, sp, fp);
+      if (branches[3]-> node_type == "else"){
+        std::cout<<branches[2]->make_mips(new_scope, sp, fp);
+        std::cout<<branches[4]->make_mips(new_scope, sp, fp);
+      }
+    }
   }
   if(node_type == "T_SWITCH"){/*std::cout<<node_type<<std::endl;*/}
   if(node_type == "T_IF"){/*std::cout<<node_type<<std::endl;*/}
