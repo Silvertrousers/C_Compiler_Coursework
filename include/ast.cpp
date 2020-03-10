@@ -52,22 +52,34 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &fp){
   if(node_type == "DECLARATION_LIST"){/*std::cout<<node_type<<std::endl;*/}
   if(node_type == "STATEMENT_LIST"){/*std::cout<<node_type<<std::endl;*/}
   if(node_type == "EXPRESSION_STATEMENT"){/*std::cout<<node_type<<std::endl;*/}
-  if(node_type == "SELECTION_STATEMENT"){/*std::cout<<node_type<<std::endl;*/
+    if(node_type == "SELECTION_STATEMENT"){/*std::cout<<node_type<<std::endl;*/
     symbol_table new_scope(&table);
     if (branches[0]-> node_type == "if"){
       std::cout<<branches[2]->make_mips(new_scope, sp, fp);
-      std::cout<<branches[4]->make_mips(new_scope, sp, fp);
-      if (branches[3]-> node_type == "else"){
-        std::cout<<branches[2]->make_mips(new_scope, sp, fp);
-        std::cout<<branches[4]->make_mips(new_scope, sp, fp);
+      //branch if condition is not met to label else
+      std::cout<<branches[3]->make_mips(new_scope, sp, fp);
+      //branch to label end
+      //label else
+      if (branches[4]-> node_type == "else"){
+        std::cout<<branches[5]->make_mips(new_scope, sp, fp);
       }
+      //label end
     }
   }
   if(node_type == "T_SWITCH"){/*std::cout<<node_type<<std::endl;*/}
   if(node_type == "T_IF"){/*std::cout<<node_type<<std::endl;*/}
   if(node_type == "T_ELSE"){/*std::cout<<node_type<<std::endl;*/}
 
-  if(node_type == "ITERATION_STATEMENT"){/*std::cout<<node_type<<std::endl;*/}
+  if(node_type == "ITERATION_STATEMENT"){/*std::cout<<node_type<<std::endl;*/
+    symbol_table new_scope(&table);
+    if (branches[0]-> node_type == "for"){
+      std::cout<<branches[1]->make_mips(new_scope, sp, fp);
+      std::cout<<branches[2]->make_mips(new_scope, sp, fp);
+      std::cout<<branches[3]->make_mips(new_scope, sp, fp);
+      std::cout<<branches[5]->make_mips(new_scope, sp, fp);
+      //label end
+    }
+  }
   if(node_type == "T_FOR"){/*std::cout<<node_type<<std::endl;*/}
   if(node_type == "T_WHILE"){/*std::cout<<node_type<<std::endl;*/}
   if(node_type == "T_DO"){/*std::cout<<node_type<<std::endl;*/}
