@@ -18,6 +18,7 @@ class symbol_table{
 		symbol_table(symbol_table *parent_scope);
     symbol_table();
 		void insert(symbol s);
+		void print_table();
 		symbol find_symbol(std::string in);
 		~symbol_table();
 	private:

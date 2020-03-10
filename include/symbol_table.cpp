@@ -19,6 +19,16 @@ void symbol_table::insert(symbol s){
 	symbols.push_back(s);
 }
 
+void symbol_table::print_table() {
+	for (int i = 0; i < symbols.size(); i++) {
+		std::cout << symbols[i].name << ": " << symbols[i].type << std::endl;
+	}
+	std::cout << "----------------" << std::endl;
+	if (parent != NULL) {
+		parent->print_table();
+	}
+}
+
 symbol symbol_table::find_symbol(std::string in){
   for(int i=0;i<(symbols.size());i++){
     if(symbols[i].name==in){
