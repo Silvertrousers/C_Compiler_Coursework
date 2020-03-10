@@ -12,7 +12,9 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &fp){
       branches[i] = temp;
     }
   }
-
+  if(node_type == "NULL"){
+    return "";
+  }
   if(node_type == "TRANSLATION_UNIT"){/*std::cout<<node_type<<std::endl;*/
 
     std::cout<<branches[0]->make_mips(table, sp, fp);
@@ -138,11 +140,11 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &fp){
   }
   if(node_type == "DECLARATION"){
     /*std::cout<<node_type<<std::endl;*/
-
     symbol s;
     s.name = branches[1]->branches[0]->value;
     s.type = "int";
-    s.value = branches[1]->branches[1]->value
+    if(branches[1]->branches[1] != NULL){s.value = branches[1]->branches[1]->value;}
+    else{s.value = "0";}
     table.insert(s);
   }
   if(node_type == "DECLARATION_SPECIFIERS"){/*std::cout<<node_type<<std::endl;*/}

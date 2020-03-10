@@ -16,6 +16,7 @@ struct symbol{
 class symbol_table{
 	public:
 		symbol_table(symbol_table *parent_scope);
+    symbol_table();
 		void insert(symbol s);
 		symbol find_symbol(std::string in);
 		~symbol_table();
