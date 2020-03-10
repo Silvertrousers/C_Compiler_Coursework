@@ -447,7 +447,10 @@ INIT_DECLARATOR_LIST : INIT_DECLARATOR { $$ = $1; }
                                                                                 std::vector<std::string> branch_notes = {"INIT_DECLARATOR_LIST","INIT_DECLARATOR"};
                                                                                 $$ = new ast_node("INIT_DECLARATOR_LIST","", branches, branch_notes);}
 
-INIT_DECLARATOR : DECLARATOR { $$ = $1; }
+INIT_DECLARATOR : DECLARATOR {													std::vector<ast_node*> branches = {$1, NULL};
+                                                                                std::vector<std::string> branch_notes = {"DECLARATOR","INITIALIZER"};
+                                                                                $$ = new ast_node("INIT_DECLARATOR","", branches, branch_notes);}
+
                 | DECLARATOR T_EQUALS INITIALIZER {                             std::vector<ast_node*> branches = {$1, $3};
                                                                                 std::vector<std::string> branch_notes = {"DECLARATOR","INITIALIZER"};
                                                                                 $$ = new ast_node("INIT_DECLARATOR","", branches, branch_notes);}
