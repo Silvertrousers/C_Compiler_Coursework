@@ -11,14 +11,17 @@ struct symbol{
 };
 
 class symbol_table{
-  public:
-    void insert(symbol s);
-    symbol find_symbol(std::string in);
-    ~symbol_table();
-    int stack_pointer;
-    int offset;
-    std::vector<symbol> symbols;
-    symbol_table *parent;
+	public:
+		symbol_table(symbol_table *parent_scope);
+		void insert(symbol s);
+		symbol find_symbol(std::string in);
+		~symbol_table();
+	private:
+		int stack_pointer;
+		int offset;
+		std::vector<symbol> symbols;
+		symbol null_symbol;
+		symbol_table *parent;
 };
 
 //mips is basically a three address code
