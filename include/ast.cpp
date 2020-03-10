@@ -140,21 +140,25 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &fp){
   }
   if(node_type == "DECLARATION"){
     /*std::cout<<node_type<<std::endl;*/
-    symbol s;
-    s.name = branches[1]->branches[0]->value;
-    s.type = "int";
-    if(branches[1]->branches[1] != NULL){s.value = branches[1]->branches[1]->value;}
-    else{s.value = "0";}
-    table.insert(s);
-    table.print_table();
+    branches[0]->make_mips(table, sp, fp);
+    branches[1]->make_mips(table, sp, fp);
   }
   if(node_type == "DECLARATION_SPECIFIERS"){/*std::cout<<node_type<<std::endl;*/}
 
   if(node_type == "INIT_DECLARATOR_LIST"){
     /*std::cout<<node_type<<std::endl;*/
+    branches[0]->make_mips(table, sp, fp);
+    branches[1]->make_mips(table, sp, fp);
   }
   if(node_type == "INIT_DECLARATOR"){
     /*std::cout<<node_type<<std::endl;*/
+    symbol s;
+    s.name = branches[0]->value;
+    s.type = "int";
+    s.value = "0";
+    if(branches[1] != NULL){s.value = branches[1]->value;}
+    table.insert(s);
+    table.print_table();
   }
   if(node_type == "STORAGE_CLASS_SPECIFIER"){
     /*std::cout<<node_type<<std::endl;*/
