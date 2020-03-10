@@ -241,6 +241,6 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &fp){
   if(node_type == "INITIALIZER_LIST"){
     /*std::cout<<node_type<<std::endl;*/
   }
-  return "r2";
+  return "";
 }
 #endif
