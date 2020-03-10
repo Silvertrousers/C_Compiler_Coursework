@@ -17,6 +17,7 @@ class symbol_table{
 	public:
 		symbol_table(symbol_table *parent_scope);
 		void insert(symbol s);
+		void print_table();
 		symbol find_symbol(std::string in);
 		~symbol_table();
 	private:
