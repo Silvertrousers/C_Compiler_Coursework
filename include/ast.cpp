@@ -71,39 +71,12 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &fp){
   if(node_type == "UNARY_OPERATOR"){/*std::cout<<node_type<<std::endl;*/}
   if(node_type == "CAST_EXPRESSION"){
     /*std::cout<<node_type<<std::endl;*/
-
   }
   if(node_type == "MULTIPLICATIVE_EXPRESSION"){
     /*std::cout<<node_type<<std::endl;*/
-    if(value == "*"){
-      std::cout<<"add r1, ";
-      std::cout<<branches[0]->make_mips(table, sp, fp);
-      std::cout<<", "<<branches[1]->make_mips(table, sp, fp)<<std::endl;
-    }
-    if(value == "/"){
-      std::cout<<"sub r1, ";
-      std::cout<<branches[0]->make_mips(table, sp, fp);
-      std::cout<<", "<<branches[1]->make_mips(table, sp, fp)<<std::endl;
-    }
-    if(value == "%"){
-      std::cout<<" r1, ";
-      std::cout<<branches[0]->make_mips(table, sp, fp);
-      std::cout<<", "<<branches[1]->make_mips(table, sp, fp)<<std::endl;
-    }
   }
   if(node_type == "ADDITIVE_EXPRESSION"){
     /*std::cout<<node_type<<std::endl;*/
-    if(value == "+"){
-      std::cout<<"add r1, ";
-      std::cout<<branches[0]->make_mips(table, sp, fp);
-      std::cout<<", "<<branches[1]->make_mips(table, sp, fp)<<std::endl;
-    }
-    if(value == "-"){
-      std::cout<<"sub r1, ";
-      std::cout<<branches[0]->make_mips(table, sp, fp);
-      std::cout<<", "<<branches[1]->make_mips(table, sp, fp)<<std::endl;
-    }
-    return "r1";
   }
   if(node_type == "SHIFT_EXPRESSION"){/*std::cout<<node_type<<std::endl;*/}
 
@@ -156,7 +129,7 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &fp){
     s.name = branches[0]->value;
     s.type = "int";
     s.value = "0";
-    if(branches[1] != NULL){s.value = branches[1]->value;}
+    if(branches[1] != NULL && branches[1]->node_type != "NULL"){s.value = branches[1]->value;}
     table.insert(s);
     table.print_table();
   }

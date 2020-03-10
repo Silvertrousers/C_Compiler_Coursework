@@ -7,10 +7,34 @@
 symbol_table::symbol_table(symbol_table *parent_scope) {
 	parent = parent_scope;
 	null_symbol.name = "";
+
+	symbol temp1, temp2;
+	temp1.name = "temp1";
+	temp1.value = "0";
+	temp1.type = "int";
+	temp2.name = "temp2";
+	temp2.value = "0";
+	temp2.type = "int";
+	insert(temp1);
+	insert(temp2);
+	t1_free = true;
+	t2_free = true;
 }
 symbol_table::symbol_table(){
 	parent = NULL;
 	null_symbol.name = "";
+
+	symbol temp1, temp2;
+	temp1.name = "temp1";
+	temp1.value = "0";
+	temp1.type = "int";
+	temp2.name = "temp2";
+	temp2.value = "0";
+	temp2.type = "int";
+	insert(temp1);
+	insert(temp2);
+	t1_free = true;
+	t2_free = true;
 }
 
 void symbol_table::insert(symbol s){
