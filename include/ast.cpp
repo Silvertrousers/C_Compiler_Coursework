@@ -23,7 +23,7 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
     std::cout<<branches[1]->make_mips(table, sp, pc);
   }
 
-  if(node_type == "EXTERNAL_DECLARATION"){/*std::cout<<node_type<<std::endl;*/}
+  if(node_type == "EXTERNAL_DECLARATION"){/*std::cout<<node_type<<std::endl;*/}\
 
   if(node_type == "FUNCTION_DECLARATION"){
     symbol_table newscope = symbol_table(&table);
@@ -127,53 +127,60 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
   if(node_type == "MULTIPLICATIVE_EXPRESSION"){
     /*std::cout<<node_type<<std::endl;*/
     if(value == "*"){
+      arg1 =branches[0]->make_mips(table, sp, pc);//need a way to check if arg1 is a constant
+      arg2 =branches[1]->make_mips(table, sp, pc);
+      std::cout<<"lw r1, "<<table.find_symbol(arg1).offset<<"("<<table.stack_pointer<<")"<<std::endl;
+      std::cout<<"lw r2, "<<table.find_symbol(arg2).offset<<"("<<table.stack_pointer<<")"<<std::endl;
+      std::cout<<"mult r1, r2"<<std::endl;
+      std::cout<<"mflo r3"<<std::endl;
+
       if(table.t1_free == true){
-        arg1 =branches[0]->make_mips(table, sp, pc);
-        arg2 =branches[1]->make_mips(table, sp, pc);
-        std::cout<<"mult "<<arg1<<", "<<arg2<<std::endl;
-        std::cout<<"mflo temp1"<<std::endl;
+        std::cout<<"sw r3, "<<table.find_symbol("temp1").offset<<"("<<table.stack_pointer<<")"<<std::endl;
         table.t1_free = false;
         return "temp1";
       }
       if(table.t2_free = true){
-        arg1 =branches[0]->make_mips(table, sp, pc);
-        arg2 =branches[1]->make_mips(table, sp, pc);
-        std::cout<<"mult "<<arg1<<", "<<arg2<<std::endl;
-        std::cout<<"mflo temp2"<<std::endl;
+        std::cout<<"sw r3, "<<table.find_symbol("temp2").offset<<"("<<table.stack_pointer<<")"<<std::endl;
+        table.t2_free = false;
         return "temp2";
       }
     }
   }
   if(node_type == "ADDITIVE_EXPRESSION"){
     /*std::cout<<node_type<<std::endl;*/
-    std::string arg1, arg2;
     if(value == "+"){
+      arg1 =branches[0]->make_mips(table, sp, pc);//need a way to check if arg1 is a constant
+      arg2 =branches[1]->make_mips(table, sp, pc);
+      std::cout<<"lw r1, "<<table.find_symbol(arg1).offset<<"("<<table.stack_pointer<<")"<<std::endl;
+      std::cout<<"lw r2, "<<table.find_symbol(arg2).offset<<"("<<table.stack_pointer<<")"<<std::endl;
+      std::cout<<"add r3, r1, r2"<<std::endl;
+
       if(table.t1_free == true){
-        arg1 =branches[0]->make_mips(table, sp, pc);
-        arg2 =branches[1]->make_mips(table, sp, pc);
-        std::cout<<"add temp1, "<<arg1<<", "<<arg2<<std::endl;
+        std::cout<<"sw r3, "<<table.find_symbol("temp1").offset<<"("<<table.stack_pointer<<")"<<std::endl;
         table.t1_free = false;
         return "temp1";
       }
       if(table.t2_free = true){
-        arg1 =branches[0]->make_mips(table, sp, pc);
-        arg2 =branches[1]->make_mips(table, sp, pc);
-        std::cout<<"add temp2, "<<arg1<<", "<<arg2<<std::endl;
+        std::cout<<"sw r3, "<<table.find_symbol("temp2").offset<<"("<<table.stack_pointer<<")"<<std::endl;
+        table.t2_free = false;
         return "temp2";
       }
     }
     if(value == "-"){
+      arg1 =branches[0]->make_mips(table, sp, pc);//need a way to check if arg1 is a constant
+      arg2 =branches[1]->make_mips(table, sp, pc);
+      std::cout<<"lw r1, "<<table.find_symbol(arg1).offset<<"("<<table.stack_pointer<<")"<<std::endl;
+      std::cout<<"lw r2, "<<table.find_symbol(arg2).offset<<"("<<table.stack_pointer<<")"<<std::endl;
+      std::cout<<"sub r3, r1, r2"<<std::endl;
+
       if(table.t1_free == true){
-        arg1 =branches[0]->make_mips(table, sp, pc);
-        arg2 =branches[1]->make_mips(table, sp, pc);
-        std::cout<<"sub temp1, "<<arg1<<", "<<arg2<<std::endl;
+        std::cout<<"sw r3, "<<table.find_symbol("temp1").offset<<"("<<table.stack_pointer<<")"<<std::endl;
         table.t1_free = false;
         return "temp1";
       }
       if(table.t2_free = true){
-        arg1 =branches[0]->make_mips(table, sp, pc);
-        arg2 =branches[1]->make_mips(table, sp, pc);
-        std::cout<<"sub temp2, "<<arg1<<", "<<arg2<<std::endl;
+        std::cout<<"sw r3, "<<table.find_symbol("temp2").offset<<"("<<table.stack_pointer<<")"<<std::endl;
+        table.t2_free = false;
         return "temp2";
       }
     }
