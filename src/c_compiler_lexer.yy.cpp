@@ -1,6 +1,6 @@
-#line 2 "src/maths_lexer.yy.cpp"
+#line 2 "src/c_compiler_lexer.yy.cpp"
 
-#line 4 "src/maths_lexer.yy.cpp"
+#line 4 "src/c_compiler_lexer.yy.cpp"
 
 #define  YY_INT_ALIGNED short int
 
@@ -621,13 +621,13 @@ int yy_flex_debug = 0;
 #define YY_MORE_ADJ 0
 #define YY_RESTORE_YY_MORE_OFFSET
 char *yytext;
-#line 1 "src/maths_lexer.flex"
-#line 4 "src/maths_lexer.flex"
+#line 1 "src/c_compiler_lexer.flex"
+#line 4 "src/c_compiler_lexer.flex"
 
 extern "C" int fileno(FILE *stream);
 
 #include "maths_parser.tab.hpp"
-#line 631 "src/maths_lexer.yy.cpp"
+#line 631 "src/c_compiler_lexer.yy.cpp"
 
 #define INITIAL 0
 
@@ -845,10 +845,10 @@ YY_DECL
 		}
 
 	{
-#line 10 "src/maths_lexer.flex"
+#line 10 "src/c_compiler_lexer.flex"
 
 
-#line 852 "src/maths_lexer.yy.cpp"
+#line 852 "src/c_compiler_lexer.yy.cpp"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -908,456 +908,456 @@ do_action:	/* This label is used only to access EOF actions. */
 case 1:
 /* rule 1 can match eol */
 YY_RULE_SETUP
-#line 12 "src/maths_lexer.flex"
+#line 12 "src/c_compiler_lexer.flex"
 { return T_STRING; }
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 14 "src/maths_lexer.flex"
+#line 14 "src/c_compiler_lexer.flex"
 { return T_AUTO; }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 15 "src/maths_lexer.flex"
+#line 15 "src/c_compiler_lexer.flex"
 { return T_BREAK; }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 16 "src/maths_lexer.flex"
+#line 16 "src/c_compiler_lexer.flex"
 { return T_CASE; }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 17 "src/maths_lexer.flex"
+#line 17 "src/c_compiler_lexer.flex"
 { return T_CHAR; }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 18 "src/maths_lexer.flex"
+#line 18 "src/c_compiler_lexer.flex"
 { return T_CONST; }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 19 "src/maths_lexer.flex"
+#line 19 "src/c_compiler_lexer.flex"
 { return T_CONTINUE; }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 20 "src/maths_lexer.flex"
+#line 20 "src/c_compiler_lexer.flex"
 { return T_DEFAULT; }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 21 "src/maths_lexer.flex"
+#line 21 "src/c_compiler_lexer.flex"
 { return T_DO; }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 22 "src/maths_lexer.flex"
+#line 22 "src/c_compiler_lexer.flex"
 { return T_DOUBLE; }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 23 "src/maths_lexer.flex"
+#line 23 "src/c_compiler_lexer.flex"
 { return T_ELSE; }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 24 "src/maths_lexer.flex"
+#line 24 "src/c_compiler_lexer.flex"
 { return T_ENUM; }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 25 "src/maths_lexer.flex"
+#line 25 "src/c_compiler_lexer.flex"
 { return T_EXTERN; }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 26 "src/maths_lexer.flex"
+#line 26 "src/c_compiler_lexer.flex"
 { return T_FLOAT; }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 27 "src/maths_lexer.flex"
+#line 27 "src/c_compiler_lexer.flex"
 { return T_FOR; }
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 28 "src/maths_lexer.flex"
+#line 28 "src/c_compiler_lexer.flex"
 { return T_GOTO; }
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 29 "src/maths_lexer.flex"
+#line 29 "src/c_compiler_lexer.flex"
 { return T_IF; }
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 30 "src/maths_lexer.flex"
+#line 30 "src/c_compiler_lexer.flex"
 { return T_INT; }
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 31 "src/maths_lexer.flex"
+#line 31 "src/c_compiler_lexer.flex"
 { return T_LONG; }
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 32 "src/maths_lexer.flex"
+#line 32 "src/c_compiler_lexer.flex"
 { return T_REGISTER; }
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 33 "src/maths_lexer.flex"
+#line 33 "src/c_compiler_lexer.flex"
 { return T_RETURN; }
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 34 "src/maths_lexer.flex"
+#line 34 "src/c_compiler_lexer.flex"
 { return T_SHORT; }
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 35 "src/maths_lexer.flex"
+#line 35 "src/c_compiler_lexer.flex"
 { return T_SIGNED; }
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 36 "src/maths_lexer.flex"
+#line 36 "src/c_compiler_lexer.flex"
 { return T_SIZEOF; }
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 37 "src/maths_lexer.flex"
+#line 37 "src/c_compiler_lexer.flex"
 { return T_STATIC; }
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 38 "src/maths_lexer.flex"
+#line 38 "src/c_compiler_lexer.flex"
 { return T_STRUCT; }
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 39 "src/maths_lexer.flex"
+#line 39 "src/c_compiler_lexer.flex"
 { return T_SWITCH; }
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 40 "src/maths_lexer.flex"
+#line 40 "src/c_compiler_lexer.flex"
 { return T_TYPEDEF; }
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 41 "src/maths_lexer.flex"
+#line 41 "src/c_compiler_lexer.flex"
 { return T_UNION; }
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 42 "src/maths_lexer.flex"
+#line 42 "src/c_compiler_lexer.flex"
 { return T_UNSIGNED; }
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 43 "src/maths_lexer.flex"
+#line 43 "src/c_compiler_lexer.flex"
 { return T_VOID; }
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 44 "src/maths_lexer.flex"
+#line 44 "src/c_compiler_lexer.flex"
 { return T_VOLATILE; }
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 45 "src/maths_lexer.flex"
+#line 45 "src/c_compiler_lexer.flex"
 { return T_WHILE; }
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 47 "src/maths_lexer.flex"
+#line 47 "src/c_compiler_lexer.flex"
 {return T_MODULO_EQUALS; }
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 48 "src/maths_lexer.flex"
+#line 48 "src/c_compiler_lexer.flex"
 {return T_LEFT_SHIFT_EQUALS;}
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 49 "src/maths_lexer.flex"
+#line 49 "src/c_compiler_lexer.flex"
 {return T_RIGHT_SHIFT_EQUALS;}
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
-#line 50 "src/maths_lexer.flex"
+#line 50 "src/c_compiler_lexer.flex"
 { return T_NOT_EQUALS_EQUALS; }
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
-#line 51 "src/maths_lexer.flex"
+#line 51 "src/c_compiler_lexer.flex"
 { return T_EQUALS_EQUALS; }
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
-#line 52 "src/maths_lexer.flex"
+#line 52 "src/c_compiler_lexer.flex"
 { return T_MINUS_EQUALS; }
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
-#line 53 "src/maths_lexer.flex"
+#line 53 "src/c_compiler_lexer.flex"
 { return T_TIMES_EQUALS; }
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
-#line 54 "src/maths_lexer.flex"
+#line 54 "src/c_compiler_lexer.flex"
 { return T_DIVIDE_EQUALS; }
 	YY_BREAK
 case 42:
 YY_RULE_SETUP
-#line 55 "src/maths_lexer.flex"
+#line 55 "src/c_compiler_lexer.flex"
 { return T_LESS_THAN_OR_EQUAL_TO; }
 	YY_BREAK
 case 43:
 YY_RULE_SETUP
-#line 56 "src/maths_lexer.flex"
+#line 56 "src/c_compiler_lexer.flex"
 { return T_GREATER_THAN_OR_EQUAL_TO; }
 	YY_BREAK
 case 44:
 YY_RULE_SETUP
-#line 57 "src/maths_lexer.flex"
+#line 57 "src/c_compiler_lexer.flex"
 { return T_AND_EQUALS; }
 	YY_BREAK
 case 45:
 YY_RULE_SETUP
-#line 58 "src/maths_lexer.flex"
+#line 58 "src/c_compiler_lexer.flex"
 { return T_OR_EQUALS; }
 	YY_BREAK
 case 46:
 YY_RULE_SETUP
-#line 59 "src/maths_lexer.flex"
+#line 59 "src/c_compiler_lexer.flex"
 { return T_XOR_EQUALS; }
 	YY_BREAK
 case 47:
 YY_RULE_SETUP
-#line 60 "src/maths_lexer.flex"
+#line 60 "src/c_compiler_lexer.flex"
 { return T_ARROW; }
 	YY_BREAK
 case 48:
 YY_RULE_SETUP
-#line 61 "src/maths_lexer.flex"
+#line 61 "src/c_compiler_lexer.flex"
 { return T_TIMES; }
 	YY_BREAK
 case 49:
 YY_RULE_SETUP
-#line 62 "src/maths_lexer.flex"
+#line 62 "src/c_compiler_lexer.flex"
 { return T_DIVIDE; }
 	YY_BREAK
 case 50:
 YY_RULE_SETUP
-#line 63 "src/maths_lexer.flex"
+#line 63 "src/c_compiler_lexer.flex"
 { return T_PLUS; }
 	YY_BREAK
 case 51:
 YY_RULE_SETUP
-#line 64 "src/maths_lexer.flex"
+#line 64 "src/c_compiler_lexer.flex"
 { return T_INCREMENT; }
 	YY_BREAK
 case 52:
 YY_RULE_SETUP
-#line 65 "src/maths_lexer.flex"
+#line 65 "src/c_compiler_lexer.flex"
 { return T_PLUS_EQUALS; }
 	YY_BREAK
 case 53:
 YY_RULE_SETUP
-#line 66 "src/maths_lexer.flex"
+#line 66 "src/c_compiler_lexer.flex"
 { return T_EXPONENT; }
 	YY_BREAK
 case 54:
 YY_RULE_SETUP
-#line 67 "src/maths_lexer.flex"
+#line 67 "src/c_compiler_lexer.flex"
 { return T_DECREMENT; }
 	YY_BREAK
 case 55:
 YY_RULE_SETUP
-#line 68 "src/maths_lexer.flex"
+#line 68 "src/c_compiler_lexer.flex"
 { return T_MINUS; }
 	YY_BREAK
 case 56:
 YY_RULE_SETUP
-#line 69 "src/maths_lexer.flex"
+#line 69 "src/c_compiler_lexer.flex"
 { return T_EMPTY_BRACKETS; }
 	YY_BREAK
 case 57:
 YY_RULE_SETUP
-#line 70 "src/maths_lexer.flex"
+#line 70 "src/c_compiler_lexer.flex"
 { return T_LBRACKET; }
 	YY_BREAK
 case 58:
 YY_RULE_SETUP
-#line 71 "src/maths_lexer.flex"
+#line 71 "src/c_compiler_lexer.flex"
 { return T_RBRACKET; }
 	YY_BREAK
 case 59:
 YY_RULE_SETUP
-#line 72 "src/maths_lexer.flex"
+#line 72 "src/c_compiler_lexer.flex"
 { return T_ESQ_BRACKETS; }
 	YY_BREAK
 case 60:
 YY_RULE_SETUP
-#line 73 "src/maths_lexer.flex"
+#line 73 "src/c_compiler_lexer.flex"
 { return T_LSQ_BRACKET; }
 	YY_BREAK
 case 61:
 YY_RULE_SETUP
-#line 74 "src/maths_lexer.flex"
+#line 74 "src/c_compiler_lexer.flex"
 { return T_RSQ_BRACKET; }
 	YY_BREAK
 case 62:
 YY_RULE_SETUP
-#line 75 "src/maths_lexer.flex"
+#line 75 "src/c_compiler_lexer.flex"
 { return T_ECURLY_BRACKETS; }
 	YY_BREAK
 case 63:
 YY_RULE_SETUP
-#line 76 "src/maths_lexer.flex"
+#line 76 "src/c_compiler_lexer.flex"
 { return T_LCURLY_BRACKET; }
 	YY_BREAK
 case 64:
 YY_RULE_SETUP
-#line 77 "src/maths_lexer.flex"
+#line 77 "src/c_compiler_lexer.flex"
 { return T_RCURLY_BRACKET; }
 	YY_BREAK
 case 65:
 YY_RULE_SETUP
-#line 78 "src/maths_lexer.flex"
+#line 78 "src/c_compiler_lexer.flex"
 { return T_LEFT_SHIFT; }
 	YY_BREAK
 case 66:
 YY_RULE_SETUP
-#line 79 "src/maths_lexer.flex"
+#line 79 "src/c_compiler_lexer.flex"
 { return T_LESS_THAN; }
 	YY_BREAK
 case 67:
 YY_RULE_SETUP
-#line 80 "src/maths_lexer.flex"
+#line 80 "src/c_compiler_lexer.flex"
 { return T_RIGHT_SHIFT; }
 	YY_BREAK
 case 68:
 YY_RULE_SETUP
-#line 81 "src/maths_lexer.flex"
+#line 81 "src/c_compiler_lexer.flex"
 { return T_GREATER_THAN; }
 	YY_BREAK
 case 69:
 YY_RULE_SETUP
-#line 82 "src/maths_lexer.flex"
+#line 82 "src/c_compiler_lexer.flex"
 { return T_EQUALS; }
 	YY_BREAK
 case 70:
 YY_RULE_SETUP
-#line 84 "src/maths_lexer.flex"
+#line 84 "src/c_compiler_lexer.flex"
 { return T_AND_AND; }
 	YY_BREAK
 case 71:
 YY_RULE_SETUP
-#line 85 "src/maths_lexer.flex"
+#line 85 "src/c_compiler_lexer.flex"
 { return T_AND; }
 	YY_BREAK
 case 72:
 YY_RULE_SETUP
-#line 86 "src/maths_lexer.flex"
+#line 86 "src/c_compiler_lexer.flex"
 { return T_OR_OR; }
 	YY_BREAK
 case 73:
 YY_RULE_SETUP
-#line 87 "src/maths_lexer.flex"
+#line 87 "src/c_compiler_lexer.flex"
 { return T_OR; }
 	YY_BREAK
 case 74:
 YY_RULE_SETUP
-#line 88 "src/maths_lexer.flex"
+#line 88 "src/c_compiler_lexer.flex"
 { return T_BITWISE_NOT; }
 	YY_BREAK
 case 75:
 YY_RULE_SETUP
-#line 89 "src/maths_lexer.flex"
+#line 89 "src/c_compiler_lexer.flex"
 { return T_DOT; }
 	YY_BREAK
 case 76:
 YY_RULE_SETUP
-#line 90 "src/maths_lexer.flex"
+#line 90 "src/c_compiler_lexer.flex"
 { return T_COMMA; }
 	YY_BREAK
 case 77:
 YY_RULE_SETUP
-#line 91 "src/maths_lexer.flex"
+#line 91 "src/c_compiler_lexer.flex"
 { return T_COLON; }
 	YY_BREAK
 case 78:
 YY_RULE_SETUP
-#line 92 "src/maths_lexer.flex"
+#line 92 "src/c_compiler_lexer.flex"
 { return T_SEMICOLON; }
 	YY_BREAK
 case 79:
 YY_RULE_SETUP
-#line 93 "src/maths_lexer.flex"
+#line 93 "src/c_compiler_lexer.flex"
 { return T_LOGICAL_NOT; }
 	YY_BREAK
 case 80:
 YY_RULE_SETUP
-#line 94 "src/maths_lexer.flex"
+#line 94 "src/c_compiler_lexer.flex"
 { return T_MODULO; }
 	YY_BREAK
 case 81:
 YY_RULE_SETUP
-#line 95 "src/maths_lexer.flex"
+#line 95 "src/c_compiler_lexer.flex"
 { return T_QUESTION; }
 	YY_BREAK
 case 82:
 YY_RULE_SETUP
-#line 97 "src/maths_lexer.flex"
+#line 97 "src/c_compiler_lexer.flex"
 { yylval._text=new std::string(yytext); return T_EXP_FLOAT; }
 	YY_BREAK
 case 83:
 YY_RULE_SETUP
-#line 98 "src/maths_lexer.flex"
+#line 98 "src/c_compiler_lexer.flex"
 { yylval._text=new std::string(yytext); return T_NORM_FLOAT; }
 	YY_BREAK
 case 84:
 YY_RULE_SETUP
-#line 99 "src/maths_lexer.flex"
+#line 99 "src/c_compiler_lexer.flex"
 { yylval._text=new std::string(yytext); return T_HEX_INT; }
 	YY_BREAK
 case 85:
 YY_RULE_SETUP
-#line 100 "src/maths_lexer.flex"
+#line 100 "src/c_compiler_lexer.flex"
 { yylval._text=new std::string(yytext); return T_DEC_INT; }
 	YY_BREAK
 case 86:
 YY_RULE_SETUP
-#line 101 "src/maths_lexer.flex"
+#line 101 "src/c_compiler_lexer.flex"
 { yylval._text=new std::string(yytext); return T_OCTAL_INT; }
 	YY_BREAK
 case 87:
 YY_RULE_SETUP
-#line 102 "src/maths_lexer.flex"
+#line 102 "src/c_compiler_lexer.flex"
 { yylval._text=new std::string(yytext); return T_IDENTIFIER; }
 	YY_BREAK
 case 88:
 /* rule 88 can match eol */
 YY_RULE_SETUP
-#line 104 "src/maths_lexer.flex"
+#line 104 "src/c_compiler_lexer.flex"
 {;}
 	YY_BREAK
 case 89:
 YY_RULE_SETUP
-#line 106 "src/maths_lexer.flex"
+#line 106 "src/c_compiler_lexer.flex"
 { fprintf(stderr, "Invalid token\n"); exit(1); }
 	YY_BREAK
 case 90:
 YY_RULE_SETUP
-#line 107 "src/maths_lexer.flex"
+#line 107 "src/c_compiler_lexer.flex"
 ECHO;
 	YY_BREAK
-#line 1361 "src/maths_lexer.yy.cpp"
+#line 1361 "src/c_compiler_lexer.yy.cpp"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2358,7 +2358,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 107 "src/maths_lexer.flex"
+#line 107 "src/c_compiler_lexer.flex"
 
 
 

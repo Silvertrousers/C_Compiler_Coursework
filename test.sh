@@ -2,4 +2,4 @@
 
 make clean
 make
-./bin/print_canonical < int.txt
+./bin/c_compiler < int.txt
