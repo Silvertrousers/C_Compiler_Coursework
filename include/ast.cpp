@@ -145,6 +145,26 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
         return "temp2";
       }
     }
+    if(value == "/" or value == "%"){
+      arg1 =branches[0]->make_mips(table, sp, pc);//need a way to check if arg1 is a constant
+      arg2 =branches[1]->make_mips(table, sp, pc);
+      std::cout<<"lw r1, "<<table.find_symbol(arg1).offset<<"("<<table.stack_pointer<<")"<<std::endl;
+      std::cout<<"lw r2, "<<table.find_symbol(arg2).offset<<"("<<table.stack_pointer<<")"<<std::endl;
+      std::cout<<"div r1, r2"<<std::endl;
+      if(value == "/"){std::cout<<"mflo r3"<<std::endl;}//get quotient
+      if(value == "%"){std::cout<<"mfhi r3"<<std::endl;}//get remainder
+
+      if(table.t1_free == true){
+        std::cout<<"sw r3, "<<table.find_symbol("temp1").offset<<"("<<table.stack_pointer<<")"<<std::endl;
+        table.t1_free = false;
+        return "temp1";
+      }
+      if(table.t2_free = true){
+        std::cout<<"sw r3, "<<table.find_symbol("temp2").offset<<"("<<table.stack_pointer<<")"<<std::endl;
+        table.t2_free = false;
+        return "temp2";
+      }
+    }
   }
   if(node_type == "ADDITIVE_EXPRESSION"){
     /*std::cout<<node_type<<std::endl;*/
