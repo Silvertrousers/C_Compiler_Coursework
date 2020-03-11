@@ -8,6 +8,7 @@ std::string makeName(std::string in);
 
 std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
   //table.print_table();
+  std::string arg1, arg2;
   for(int i=0;i<branches.size();i++){
     if(branches[i] == NULL){
       ast_node * temp = new ast_node("NULL","");
@@ -127,42 +128,52 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
     /*std::cout<<node_type<<std::endl;*/
     if(value == "*"){
       if(table.t1_free == true){
-        std::cout<<"mult "<<branches[0]->make_mips(table, sp, pc)<<", "<<branches[1]->make_mips(table, sp, pc)<<std::endl;
+        arg1 =branches[0]->make_mips(table, sp, pc);
+        arg2 =branches[1]->make_mips(table, sp, pc);
+        std::cout<<"mult "<<arg1<<", "<<arg2<<std::endl;
         std::cout<<"mflo temp1"<<std::endl;
         table.t1_free = false;
         return "temp1";
       }
       if(table.t2_free = true){
-        std::cout<<"mult "<<branches[0]->make_mips(table, sp, pc)<<", "<<branches[1]->make_mips(table, sp, pc)<<std::endl;
+        arg1 =branches[0]->make_mips(table, sp, pc);
+        arg2 =branches[1]->make_mips(table, sp, pc);
+        std::cout<<"mult "<<arg1<<", "<<arg2<<std::endl;
         std::cout<<"mflo temp2"<<std::endl;
-        table.t2_free = false;
         return "temp2";
       }
     }
   }
   if(node_type == "ADDITIVE_EXPRESSION"){
     /*std::cout<<node_type<<std::endl;*/
+    std::string arg1, arg2;
     if(value == "+"){
       if(table.t1_free == true){
-        std::cout<<"add temp1, "<<branches[0]->make_mips(table, sp, pc)<<", "<<branches[1]->make_mips(table, sp, pc)<<std::endl;
+        arg1 =branches[0]->make_mips(table, sp, pc);
+        arg2 =branches[1]->make_mips(table, sp, pc);
+        std::cout<<"add temp1, "<<arg1<<", "<<arg2<<std::endl;
         table.t1_free = false;
         return "temp1";
       }
       if(table.t2_free = true){
-        std::cout<<"add temp2, "<<branches[0]->make_mips(table, sp, pc)<<", "<<branches[1]->make_mips(table, sp, pc)<<std::endl;
-        if(table.t2_free = true)
+        arg1 =branches[0]->make_mips(table, sp, pc);
+        arg2 =branches[1]->make_mips(table, sp, pc);
+        std::cout<<"add temp2, "<<arg1<<", "<<arg2<<std::endl;
         return "temp2";
       }
     }
     if(value == "-"){
       if(table.t1_free == true){
-        std::cout<<"sub temp1, "<<branches[0]->make_mips(table, sp, pc)<<", "<<branches[1]->make_mips(table, sp, pc)<<std::endl;
+        arg1 =branches[0]->make_mips(table, sp, pc);
+        arg2 =branches[1]->make_mips(table, sp, pc);
+        std::cout<<"sub temp1, "<<arg1<<", "<<arg2<<std::endl;
         table.t1_free = false;
         return "temp1";
       }
       if(table.t2_free = true){
-        std::cout<<"sub temp2, "<<branches[0]->make_mips(table, sp, pc)<<", "<<branches[1]->make_mips(table, sp, pc)<<std::endl;
-        table.t2_free = false;
+        arg1 =branches[0]->make_mips(table, sp, pc);
+        arg2 =branches[1]->make_mips(table, sp, pc);
+        std::cout<<"sub temp2, "<<arg1<<", "<<arg2<<std::endl;
         return "temp2";
       }
     }
