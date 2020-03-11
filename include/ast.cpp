@@ -4,7 +4,11 @@
 #include <string>
 #include "ast.hpp"
 #include "symbol_table.hpp"
+#include <regex>
+
 std::string makeName(std::string in);
+bool is_a_variable(std::string in);
+std::string var_or_const_instr(std::string v_instr, std::string c_instr, std::string arg1, std::string arg2);
 
 std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
   //table.print_table();
@@ -171,9 +175,11 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
     if(value == "+"){
       arg1 =branches[0]->make_mips(table, sp, pc);//need a way to check if arg1 is a constant
       arg2 =branches[1]->make_mips(table, sp, pc);
+
       std::cout<<"lw r1, "<<table.find_symbol(arg1).offset<<"("<<table.stack_pointer<<")"<<std::endl;
       std::cout<<"lw r2, "<<table.find_symbol(arg2).offset<<"("<<table.stack_pointer<<")"<<std::endl;
       std::cout<<"add r3, r1, r2"<<std::endl;
+
 
       if(table.t1_free == true){
         std::cout<<"sw r3, "<<table.find_symbol("temp1").offset<<"("<<table.stack_pointer<<")"<<std::endl;
@@ -205,7 +211,27 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
       }
     }
   }
-  if(node_type == "SHIFT_EXPRESSION"){/*std::cout<<node_type<<std::endl;*/}
+  if(node_type == "SHIFT_EXPRESSION"){/*std::cout<<node_type<<std::endl;*/
+    arg1 =branches[0]->make_mips(table, sp, pc);//need a way to check if arg1 is a constant
+    arg2 =branches[1]->make_mips(table, sp, pc);
+
+    std::cout<<"lw r1, "<<table.find_symbol(arg1).offset<<"("<<table.stack_pointer<<")"<<std::endl;
+    std::cout<<"lw r2, "<<table.find_symbol(arg2).offset<<"("<<table.stack_pointer<<")"<<std::endl;
+
+    if(value == "<<"){std::cout<<"sllv r3, r1, r2"<<std::endl;}
+    if(value == ">>"){std::cout<<"srlv r3, r1, r2"<<std::endl;}
+
+    if(table.t1_free == true){
+      std::cout<<"sw r3, "<<table.find_symbol("temp1").offset<<"("<<table.stack_pointer<<")"<<std::endl;
+      table.t1_free = false;
+      return "temp1";
+    }
+    if(table.t2_free = true){
+      std::cout<<"sw r3, "<<table.find_symbol("temp2").offset<<"("<<table.stack_pointer<<")"<<std::endl;
+      table.t2_free = false;
+      return "temp2";
+    }
+  }
 
   if(node_type == "RELATIONAL_EXPRESSION"){
     /*std::cout<<node_type<<std::endl;*/
@@ -355,5 +381,19 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
 }
 std::string makeName(std::string in){
   return in;
+}
+
+std::string var_or_const_instr(std::string v_instr, std::string c_instr, std::string arg1, std::string arg2){
+  if(is_a_variable(arg1) && is_a_variable(arg2)){
+    
+  }
+  if(is_a_variable(arg1) && !is_a_variable(arg2)){}
+  if(!is_a_variable(arg1) && is_a_variable(arg2)){}
+  if(!is_a_variable(arg1) && !is_a_variable(arg2)){}
+}
+
+bool is_a_variable(std::string in){
+  regex r = regex("[0]|[1-9][0-9]*");
+  return !regex_match(in,r);
 }
 #endif
