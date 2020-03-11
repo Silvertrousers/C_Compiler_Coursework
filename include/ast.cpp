@@ -52,7 +52,10 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
 
   }
   if(node_type == "DECLARATION_LIST"){/*std::cout<<node_type<<std::endl;*/}
-  if(node_type == "STATEMENT_LIST"){/*std::cout<<node_type<<std::endl;*/}
+  if(node_type == "STATEMENT_LIST"){/*std::cout<<node_type<<std::endl;*/
+    branches[0]->make_mips(table, sp, pc);
+    branches[1]->make_mips(table, sp, pc);
+  }
   if(node_type == "EXPRESSION_STATEMENT"){/*std::cout<<node_type<<std::endl;*/}
   if(node_type == "SELECTION_STATEMENT"){/*std::cout<<node_type<<std::endl;*/
     symbol_table new_scope = symbol_table(&table);
@@ -119,7 +122,7 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
       if(table.t2_free = true){
         std::cout<<"mult "<<branches[0]->make_mips(table, sp, pc)<<", "<<branches[1]->make_mips(table, sp, pc)<<std::endl;
         std::cout<<"mflo temp2"<<std::endl;
-        table.t1_free = false;
+        table.t2_free = false;
         return "temp2";
       }
     }
@@ -134,7 +137,7 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
       }
       if(table.t2_free = true){
         std::cout<<"add temp2, "<<branches[0]->make_mips(table, sp, pc)<<", "<<branches[1]->make_mips(table, sp, pc)<<std::endl;
-        table.t2_free = false;
+        if(table.t2_free = true)
         return "temp2";
       }
     }
