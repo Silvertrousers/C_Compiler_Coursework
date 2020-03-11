@@ -4,10 +4,10 @@
 #include <string>
 #include "ast.hpp"
 #include "symbol_table.hpp"
+std::string makeName(std::string in);
 
 std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
   //table.print_table();
-
   for(int i=0;i<branches.size();i++){
     if(branches[i] == NULL){
       ast_node * temp = new ast_node("NULL","");
@@ -60,15 +60,17 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
    if(node_type == "SELECTION_STATEMENT"){/*std::cout<<node_type<<std::endl;*/
     symbol_table new_scope = symbol_table(&table);
     if (branches[0]-> node_type == "if"){
-      std::cout<< "beq " << branches[2]->make_mips(new_scope, sp, pc) << "r0 " << skip << std::endl;
+      std::string skip = makeName("skip");
+      std::string end = makeName("end");
+      std::cout<< "beq " << branches[2]->make_mips(new_scope, sp, pc) << "r0, " << skip << std::endl;
       //branch if condition is not met to label else
       std::cout<<branches[3]->make_mips(new_scope, sp, pc);
       std::cout<< "beq " << "r0" << "r0 " << end << std::endl;
-      std::cout << ":" << skip << std::endl;
+      std::cout << skip  << ":"<< std::endl;
       if (branches[4]-> node_type == "else"){
         std::cout<<branches[5]->make_mips(new_scope, sp, pc);
       }
-      std::cout << ":" << end << std::endl;
+      std::cout << end  << ":"<< std::endl;
     }
   }
   if(node_type == "T_SWITCH"){/*std::cout<<node_type<<std::endl;*/}
@@ -312,5 +314,8 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
     /*std::cout<<node_type<<std::endl;*/
   }
   return "";
+}
+std::string makeName(std::string in){
+  return in;
 }
 #endif
