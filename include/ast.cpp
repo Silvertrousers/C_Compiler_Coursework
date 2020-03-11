@@ -116,7 +116,7 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
         table.t1_free = false;
         return "temp1";
       }
-      else{
+      if(table.t2_free = true){
         std::cout<<"mult "<<branches[0]->make_mips(table, sp, pc)<<", "<<branches[1]->make_mips(table, sp, pc)<<std::endl;
         std::cout<<"mflo temp2"<<std::endl;
         table.t1_free = false;
@@ -132,7 +132,7 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
         table.t1_free = false;
         return "temp1";
       }
-      else{
+      if(table.t2_free = true){
         std::cout<<"add temp2, "<<branches[0]->make_mips(table, sp, pc)<<", "<<branches[1]->make_mips(table, sp, pc)<<std::endl;
         table.t2_free = false;
         return "temp2";
@@ -144,7 +144,7 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
         table.t1_free = false;
         return "temp1";
       }
-      else{
+      if(table.t2_free = true){
         std::cout<<"sub temp2, "<<branches[0]->make_mips(table, sp, pc)<<", "<<branches[1]->make_mips(table, sp, pc)<<std::endl;
         table.t2_free = false;
         return "temp2";
@@ -180,6 +180,8 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
     if(branches[1]->value == "="){
       std::string s = branches[0]->value;
       std::cout<<"sw "<<branches[2]->make_mips(table, sp, pc)<<", "<<table.find_symbol(s).offset<<"("<<table.stack_pointer<<")"<<std::endl;
+      table.t1_free = true;
+      table.t2_free = true;
     }
   }
   if(node_type == "ASSIGNMENT_OPERATOR"){/*std::cout<<node_type<<std::endl;*/
