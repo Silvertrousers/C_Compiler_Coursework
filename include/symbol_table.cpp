@@ -3,7 +3,7 @@
 
 void symbol_table::insert(symbol s){
 	var_pointer += 4;
-	s.offset = var_pointer - stack_pointer;
+	s.offset = var_pointer;
 	symbols.push_back(s);
 }
 
@@ -33,7 +33,7 @@ symbol symbol_table::find_symbol(std::string in){
 symbol_table::symbol_table(){
 	parent = NULL;
 	null_symbol.name = "";
-
+	var_pointer = 0;
 	symbol temp1, temp2;
 	temp1.name = "temp1";
 	temp1.value = "0";
@@ -50,7 +50,7 @@ symbol_table::symbol_table(){
 symbol_table::symbol_table(symbol_table *parent_scope){
 	parent = parent_scope;
 	null_symbol.name = "";
-
+	var_pointer = 0;
 	symbol temp1, temp2;
 	temp1.name = "temp1";
 	temp1.value = "0";

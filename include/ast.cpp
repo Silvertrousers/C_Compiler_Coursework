@@ -91,7 +91,9 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
 
   if(node_type == "PRIMARY_EXPRESSION"){/*std::cout<<node_type<<std::endl;*/}
 
-  if(node_type == "CONSTANT"){/*std::cout<<node_type<<std::endl;*/}
+  if(node_type == "CONSTANT"){/*std::cout<<node_type<<std::endl;*/
+    return value;
+  }
 
   if(node_type == "POSTFIX_EXPRESSION"){/*std::cout<<node_type<<std::endl;*/}
 
@@ -107,20 +109,47 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
   }
   if(node_type == "MULTIPLICATIVE_EXPRESSION"){
     /*std::cout<<node_type<<std::endl;*/
+    if(value == "*"){
+      if(table.t1_free == true){
+        std::cout<<"mult "<<branches[0]->make_mips(table, sp, pc)<<", "<<branches[1]->make_mips(table, sp, pc)<<std::endl;
+        std::cout<<"mflo temp1"<<std::endl;
+        table.t1_free = false;
+        return "temp1";
+      }
+      else{
+        std::cout<<"mult "<<branches[0]->make_mips(table, sp, pc)<<", "<<branches[1]->make_mips(table, sp, pc)<<std::endl;
+        std::cout<<"mflo temp2"<<std::endl;
+        table.t1_free = false;
+        return "temp2";
+      }
+    }
   }
   if(node_type == "ADDITIVE_EXPRESSION"){
     /*std::cout<<node_type<<std::endl;*/
     if(value == "+"){
-      std::cout<<"add temp1, "<<branches[0]->make_mips(table, sp, pc)<<", "<<branches[1]->make_mips(table, sp, pc)<<std::endl;
-      table.t1_free = false;
-      return "temp1";
+      if(table.t1_free == true){
+        std::cout<<"add temp1, "<<branches[0]->make_mips(table, sp, pc)<<", "<<branches[1]->make_mips(table, sp, pc)<<std::endl;
+        table.t1_free = false;
+        return "temp1";
+      }
+      else{
+        std::cout<<"add temp2, "<<branches[0]->make_mips(table, sp, pc)<<", "<<branches[1]->make_mips(table, sp, pc)<<std::endl;
+        table.t2_free = false;
+        return "temp2";
+      }
     }
     if(value == "-"){
-      std::cout<<"sub r1, ";
-      std::cout<<branches[0]->make_mips(table, sp, pc);
-      std::cout<<", "<<branches[1]->make_mips(table, sp, pc)<<std::endl;
+      if(table.t1_free == true){
+        std::cout<<"sub temp1, "<<branches[0]->make_mips(table, sp, pc)<<", "<<branches[1]->make_mips(table, sp, pc)<<std::endl;
+        table.t1_free = false;
+        return "temp1";
+      }
+      else{
+        std::cout<<"sub temp2, "<<branches[0]->make_mips(table, sp, pc)<<", "<<branches[1]->make_mips(table, sp, pc)<<std::endl;
+        table.t2_free = false;
+        return "temp2";
+      }
     }
-    return "r1";
   }
   if(node_type == "SHIFT_EXPRESSION"){/*std::cout<<node_type<<std::endl;*/}
 
@@ -148,6 +177,10 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
   }
   if(node_type == "CONDITIONAL_EXPRESSION"){/*std::cout<<node_type<<std::endl;*/}
   if(node_type == "ASSIGNMENT_EXPRESSION"){/*std::cout<<node_type<<std::endl;*/
+    if(branches[1]->value == "="){
+      std::string s = branches[0]->value;
+      std::cout<<"sw "<<branches[2]->make_mips(table, sp, pc)<<", "<<table.find_symbol(s).offset<<"("<<table.stack_pointer<<")"<<std::endl;
+    }
   }
   if(node_type == "ASSIGNMENT_OPERATOR"){/*std::cout<<node_type<<std::endl;*/
   }
