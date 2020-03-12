@@ -333,11 +333,11 @@ ADDITIVE_EXPRESSION : MULTIPLICATIVE_EXPRESSION { $$  = $1;}
 SHIFT_EXPRESSION : ADDITIVE_EXPRESSION { $$  = $1;}
                  | SHIFT_EXPRESSION T_LEFT_SHIFT ADDITIVE_EXPRESSION {          std::vector<ast_node*> branches = {$1, $3};
                                                                                 std::vector<std::string> branch_notes = {"SHIFT_EXPRESSION","ADDITIVE_EXPRESSION"};
-                                                                                $$ = new ast_node("ADDITIVE_EXPRESSION","<<", branches, branch_notes);}
+                                                                                $$ = new ast_node("SHIFT_EXPRESSION","<<", branches, branch_notes);}
 
                  | SHIFT_EXPRESSION T_RIGHT_SHIFT ADDITIVE_EXPRESSION {         std::vector<ast_node*> branches = {$1, $3};
                                                                                 std::vector<std::string> branch_notes = {"SHIFT_EXPRESSION","ADDITIVE_EXPRESSION"};
-                                                                                $$ = new ast_node("ADDITIVE_EXPRESSION",">>", branches, branch_notes);}
+                                                                                $$ = new ast_node("SHIFT_EXPRESSION",">>", branches, branch_notes);}
 
 RELATIONAL_EXPRESSION : SHIFT_EXPRESSION { $$  = $1;}
                       | RELATIONAL_EXPRESSION T_LESS_THAN SHIFT_EXPRESSION {    std::vector<ast_node*> branches = {$1, $3};

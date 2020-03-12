@@ -8,7 +8,7 @@
 
 std::string makeName(std::string in);
 bool is_a_variable(std::string in);
-std::string var_or_const_instr(std::string v_instr, std::string c_instr, std::string arg1, std::string arg2);
+std::string var_or_const_instr(std::string v_instr, std::string c_instr, std::string arg1, std::string arg2, symbol_table table);
 
 std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
   //table.print_table();
@@ -175,10 +175,10 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
     if(value == "+"){
       arg1 =branches[0]->make_mips(table, sp, pc);//need a way to check if arg1 is a constant
       arg2 =branches[1]->make_mips(table, sp, pc);
-
-      std::cout<<"lw r1, "<<table.find_symbol(arg1).offset<<"("<<table.stack_pointer<<")"<<std::endl;
-      std::cout<<"lw r2, "<<table.find_symbol(arg2).offset<<"("<<table.stack_pointer<<")"<<std::endl;
-      std::cout<<"add r3, r1, r2"<<std::endl;
+      var_or_const_instr("add", "addi", arg1, arg2, table);
+      // std::cout<<"lw r1, "<<table.find_symbol(arg1).offset<<"("<<table.stack_pointer<<")"<<std::endl;
+      // std::cout<<"lw r2, "<<table.find_symbol(arg2).offset<<"("<<table.stack_pointer<<")"<<std::endl;
+      // std::cout<<"add r3, r1, r2"<<std::endl;
 
 
       if(table.t1_free == true){
@@ -215,11 +215,9 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
     arg1 =branches[0]->make_mips(table, sp, pc);//need a way to check if arg1 is a constant
     arg2 =branches[1]->make_mips(table, sp, pc);
 
-    std::cout<<"lw r1, "<<table.find_symbol(arg1).offset<<"("<<table.stack_pointer<<")"<<std::endl;
-    std::cout<<"lw r2, "<<table.find_symbol(arg2).offset<<"("<<table.stack_pointer<<")"<<std::endl;
 
-    if(value == "<<"){std::cout<<"sllv r3, r1, r2"<<std::endl;}
-    if(value == ">>"){std::cout<<"srlv r3, r1, r2"<<std::endl;}
+    if(value == "<<"){var_or_const_instr("sllv", "sll", arg1, arg2, table);}
+    if(value == ">>"){var_or_const_instr("srlv", "srl", arg1, arg2, table);}//changes for unsigned ints (gotta use sra)
 
     if(table.t1_free == true){
       std::cout<<"sw r3, "<<table.find_symbol("temp1").offset<<"("<<table.stack_pointer<<")"<<std::endl;
@@ -235,6 +233,23 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
 
   if(node_type == "RELATIONAL_EXPRESSION"){
     /*std::cout<<node_type<<std::endl;*/
+    arg1 =branches[0]->make_mips(table, sp, pc);
+    arg2 =branches[1]->make_mips(table, sp, pc);
+
+    var_or_const_instr("slt", "slti", arg1, arg2, table);
+    if(value == "<"){}
+    if(value == ">"){std::cout<<"nor r3, r3, r3"<<std::endl;}//this nots the less than to make a greater than instruction
+
+    if(table.t1_free == true){
+      std::cout<<"sw r3, "<<table.find_symbol("temp1").offset<<"("<<table.stack_pointer<<")"<<std::endl;
+      table.t1_free = false;
+      return "temp1";
+    }
+    if(table.t2_free = true){
+      std::cout<<"sw r3, "<<table.find_symbol("temp2").offset<<"("<<table.stack_pointer<<")"<<std::endl;
+      table.t2_free = false;
+      return "temp2";
+    }
 
   }
   if(node_type == "EQUALITY_EXPRESSION"){
@@ -259,7 +274,9 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
   if(node_type == "ASSIGNMENT_EXPRESSION"){/*std::cout<<node_type<<std::endl;*/
     if(branches[1]->value == "="){
       std::string s = branches[0]->value;
-      std::cout<<"sw "<<branches[2]->make_mips(table, sp, pc)<<", "<<table.find_symbol(s).offset<<"("<<table.stack_pointer<<")"<<std::endl;
+      std::string res = branches[2]->make_mips(table, sp, pc);
+      std::cout<<"lw r3, "<<table.find_symbol(res).offset<<"("<<table.stack_pointer<<")"<<std::endl;//this is the location of temp1
+      std::cout<<"sw r3, "<<table.find_symbol(s).offset<<"("<<table.stack_pointer<<")"<<std::endl;
       table.t1_free = true;
       table.t2_free = true;
     }
@@ -383,17 +400,32 @@ std::string makeName(std::string in){
   return in;
 }
 
-std::string var_or_const_instr(std::string v_instr, std::string c_instr, std::string arg1, std::string arg2){
+std::string var_or_const_instr(std::string v_instr, std::string c_instr, std::string arg1, std::string arg2, symbol_table table){
   if(is_a_variable(arg1) && is_a_variable(arg2)){
-    
+    std::cout<<"lw r1, "<<table.find_symbol(arg1).offset<<"("<<table.stack_pointer<<")"<<std::endl;
+    std::cout<<"lw r2, "<<table.find_symbol(arg2).offset<<"("<<table.stack_pointer<<")"<<std::endl;
+    std::cout<<v_instr<<" r3, r1, r2"<<std::endl;
   }
-  if(is_a_variable(arg1) && !is_a_variable(arg2)){}
-  if(!is_a_variable(arg1) && is_a_variable(arg2)){}
-  if(!is_a_variable(arg1) && !is_a_variable(arg2)){}
+  if(is_a_variable(arg1) && !is_a_variable(arg2)){
+    std::cout<<"lw r1, "<<table.find_symbol(arg1).offset<<"("<<table.stack_pointer<<")"<<std::endl;
+    std::cout<<c_instr<<" r3, r1, "<<arg2<<std::endl;
+  }
+  if(!is_a_variable(arg1) && is_a_variable(arg2)){
+    std::cout<<"lw r1, "<<table.find_symbol(arg2).offset<<"("<<table.stack_pointer<<")"<<std::endl;
+    std::cout<<c_instr<<" r3, r1, "<<arg1<<std::endl;
+  }
+  if(!is_a_variable(arg1) && !is_a_variable(arg2)){
+    std::cout<<"addi r1, r1, 0"<<std::endl;
+    std::cout<<"addi r1, r1, "<<arg1<<std::endl; //load r1 -> arg1
+    std::cout<<"addi r2, r2, 0"<<std::endl;
+    std::cout<<"addi r2, r2, "<<arg2<<std::endl; //load r2 -> arg2
+
+    std::cout<<v_instr<<" r3, r1, r2"<<std::endl;
+  }
 }
 
 bool is_a_variable(std::string in){
-  regex r = regex("[0]|[1-9][0-9]*");
+  std::regex r("[0]|[1-9][0-9]*");
   return !regex_match(in,r);
 }
 #endif
