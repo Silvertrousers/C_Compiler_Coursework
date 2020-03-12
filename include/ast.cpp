@@ -143,7 +143,7 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
         table.t1_free = false;
         return "temp1";
       }
-      if(table.t2_free = true){
+      if(table.t2_free == true){
         std::cout<<"sw r3, "<<table.find_symbol("temp2").offset<<"("<<table.stack_pointer<<")"<<std::endl;
         table.t2_free = false;
         return "temp2";
@@ -163,7 +163,7 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
         table.t1_free = false;
         return "temp1";
       }
-      if(table.t2_free = true){
+      if(table.t2_free == true){
         std::cout<<"sw r3, "<<table.find_symbol("temp2").offset<<"("<<table.stack_pointer<<")"<<std::endl;
         table.t2_free = false;
         return "temp2";
@@ -186,7 +186,7 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
         table.t1_free = false;
         return "temp1";
       }
-      if(table.t2_free = true){
+      if(table.t2_free == true){
         std::cout<<"sw r3, "<<table.find_symbol("temp2").offset<<"("<<table.stack_pointer<<")"<<std::endl;
         table.t2_free = false;
         return "temp2";
@@ -204,7 +204,7 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
         table.t1_free = false;
         return "temp1";
       }
-      if(table.t2_free = true){
+      if(table.t2_free == true){
         std::cout<<"sw r3, "<<table.find_symbol("temp2").offset<<"("<<table.stack_pointer<<")"<<std::endl;
         table.t2_free = false;
         return "temp2";
@@ -224,7 +224,7 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
       table.t1_free = false;
       return "temp1";
     }
-    if(table.t2_free = true){
+    if(table.t2_free == true){
       std::cout<<"sw r3, "<<table.find_symbol("temp2").offset<<"("<<table.stack_pointer<<")"<<std::endl;
       table.t2_free = false;
       return "temp2";
@@ -237,15 +237,17 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
     arg2 =branches[1]->make_mips(table, sp, pc);
 
     var_or_const_instr("slt", "slti", arg1, arg2, table);
+
     if(value == "<"){}
     if(value == ">"){std::cout<<"nor r3, r3, r3"<<std::endl;}//this nots the less than to make a greater than instruction
+
 
     if(table.t1_free == true){
       std::cout<<"sw r3, "<<table.find_symbol("temp1").offset<<"("<<table.stack_pointer<<")"<<std::endl;
       table.t1_free = false;
       return "temp1";
     }
-    if(table.t2_free = true){
+    if(table.t2_free == true){
       std::cout<<"sw r3, "<<table.find_symbol("temp2").offset<<"("<<table.stack_pointer<<")"<<std::endl;
       table.t2_free = false;
       return "temp2";
@@ -266,7 +268,7 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
       table.t1_free = false;
       return "temp1";
     }
-    if(table.t2_free = true){
+    if(table.t2_free == true){
       std::cout<<"sw r3, "<<table.find_symbol("temp2").offset<<"("<<table.stack_pointer<<")"<<std::endl;
       table.t2_free = false;
       return "temp2";
@@ -284,7 +286,7 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
       table.t1_free = false;
       return "temp1";
     }
-    if(table.t2_free = true){
+    if(table.t2_free == true){
       std::cout<<"sw r3, "<<table.find_symbol("temp2").offset<<"("<<table.stack_pointer<<")"<<std::endl;
       table.t2_free = false;
       return "temp2";
@@ -302,7 +304,7 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
       table.t1_free = false;
       return "temp1";
     }
-    if(table.t2_free = true){
+    if(table.t2_free == true){
       std::cout<<"sw r3, "<<table.find_symbol("temp2").offset<<"("<<table.stack_pointer<<")"<<std::endl;
       table.t2_free = false;
       return "temp2";
@@ -310,9 +312,66 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
   }//hi
   if(node_type == "LOGICAL_AND_EXPRESSION"){
     /*std::cout<<node_type<<std::endl;*/
+
+    std::string sc = makeName("short_circuit");
+    std::string nsc = makeName("not_short_circuit");
+
+    arg1 =branches[0]->make_mips(table, sp, pc);//eval arg1
+    var_or_const_instr("xor", "xori", arg1, "0", table);//check if arg1 = 0
+
+    std::cout<<"beq r3, r0, "<<sc<<std::endl;
+    arg2 =branches[1]->make_mips(table, sp, pc);//else eval second arg
+    var_or_const_instr("xor", "xori", arg2, "0", table);//check if arg2 = 0
+
+    std::cout<<"addi r2,r0,1"<<std::endl;// set result to 1
+    std::cout<<"bne r3, r0, "<<nsc<<std::endl;//result stays 1 if arg2 != 0
+    std::cout<<sc<<":"<<std::endl;
+    std::cout<<"addi r2,r0,0"<<std::endl;// set result to 0
+    std::cout<<nsc<<":"<<std::endl;
+
+    std::cout<<"add r3,r2, r0"<<std::endl;
+
+    if(table.t1_free == true){
+      std::cout<<"sw r3, "<<table.find_symbol("temp1").offset<<"("<<table.stack_pointer<<")"<<std::endl;
+      table.t1_free = false;
+      return "temp1";
+    }
+    if(table.t2_free == true){
+      std::cout<<"sw r3, "<<table.find_symbol("temp2").offset<<"("<<table.stack_pointer<<")"<<std::endl;
+      table.t2_free = false;
+      return "temp2";
+    }
   }
   if(node_type == "LOGICAL_OR_EXPRESSION"){
     /*std::cout<<node_type<<std::endl;*/
+    std::string sc = makeName("short_circuit");
+    std::string nsc = makeName("not_short_circuit");
+
+    arg1 =branches[0]->make_mips(table, sp, pc);//eval arg1
+    var_or_const_instr("xor", "xori", arg1, "0", table);//check if arg1 = 0
+
+    std::cout<<"bne r3, r0, "<<sc<<std::endl;
+    arg2 =branches[1]->make_mips(table, sp, pc);//else eval second arg
+    var_or_const_instr("xor", "xori", arg2, "0", table);//check if arg2 = 0
+
+    std::cout<<"addi r2,r0,0"<<std::endl;// set result to 0
+    std::cout<<"beq r3, r0, "<<nsc<<std::endl;//result stays 1 if arg2 != 0
+    std::cout<<sc<<":"<<std::endl;
+    std::cout<<"addi r2,r0,1"<<std::endl;// set result to 1
+    std::cout<<nsc<<":"<<std::endl;
+
+    std::cout<<"add r3,r2, r0"<<std::endl;
+
+    if(table.t1_free == true){
+      std::cout<<"sw r3, "<<table.find_symbol("temp1").offset<<"("<<table.stack_pointer<<")"<<std::endl;
+      table.t1_free = false;
+      return "temp1";
+    }
+    if(table.t2_free == true){
+      std::cout<<"sw r3, "<<table.find_symbol("temp2").offset<<"("<<table.stack_pointer<<")"<<std::endl;
+      table.t2_free = false;
+      return "temp2";
+    }
   }
   if(node_type == "CONDITIONAL_EXPRESSION"){/*std::cout<<node_type<<std::endl;*/}
   if(node_type == "ASSIGNMENT_EXPRESSION"){/*std::cout<<node_type<<std::endl;*/
@@ -459,13 +518,13 @@ std::string var_or_const_instr(std::string v_instr, std::string c_instr, std::st
     std::cout<<c_instr<<" r3, r1, "<<arg1<<std::endl;
   }
   if(!is_a_variable(arg1) && !is_a_variable(arg2)){
-    std::cout<<"addi r1, r1, 0"<<std::endl;
-    std::cout<<"addi r1, r1, "<<arg1<<std::endl; //load r1 -> arg1
-    std::cout<<"addi r2, r2, 0"<<std::endl;
-    std::cout<<"addi r2, r2, "<<arg2<<std::endl; //load r2 -> arg2
+
+    std::cout<<"addi r1, r0, "<<arg1<<std::endl; //load r1 -> arg1
+    std::cout<<"addi r2, r0, "<<arg2<<std::endl; //load r2 -> arg2
 
     std::cout<<v_instr<<" r3, r1, r2"<<std::endl;
   }
+  return "r3";
 }
 
 bool is_a_variable(std::string in){
