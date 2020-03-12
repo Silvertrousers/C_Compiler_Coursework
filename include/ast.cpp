@@ -307,7 +307,7 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
       table.t2_free = false;
       return "temp2";
     }
-  }
+  }//hi
   if(node_type == "LOGICAL_AND_EXPRESSION"){
     /*std::cout<<node_type<<std::endl;*/
   }
