@@ -250,19 +250,63 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
       table.t2_free = false;
       return "temp2";
     }
-
   }
   if(node_type == "EQUALITY_EXPRESSION"){
     /*std::cout<<node_type<<std::endl;*/
   }
   if(node_type == "AND_EXPRESSION"){
     /*std::cout<<node_type<<std::endl;*/
+    arg1 =branches[0]->make_mips(table, sp, pc);
+    arg2 =branches[1]->make_mips(table, sp, pc);
+
+    var_or_const_instr("and", "andi", arg1, arg2, table);
+
+    if(table.t1_free == true){
+      std::cout<<"sw r3, "<<table.find_symbol("temp1").offset<<"("<<table.stack_pointer<<")"<<std::endl;
+      table.t1_free = false;
+      return "temp1";
+    }
+    if(table.t2_free = true){
+      std::cout<<"sw r3, "<<table.find_symbol("temp2").offset<<"("<<table.stack_pointer<<")"<<std::endl;
+      table.t2_free = false;
+      return "temp2";
+    }
   }
   if(node_type == "EXCLUSIVE_OR_EXPRESSION"){
     /*std::cout<<node_type<<std::endl;*/
+    arg1 =branches[0]->make_mips(table, sp, pc);
+    arg2 =branches[1]->make_mips(table, sp, pc);
+
+    var_or_const_instr("xor", "xori", arg1, arg2, table);
+
+    if(table.t1_free == true){
+      std::cout<<"sw r3, "<<table.find_symbol("temp1").offset<<"("<<table.stack_pointer<<")"<<std::endl;
+      table.t1_free = false;
+      return "temp1";
+    }
+    if(table.t2_free = true){
+      std::cout<<"sw r3, "<<table.find_symbol("temp2").offset<<"("<<table.stack_pointer<<")"<<std::endl;
+      table.t2_free = false;
+      return "temp2";
+    }
   }
   if(node_type == "INCLUSIVE_OR_EXPRESSION"){
     /*std::cout<<node_type<<std::endl;*/
+    arg1 =branches[0]->make_mips(table, sp, pc);
+    arg2 =branches[1]->make_mips(table, sp, pc);
+
+    var_or_const_instr("or", "ori", arg1, arg2, table);
+
+    if(table.t1_free == true){
+      std::cout<<"sw r3, "<<table.find_symbol("temp1").offset<<"("<<table.stack_pointer<<")"<<std::endl;
+      table.t1_free = false;
+      return "temp1";
+    }
+    if(table.t2_free = true){
+      std::cout<<"sw r3, "<<table.find_symbol("temp2").offset<<"("<<table.stack_pointer<<")"<<std::endl;
+      table.t2_free = false;
+      return "temp2";
+    }
   }
   if(node_type == "LOGICAL_AND_EXPRESSION"){
     /*std::cout<<node_type<<std::endl;*/
