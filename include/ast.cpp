@@ -62,21 +62,20 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
     branches[1]->make_mips(table, sp, pc);
   }
   if(node_type == "EXPRESSION_STATEMENT"){/*std::cout<<node_type<<std::endl;*/}
-  if(node_type == "SELECTION_STATEMENT"){/*std::cout<<node_type<<std::endl;*/
+  if(node_type == "EXPRESSION_STATEMENT"){/*std::cout<<node_type<<std::endl;*/}
+   if(node_type == "SELECTION_STATEMENT"){/*std::cout<<node_type<<std::endl;*/
     symbol_table new_scope = symbol_table(&table);
-    std::string s;
-
-    if (branches[0]-> node_type == "T_IF"){
+    if (branches[0]-> node_type == "if"){
       std::string skip = makeName("skip");
       std::string end = makeName("end");
-      s = branches[2]->make_mips(new_scope, sp, pc);
-      std::cout<< "beq " << s << "r0, " << skip << std::endl;
+      arg1 = branches[2]->make_mips(new_scope, sp, pc);
+      std::cout<< "beq " << arg1 << "r0, " << skip << std::endl;
       //branch if condition is not met to label else
       std::cout<<branches[3]->make_mips(new_scope, sp, pc);
       std::cout<< "beq " << "r0" << "r0 " << end << std::endl;
       std::cout << skip  << ":"<< std::endl;
       if (branches[4]-> node_type == "else"){
-        s = branches[5]->make_mips(new_scope, sp, pc);
+        std::cout<<branches[5]->make_mips(new_scope, sp, pc);
       }
       std::cout << end  << ":"<< std::endl;
     }
@@ -87,26 +86,25 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
 
   if(node_type == "ITERATION_STATEMENT"){/*std::cout<<node_type<<std::endl;*/
     symbol_table new_scope(&table);
-    std::string  s;
-    if (branches[0]-> node_type == "T_FOR"){
-      s=branches[1]->make_mips(new_scope, sp, pc);
+    if (branches[0]-> node_type == "for"){
+      std::cout<<branches[1]->make_mips(new_scope, sp, pc);
       std::string start = makeName("start");
       std::string end = makeName("end");
-      std::cout << start << ":"<< std::endl;
-      s=branches[2]->make_mips(new_scope, sp, pc)
-      std::cout<< "beq" << s << "r0" << end << std::endl;
-      s=branches[3]->make_mips(new_scope, sp, pc);
-      s=branches[5]->make_mips(new_scope, sp, pc);
+      std::cout << ":" << start << std::endl;
+      arg1 = branches[2]->make_mips(new_scope, sp, pc);
+      std::cout<< "beq" << arg1 << "r0" << end << std::endl;
+      branches[3]->make_mips(new_scope, sp, pc);
+      branches[5]->make_mips(new_scope, sp, pc);
       std::cout<< "beq " << "r0" << "r0 " << start << std::endl;
       //label end
-      std::cout <<  end << ":"<< std::endl;
+      std::cout << ":" << end << std::endl;
     }
-    if (branches[0]-> node_type == "T_WHILE"){
+    if (branches[0]-> node_type == "while"){
       std::string end = makeName("end");
-      s = branches[1]->make_mips(new_scope, sp, pc)
-      std::cout<< "beq " << s << "r0" << end << std::endl;
-      s=branches[5]->make_mips(new_scope, sp, pc);
-      std::cout  << end << ":"<< std::endl;
+      arg1 = branches[1]->make_mips(new_scope, sp, pc);
+      std::cout<< "beq " << arg1 << "r0" << end << std::endl;
+      std::cout<<branches[5]->make_mips(new_scope, sp, pc);
+      std::cout << ":" << end << std::endl;
     }
   }
   if(node_type == "T_FOR"){/*std::cout<<node_type<<std::endl;*/}
