@@ -4,7 +4,7 @@
 
 extern "C" int fileno(FILE *stream);
 
-#include "maths_parser.tab.hpp"
+#include "compiler_parser.tab.hpp"
 
 bool enum_flag = false;
 bool enum_flag_2 = false;
@@ -19,7 +19,6 @@ auto            { return T_AUTO; }
 break           { return T_BREAK; }
 case            { return T_CASE; }
 char            { return T_CHAR; }
-const           { return T_CONST; }
 continue        { return T_CONTINUE; }
 default         { return T_DEFAULT; }
 do              { return T_DO; }
@@ -29,7 +28,6 @@ enum            { enum_flag = true; return T_ENUM; }
 extern          { return T_EXTERN; }
 float           { return T_FLOAT; }
 for             { return T_FOR; }
-goto            { return T_GOTO; }
 if              { return T_IF; }
 int             { return T_INT; }
 long            { return T_LONG; }
@@ -42,7 +40,6 @@ static          { return T_STATIC; }
 struct          { return T_STRUCT; }
 switch          { return T_SWITCH; }
 typedef         { typedef_flag = true; return T_TYPEDEF; }
-union           { return T_UNION; }
 unsigned        { return T_UNSIGNED; }
 void            { return T_VOID; }
 volatile        { return T_VOLATILE; }
