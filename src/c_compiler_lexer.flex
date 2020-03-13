@@ -5,6 +5,10 @@
 extern "C" int fileno(FILE *stream);
 
 #include "maths_parser.tab.hpp"
+
+bool enum_flag = false;
+bool enum_flag_2 = false;
+bool typedef_flag = false;
 %}
 
 %%
@@ -21,7 +25,7 @@ default         { return T_DEFAULT; }
 do              { return T_DO; }
 double          { return T_DOUBLE; }
 else            { return T_ELSE; }
-enum            { return T_ENUM; }
+enum            { enum_flag = true; return T_ENUM; }
 extern          { return T_EXTERN; }
 float           { return T_FLOAT; }
 for             { return T_FOR; }
@@ -37,7 +41,7 @@ sizeof          { return T_SIZEOF; }
 static          { return T_STATIC; }
 struct          { return T_STRUCT; }
 switch          { return T_SWITCH; }
-typedef         { return T_TYPEDEF; }
+typedef         { typedef_flag = true; return T_TYPEDEF; }
 union           { return T_UNION; }
 unsigned        { return T_UNSIGNED; }
 void            { return T_VOID; }
@@ -74,7 +78,7 @@ while           { return T_WHILE; }
 [\]]            { return T_RSQ_BRACKET; }
 [\{][\}]        { return T_ECURLY_BRACKETS; }
 [\{]            { return T_LCURLY_BRACKET; }
-[\}]            { return T_RCURLY_BRACKET; }
+[\}]            { if (enum_flag_2 == true) {enum_flag_2 = false;} return T_RCURLY_BRACKET; }
 [<][<]          { return T_LEFT_SHIFT; }
 [<]             { return T_LESS_THAN; }
 [>][>]          { return T_RIGHT_SHIFT; }
@@ -99,7 +103,8 @@ while           { return T_WHILE; }
 [0][xX][0-9a-fA-F]+[lLuU]* { yylval._text=new std::string(yytext); return T_HEX_INT; }
 [1-9][0-9]*[lLuU]* { yylval._text=new std::string(yytext); return T_DEC_INT; }
 [0][0-7]*[lLuU]*   { yylval._text=new std::string(yytext); return T_OCTAL_INT; }
-[a-zA-Z_][a-zA-Z0-9_]*          { yylval._text=new std::string(yytext); return T_IDENTIFIER; }
+[a-zA-Z_][a-zA-Z0-9_]*          { yylval._text=new std::string(yytext); if (typedef_flag == true) {typedef_flag = false; return T_CUSTOM_TYPE;} if (enum_flag == true){enum_flag = false; enum_flag_2 = true;T_IDENTIFIER;} else if (enum_flag_2 == true){ return T_ENUM_CONSTANT;} else {return T_IDENTIFIER;}  }
+
 
 [ \t\r\n]+		{;}
 
