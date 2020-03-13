@@ -559,23 +559,23 @@ DIRECT_DECLARATOR : IDENTIFIER {$$ = $1; }
 
                   | DIRECT_DECLARATOR T_ESQ_BRACKETS {                          std::vector<ast_node*> branches = {$1, NULL};
                                                                                 std::vector<std::string> branch_notes = {"DIRECT_DECLARATOR","CONSTANT_EXPRESSION"};
-                                                                                $$ = new ast_node("TYPE_QUALIFIER_LIST","", branches, branch_notes);}
+                                                                                $$ = new ast_node("TYPE_QUALIFIER_LIST","array_definition", branches, branch_notes);}
 
                   | DIRECT_DECLARATOR T_LSQ_BRACKET CONSTANT_EXPRESSION T_RSQ_BRACKET {       std::vector<ast_node*> branches = {$1, $3};
                                                                                               std::vector<std::string> branch_notes = {"DIRECT_DECLARATOR","CONSTANT_EXPRESSION"};
-                                                                                              $$ = new ast_node("TYPE_QUALIFIER_LIST","", branches, branch_notes);}
+                                                                                              $$ = new ast_node("TYPE_QUALIFIER_LIST","array_indexing", branches, branch_notes);}
 
                   | DIRECT_DECLARATOR T_LBRACKET PARAMETER_TYPE_LIST T_RBRACKET {      std::vector<ast_node*> branches = {$1, $3};
                                                                                        std::vector<std::string> branch_notes = {"DIRECT_DECLARATOR","PARAMETER_TYPE_LIST"};
-                                                                                       $$ = new ast_node("TYPE_QUALIFIER_LIST","", branches, branch_notes);}
+                                                                                       $$ = new ast_node("TYPE_QUALIFIER_LIST","fn_call", branches, branch_notes);}
 
                   | DIRECT_DECLARATOR T_EMPTY_BRACKETS                   {      std::vector<ast_node*> branches = {$1, NULL};
                                                                                 std::vector<std::string> branch_notes = {"DIRECT_DECLARATOR","IDENTIFIER_LIST"};
-                                                                                $$ = new ast_node("TYPE_QUALIFIER_LIST","", branches, branch_notes);}
+                                                                                $$ = new ast_node("TYPE_QUALIFIER_LIST","fn_call", branches, branch_notes);}
 
                   | DIRECT_DECLARATOR T_LBRACKET IDENTIFIER_LIST T_RBRACKET   { std::vector<ast_node*> branches = {$1, $3};
                                                                                 std::vector<std::string> branch_notes = {"DIRECT_DECLARATOR","IDENTIFIER_LIST"};
-                                                                                $$ = new ast_node("TYPE_QUALIFIER_LIST","", branches, branch_notes);}
+                                                                                $$ = new ast_node("TYPE_QUALIFIER_LIST","fn_call ", branches, branch_notes);}
 
 POINTER : DEREFERENCE {$$ = $1;}
         | DEREFERENCE TYPE_QUALIFIER_LIST {                                     std::vector<ast_node*> branches = {$1, $2};

@@ -201,9 +201,7 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
     if(value == "-"){
       arg1 =branches[0]->make_mips(table, sp, pc);//need a way to check if arg1 is a constant
       arg2 =branches[1]->make_mips(table, sp, pc);
-      std::cout<<"lw r1, "<<table.find_symbol(arg1).offset<<"("<<table.stack_pointer<<")"<<std::endl;
-      std::cout<<"lw r2, "<<table.find_symbol(arg2).offset<<"("<<table.stack_pointer<<")"<<std::endl;
-      std::cout<<"sub r3, r1, r2"<<std::endl;
+      var_or_const_instr("sub", "sub", arg1, arg2, table);
 
       if(table.t1_free == true){
         std::cout<<"sw r3, "<<table.find_symbol("temp1").offset<<"("<<table.stack_pointer<<")"<<std::endl;
@@ -245,7 +243,9 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
     var_or_const_instr("slt", "slti", arg1, arg2, table);
 
     if(value == "<"){}
-    if(value == ">"){std::cout<<"nor r3, r3, r3"<<std::endl;}//this nots the less than to make a greater than instruction
+    if(value == ">"){
+      std::cout<<"xori r3, r3, 1"<<std::endl;//if set to 1, this will turn the 1 to a 0
+    }//this nots the less than to make a greater than instruction
 
 
     if(table.t1_free == true){
@@ -261,6 +261,30 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
   }
   if(node_type == "EQUALITY_EXPRESSION"){
     /*std::cout<<node_type<<std::endl;*/
+    arg1 =branches[0]->make_mips(table, sp, pc);
+    arg2 =branches[1]->make_mips(table, sp, pc);
+    std::string skip = makeName("skip");
+
+    var_or_const_instr("sub", "subi", arg1, arg2, table);
+    std::cout<<"addi r1,r3,0"<<std::endl;
+    std::cout<<"addi r3,r0,1"<<std::endl;//set result to 1
+
+    if(value == "=="){std::cout<<"beq r1,r0, "<<skip<<std::endl; }
+    if(value == "!="){std::cout<<"bne r1,r0, "<<skip<<std::endl; }//this nots the less than to make a greater than instruction
+    
+    std::cout<<"addi r3,r0,0"<<std::endl;//set result to 0
+    std::cout<<skip<<":"<<std::endl;
+
+    if(table.t1_free == true){
+      std::cout<<"sw r3, "<<table.find_symbol("temp1").offset<<"("<<table.stack_pointer<<")"<<std::endl;
+      table.t1_free = false;
+      return "temp1";
+    }
+    if(table.t2_free == true){
+      std::cout<<"sw r3, "<<table.find_symbol("temp2").offset<<"("<<table.stack_pointer<<")"<<std::endl;
+      table.t2_free = false;
+      return "temp2";
+    }
   }
   if(node_type == "AND_EXPRESSION"){
     /*std::cout<<node_type<<std::endl;*/
@@ -633,11 +657,13 @@ std::string var_or_const_instr(std::string v_instr, std::string c_instr, std::st
   }
   if(is_a_variable(arg1) && !is_a_variable(arg2)){
     std::cout<<"lw r1, "<<table.find_symbol(arg1).offset<<"("<<table.stack_pointer<<")"<<std::endl;
-    std::cout<<c_instr<<" r3, r1, "<<arg2<<std::endl;
+    std::cout<<"addi r2, r0, "<<arg2<<std::endl;
+    std::cout<<v_instr<<" r3, r1, r2"<<std::endl;
   }
   if(!is_a_variable(arg1) && is_a_variable(arg2)){
     std::cout<<"lw r1, "<<table.find_symbol(arg2).offset<<"("<<table.stack_pointer<<")"<<std::endl;
-    std::cout<<c_instr<<" r3, r1, "<<arg1<<std::endl;
+    std::cout<<"addi r2, r0, "<<arg1<<std::endl;
+    std::cout<<v_instr<<" r3, r1, r2"<<std::endl;
   }
   if(!is_a_variable(arg1) && !is_a_variable(arg2)){
 
