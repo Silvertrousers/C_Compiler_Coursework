@@ -13,6 +13,9 @@ std::string var_or_const_instr(std::string v_instr, std::string c_instr, std::st
 
 std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
   //table.print_table();
+  std::cout<<node_type<<std::endl;
+
+
   std::string arg1, arg2;
   for(int i=0;i<branches.size();i++){
     if(branches[i] == NULL){
@@ -271,7 +274,7 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
 
     if(value == "=="){std::cout<<"beq r1,r0, "<<skip<<std::endl; }
     if(value == "!="){std::cout<<"bne r1,r0, "<<skip<<std::endl; }//this nots the less than to make a greater than instruction
-    
+
     std::cout<<"addi r3,r0,0"<<std::endl;//set result to 0
     std::cout<<skip<<":"<<std::endl;
 
@@ -405,8 +408,8 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
   }
   if(node_type == "CONDITIONAL_EXPRESSION"){/*std::cout<<node_type<<std::endl;*/}
   if(node_type == "ASSIGNMENT_EXPRESSION"){/*std::cout<<node_type<<std::endl;*/
+    std::string s = branches[0]->value;
     if(branches[1]->value == "="){
-      std::string s = branches[0]->value;
       std::string res = branches[2]->make_mips(table, sp, pc);
       std::cout<<"lw r3, "<<table.find_symbol(res).offset<<"("<<table.stack_pointer<<")"<<std::endl;//this is the location of temp1
       std::cout<<"sw r3, "<<table.find_symbol(s).offset<<"("<<table.stack_pointer<<")"<<std::endl;
@@ -414,7 +417,6 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
       table.t2_free = true;
     }
     if(branches[1]->value == "+="){
-      std::string s = branches[0]->value;
       std::string res = branches[2]->make_mips(table, sp, pc);
       std::cout<<"lw r1, "<<table.find_symbol(res).offset<<"("<<table.stack_pointer<<")"<<std::endl;//this is the location of temp1
       std::cout<<"lw r2, "<<table.find_symbol(s).offset<<"("<<table.stack_pointer<<")"<<std::endl;//this is the location of old x
@@ -425,7 +427,6 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
       table.t2_free = true;
     }
     if(branches[1]->value == "-="){
-      std::string s = branches[0]->value;
       std::string res = branches[2]->make_mips(table, sp, pc);
       std::cout<<"lw r1, "<<table.find_symbol(res).offset<<"("<<table.stack_pointer<<")"<<std::endl;//this is the location of temp1
       std::cout<<"lw r2, "<<table.find_symbol(s).offset<<"("<<table.stack_pointer<<")"<<std::endl;//this is the location of old x
@@ -436,7 +437,6 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
       table.t2_free = true;
     }
     if(branches[1]->value == "*="){
-      std::string s = branches[0]->value;
       std::string res = branches[2]->make_mips(table, sp, pc);
       std::cout<<"lw r1, "<<table.find_symbol(res).offset<<"("<<table.stack_pointer<<")"<<std::endl;//this is the location of temp1
       std::cout<<"lw r2, "<<table.find_symbol(s).offset<<"("<<table.stack_pointer<<")"<<std::endl;//this is the location of old x
@@ -449,7 +449,6 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
       table.t2_free = true;
     }
     if(branches[1]->value == "/="){
-      std::string s = branches[0]->value;
       std::string res = branches[2]->make_mips(table, sp, pc);
       std::cout<<"lw r1, "<<table.find_symbol(res).offset<<"("<<table.stack_pointer<<")"<<std::endl;//this is the location of temp1
       std::cout<<"lw r2, "<<table.find_symbol(s).offset<<"("<<table.stack_pointer<<")"<<std::endl;//this is the location of old x
@@ -462,7 +461,6 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
       table.t2_free = true;
     }
     if(branches[1]->value == "%="){
-      std::string s = branches[0]->value;
       std::string res = branches[2]->make_mips(table, sp, pc);
       std::cout<<"lw r1, "<<table.find_symbol(res).offset<<"("<<table.stack_pointer<<")"<<std::endl;//this is the location of temp1
       std::cout<<"lw r2, "<<table.find_symbol(s).offset<<"("<<table.stack_pointer<<")"<<std::endl;//this is the location of old x
@@ -475,7 +473,6 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
       table.t2_free = true;
     }
     if(branches[1]->value == "<<="){
-      std::string s = branches[0]->value;
       std::string res = branches[2]->make_mips(table, sp, pc);
       std::cout<<"lw r1, "<<table.find_symbol(res).offset<<"("<<table.stack_pointer<<")"<<std::endl;//this is the location of temp1
       std::cout<<"lw r2, "<<table.find_symbol(s).offset<<"("<<table.stack_pointer<<")"<<std::endl;//this is the location of old x
@@ -486,7 +483,6 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
       table.t2_free = true;
     }
     if(branches[1]->value == ">>="){
-      std::string s = branches[0]->value;
       std::string res = branches[2]->make_mips(table, sp, pc);
       std::cout<<"lw r1, "<<table.find_symbol(res).offset<<"("<<table.stack_pointer<<")"<<std::endl;//this is the location of temp1
       std::cout<<"lw r2, "<<table.find_symbol(s).offset<<"("<<table.stack_pointer<<")"<<std::endl;//this is the location of old x
@@ -497,7 +493,6 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
       table.t2_free = true;
     }
     if(branches[1]->value == "&="){
-      std::string s = branches[0]->value;
       std::string res = branches[2]->make_mips(table, sp, pc);
       std::cout<<"lw r1, "<<table.find_symbol(res).offset<<"("<<table.stack_pointer<<")"<<std::endl;//this is the location of temp1
       std::cout<<"lw r2, "<<table.find_symbol(s).offset<<"("<<table.stack_pointer<<")"<<std::endl;//this is the location of old x
@@ -508,7 +503,6 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
       table.t2_free = true;
     }
     if(branches[1]->value == "|="){
-      std::string s = branches[0]->value;
       std::string res = branches[2]->make_mips(table, sp, pc);
       std::cout<<"lw r1, "<<table.find_symbol(res).offset<<"("<<table.stack_pointer<<")"<<std::endl;//this is the location of temp1
       std::cout<<"lw r2, "<<table.find_symbol(s).offset<<"("<<table.stack_pointer<<")"<<std::endl;//this is the location of old x
@@ -519,7 +513,6 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
       table.t2_free = true;
     }
     if(branches[1]->value == "^="){
-      std::string s = branches[0]->value;
       std::string res = branches[2]->make_mips(table, sp, pc);
       std::cout<<"lw r1, "<<table.find_symbol(res).offset<<"("<<table.stack_pointer<<")"<<std::endl;//this is the location of temp1
       std::cout<<"lw r2, "<<table.find_symbol(s).offset<<"("<<table.stack_pointer<<")"<<std::endl;//this is the location of old x
@@ -529,10 +522,13 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
       table.t1_free = true;
       table.t2_free = true;
     }
+    return s;
   }
   if(node_type == "ASSIGNMENT_OPERATOR"){/*std::cout<<node_type<<std::endl;*/
   }
-  if(node_type == "CONSTANT_EXPRESSION"){/*std::cout<<node_type<<std::endl;*/}
+  if(node_type == "CONSTANT_EXPRESSION"){/*std::cout<<node_type<<std::endl;*/
+
+  }
   if(node_type == "EXPR"){
     /*std::cout<<node_type<<std::endl;*/
   }
@@ -551,11 +547,30 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
   if(node_type == "INIT_DECLARATOR"){
     /*std::cout<<node_type<<std::endl;*/
     symbol s;
-    s.name = branches[0]->value;
-    s.type = "int";
-    s.value = "0";
-    if(branches[1] != NULL && branches[1]->node_type != "NULL"){s.value = branches[1]->value;}
-    table.insert(s);
+    std::string s_string = branches[0]->branches[1]->make_mips(table, sp, pc);
+
+    if(branches[0]->node_type == "DIRECT_DECLARATOR"){
+      s.type = "int array";
+      int array_size = std::stoi(table.find_symbol("temp1").value);
+      std::cout<<"im here: "<<array_size<<std::endl;
+      for(int i=0; i<array_size; i++){
+        s.name = branches[0]->value+"_index_"+std::to_string(i);
+        table.insert(s);
+      }
+    }
+    else{
+      s.name = branches[0]->value;
+      s.type = "int";
+      if(branches[1] !=NULL){
+        s.value = table.find_symbol(s_string).value;
+        std::cout<<"lw r2, "<<table.find_symbol(s.name).offset<<"("<<table.stack_pointer<<")"<<std::endl;
+      }
+      else{
+        s.value = "0";
+      }
+      if(branches[1] != NULL && branches[1]->node_type != "NULL"){s.value = branches[1]->value;}
+      table.insert(s);
+    }
     //table.print_table();
   }
   if(node_type == "STORAGE_CLASS_SPECIFIER"){
@@ -601,6 +616,7 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
   if(node_type == "DECLARATOR"){/*std::cout<<node_type<<std::endl;*/}
   if(node_type == "DIRECT_DECLARATOR"){
     /*std::cout<<node_type<<std::endl;*/
+
   }
   if(node_type == "POINTER"){
     /*std::cout<<node_type<<std::endl;*/

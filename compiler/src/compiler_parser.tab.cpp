@@ -3155,7 +3155,7 @@ yyreduce:
 #line 560 "src/compiler_parser.y" /* yacc.c:1646  */
     {                          std::vector<ast_node*> branches = {(yyvsp[-1].nodePtr), NULL};
                                                                                 std::vector<std::string> branch_notes = {"DIRECT_DECLARATOR","CONSTANT_EXPRESSION"};
-                                                                                (yyval.nodePtr) = new ast_node("TYPE_QUALIFIER_LIST","", branches, branch_notes);}
+                                                                                (yyval.nodePtr) = new ast_node("DIRECT_DECLARATOR","array_decl", branches, branch_notes);}
 #line 3160 "src/compiler_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
@@ -3163,7 +3163,7 @@ yyreduce:
 #line 564 "src/compiler_parser.y" /* yacc.c:1646  */
     {       std::vector<ast_node*> branches = {(yyvsp[-3].nodePtr), (yyvsp[-1].nodePtr)};
                                                                                               std::vector<std::string> branch_notes = {"DIRECT_DECLARATOR","CONSTANT_EXPRESSION"};
-                                                                                              (yyval.nodePtr) = new ast_node("TYPE_QUALIFIER_LIST","", branches, branch_notes);}
+                                                                                              (yyval.nodePtr) = new ast_node("DIRECT_DECLARATOR","array_decl", branches, branch_notes);}
 #line 3168 "src/compiler_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
@@ -3171,7 +3171,7 @@ yyreduce:
 #line 568 "src/compiler_parser.y" /* yacc.c:1646  */
     {      std::vector<ast_node*> branches = {(yyvsp[-3].nodePtr), (yyvsp[-1].nodePtr)};
                                                                                        std::vector<std::string> branch_notes = {"DIRECT_DECLARATOR","PARAMETER_TYPE_LIST"};
-                                                                                       (yyval.nodePtr) = new ast_node("TYPE_QUALIFIER_LIST","", branches, branch_notes);}
+                                                                                       (yyval.nodePtr) = new ast_node("DIRECT_DECLARATOR","fn_dcl", branches, branch_notes);}
 #line 3176 "src/compiler_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
@@ -3179,7 +3179,7 @@ yyreduce:
 #line 572 "src/compiler_parser.y" /* yacc.c:1646  */
     {      std::vector<ast_node*> branches = {(yyvsp[-1].nodePtr), NULL};
                                                                                 std::vector<std::string> branch_notes = {"DIRECT_DECLARATOR","IDENTIFIER_LIST"};
-                                                                                (yyval.nodePtr) = new ast_node("TYPE_QUALIFIER_LIST","", branches, branch_notes);}
+                                                                                (yyval.nodePtr) = new ast_node("DIRECT_DECLARATOR","fn_dcl", branches, branch_notes);}
 #line 3184 "src/compiler_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
@@ -3187,7 +3187,7 @@ yyreduce:
 #line 576 "src/compiler_parser.y" /* yacc.c:1646  */
     { std::vector<ast_node*> branches = {(yyvsp[-3].nodePtr), (yyvsp[-1].nodePtr)};
                                                                                 std::vector<std::string> branch_notes = {"DIRECT_DECLARATOR","IDENTIFIER_LIST"};
-                                                                                (yyval.nodePtr) = new ast_node("TYPE_QUALIFIER_LIST","", branches, branch_notes);}
+                                                                                (yyval.nodePtr) = new ast_node("DIRECT_DECLARATOR","fn_dcl ", branches, branch_notes);}
 #line 3192 "src/compiler_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
