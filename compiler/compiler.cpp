@@ -1,6 +1,3 @@
-
-
-
 #include "./include/ast.hpp"
 #include "./include/symbol_table.hpp"
 #include "./include/ast.cpp"
