@@ -1,3 +1,4 @@
+
 #ifndef ast_cpp
 #define ast_cpp
 #include <iostream>
@@ -383,6 +384,122 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
       std::string s = branches[0]->value;
       std::string res = branches[2]->make_mips(table, sp, pc);
       std::cout<<"lw r3, "<<table.find_symbol(res).offset<<"("<<table.stack_pointer<<")"<<std::endl;//this is the location of temp1
+      std::cout<<"sw r3, "<<table.find_symbol(s).offset<<"("<<table.stack_pointer<<")"<<std::endl;
+      table.t1_free = true;
+      table.t2_free = true;
+    }
+    if(branches[1]->value == "+="){
+      std::string s = branches[0]->value;
+      std::string res = branches[2]->make_mips(table, sp, pc);
+      std::cout<<"lw r1, "<<table.find_symbol(res).offset<<"("<<table.stack_pointer<<")"<<std::endl;//this is the location of temp1
+      std::cout<<"lw r2, "<<table.find_symbol(s).offset<<"("<<table.stack_pointer<<")"<<std::endl;//this is the location of old x
+
+      std::cout<<"add r3,r2,r1"<<std::endl;//x=x+the rest
+      std::cout<<"sw r3, "<<table.find_symbol(s).offset<<"("<<table.stack_pointer<<")"<<std::endl;
+      table.t1_free = true;
+      table.t2_free = true;
+    }
+    if(branches[1]->value == "-="){
+      std::string s = branches[0]->value;
+      std::string res = branches[2]->make_mips(table, sp, pc);
+      std::cout<<"lw r1, "<<table.find_symbol(res).offset<<"("<<table.stack_pointer<<")"<<std::endl;//this is the location of temp1
+      std::cout<<"lw r2, "<<table.find_symbol(s).offset<<"("<<table.stack_pointer<<")"<<std::endl;//this is the location of old x
+
+      std::cout<<"sub r3,r2,r1"<<std::endl;//x=x+the rest
+      std::cout<<"sw r3, "<<table.find_symbol(s).offset<<"("<<table.stack_pointer<<")"<<std::endl;
+      table.t1_free = true;
+      table.t2_free = true;
+    }
+    if(branches[1]->value == "*="){
+      std::string s = branches[0]->value;
+      std::string res = branches[2]->make_mips(table, sp, pc);
+      std::cout<<"lw r1, "<<table.find_symbol(res).offset<<"("<<table.stack_pointer<<")"<<std::endl;//this is the location of temp1
+      std::cout<<"lw r2, "<<table.find_symbol(s).offset<<"("<<table.stack_pointer<<")"<<std::endl;//this is the location of old x
+
+      std::cout<<"mult r2,r1"<<std::endl;//x=x+the rest
+      std::cout<<"mflo r3"<<std::endl;
+
+      std::cout<<"sw r3, "<<table.find_symbol(s).offset<<"("<<table.stack_pointer<<")"<<std::endl;
+      table.t1_free = true;
+      table.t2_free = true;
+    }
+    if(branches[1]->value == "/="){
+      std::string s = branches[0]->value;
+      std::string res = branches[2]->make_mips(table, sp, pc);
+      std::cout<<"lw r1, "<<table.find_symbol(res).offset<<"("<<table.stack_pointer<<")"<<std::endl;//this is the location of temp1
+      std::cout<<"lw r2, "<<table.find_symbol(s).offset<<"("<<table.stack_pointer<<")"<<std::endl;//this is the location of old x
+
+      std::cout<<"div r2,r1"<<std::endl;//x=x+the rest
+      std::cout<<"mflo r3"<<std::endl;
+
+      std::cout<<"sw r3, "<<table.find_symbol(s).offset<<"("<<table.stack_pointer<<")"<<std::endl;
+      table.t1_free = true;
+      table.t2_free = true;
+    }
+    if(branches[1]->value == "%="){
+      std::string s = branches[0]->value;
+      std::string res = branches[2]->make_mips(table, sp, pc);
+      std::cout<<"lw r1, "<<table.find_symbol(res).offset<<"("<<table.stack_pointer<<")"<<std::endl;//this is the location of temp1
+      std::cout<<"lw r2, "<<table.find_symbol(s).offset<<"("<<table.stack_pointer<<")"<<std::endl;//this is the location of old x
+
+      std::cout<<"div r2,r1"<<std::endl;//x=x+the rest
+      std::cout<<"mfhi r3"<<std::endl;
+
+      std::cout<<"sw r3, "<<table.find_symbol(s).offset<<"("<<table.stack_pointer<<")"<<std::endl;
+      table.t1_free = true;
+      table.t2_free = true;
+    }
+    if(branches[1]->value == "<<="){
+      std::string s = branches[0]->value;
+      std::string res = branches[2]->make_mips(table, sp, pc);
+      std::cout<<"lw r1, "<<table.find_symbol(res).offset<<"("<<table.stack_pointer<<")"<<std::endl;//this is the location of temp1
+      std::cout<<"lw r2, "<<table.find_symbol(s).offset<<"("<<table.stack_pointer<<")"<<std::endl;//this is the location of old x
+
+      std::cout<<"sllv r3,r2,r1"<<std::endl;//x=x+the rest
+      std::cout<<"sw r3, "<<table.find_symbol(s).offset<<"("<<table.stack_pointer<<")"<<std::endl;
+      table.t1_free = true;
+      table.t2_free = true;
+    }
+    if(branches[1]->value == ">>="){
+      std::string s = branches[0]->value;
+      std::string res = branches[2]->make_mips(table, sp, pc);
+      std::cout<<"lw r1, "<<table.find_symbol(res).offset<<"("<<table.stack_pointer<<")"<<std::endl;//this is the location of temp1
+      std::cout<<"lw r2, "<<table.find_symbol(s).offset<<"("<<table.stack_pointer<<")"<<std::endl;//this is the location of old x
+
+      std::cout<<"srlv r3,r2,r1"<<std::endl;//x=x+the rest
+      std::cout<<"sw r3, "<<table.find_symbol(s).offset<<"("<<table.stack_pointer<<")"<<std::endl;
+      table.t1_free = true;
+      table.t2_free = true;
+    }
+    if(branches[1]->value == "&="){
+      std::string s = branches[0]->value;
+      std::string res = branches[2]->make_mips(table, sp, pc);
+      std::cout<<"lw r1, "<<table.find_symbol(res).offset<<"("<<table.stack_pointer<<")"<<std::endl;//this is the location of temp1
+      std::cout<<"lw r2, "<<table.find_symbol(s).offset<<"("<<table.stack_pointer<<")"<<std::endl;//this is the location of old x
+
+      std::cout<<"and r3,r2,r1"<<std::endl;//x=x+the rest
+      std::cout<<"sw r3, "<<table.find_symbol(s).offset<<"("<<table.stack_pointer<<")"<<std::endl;
+      table.t1_free = true;
+      table.t2_free = true;
+    }
+    if(branches[1]->value == "|="){
+      std::string s = branches[0]->value;
+      std::string res = branches[2]->make_mips(table, sp, pc);
+      std::cout<<"lw r1, "<<table.find_symbol(res).offset<<"("<<table.stack_pointer<<")"<<std::endl;//this is the location of temp1
+      std::cout<<"lw r2, "<<table.find_symbol(s).offset<<"("<<table.stack_pointer<<")"<<std::endl;//this is the location of old x
+
+      std::cout<<"or r3,r2,r1"<<std::endl;//x=x+the rest
+      std::cout<<"sw r3, "<<table.find_symbol(s).offset<<"("<<table.stack_pointer<<")"<<std::endl;
+      table.t1_free = true;
+      table.t2_free = true;
+    }
+    if(branches[1]->value == "^="){
+      std::string s = branches[0]->value;
+      std::string res = branches[2]->make_mips(table, sp, pc);
+      std::cout<<"lw r1, "<<table.find_symbol(res).offset<<"("<<table.stack_pointer<<")"<<std::endl;//this is the location of temp1
+      std::cout<<"lw r2, "<<table.find_symbol(s).offset<<"("<<table.stack_pointer<<")"<<std::endl;//this is the location of old x
+
+      std::cout<<"xor r3,r2,r1"<<std::endl;//x=x+the rest
       std::cout<<"sw r3, "<<table.find_symbol(s).offset<<"("<<table.stack_pointer<<")"<<std::endl;
       table.t1_free = true;
       table.t2_free = true;
