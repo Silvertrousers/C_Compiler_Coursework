@@ -16,10 +16,10 @@
   std::string* _text;
 }
 
-%token T_AUTO T_BREAK T_CASE T_CHAR T_CONST T_CONTINUE T_DEFAULT T_DO T_DOUBLE
-%token T_ELSE T_ENUM T_EXTERN T_FLOAT T_FOR T_GOTO T_IF T_INT T_LONG T_REGISTER T_RETURN
+%token T_AUTO T_BREAK T_CASE T_CHAR T_CONTINUE T_DEFAULT T_DO T_DOUBLE
+%token T_ELSE T_ENUM T_EXTERN T_FLOAT T_FOR  T_IF T_INT T_LONG T_REGISTER T_RETURN
 %token T_SHORT T_SIGNED T_SIZEOF T_STATIC T_STRUCT T_SWITCH
-%token T_TYPEDEF T_UNION T_UNSIGNED T_VOID T_VOLATILE T_WHILE
+%token T_TYPEDEF T_UNSIGNED T_VOID T_VOLATILE T_WHILE
 %token T_TIMES T_DIVIDE T_PLUS T_MINUS T_EXPONENT T_DECREMENT T_INCREMENT
 %token T_LESS_THAN T_GREATER_THAN T_EQUALS T_AND T_OR T_BITWISE_NOT T_LOGICAL_NOT
 %token T_AND_AND T_OR_OR
@@ -49,13 +49,13 @@
 %type<nodePtr> STRUCT_DECLARATOR_LIST STRUCT_DECLARATOR ENUM_SPECIFIER ENUMERATOR_LIST ENUMERATOR TYPE_QUALIFIER
 %type<nodePtr> DECLARATOR DIRECT_DECLARATOR POINTER TYPE_QUALIFIER_LIST PARAMETER_TYPE_LIST PARAMETER_LIST PARAMETER_DECLARATION
 %type<nodePtr> IDENTIFIER_LIST TYPE_NAME ABSTRACT_DECLARATOR DIRECT_ABSTRACT_DECLARATOR TYPEDEF_NAME INITIALIZER INITIALIZER_LIST
-%type<nodePtr> SIZE_OF GOTO RETURN FOR WHILE DO SWITCH IF ELSE IDENTIFIER ENUM ENUM_CONSTANT DEREFERENCE ELIPSIS CASE DEFAULT
+%type<nodePtr> SIZE_OF RETURN FOR WHILE DO SWITCH IF ELSE IDENTIFIER ENUM ENUM_CONSTANT DEREFERENCE ELIPSIS CASE DEFAULT
 
 
-%type<_text> T_AUTO T_BREAK T_CASE T_CHAR T_CONST T_CONTINUE T_DEFAULT T_DO T_DOUBLE
-%type<_text> T_ELSE T_ENUM T_EXTERN T_FLOAT T_FOR T_GOTO T_IF T_INT T_LONG T_REGISTER T_RETURN
+%type<_text> T_AUTO T_BREAK T_CASE T_CHAR T_CONTINUE T_DEFAULT T_DO T_DOUBLE
+%type<_text> T_ELSE T_ENUM T_EXTERN T_FLOAT T_FOR T_IF T_INT T_LONG T_REGISTER T_RETURN
 %type<_text> T_SHORT T_SIGNED T_SIZEOF T_STATIC T_STRUCT T_SWITCH
-%type<_text> T_TYPEDEF T_UNION T_UNSIGNED T_VOID T_VOLATILE T_WHILE
+%type<_text> T_TYPEDEF T_UNSIGNED T_VOID T_VOLATILE T_WHILE
 %type<_text> T_TIMES T_DIVIDE T_PLUS T_MINUS T_EXPONENT T_DECREMENT T_INCREMENT
 %type<_text> T_LESS_THAN T_GREATER_THAN T_EQUALS T_AND T_OR T_BITWISE_NOT T_LOGICAL_NOT
 %type<_text> T_AND_AND T_OR_OR
@@ -206,11 +206,7 @@ FOR : T_FOR {$$ = new ast_node("T_FOR", "for");}
 WHILE : T_WHILE {$$ = new ast_node("T_WHILE", "while");}
 DO : T_DO {$$ = new ast_node("T_DO", "do");}
 
-JUMP_STATEMENT : GOTO IDENTIFIER T_SEMICOLON {                                  std::vector<ast_node*> branches = {$1, $2};
-                                                                                std::vector<std::string> branch_notes = {"GOTO", "IDENTIFIER"};
-                                                                                $$ = new ast_node("JUMP_STATEMENT","", branches, branch_notes);}
-
-               | T_CONTINUE T_SEMICOLON {$$ = new ast_node("JUMP_STATEMENT", "continue");}
+JUMP_STATEMENT : T_CONTINUE T_SEMICOLON {$$ = new ast_node("JUMP_STATEMENT", "continue");}
                | T_BREAK T_SEMICOLON {$$ = new ast_node("JUMP_STATEMENT", "break");}
 
                | RETURN EXPR T_SEMICOLON {                                      std::vector<ast_node*> branches = {$1, $2};
@@ -222,7 +218,7 @@ JUMP_STATEMENT : GOTO IDENTIFIER T_SEMICOLON {                                  
                                                                                 $$ = new ast_node("JUMP_STATEMENT","", branches, branch_notes);}
 
 
-GOTO : T_GOTO { $$ = new ast_node("GOTO", "goto");}
+
 RETURN : T_RETURN {$$ = new ast_node("RETURN", "return");}
 
 PRIMARY_EXPRESSION : IDENTIFIER { $$ = $1; }
@@ -487,7 +483,7 @@ STRUCT_OR_UNION_SPECIFIER : STRUCT_OR_UNION IDENTIFIER {                        
                                                                                                                     $$ = new ast_node("STRUCT_OR_UNION_SPECIFIER","", branches, branch_notes);}
 
 STRUCT_OR_UNION : T_STRUCT { $$ = new ast_node("STRUCT_OR_UNION", "struct");}
-                | T_UNION  { $$ = new ast_node("STRUCT_OR_UNION", "union");}
+
 
 STRUCT_DECLARATION_LIST : STRUCT_DECLARATION {$$ = $1;}
                         | STRUCT_DECLARATION_LIST STRUCT_DECLARATION {          std::vector<ast_node*> branches = {$1, $2};
@@ -550,8 +546,7 @@ ENUMERATOR : ENUM_CONSTANT { $$ = $1;}
 
 ENUM_CONSTANT : T_ENUM_CONSTANT { $$ = new ast_node("ENUMERATOR",*$1);}
 
-TYPE_QUALIFIER : T_CONST { $$ = new ast_node("TYPE_QUALIFIER", "const");}
-               | T_VOLATILE { $$ = new ast_node("TYPE_QUALIFIER", "volatile");}
+TYPE_QUALIFIER : T_VOLATILE { $$ = new ast_node("TYPE_QUALIFIER", "volatile");}
 
 DECLARATOR : DIRECT_DECLARATOR { $$ = $1; }
            | POINTER DIRECT_DECLARATOR {                                        std::vector<ast_node*> branches = {$1, $2};

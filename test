@@ -2,4 +2,4 @@
 
 make clean
 make
-./bin/c_compiler < int.txt
+./bin/compiler < int.txt
