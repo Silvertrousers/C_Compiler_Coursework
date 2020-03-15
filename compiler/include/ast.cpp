@@ -131,7 +131,31 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
   if(node_type == "POSTFIX_EXPRESSION"){/*std::cout<<node_type<<std::endl;*/}
 
   if(node_type == "ARGUMENT_EXPRESSION_LIST"){/*std::cout<<node_type<<std::endl;*/}
-  if(node_type == "UNARY_EXPRESSION"){/*std::cout<<node_type<<std::endl;*/}
+  if(node_type == "UNARY_EXPRESSION"){/*std::cout<<node_type<<std::endl;*/
+    if(value == "++"){
+      arg1 = branches[0]->make_mips(table, sp, pc);
+      std::cout<<"lw r1, "<<table.find_symbol(arg1).offset<<"("<<table.stack_pointer<<")"<<std::endl;
+      std::cout<<"addi r3,r1,1"<<std::endl;//x=x+the rest
+      std::cout<<"sw r3, "<<table.find_symbol(s).offset<<"("<<table.stack_pointer<<")"<<std::endl;
+      table.t1_free = true;
+      table.t2_free = true;
+    }
+    if(value == "--"){
+      arg1 = branches[0]->make_mips(table, sp, pc);
+      std::cout<<"lw r1, "<<table.find_symbol(arg1).offset<<"("<<table.stack_pointer<<")"<<std::endl;
+      std::cout<<"addi r2,r0,1"<<std::endl;
+      std::cout<<"sub r3,r1,r2"<<std::endl;//x=x+the rest
+      std::cout<<"sw r3, "<<table.find_symbol(s).offset<<"("<<table.stack_pointer<<")"<<std::endl;
+      table.t1_free = true;
+      table.t2_free = true;
+    }
+    if(branches[0]->value == "and"){}
+    if(branches[0]->value == "times"){}
+    if(branches[0]->value == "plus"){}
+    if(branches[0]->value == "minus"){}
+    if(branches[0]->value == "bitwise_not"){}
+    if(branches[0]->value == "logical_not"){}
+  }
 
   if(node_type == "SIZE_OF"){/*std::cout<<node_type<<std::endl;*/}
 
