@@ -13,7 +13,7 @@ std::string var_or_const_instr(std::string v_instr, std::string c_instr, std::st
 
 std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
   //table.print_table();
-  std::cout<<node_type<<std::endl;
+  //std::cout<<node_type<<std::endl;
 
 
   std::string arg1, arg2;
@@ -524,11 +524,7 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
     }
     return s;
   }
-  if(node_type == "ASSIGNMENT_OPERATOR"){/*std::cout<<node_type<<std::endl;*/
-  }
-  if(node_type == "CONSTANT_EXPRESSION"){/*std::cout<<node_type<<std::endl;*/
 
-  }
   if(node_type == "EXPR"){
     /*std::cout<<node_type<<std::endl;*/
   }
@@ -546,19 +542,24 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
   }
   if(node_type == "INIT_DECLARATOR"){
     /*std::cout<<node_type<<std::endl;*/
-    symbol s;
-    std::string s_string = branches[0]->branches[1]->make_mips(table, sp, pc);
 
+    std::string s_string = branches[0]->branches[1]->make_mips(table, sp, pc);
+    std::cout<<"array_size: "<<s_string<<std::endl;
     if(branches[0]->node_type == "DIRECT_DECLARATOR"){
-      s.type = "int array";
-      int array_size = std::stoi(table.find_symbol("temp1").value);
+
+      int array_size = branches[0]->branches[1]->eval_expr();
       std::cout<<"im here: "<<array_size<<std::endl;
       for(int i=0; i<array_size; i++){
-        s.name = branches[0]->value+"_index_"+std::to_string(i);
-        table.insert(s);
+        symbol * s = new symbol();
+        s->name = branches[0]->value+"_index_"+std::to_string(i);
+        std::cout<<"name: "<<s->name<<std::endl;
+        s->type = "int array";
+        table.insert(*s);
+        table.var_pointer += array_size*4;
       }
     }
     else{
+      symbol s;
       s.name = branches[0]->value;
       s.type = "int";
       if(branches[1] !=NULL){
@@ -663,6 +664,97 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
 }
 std::string makeName(std::string in){
   return in;
+}
+
+int ast_node::eval_expr(){
+
+  if(node_type == "SIZE_OF"){/*std::cout<<node_type<<std::endl;*/}
+
+  if(node_type == "UNARY_OPERATOR"){/*std::cout<<node_type<<std::endl;*/
+
+  }
+  if(node_type == "CAST_EXPRESSION"){
+    /*std::cout<<node_type<<std::endl;*/
+  }
+  if(node_type == "MULTIPLICATIVE_EXPRESSION"){
+    /*std::cout<<node_type<<std::endl;*/
+    if(value == "*"){
+      return (branches[0]->eval_expr() * branches[1]->eval_expr());
+    }
+    if(value == "/"){
+      return (branches[0]->eval_expr() / branches[1]->eval_expr());
+    }
+    if(value =="%"){
+      return (branches[0]->eval_expr() % branches[1]->eval_expr());
+    }
+  }
+  if(node_type == "ADDITIVE_EXPRESSION"){
+    /*std::cout<<node_type<<std::endl;*/
+    if(value == "+"){
+      return (branches[0]->eval_expr() + branches[1]->eval_expr());
+    }
+    if(value == "-"){
+      return (branches[0]->eval_expr() - branches[1]->eval_expr());
+    }
+  }
+  if(node_type == "SHIFT_EXPRESSION"){/*std::cout<<node_type<<std::endl;*/
+    if(value == ">>"){
+      return (branches[0]->eval_expr() >> branches[1]->eval_expr());
+    }
+    if(value == "<<"){
+      return (branches[0]->eval_expr() << branches[1]->eval_expr());
+    }
+  }
+
+  if(node_type == "RELATIONAL_EXPRESSION"){
+    /*std::cout<<node_type<<std::endl;*/
+    if(value == ">"){
+      return (branches[0]->eval_expr() > branches[1]->eval_expr());
+    }
+    if(value == "<"){
+      return (branches[0]->eval_expr() < branches[1]->eval_expr());
+    }
+  }
+  if(node_type == "EQUALITY_EXPRESSION"){
+    /*std::cout<<node_type<<std::endl;*/
+    return (branches[0]->eval_expr() == branches[1]->eval_expr());
+  }
+  if(node_type == "AND_EXPRESSION"){
+    /*std::cout<<node_type<<std::endl;*/
+    return (branches[0]->eval_expr() & branches[1]->eval_expr());
+  }
+  if(node_type == "EXCLUSIVE_OR_EXPRESSION"){
+    /*std::cout<<node_type<<std::endl;*/
+    return (branches[0]->eval_expr() ^ branches[1]->eval_expr());
+  }
+  if(node_type == "INCLUSIVE_OR_EXPRESSION"){
+    /*std::cout<<node_type<<std::endl;*/
+    return (branches[0]->eval_expr() | branches[1]->eval_expr());
+  }//hi
+  if(node_type == "LOGICAL_AND_EXPRESSION"){
+    /*std::cout<<node_type<<std::endl;*/
+    return (branches[0]->eval_expr() && branches[1]->eval_expr());
+  }
+  if(node_type == "LOGICAL_OR_EXPRESSION"){
+    /*std::cout<<node_type<<std::endl;*/
+    return (branches[0]->eval_expr() || branches[1]->eval_expr());
+  }
+
+  if(node_type == "CONSTANT_EXPRESSION"){/*std::cout<<node_type<<std::endl;*/
+
+  }
+  if(node_type == "ASSIGNMENT_EXPRESSION"){/*std::cout<<node_type<<std::endl;*/
+    return branches[1]->eval_expr();
+  }
+  if(node_type == "PRIMARY_EXPRESSION"){/*std::cout<<node_type<<std::endl;*/
+
+  }
+  if(node_type == "CONSTANT"){/*std::cout<<node_type<<std::endl;*/
+    return stoi(value);
+  }
+  if(node_type == "IDENTIFIER"){/*std::cout<<node_type<<std::endl;*/
+
+  }
 }
 
 std::string var_or_const_instr(std::string v_instr, std::string c_instr, std::string arg1, std::string arg2, symbol_table table){

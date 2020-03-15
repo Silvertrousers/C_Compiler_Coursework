@@ -227,7 +227,7 @@ PRIMARY_EXPRESSION : IDENTIFIER { $$ = $1; }
 
                    | T_LBRACKET EXPR T_RBRACKET {                               std::vector<ast_node*> branches = {$2};
                                                                                 std::vector<std::string> branch_notes = {"EXPR"};
-                                                                                $$ = new ast_node("JUMP_STATEMENT","", branches, branch_notes);}
+                                                                                $$ = new ast_node("PRIMARY_EXPRESSION","", branches, branch_notes);}
 
 CONSTANT : T_DEC_INT   {$$ = new ast_node("CONSTANT", std::to_string((int)round(std::stoi(*$1)))); }
          | T_OCTAL_INT {$$ = new ast_node("CONSTANT", std::to_string((int)round(std::stoi(*$1, 0, 8)))); }
@@ -238,19 +238,19 @@ CONSTANT : T_DEC_INT   {$$ = new ast_node("CONSTANT", std::to_string((int)round(
 POSTFIX_EXPRESSION : PRIMARY_EXPRESSION { $$  = $1;}
                    | POSTFIX_EXPRESSION T_LSQ_BRACKET EXPR T_RSQ_BRACKET {      std::vector<ast_node*> branches = {$1, $3};
                                                                                 std::vector<std::string> branch_notes = {"POSTFIX_EXPRESSION", "EXPR"};
-                                                                                $$ = new ast_node("POSTFIX_EXPRESSION","", branches, branch_notes);}
+                                                                                $$ = new ast_node("POSTFIX_EXPRESSION","array_indexing", branches, branch_notes);}
 
                    | POSTFIX_EXPRESSION T_EMPTY_BRACKETS {                      std::vector<ast_node*> branches = {$1, NULL};
                                                                                 std::vector<std::string> branch_notes = {"POSTFIX_EXPRESSION", "ARGUMENT_EXPRESSION_LIST"};
-                                                                                $$ = new ast_node("POSTFIX_EXPRESSION","", branches, branch_notes);}
+                                                                                $$ = new ast_node("POSTFIX_EXPRESSION","array_indexing", branches, branch_notes);}
 
                    | POSTFIX_EXPRESSION T_LBRACKET ARGUMENT_EXPRESSION_LIST T_RBRACKET { std::vector<ast_node*> branches = {$1, $3};
                                                                                          std::vector<std::string> branch_notes = {"POSTFIX_EXPRESSION", "ARGUMENT_EXPRESSION_LIST"};
-                                                                                         $$ = new ast_node("POSTFIX_EXPRESSION","", branches, branch_notes);}
+                                                                                         $$ = new ast_node("POSTFIX_EXPRESSION","fn_call", branches, branch_notes);}
 
                    | POSTFIX_EXPRESSION T_DOT IDENTIFIER {                      std::vector<ast_node*> branches = {$1, $3};
                                                                                 std::vector<std::string> branch_notes = {"POSTFIX_EXPRESSION", "ARGUMENT_EXPRESSION_LIST"};
-                                                                                $$ = new ast_node("POSTFIX_EXPRESSION",".", branches, branch_notes);}
+                                                                                $$ = new ast_node("POSTFIX_EXPRESSION","struct member access", branches, branch_notes);}
 
                    | POSTFIX_EXPRESSION T_ARROW IDENTIFIER {                    std::vector<ast_node*> branches = {$1, $3};
                                                                                 std::vector<std::string> branch_notes = {"POSTFIX_EXPRESSION", "IDENTIFIER"};
