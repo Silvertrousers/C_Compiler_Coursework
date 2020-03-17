@@ -123,12 +123,12 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
   if(node_type == "T_DO"){/*std::cout<<node_type<<std::endl;*/}
   if(node_type == "JUMP_STATEMENT"){/*std::cout<<node_type<<std::endl;*/
     if (branches[0]->node_type == "T_RETURN"){
-        if (branches[1]->value !== ""){
+        if (branches[1]->value != ""){
             std::cout<<"sw r3, "<<table.find_symbol("temp1").offset<<"("<<table.stack_pointer<<")"<<std::endl;
             table.t1_free = false;
         }
         std::cout << "jr r31" << std::endl;
-        if (branches[1]->value !== ""){
+        if (branches[1]->value != ""){
             return "temp1";
         }
     }
@@ -638,7 +638,7 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
   if(node_type == "CONDITIONAL_EXPRESSION"){/*std::cout<<node_type<<std::endl;*/}
   if(node_type == "ASSIGNMENT_EXPRESSION"){/*std::cout<<node_type<<std::endl;*/
     std::string s = branches[0]->make_mips(table, sp, pc);
-  
+
     if(branches[1]->value == "="){
       std::string res = branches[2]->make_mips(table, sp, pc);
       std::cout<<"lw r3, "<<table.find_symbol(res).offset<<"("<<table.stack_pointer<<")"<<std::endl;//this is the location of temp1
