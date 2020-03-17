@@ -121,7 +121,18 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
   if(node_type == "T_FOR"){/*std::cout<<node_type<<std::endl;*/}
   if(node_type == "T_WHILE"){/*std::cout<<node_type<<std::endl;*/}
   if(node_type == "T_DO"){/*std::cout<<node_type<<std::endl;*/}
-  if(node_type == "JUMP_STATEMENT"){/*std::cout<<node_type<<std::endl;*/}
+  if(node_type == "JUMP_STATEMENT"){/*std::cout<<node_type<<std::endl;*/
+    if (branches[0]->node_type == "T_RETURN"){
+        if (branches[1]->value !== ""){
+            std::cout<<"sw r3, "<<table.find_symbol("temp1").offset<<"("<<table.stack_pointer<<")"<<std::endl;
+            table.t1_free = false;
+        }
+        std::cout << "jr r31" << std::endl;
+        if (branches[1]->value !== ""){
+            return "temp1";
+        }
+    }
+  }
   if(node_type == "GOTO"){/*std::cout<<node_type<<std::endl;*/}
   if(node_type == "RETURN"){/*std::cout<<node_type<<std::endl;*/}
 
