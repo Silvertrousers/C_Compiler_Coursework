@@ -9,7 +9,7 @@ void symbol_table::insert(symbol s){
 
 void symbol_table::print_table() {
 	for (int i = 0; i < symbols.size(); i++) {
-		std::cout << symbols[i].name << ": " << symbols[i].type<<": "<<symbols[i].value << std::endl;
+		std::cout << symbols[i].name << ": " << symbols[i].type<<": "<<symbols[i].value<<":"<<symbols[i].offset << std::endl;
 	}
 	std::cout << "----------------" << std::endl;
 	if (parent != NULL) {

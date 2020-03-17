@@ -2753,7 +2753,7 @@ yyreduce:
 #line 418 "src/compiler_parser.y" /* yacc.c:1646  */
     {                              std::vector<ast_node*> branches = {NULL, NULL};
                                                                                 std::vector<std::string> branch_notes = {"DECLARATION_SPECIFIERS","INIT_DECLARATOR_LIST"};
-                                                                                (yyval.nodePtr) = new ast_node("DECLARATION","oh_dear", branches, branch_notes);}
+                                                                                (yyval.nodePtr) = new ast_node("DECLARATION","", branches, branch_notes);}
 #line 2758 "src/compiler_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
@@ -2825,7 +2825,7 @@ yyreduce:
 #line 446 "src/compiler_parser.y" /* yacc.c:1646  */
     {													std::vector<ast_node*> branches = {(yyvsp[0].nodePtr), NULL};
                                                                                 std::vector<std::string> branch_notes = {"DECLARATOR","INITIALIZER"};
-                                                                                (yyval.nodePtr) = new ast_node("INIT_DECLARATOR","", branches, branch_notes);}
+                                                                                (yyval.nodePtr) = new ast_node("INIT_DECLARATOR","just a declarator", branches, branch_notes);}
 #line 2830 "src/compiler_parser.tab.cpp" /* yacc.c:1646  */
     break;
 

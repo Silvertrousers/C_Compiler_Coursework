@@ -12,7 +12,7 @@ bool is_a_variable(std::string in);
 std::string var_or_const_instr(std::string v_instr, std::string c_instr, std::string arg1, std::string arg2, symbol_table table);
 
 std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
-  //table.print_table();
+
   //std::cout<<node_type<<std::endl;
 
 
@@ -60,7 +60,10 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
     branches[1]->make_mips(new_scope, sp, pc);
 
   }
-  if(node_type == "DECLARATION_LIST"){/*std::cout<<node_type<<std::endl;*/}
+  if(node_type == "DECLARATION_LIST"){/*std::cout<<node_type<<std::endl;*/
+    if(branches[0] != NULL){branches[0]->make_mips(table, sp, pc);}
+    if(branches[1] != NULL){branches[1]->make_mips(table, sp, pc);}
+  }
   if(node_type == "STATEMENT_LIST"){/*std::cout<<node_type<<std::endl;*/
     branches[0]->make_mips(table, sp, pc);
     branches[1]->make_mips(table, sp, pc);
@@ -125,10 +128,29 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
   if(node_type == "PRIMARY_EXPRESSION"){/*std::cout<<node_type<<std::endl;*/}
 
   if(node_type == "CONSTANT"){/*std::cout<<node_type<<std::endl;*/
-    return value;
+    std::cout<<"addi r3, r0, "<<value<<std::endl;
+    if(table.t1_free){
+      std::cout<<"sw r3, "<<table.find_symbol("temp1").offset<<"("<<table.stack_pointer<<")"<<std::endl;
+      return "temp1";
+    }
+    if(table.t2_free){
+      std::cout<<"sw r3, "<<table.find_symbol("temp2").offset<<"("<<table.stack_pointer<<")"<<std::endl;
+      return "temp2";
+    }
+
   }
 
-  if(node_type == "POSTFIX_EXPRESSION"){/*std::cout<<node_type<<std::endl;*/}
+  if(node_type == "POSTFIX_EXPRESSION"){/*std::cout<<node_type<<std::endl;*/
+    if(value == "array_indexing"){
+      arg1 = branches[0]->make_mips(table, sp, pc);
+      if(branches[1] != NULL){
+        arg2 = branches[1]->make_mips(table, sp, pc);
+        int array_index = branches[1]->eval_expr();
+        //std::cout<<"I want to access: "<<arg1<<"_index_"<<std::to_string(array_index)<<std::endl;
+        return arg1+"_index_"+std::to_string(array_index);
+      }
+    }
+  }
 
   if(node_type == "ARGUMENT_EXPRESSION_LIST"){/*std::cout<<node_type<<std::endl;*/}
   if(node_type == "UNARY_EXPRESSION"){/*std::cout<<node_type<<std::endl;*/
@@ -139,6 +161,7 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
       std::cout<<"sw r3, "<<table.find_symbol(arg1).offset<<"("<<table.stack_pointer<<")"<<std::endl;
       table.t1_free = true;
       table.t2_free = true;
+      return arg1;
     }
     if(value == "--"){
       arg1 = branches[0]->make_mips(table, sp, pc);
@@ -148,6 +171,7 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
       std::cout<<"sw r3, "<<table.find_symbol(arg1).offset<<"("<<table.stack_pointer<<")"<<std::endl;
       table.t1_free = true;
       table.t2_free = true;
+      return arg1;
     }
     if(branches[0]->value == "and"){}//pointers
     if(branches[0]->value == "times"){}//pointers so dont do yet
@@ -160,6 +184,7 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
       std::cout<<"sw r3, "<<table.find_symbol(arg1).offset<<"("<<table.stack_pointer<<")"<<std::endl;
       table.t1_free = true;
       table.t2_free = true;
+      return arg1;
     }
     if(branches[0]->value == "logical_not"){
       arg1 = branches[0]->make_mips(table, sp, pc);
@@ -174,6 +199,7 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
       std::cout<<"sw r3, "<<table.find_symbol(arg1).offset<<"("<<table.stack_pointer<<")"<<std::endl;
       table.t1_free = true;
       table.t2_free = true;
+      return arg1;
     }
   }
 
@@ -183,6 +209,154 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
   if(node_type == "CAST_EXPRESSION"){
     /*std::cout<<node_type<<std::endl;*/
 
+  }
+
+
+  if(node_type == "EXPR"){
+    /*std::cout<<node_type<<std::endl;*/
+  }
+  if(node_type == "DECLARATION"){
+    /*std::cout<<node_type<<std::endl;*/
+    if(branches[0] != NULL){branches[0]->make_mips(table, sp, pc);}
+    if(branches[1] != NULL){branches[1]->make_mips(table, sp, pc);}
+  }
+  if(node_type == "DECLARATION_SPECIFIERS"){/*std::cout<<node_type<<std::endl;*/}
+
+  if(node_type == "INIT_DECLARATOR_LIST"){
+    /*std::cout<<node_type<<std::endl;*/
+    branches[0]->make_mips(table, sp, pc);
+    branches[1]->make_mips(table, sp, pc);
+  }
+  if(node_type == "INIT_DECLARATOR"){
+    /*std::cout<<node_type<<std::endl;*/
+
+    if(branches[0]-> node_type=="IDENTIFIER"){
+      symbol s;
+      s.name = branches[0]->value;
+      s.type = "int";
+      if(branches[1]->node_type == "NULL"){
+        s.value = "0";
+        table.insert(s);
+      }
+      else{
+        arg1 = branches[1]->make_mips(table, sp, pc);
+        s.value = table.find_symbol(arg1).value;
+        table.insert(s);
+        std::cout<<"lw r3, "<<table.find_symbol(arg1).offset<<"("<<table.stack_pointer<<")"<<std::endl;
+        std::cout<<"sw r3, "<<table.find_symbol(s.name).offset<<"("<<table.stack_pointer<<")"<<std::endl;
+      }
+      return s.name;
+    }
+    else{
+      arg1 = branches[0]->make_mips(table, sp, pc);
+      arg2 = branches[1]->make_mips(table, sp, pc);
+      if(branches[1]->node_type == "NULL"){}
+      else{
+        std::cout<<"lw r3, "<<table.find_symbol(arg2).offset<<"("<<table.stack_pointer<<")"<<std::endl;
+        std::cout<<"sw r3, "<<table.find_symbol(arg1).offset<<"("<<table.stack_pointer<<")"<<std::endl;
+      }
+      return arg1;
+    }
+  }
+  if(node_type == "STORAGE_CLASS_SPECIFIER"){
+    /*std::cout<<node_type<<std::endl;*/
+  }
+  if(node_type == "TYPE_SPECIFIER"){/*std::cout<<node_type<<std::endl;*/}
+  if(node_type == "STRUCT_OR_UNION_SPECIFIER"){
+    /*std::cout<<node_type<<std::endl;*/
+  }
+  if(node_type == "STRUCT_OR_UNION"){
+    /*std::cout<<node_type<<std::endl;*/
+  }
+  if(node_type == "STRUCT_DECLARATION_LIST"){
+    /*std::cout<<node_type<<std::endl;*/
+  }
+  if(node_type == "STRUCT_DECLARATION"){
+    /*std::cout<<node_type<<std::endl;*/
+  }
+  if(node_type == "STRUCT_DECLARATOR_LIST"){
+    /*std::cout<<node_type<<std::endl;*/
+  }
+  if(node_type == "STRUCT_DECLARATOR"){
+    /*std::cout<<node_type<<std::endl;*/
+  }
+  if(node_type == "ENUM_SPECIFIER"){
+    /*std::cout<<node_type<<std::endl;*/
+  }
+  if(node_type == "ENUM"){
+    /*std::cout<<node_type<<std::endl;*/
+  }
+  if(node_type == "ENUMERATOR_LIST"){
+    /*std::cout<<node_type<<std::endl;*/
+  }
+  if(node_type == "ENUMERATOR"){
+    /*std::cout<<node_type<<std::endl;*/
+  }
+  if(node_type == "ENUM_CONSTANT"){
+    /*std::cout<<node_type<<std::endl;*/
+  }
+  if(node_type == "TYPE_QUALIFIER"){
+    /*std::cout<<node_type<<std::endl;*/
+  }
+  if(node_type == "DECLARATOR"){/*std::cout<<node_type<<std::endl;*/}
+  if(node_type == "DIRECT_DECLARATOR"){
+    /*std::cout<<node_type<<std::endl;*/
+
+    if(value == "array_decl"){
+      int array_size = branches[1]->eval_expr();
+      for(int i=0; i<array_size; i++){
+        symbol * s = new symbol();
+        s->name = branches[0]->value+"_index_"+std::to_string(i);
+        s->type = "int array";
+        table.insert(*s);
+        s->offset = table.var_pointer + i*4;
+      }
+      table.var_pointer += array_size*4;
+      return branches[0]->value;
+    }
+
+  }
+  if(node_type == "POINTER"){
+    /*std::cout<<node_type<<std::endl;*/
+  }
+  if(node_type == "DEREFERENCE"){
+    /*std::cout<<node_type<<std::endl;*/
+  }
+  if(node_type == "TYPE_QUALIFIER_LIST"){
+    /*std::cout<<node_type<<std::endl;*/
+  }
+  if(node_type == "PARAMETER_TYPE_LIST"){/*std::cout<<node_type<<std::endl;*/}
+  if(node_type == "ELIPSIS"){
+    /*std::cout<<node_type<<std::endl;*/
+  }
+  if(node_type == "PARAMETER_LIST"){
+    /*std::cout<<node_type<<std::endl;*/
+  }
+  if(node_type == "PARAMETER_DECLARATION"){
+    /*std::cout<<node_type<<std::endl;*/
+  }
+  if(node_type == "IDENTIFIER_LIST"){
+    /*std::cout<<node_type<<std::endl;*/
+  }
+  if(node_type == "IDENTIFIER"){
+    return value;
+  }
+  if(node_type == "TYPE_NAME"){
+    /*std::cout<<node_type<<std::endl;*/
+  }
+  if(node_type == "ABSTRACT_DECLARATOR"){/*std::cout<<node_type<<std::endl;*/}
+  if(node_type == "DIRECT_ABSTRACT_DECLARATOR"){
+    /*std::cout<<node_type<<std::endl;*/
+  }
+  if(node_type == "TYPEDEF_NAME"){
+    /*std::cout<<node_type<<std::endl;*/
+  }
+  if(node_type == "INITIALIZER"){
+    /*std::cout<<node_type<<std::endl;*/
+
+  }
+  if(node_type == "INITIALIZER_LIST"){
+    /*std::cout<<node_type<<std::endl;*/
   }
   if(node_type == "MULTIPLICATIVE_EXPRESSION"){
     /*std::cout<<node_type<<std::endl;*/
@@ -452,7 +626,8 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
   }
   if(node_type == "CONDITIONAL_EXPRESSION"){/*std::cout<<node_type<<std::endl;*/}
   if(node_type == "ASSIGNMENT_EXPRESSION"){/*std::cout<<node_type<<std::endl;*/
-    std::string s = branches[0]->value;
+    std::string s = branches[0]->make_mips(table, sp, pc);
+  
     if(branches[1]->value == "="){
       std::string res = branches[2]->make_mips(table, sp, pc);
       std::cout<<"lw r3, "<<table.find_symbol(res).offset<<"("<<table.stack_pointer<<")"<<std::endl;//this is the location of temp1
@@ -567,142 +742,6 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
       table.t2_free = true;
     }
     return s;
-  }
-
-  if(node_type == "EXPR"){
-    /*std::cout<<node_type<<std::endl;*/
-  }
-  if(node_type == "DECLARATION"){
-    /*std::cout<<node_type<<std::endl;*/
-    branches[0]->make_mips(table, sp, pc);
-    branches[1]->make_mips(table, sp, pc);
-  }
-  if(node_type == "DECLARATION_SPECIFIERS"){/*std::cout<<node_type<<std::endl;*/}
-
-  if(node_type == "INIT_DECLARATOR_LIST"){
-    /*std::cout<<node_type<<std::endl;*/
-    branches[0]->make_mips(table, sp, pc);
-    branches[1]->make_mips(table, sp, pc);
-  }
-  if(node_type == "INIT_DECLARATOR"){
-    /*std::cout<<node_type<<std::endl;*/
-
-    std::string s_string = branches[0]->branches[1]->make_mips(table, sp, pc);
-    std::cout<<"array_size: "<<s_string<<std::endl;
-    if(branches[0]->node_type == "DIRECT_DECLARATOR"){
-
-      int array_size = branches[0]->branches[1]->eval_expr();
-      std::cout<<"im here: "<<array_size<<std::endl;
-      for(int i=0; i<array_size; i++){
-        symbol * s = new symbol();
-        s->name = branches[0]->value+"_index_"+std::to_string(i);
-        std::cout<<"name: "<<s->name<<std::endl;
-        s->type = "int array";
-        table.insert(*s);
-        table.var_pointer += array_size*4;
-      }
-    }
-    else{
-      symbol s;
-      s.name = branches[0]->value;
-      s.type = "int";
-      if(branches[1] !=NULL){
-        s.value = table.find_symbol(s_string).value;
-        std::cout<<"lw r2, "<<table.find_symbol(s.name).offset<<"("<<table.stack_pointer<<")"<<std::endl;
-      }
-      else{
-        s.value = "0";
-      }
-      if(branches[1] != NULL && branches[1]->node_type != "NULL"){s.value = branches[1]->value;}
-      table.insert(s);
-    }
-    //table.print_table();
-  }
-  if(node_type == "STORAGE_CLASS_SPECIFIER"){
-    /*std::cout<<node_type<<std::endl;*/
-  }
-  if(node_type == "TYPE_SPECIFIER"){/*std::cout<<node_type<<std::endl;*/}
-  if(node_type == "STRUCT_OR_UNION_SPECIFIER"){
-    /*std::cout<<node_type<<std::endl;*/
-  }
-  if(node_type == "STRUCT_OR_UNION"){
-    /*std::cout<<node_type<<std::endl;*/
-  }
-  if(node_type == "STRUCT_DECLARATION_LIST"){
-    /*std::cout<<node_type<<std::endl;*/
-  }
-  if(node_type == "STRUCT_DECLARATION"){
-    /*std::cout<<node_type<<std::endl;*/
-  }
-  if(node_type == "STRUCT_DECLARATOR_LIST"){
-    /*std::cout<<node_type<<std::endl;*/
-  }
-  if(node_type == "STRUCT_DECLARATOR"){
-    /*std::cout<<node_type<<std::endl;*/
-  }
-  if(node_type == "ENUM_SPECIFIER"){
-    /*std::cout<<node_type<<std::endl;*/
-  }
-  if(node_type == "ENUM"){
-    /*std::cout<<node_type<<std::endl;*/
-  }
-  if(node_type == "ENUMERATOR_LIST"){
-    /*std::cout<<node_type<<std::endl;*/
-  }
-  if(node_type == "ENUMERATOR"){
-    /*std::cout<<node_type<<std::endl;*/
-  }
-  if(node_type == "ENUM_CONSTANT"){
-    /*std::cout<<node_type<<std::endl;*/
-  }
-  if(node_type == "TYPE_QUALIFIER"){
-    /*std::cout<<node_type<<std::endl;*/
-  }
-  if(node_type == "DECLARATOR"){/*std::cout<<node_type<<std::endl;*/}
-  if(node_type == "DIRECT_DECLARATOR"){
-    /*std::cout<<node_type<<std::endl;*/
-
-  }
-  if(node_type == "POINTER"){
-    /*std::cout<<node_type<<std::endl;*/
-  }
-  if(node_type == "DEREFERENCE"){
-    /*std::cout<<node_type<<std::endl;*/
-  }
-  if(node_type == "TYPE_QUALIFIER_LIST"){
-    /*std::cout<<node_type<<std::endl;*/
-  }
-  if(node_type == "PARAMETER_TYPE_LIST"){/*std::cout<<node_type<<std::endl;*/}
-  if(node_type == "ELIPSIS"){
-    /*std::cout<<node_type<<std::endl;*/
-  }
-  if(node_type == "PARAMETER_LIST"){
-    /*std::cout<<node_type<<std::endl;*/
-  }
-  if(node_type == "PARAMETER_DECLARATION"){
-    /*std::cout<<node_type<<std::endl;*/
-  }
-  if(node_type == "IDENTIFIER_LIST"){
-    /*std::cout<<node_type<<std::endl;*/
-  }
-  if(node_type == "IDENTIFIER"){
-    return value;
-  }
-  if(node_type == "TYPE_NAME"){
-    /*std::cout<<node_type<<std::endl;*/
-  }
-  if(node_type == "ABSTRACT_DECLARATOR"){/*std::cout<<node_type<<std::endl;*/}
-  if(node_type == "DIRECT_ABSTRACT_DECLARATOR"){
-    /*std::cout<<node_type<<std::endl;*/
-  }
-  if(node_type == "TYPEDEF_NAME"){
-    /*std::cout<<node_type<<std::endl;*/
-  }
-  if(node_type == "INITIALIZER"){
-    /*std::cout<<node_type<<std::endl;*/
-  }
-  if(node_type == "INITIALIZER_LIST"){
-    /*std::cout<<node_type<<std::endl;*/
   }
   return "";
 }

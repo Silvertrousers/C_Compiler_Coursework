@@ -417,7 +417,7 @@ EXPR : ASSIGNMENT_EXPRESSION { $$ = $1; }
 
 DECLARATION : DECLARATION_SPECIFIERS T_SEMICOLON {                              std::vector<ast_node*> branches = {NULL, NULL};
                                                                                 std::vector<std::string> branch_notes = {"DECLARATION_SPECIFIERS","INIT_DECLARATOR_LIST"};
-                                                                                $$ = new ast_node("DECLARATION","oh_dear", branches, branch_notes);}
+                                                                                $$ = new ast_node("DECLARATION","", branches, branch_notes);}
 
             | DECLARATION_SPECIFIERS INIT_DECLARATOR_LIST T_SEMICOLON {         std::vector<ast_node*> branches = {$1, $2};
                                                                                 std::vector<std::string> branch_notes = {"DECLARATION_SPECIFIERS","INIT_DECLARATOR_LIST"};
@@ -445,7 +445,7 @@ INIT_DECLARATOR_LIST : INIT_DECLARATOR { $$ = $1; }
 
 INIT_DECLARATOR : DECLARATOR {													std::vector<ast_node*> branches = {$1, NULL};
                                                                                 std::vector<std::string> branch_notes = {"DECLARATOR","INITIALIZER"};
-                                                                                $$ = new ast_node("INIT_DECLARATOR","", branches, branch_notes);}
+                                                                                $$ = new ast_node("INIT_DECLARATOR","just a declarator", branches, branch_notes);}
 
                 | DECLARATOR T_EQUALS INITIALIZER {                             std::vector<ast_node*> branches = {$1, $3};
                                                                                 std::vector<std::string> branch_notes = {"DECLARATOR","INITIALIZER"};
