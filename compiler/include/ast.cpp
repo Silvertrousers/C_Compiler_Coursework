@@ -162,9 +162,34 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
         return arg1+"_index_"+std::to_string(array_index);
       }
     }
+    if (value == "fn_call"){
+        symbol_table new_scope = new symbol_table(&table);
+        if (table.find_symbol(branches[0]->value).name != NULL){
+            fn = table.find_symbol(branches[0]->value);
+        if (branches[1]->node_type == "ARGUMENT_EXPRESSION_LIST"){
+            branches[1]->make_mips(new_scope, sp, pc);
+        }
+        std::cout << "beq r0 r0 " << fn.label << std::endl;
+    }
   }
 
-  if(node_type == "ARGUMENT_EXPRESSION_LIST"){/*std::cout<<node_type<<std::endl;*/}
+  if(node_type == "ARGUMENT_EXPRESSION_LIST"){/*std::cout<<node_type<<std::endl;*/
+      if (branches[0]->node_type == "ARGUMENT_EXPRESSION_LIST"){
+          branches[0]->make_mips(table, sp, pc);
+      }
+      if (branches[0]->node_type == "ASSIGNMENT_EXPRESSION"){
+          arg1 = branches[0]->make_mips(table, sp, pc);
+          std::cout << "add r7, r6, r0" <<std::endl;
+          std::cout << "add r6, r5, r0" <<std::endl;
+          std::cout << "add r5, r4, r0" <<std::endl;
+          std::cout<<"lw r4, "<<table.find_symbol(arg1).offset<<"("<<table.stack_pointer<<")"<<std::endl;
+      }
+      arg1 = brances[1]->make_mips(table, sp, pc);
+      std::cout << "add r7, r6, r0" <<std::endl;
+      std::cout << "add r6, r5, r0" <<std::endl;
+      std::cout << "add r5, r4, r0" <<std::endl;
+      std::cout<<"lw r4, "<<table.find_symbol(arg2).offset<<"("<<table.stack_pointer<<")"<<std::endl;
+  }
   if(node_type == "UNARY_EXPRESSION"){/*std::cout<<node_type<<std::endl;*/
     if(value == "++"){
       arg1 = branches[0]->make_mips(table, sp, pc);
