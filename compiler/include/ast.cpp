@@ -41,6 +41,7 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
     temp.label = pc;
     table.insert(temp);
     symbol_table new_scope = symbol_table(&newscope);
+
     /*std::cout<<node_type<<std::endl;*/
     std::cout<<branches[0]->make_mips(new_scope, sp, pc);//reutrn type
     //fn name should already be in the stack
@@ -58,7 +59,6 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
     symbol_table new_scope = symbol_table(&table);
     branches[0]->make_mips(new_scope, sp, pc);
     branches[1]->make_mips(new_scope, sp, pc);
-
   }
   if(node_type == "DECLARATION_LIST"){/*std::cout<<node_type<<std::endl;*/
     if(branches[0] != NULL){branches[0]->make_mips(table, sp, pc);}
@@ -95,6 +95,7 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
 
   if(node_type == "ITERATION_STATEMENT"){/*std::cout<<node_type<<std::endl;*/
     symbol_table new_scope(&table);
+
     if (branches[0]-> node_type == "T_FOR"){
       std::cout<<branches[1]->make_mips(new_scope, sp, pc);
       std::string start = makeName("start");
@@ -122,7 +123,7 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
   if(node_type == "T_WHILE"){/*std::cout<<node_type<<std::endl;*/}
   if(node_type == "T_DO"){/*std::cout<<node_type<<std::endl;*/}
   if(node_type == "JUMP_STATEMENT"){/*std::cout<<node_type<<std::endl;*/
-    if (branches[0]->node_type == "T_RETURN"){
+    if (branches[0]->node_type == "RETURN"){
         if (branches[1]->value != ""){
             std::cout<<"sw r3, "<<table.find_symbol("temp1").offset<<"("<<table.stack_pointer<<")"<<std::endl;
             table.t1_free = false;
@@ -268,6 +269,7 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
       }
       return arg1;
     }
+
   }
   if(node_type == "STORAGE_CLASS_SPECIFIER"){
     /*std::cout<<node_type<<std::endl;*/
@@ -325,7 +327,6 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
       table.var_pointer += array_size*4;
       return branches[0]->value;
     }
-
   }
   if(node_type == "POINTER"){
     /*std::cout<<node_type<<std::endl;*/

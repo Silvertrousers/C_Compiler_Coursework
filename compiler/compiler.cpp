@@ -12,8 +12,10 @@ int main()
 {
     int sp, pc;
     symbol_table s = symbol_table();
+    s.stack_pointer = 0;
+
     ast_node * ast=parseAST();
     std::string a = ast->make_mips(s, sp, pc);
-    s.print_table();
+    //s.print_table();
     return 0;
 }

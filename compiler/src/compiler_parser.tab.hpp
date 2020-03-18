@@ -30,8 +30,8 @@
    This special exception was added by the Free Software Foundation in
    version 2.2 of Bison.  */
 
-#ifndef YY_YY_SRC_COMPILER_PARSER_TAB_HPP_INCLUDED
-# define YY_YY_SRC_COMPILER_PARSER_TAB_HPP_INCLUDED
+#ifndef YY_YY_COMPILER_SRC_COMPILER_PARSER_TAB_HPP_INCLUDED
+# define YY_YY_COMPILER_SRC_COMPILER_PARSER_TAB_HPP_INCLUDED
 /* Debug traces.  */
 #ifndef YYDEBUG
 # define YYDEBUG 0
@@ -40,7 +40,7 @@
 extern int yydebug;
 #endif
 /* "%code requires" blocks.  */
-#line 1 "src/compiler_parser.y" /* yacc.c:1909  */
+#line 1 "compiler/src/compiler_parser.y" /* yacc.c:1909  */
 
   #include "./ast.hpp"
 
@@ -53,7 +53,7 @@ extern int yydebug;
   int yylex(void);
   void yyerror(const char *);
 
-#line 57 "src/compiler_parser.tab.hpp" /* yacc.c:1909  */
+#line 57 "compiler/src/compiler_parser.tab.hpp" /* yacc.c:1909  */
 
 /* Token type.  */
 #ifndef YYTOKENTYPE
@@ -155,12 +155,12 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 14 "src/compiler_parser.y" /* yacc.c:1909  */
+#line 14 "compiler/src/compiler_parser.y" /* yacc.c:1909  */
 
   ast_node* nodePtr;
   std::string* _text;
 
-#line 164 "src/compiler_parser.tab.hpp" /* yacc.c:1909  */
+#line 164 "compiler/src/compiler_parser.tab.hpp" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;
@@ -173,4 +173,4 @@ extern YYSTYPE yylval;
 
 int yyparse (void);
 
-#endif /* !YY_YY_SRC_COMPILER_PARSER_TAB_HPP_INCLUDED  */
+#endif /* !YY_YY_COMPILER_SRC_COMPILER_PARSER_TAB_HPP_INCLUDED  */

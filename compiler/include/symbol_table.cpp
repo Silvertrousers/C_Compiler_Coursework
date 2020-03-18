@@ -8,6 +8,7 @@ void symbol_table::insert(symbol s){
 }
 
 void symbol_table::print_table() {
+	std::cout<<"stack_pointer: "<<stack_pointer<<std::endl;
 	for (int i = 0; i < symbols.size(); i++) {
 		std::cout << symbols[i].name << ": " << symbols[i].type<<": "<<symbols[i].value<<":"<<symbols[i].offset << std::endl;
 	}
@@ -32,6 +33,7 @@ symbol symbol_table::find_symbol(std::string in){
 }
 symbol_table::symbol_table(){
 	parent = NULL;
+	stack_pointer = 0;
 	null_symbol.name = "";
 	var_pointer = 0;
 	symbol temp1, temp2;
@@ -51,6 +53,7 @@ symbol_table::symbol_table(symbol_table *parent_scope){
 	parent = parent_scope;
 	null_symbol.name = "";
 	var_pointer = 0;
+	stack_pointer = parent->var_pointer + parent->stack_pointer;
 	symbol temp1, temp2;
 	temp1.name = "temp1";
 	temp1.value = "0";

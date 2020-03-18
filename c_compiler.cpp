@@ -1,11 +1,25 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <fstream>
+
+
+
 int main(int argc, char * argv[]){
-  define file:
-    c_filename = argv[2]
-    destination_file = argv[4]
-  if(argv[1]== "--translate"){
-    run the translator
+  // define file:
+  //   c_filename = argv[2]
+  //   destination_file = argv[4]
+  std::string command;
+
+  if(std::string(argv[1]) == "--translate"){
+    std::cout<<"Translator Activated"<<std::endl;
+    command = "./translator/run_translator.sh <"+std::string(argv[2]) +" > "+std::string(argv[4]);
+    system(command.c_str());
   }
-  if(argv[1] == "-S"){
-    run the compiler
+  if(std::string(argv[1]) == "-S"){
+    std::cout<<"Compiler Activated"<<std::endl;
+    command = "./compiler/run_compiler.sh <"+std::string(argv[2]) +" > "+std::string(argv[4]);
+    system(command.c_str());
   }
+  return 0;
 }
