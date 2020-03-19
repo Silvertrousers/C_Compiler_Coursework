@@ -19,8 +19,10 @@ void symbol_table::print_table() {
 }
 
 symbol symbol_table::find_symbol(std::string in){
+	null_symbol.name = "NULL";
 	symbol temp = global_scope->find_symbol(in);
-	if(temp == null_symbol){
+
+	if(temp.name == "NULL"){
 		for(int i=0;i<(symbols.size());i++){
 	    if(symbols[i].name==in){
 	      return symbols[i];
