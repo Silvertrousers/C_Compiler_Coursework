@@ -14,7 +14,7 @@ std::string var_or_const_instr(std::string v_instr, std::string c_instr, std::st
 std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
 
   //std::cout<<node_type<<std::endl;
-
+  //table.print_table(0);
 
   std::string arg1, arg2;
   for(int i=0;i<branches.size();i++){
@@ -56,9 +56,9 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
   if(node_type == "DEFAULT"){/*std::cout<<node_type<<std::endl;*/}
   if(node_type == "CASE"){/*std::cout<<node_type<<std::endl;*/}
   if(node_type == "COMPOUND_STATEMENT"){/*std::cout<<node_type<<std::endl;*/
-    symbol_table new_scope = symbol_table(&table);
-    branches[0]->make_mips(new_scope, sp, pc);
-    branches[1]->make_mips(new_scope, sp, pc);
+    //symbol_table new_scope = symbol_table(&table);
+    branches[0]->make_mips(table, sp, pc);
+    branches[1]->make_mips(table, sp, pc);
   }
   if(node_type == "DECLARATION_LIST"){/*std::cout<<node_type<<std::endl;*/
     if(branches[0] != NULL){branches[0]->make_mips(table, sp, pc);}
@@ -89,14 +89,14 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
       std::cout << end  << ":"<< std::endl;
     }
   }
-  if(node_type == "T_SWITCH"){/*std::cout<<node_type<<std::endl;*/}
+  if(node_type == "T_swITCH"){/*std::cout<<node_type<<std::endl;*/}
   if(node_type == "T_IF"){/*std::cout<<node_type<<std::endl;*/}
   if(node_type == "T_ELSE"){/*std::cout<<node_type<<std::endl;*/}
 
   if(node_type == "ITERATION_STATEMENT"){/*std::cout<<node_type<<std::endl;*/
     symbol_table new_scope(&table);
 
-    if (branches[0]-> node_type == "T_FOR"){
+    if (branches[0]-> node_type == "T_For"){
       std::cout<<branches[1]->make_mips(new_scope, sp, pc);
       std::string start = makeName("start");
       std::string end = makeName("end");
@@ -106,7 +106,7 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
       std::cout<< "beq r1, r0, " << end << std::endl;
       branches[3]->make_mips(new_scope, sp, pc);
       branches[5]->make_mips(new_scope, sp, pc);
-      std::cout<< "beq " << "r0" << "r0 " << start << std::endl;
+      std::cout<< "beq " << "r0, " << "r0, " << start << std::endl;
       //label end
       std::cout << end << ":" << std::endl;
     }
@@ -119,7 +119,7 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
       std::cout << end<< ":" << std::endl;
     }
   }
-  if(node_type == "T_FOR"){/*std::cout<<node_type<<std::endl;*/}
+  if(node_type == "T_For"){/*std::cout<<node_type<<std::endl;*/}
   if(node_type == "T_WHILE"){/*std::cout<<node_type<<std::endl;*/}
   if(node_type == "T_DO"){/*std::cout<<node_type<<std::endl;*/}
   if(node_type == "JUMP_STATEMENT"){/*std::cout<<node_type<<std::endl;*/
@@ -127,7 +127,7 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
       arg1 = branches[1]->make_mips(table, sp, pc);
       if (branches[1]->value != ""){
 
-          std::cout<<"sw r3, "<<table.find_symbol("temp1").offset<<"("<<table.stack_pointer<<")"<<std::endl;
+          std::cout<<"sw r3, "<<table.find_symbol(arg1).offset<<"("<<table.stack_pointer<<")"<<std::endl;
           table.t1_free = false;
       }
       std::cout << "jr r31" << std::endl;
@@ -165,7 +165,7 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
     }
     if (value == "fn_call"){
         symbol fn;
-        symbol_table new_scope = new symbol_table(&table);
+        symbol_table new_scope = symbol_table(&table);
         if (table.find_symbol(branches[0]->value).name != "NULL"){
             fn = table.find_symbol(branches[0]->value);
         }
@@ -213,14 +213,14 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
       table.t2_free = true;
       return arg1;
     }
-    if(branches[0]->value == "and"){}//pointers
+    if(branches[0]->value == "AND"){}//pointers
     if(branches[0]->value == "times"){}//pointers so dont do yet
     if(branches[0]->value == "plus"){}//type level promotion, do later
     if(branches[0]->value == "minus"){}//type level demotion, do later
     if(branches[0]->value == "bitwise_not"){
       arg1 = branches[0]->make_mips(table, sp, pc);
       std::cout<<"lw r1, "<<table.find_symbol(arg1).offset<<"("<<table.stack_pointer<<")"<<std::endl;
-      std::cout<<"nor r3,r1,r1"<<std::endl;//x=x+the rest
+      std::cout<<"Nor r3,r1,r1"<<std::endl;//x=x+the rest
       std::cout<<"sw r3, "<<table.find_symbol(arg1).offset<<"("<<table.stack_pointer<<")"<<std::endl;
       table.t1_free = true;
       table.t2_free = true;
@@ -235,7 +235,7 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
       std::cout<<"beq r3, r0, "<<skip<<std::endl;
       std::cout<<"addi r3, r0, 0"<<std::endl;
       std::cout<<skip<<":"<<std::endl;
-      std::cout<<"nor r3,r1,r1"<<std::endl;//x=x+the rest
+      std::cout<<"Nor r3,r1,r1"<<std::endl;//x=x+the rest
       std::cout<<"sw r3, "<<table.find_symbol(arg1).offset<<"("<<table.stack_pointer<<")"<<std::endl;
       table.t1_free = true;
       table.t2_free = true;
@@ -245,7 +245,7 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
 
   if(node_type == "SIZE_OF"){/*std::cout<<node_type<<std::endl;*/}
 
-  if(node_type == "UNARY_OPERATOR"){/*std::cout<<node_type<<std::endl;*/}
+  if(node_type == "UNARY_OPERATor"){/*std::cout<<node_type<<std::endl;*/}
   if(node_type == "CAST_EXPRESSION"){
     /*std::cout<<node_type<<std::endl;*/
 
@@ -262,12 +262,12 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
   }
   if(node_type == "DECLARATION_SPECIFIERS"){/*std::cout<<node_type<<std::endl;*/}
 
-  if(node_type == "INIT_DECLARATOR_LIST"){
+  if(node_type == "INIT_DECLARATor_LIST"){
     /*std::cout<<node_type<<std::endl;*/
     branches[0]->make_mips(table, sp, pc);
     branches[1]->make_mips(table, sp, pc);
   }
-  if(node_type == "INIT_DECLARATOR"){
+  if(node_type == "INIT_DECLARATor"){
     /*std::cout<<node_type<<std::endl;*/
 
     if(branches[0]-> node_type=="IDENTIFIER"){
@@ -299,14 +299,14 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
     }
 
   }
-  if(node_type == "STORAGE_CLASS_SPECIFIER"){
+  if(node_type == "STorAGE_CLASS_SPECIFIER"){
     /*std::cout<<node_type<<std::endl;*/
   }
   if(node_type == "TYPE_SPECIFIER"){/*std::cout<<node_type<<std::endl;*/}
-  if(node_type == "STRUCT_OR_UNION_SPECIFIER"){
+  if(node_type == "STRUCT_or_UNION_SPECIFIER"){
     /*std::cout<<node_type<<std::endl;*/
   }
-  if(node_type == "STRUCT_OR_UNION"){
+  if(node_type == "STRUCT_or_UNION"){
     /*std::cout<<node_type<<std::endl;*/
   }
   if(node_type == "STRUCT_DECLARATION_LIST"){
@@ -315,10 +315,10 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
   if(node_type == "STRUCT_DECLARATION"){
     /*std::cout<<node_type<<std::endl;*/
   }
-  if(node_type == "STRUCT_DECLARATOR_LIST"){
+  if(node_type == "STRUCT_DECLARATor_LIST"){
     /*std::cout<<node_type<<std::endl;*/
   }
-  if(node_type == "STRUCT_DECLARATOR"){
+  if(node_type == "STRUCT_DECLARATor"){
     /*std::cout<<node_type<<std::endl;*/
   }
   if(node_type == "ENUM_SPECIFIER"){
@@ -327,10 +327,10 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
   if(node_type == "ENUM"){
     /*std::cout<<node_type<<std::endl;*/
   }
-  if(node_type == "ENUMERATOR_LIST"){
+  if(node_type == "ENUMERATor_LIST"){
     /*std::cout<<node_type<<std::endl;*/
   }
-  if(node_type == "ENUMERATOR"){
+  if(node_type == "ENUMERATor"){
     /*std::cout<<node_type<<std::endl;*/
   }
   if(node_type == "ENUM_CONSTANT"){
@@ -339,8 +339,8 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
   if(node_type == "TYPE_QUALIFIER"){
     /*std::cout<<node_type<<std::endl;*/
   }
-  if(node_type == "DECLARATOR"){/*std::cout<<node_type<<std::endl;*/}
-  if(node_type == "DIRECT_DECLARATOR"){
+  if(node_type == "DECLARATor"){/*std::cout<<node_type<<std::endl;*/}
+  if(node_type == "DIRECT_DECLARATor"){
     /*std::cout<<node_type<<std::endl;*/
 
     if(value == "array_decl"){
@@ -350,9 +350,9 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
         s->name = branches[0]->value+"_index_"+std::to_string(i);
         s->type = "int array";
         table.insert(*s);
-        s->offset = table.var_pointer + i*4;
+        //s->offset = table.var_pointer + i*4;
       }
-      table.var_pointer += array_size*4;
+      //table.var_pointer += array_size*4;
       return branches[0]->value;
     }
   }
@@ -384,8 +384,8 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
   if(node_type == "TYPE_NAME"){
     /*std::cout<<node_type<<std::endl;*/
   }
-  if(node_type == "ABSTRACT_DECLARATOR"){/*std::cout<<node_type<<std::endl;*/}
-  if(node_type == "DIRECT_ABSTRACT_DECLARATOR"){
+  if(node_type == "ABSTRACT_DECLARATor"){/*std::cout<<node_type<<std::endl;*/}
+  if(node_type == "DIRECT_ABSTRACT_DECLARATor"){
     /*std::cout<<node_type<<std::endl;*/
   }
   if(node_type == "TYPEDEF_NAME"){
@@ -405,8 +405,8 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
       arg2 =branches[1]->make_mips(table, sp, pc);
       std::cout<<"lw r1, "<<table.find_symbol(arg1).offset<<"("<<table.stack_pointer<<")"<<std::endl;
       std::cout<<"lw r2, "<<table.find_symbol(arg2).offset<<"("<<table.stack_pointer<<")"<<std::endl;
-      std::cout<<"mult r1, r2"<<std::endl;
-      std::cout<<"mflo r3"<<std::endl;
+      std::cout<<"MULT r1, r2"<<std::endl;
+      std::cout<<"MFLO r3"<<std::endl;
 
       if(table.t1_free == true){
         std::cout<<"sw r3, "<<table.find_symbol("temp1").offset<<"("<<table.stack_pointer<<")"<<std::endl;
@@ -424,9 +424,9 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
       arg2 =branches[1]->make_mips(table, sp, pc);
       std::cout<<"lw r1, "<<table.find_symbol(arg1).offset<<"("<<table.stack_pointer<<")"<<std::endl;
       std::cout<<"lw r2, "<<table.find_symbol(arg2).offset<<"("<<table.stack_pointer<<")"<<std::endl;
-      std::cout<<"div r1, r2"<<std::endl;
-      if(value == "/"){std::cout<<"mflo r3"<<std::endl;}//get quotient
-      if(value == "%"){std::cout<<"mfhi r3"<<std::endl;}//get remainder
+      std::cout<<"DIV r1, r2"<<std::endl;
+      if(value == "/"){std::cout<<"MFLO r3"<<std::endl;}//get quotient
+      if(value == "%"){std::cout<<"MFHI r3"<<std::endl;}//get remainder
 
       if(table.t1_free == true){
         std::cout<<"sw r3, "<<table.find_symbol("temp1").offset<<"("<<table.stack_pointer<<")"<<std::endl;
@@ -440,7 +440,7 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
       }
     }
   }
-  if(node_type == "ADDITIVE_EXPRESSION"){
+  if(node_type == "addiTIVE_EXPRESSION"){
     /*std::cout<<node_type<<std::endl;*/
     if(value == "+"){
       arg1 =branches[0]->make_mips(table, sp, pc);//need a way to check if arg1 is a constant
@@ -501,7 +501,7 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
     arg1 =branches[0]->make_mips(table, sp, pc);
     arg2 =branches[1]->make_mips(table, sp, pc);
 
-    var_or_const_instr("slt", "slti", arg1, arg2, table);
+    var_or_const_instr("SLT", "SLTI", arg1, arg2, table);
 
     if(value == "<"){}
     if(value == ">"){
@@ -552,7 +552,7 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
     arg1 =branches[0]->make_mips(table, sp, pc);
     arg2 =branches[1]->make_mips(table, sp, pc);
 
-    var_or_const_instr("and", "andi", arg1, arg2, table);
+    var_or_const_instr("AND", "ANDI", arg1, arg2, table);
 
     if(table.t1_free == true){
       std::cout<<"sw r3, "<<table.find_symbol("temp1").offset<<"("<<table.stack_pointer<<")"<<std::endl;
@@ -565,7 +565,7 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
       return "temp2";
     }
   }
-  if(node_type == "EXCLUSIVE_OR_EXPRESSION"){
+  if(node_type == "EXCLUSIVE_or_EXPRESSION"){
     /*std::cout<<node_type<<std::endl;*/
     arg1 =branches[0]->make_mips(table, sp, pc);
     arg2 =branches[1]->make_mips(table, sp, pc);
@@ -583,7 +583,7 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
       return "temp2";
     }
   }
-  if(node_type == "INCLUSIVE_OR_EXPRESSION"){
+  if(node_type == "INCLUSIVE_or_EXPRESSION"){
     /*std::cout<<node_type<<std::endl;*/
     arg1 =branches[0]->make_mips(table, sp, pc);
     arg2 =branches[1]->make_mips(table, sp, pc);
@@ -633,7 +633,7 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
       return "temp2";
     }
   }
-  if(node_type == "LOGICAL_OR_EXPRESSION"){
+  if(node_type == "LOGICAL_or_EXPRESSION"){
     /*std::cout<<node_type<<std::endl;*/
     std::string sc = makeName("short_circuit");
     std::string nsc = makeName("not_short_circuit");
@@ -700,8 +700,8 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
       std::cout<<"lw r1, "<<table.find_symbol(res).offset<<"("<<table.stack_pointer<<")"<<std::endl;//this is the location of temp1
       std::cout<<"lw r2, "<<table.find_symbol(s).offset<<"("<<table.stack_pointer<<")"<<std::endl;//this is the location of old x
 
-      std::cout<<"mult r2,r1"<<std::endl;//x=x+the rest
-      std::cout<<"mflo r3"<<std::endl;
+      std::cout<<"MULT r2,r1"<<std::endl;//x=x+the rest
+      std::cout<<"MFLO r3"<<std::endl;
 
       std::cout<<"sw r3, "<<table.find_symbol(s).offset<<"("<<table.stack_pointer<<")"<<std::endl;
       table.t1_free = true;
@@ -712,8 +712,8 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
       std::cout<<"lw r1, "<<table.find_symbol(res).offset<<"("<<table.stack_pointer<<")"<<std::endl;//this is the location of temp1
       std::cout<<"lw r2, "<<table.find_symbol(s).offset<<"("<<table.stack_pointer<<")"<<std::endl;//this is the location of old x
 
-      std::cout<<"div r2,r1"<<std::endl;//x=x+the rest
-      std::cout<<"mflo r3"<<std::endl;
+      std::cout<<"DIV r2,r1"<<std::endl;//x=x+the rest
+      std::cout<<"MFLO r3"<<std::endl;
 
       std::cout<<"sw r3, "<<table.find_symbol(s).offset<<"("<<table.stack_pointer<<")"<<std::endl;
       table.t1_free = true;
@@ -724,8 +724,8 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
       std::cout<<"lw r1, "<<table.find_symbol(res).offset<<"("<<table.stack_pointer<<")"<<std::endl;//this is the location of temp1
       std::cout<<"lw r2, "<<table.find_symbol(s).offset<<"("<<table.stack_pointer<<")"<<std::endl;//this is the location of old x
 
-      std::cout<<"div r2,r1"<<std::endl;//x=x+the rest
-      std::cout<<"mfhi r3"<<std::endl;
+      std::cout<<"DIV r2,r1"<<std::endl;//x=x+the rest
+      std::cout<<"MFHI r3"<<std::endl;
 
       std::cout<<"sw r3, "<<table.find_symbol(s).offset<<"("<<table.stack_pointer<<")"<<std::endl;
       table.t1_free = true;
@@ -756,7 +756,7 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
       std::cout<<"lw r1, "<<table.find_symbol(res).offset<<"("<<table.stack_pointer<<")"<<std::endl;//this is the location of temp1
       std::cout<<"lw r2, "<<table.find_symbol(s).offset<<"("<<table.stack_pointer<<")"<<std::endl;//this is the location of old x
 
-      std::cout<<"and r3,r2,r1"<<std::endl;//x=x+the rest
+      std::cout<<"AND r3,r2,r1"<<std::endl;//x=x+the rest
       std::cout<<"sw r3, "<<table.find_symbol(s).offset<<"("<<table.stack_pointer<<")"<<std::endl;
       table.t1_free = true;
       table.t2_free = true;
@@ -790,7 +790,7 @@ int ast_node::eval_expr(){
 
   if(node_type == "SIZE_OF"){/*std::cout<<node_type<<std::endl;*/}
 
-  if(node_type == "UNARY_OPERATOR"){/*std::cout<<node_type<<std::endl;*/
+  if(node_type == "UNARY_OPERATor"){/*std::cout<<node_type<<std::endl;*/
 
   }
   if(node_type == "CAST_EXPRESSION"){
@@ -808,7 +808,7 @@ int ast_node::eval_expr(){
       return (branches[0]->eval_expr() % branches[1]->eval_expr());
     }
   }
-  if(node_type == "ADDITIVE_EXPRESSION"){
+  if(node_type == "addiTIVE_EXPRESSION"){
     /*std::cout<<node_type<<std::endl;*/
     if(value == "+"){
       return (branches[0]->eval_expr() + branches[1]->eval_expr());
@@ -843,11 +843,11 @@ int ast_node::eval_expr(){
     /*std::cout<<node_type<<std::endl;*/
     return (branches[0]->eval_expr() & branches[1]->eval_expr());
   }
-  if(node_type == "EXCLUSIVE_OR_EXPRESSION"){
+  if(node_type == "EXCLUSIVE_or_EXPRESSION"){
     /*std::cout<<node_type<<std::endl;*/
     return (branches[0]->eval_expr() ^ branches[1]->eval_expr());
   }
-  if(node_type == "INCLUSIVE_OR_EXPRESSION"){
+  if(node_type == "INCLUSIVE_or_EXPRESSION"){
     /*std::cout<<node_type<<std::endl;*/
     return (branches[0]->eval_expr() | branches[1]->eval_expr());
   }//hi
@@ -855,7 +855,7 @@ int ast_node::eval_expr(){
     /*std::cout<<node_type<<std::endl;*/
     return (branches[0]->eval_expr() && branches[1]->eval_expr());
   }
-  if(node_type == "LOGICAL_OR_EXPRESSION"){
+  if(node_type == "LOGICAL_or_EXPRESSION"){
     /*std::cout<<node_type<<std::endl;*/
     return (branches[0]->eval_expr() || branches[1]->eval_expr());
   }

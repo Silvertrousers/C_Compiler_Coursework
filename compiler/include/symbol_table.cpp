@@ -7,37 +7,32 @@ void symbol_table::insert(symbol s){
 	symbols.push_back(s);
 }
 
-void symbol_table::print_table() {
+void symbol_table::print_table(int depth) {
+	std::cout<<"table: "<<depth<<std::endl;
 	std::cout<<"stack_pointer: "<<stack_pointer<<std::endl;
+	std::cout<<"var_pointer: "<<var_pointer<<std::endl;
 	for (int i = 0; i < symbols.size(); i++) {
 		std::cout << symbols[i].name << ": " << symbols[i].type<<": "<<symbols[i].value<<":"<<symbols[i].offset << std::endl;
 	}
 	std::cout << "----------------" << std::endl;
 	if (parent != NULL) {
-		parent->print_table();
+		parent->print_table(depth+1);
 	}
 }
 
 symbol symbol_table::find_symbol(std::string in){
 	null_symbol.name = "NULL";
-	symbol temp = global_scope->find_symbol(in);
-
-	if(temp.name == "NULL"){
-		for(int i=0;i<(symbols.size());i++){
-	    if(symbols[i].name==in){
-	      return symbols[i];
-	    }
-	  }
-	  if (parent != NULL) {
-		  return parent->find_symbol(in);
-	  }
-	  else {
-		  return null_symbol;
-	  }
-	}
-	else{
-		return temp;//if the symbol was found in the global scope, return the global scope version
-	}
+	for(int i=0;i<(symbols.size());i++){
+    if(symbols[i].name==in){
+      return symbols[i];
+    }
+  }
+  if (parent != NULL) {
+	  return parent->find_symbol(in);
+  }
+  else {
+	  return null_symbol;
+  }
 }
 
 symbol_table::symbol_table(){
@@ -62,7 +57,7 @@ symbol_table::symbol_table(symbol_table *parent_scope){
 	parent = parent_scope;
 	null_symbol.name = "";
 	var_pointer = 0;
-	stack_pointer = parent->var_pointer + parent->stack_pointer;
+	stack_pointer = 4+ parent->var_pointer + parent->stack_pointer;
 	global_scope = parent_scope->global_scope;
 	symbol temp1, temp2;
 	temp1.name = "temp1";
