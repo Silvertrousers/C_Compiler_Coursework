@@ -97,7 +97,15 @@ FUNCTION_DECLARATION : DECLARATION_SPECIFIERS DECLARATOR COMPOUND_STATEMENT {   
                      | DECLARATOR COMPOUND_STATEMENT {                          std::vector<ast_node*> branches = {NULL, $1,NULL, $2};
                                                                                 std::vector<std::string> branch_notes = {"DECLARATION_SPECIFIERS", "DECLARATOR", "DECLARATION_LIST", "COMPOUND_STATEMENT"};
                                                                                 $$ = new ast_node("FUNCTION_DECLARATION","", branches, branch_notes);}
+                                                                                
+                     | DECLARATION_SPECIFIERS DECLARATOR DECLARATION_LIST COMPOUND_STATEMENT {   std::vector<ast_node*> branches = {$1, $2, $3, $4};
+                                                                                std::vector<std::string> branch_notes = {"DECLARATION_SPECIFIERS", "DECLARATOR", "DECLARATION_LIST", "COMPOUND_STATEMENT"};
+                                                                                $$ = new ast_node("FUNCTION_DECLARATION","", branches, branch_notes);}
 
+                     | DECLARATOR DECLARATION_LIST COMPOUND_STATEMENT {                          std::vector<ast_node*> branches = {NULL, $1, $2, $3};
+                                                                                std::vector<std::string> branch_notes = {"DECLARATION_SPECIFIERS", "DECLARATOR", "DECLARATION_LIST", "COMPOUND_STATEMENT"};
+                                                                                $$ = new ast_node("FUNCTION_DECLARATION","", branches, branch_notes);}
+                                                                                
 STATEMENT : LABELED_STATEMENT {$$ = $1;}
           | COMPOUND_STATEMENT {$$ = $1;}
           | EXPRESSION_STATEMENT {$$ = $1;}
