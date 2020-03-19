@@ -28,6 +28,7 @@ class symbol_table{
     std::vector<symbol> symbols;
     symbol null_symbol;
     symbol_table *parent;
+    symbol_table *global_scope;
 };
 
 //mips is basically a three address code

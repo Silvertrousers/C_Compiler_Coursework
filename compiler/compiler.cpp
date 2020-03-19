@@ -11,6 +11,7 @@ int main()
 {
     int sp, pc;
     symbol_table s = symbol_table();
+    s.global_scope = &s;
     s.stack_pointer = 0;
 
     ast_node * ast=parseAST();

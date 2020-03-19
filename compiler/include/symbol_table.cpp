@@ -19,18 +19,25 @@ void symbol_table::print_table() {
 }
 
 symbol symbol_table::find_symbol(std::string in){
-  for(int i=0;i<(symbols.size());i++){
-    if(symbols[i].name==in){
-      return symbols[i];
-    }
-  }
-  if (parent != NULL) {
-	  return parent->find_symbol(in);
-  }
-  else {
-	  return null_symbol;
-  }
+	symbol temp = global_scope->find_symbol(in);
+	if(temp == null_symbol){
+		for(int i=0;i<(symbols.size());i++){
+	    if(symbols[i].name==in){
+	      return symbols[i];
+	    }
+	  }
+	  if (parent != NULL) {
+		  return parent->find_symbol(in);
+	  }
+	  else {
+		  return null_symbol;
+	  }
+	}
+	else{
+		return temp;//if the symbol was found in the global scope, return the global scope version
+	}
 }
+
 symbol_table::symbol_table(){
 	parent = NULL;
 	stack_pointer = 0;
@@ -54,6 +61,7 @@ symbol_table::symbol_table(symbol_table *parent_scope){
 	null_symbol.name = "";
 	var_pointer = 0;
 	stack_pointer = parent->var_pointer + parent->stack_pointer;
+	global_scope = parent_scope->global_scope;
 	symbol temp1, temp2;
 	temp1.name = "temp1";
 	temp1.value = "0";
