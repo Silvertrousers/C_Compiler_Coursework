@@ -13,12 +13,12 @@ int main(int argc, char * argv[]){
 
   if(std::string(argv[1]) == "--translate"){
     std::cout<<"Translator Activated"<<std::endl;
-    command = "./translator/run_translator.sh <"+std::string(argv[2]) +" > "+std::string(argv[4]);
+    command = "./translator/run_translator.sh "+std::string(argv[2]) +" "+std::string(argv[4]);
     system(command.c_str());
   }
   if(std::string(argv[1]) == "-S"){
     std::cout<<"Compiler Activated"<<std::endl;
-    command = "./compiler/run_compiler.sh <"+std::string(argv[2]) +" > "+std::string(argv[4]);
+    command = "./compiler/run_compiler.sh "+std::string(argv[2]) +" "+std::string(argv[4]);
     system(command.c_str());
   }
   return 0;

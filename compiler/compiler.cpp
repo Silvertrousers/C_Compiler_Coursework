@@ -1,6 +1,5 @@
-#include "./include/ast.hpp"
-#include "./include/symbol_table.hpp"
 #include "./include/ast.cpp"
+
 #include "./include/symbol_table.cpp"
 
 #include <iostream>
