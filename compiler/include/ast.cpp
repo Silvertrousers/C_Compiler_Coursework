@@ -45,9 +45,17 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
     /*std::cout<<node_type<<std::endl;*/
     std::cout<<branches[0]->make_mips(new_scope, sp, pc);//reutrn type
     //fn name should already be in the stack
-    std::cout<<branches[2]->make_mips(new_scope, sp, pc);//arguments
     //assign memory locations to labels has already been done since symbol table keeps track of stack
     std::cout<<temp.name<<":"<<std::endl;
+    branches[2]->make_mips(new_scope, sp, pc);//arguments
+    for (int i = 0; i < new_scope.symbols.size(); i++){
+        arg1 = new_scope.symbols[i].name; //assuming the argument calls added them to new scope, these should be the 4 parameters.
+        std::cout<<"lw r4, "<<table.find_symbol(arg1).offset<<"("<<table.stack_pointer<<")"<<std::endl;
+        std::cout << "add r4, r5, r0" << std::endl;
+        std::cout << "add r5, r6, r0" << std::endl;
+        std::cout << "add r6, r7, r0" << std::endl;
+        std::cout << "add r4, r0, r0" << std::endl;
+    }
     std::cout<<branches[3]->make_mips(new_scope, sp, pc);//body
   }
 
