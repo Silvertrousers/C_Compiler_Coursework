@@ -40,15 +40,19 @@ symbol_table::symbol_table(){
 	stack_pointer = 0;
 	null_symbol.name = "";
 	var_pointer = 0;
-	symbol temp1, temp2;
+	symbol temp1, temp2, ra;
 	temp1.name = "temp1";
 	temp1.value = "0";
 	temp1.type = "int";
 	temp2.name = "temp2";
 	temp2.value = "0";
 	temp2.type = "int";
+	ra.name = "return_address";
+	ra.value = "0";
+	ra.type = "int";
 	insert(temp1);
 	insert(temp2);
+	insert(ra);
 	t1_free = true;
 	t2_free = true;
 }

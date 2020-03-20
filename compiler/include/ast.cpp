@@ -180,8 +180,14 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
           branches[1]->make_mips(new_scope, sp, pc);
       }
       if (table.find_symbol(branches[0]->value).name != "NULL"){
+        //save old return address
+        std::cout<<"sw $ra, "<<table.find_symbol("return_address").offset<<"("<<table.stack_pointer<<")"<<std::endl;
+        //put in new return address for fn call
         std::cout << "jal " << fn.name << std::endl;
+        //put back old return address
+        std::cout<<"lw $ra, "<<table.find_symbol("return_address").offset<<"("<<table.stack_pointer<<")"<<std::endl;
       }
+      //fn call return value goes to register $v0, which is then stored in temp1/2 to be used in operations
       if(table.t1_free){
         std::cout<<"sw $v0, "<<table.find_symbol("temp1").offset<<"("<<table.stack_pointer<<")"<<std::endl;
         return "temp1";
