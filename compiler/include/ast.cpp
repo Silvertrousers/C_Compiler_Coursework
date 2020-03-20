@@ -14,7 +14,7 @@ std::string var_or_const_instr(std::string v_instr, std::string c_instr, std::st
 std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
 
   //std::cout<<node_type<<std::endl;
-  //table.print_table(0);
+  //  table.print_table(0);
 
   std::string arg1, arg2;
   for(int i=0;i<branches.size();i++){
@@ -34,13 +34,13 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
   if(node_type == "EXTERNAL_DECLARATION"){/*std::cout<<node_type<<std::endl;*/}\
 
   if(node_type == "FUNCTION_DECLARATION"){
-    symbol_table newscope = symbol_table(&table);
+    symbol_table new_scope = symbol_table(&table);
     symbol temp;
     temp.name = branches[1]->branches[0]->value;
     temp.type = "function";
     temp.label = pc;
     table.insert(temp);
-    symbol_table new_scope = symbol_table(&newscope);
+    //symbol_table new_scope = symbol_table(&newscope);
 
     /*std::cout<<node_type<<std::endl;*/
     std::cout<<branches[0]->make_mips(new_scope, sp, pc);//reutrn type
@@ -97,7 +97,7 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
       std::cout << end  << ":"<< std::endl;
     }
   }
-  if(node_type == "T_swITCH"){/*std::cout<<node_type<<std::endl;*/}
+  if(node_type == "T_SWITCH"){/*std::cout<<node_type<<std::endl;*/}
   if(node_type == "T_IF"){/*std::cout<<node_type<<std::endl;*/}
   if(node_type == "T_ELSE"){/*std::cout<<node_type<<std::endl;*/}
 
@@ -172,15 +172,15 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
       }
     }
     if (value == "fn_call"){
-        symbol fn;
-        symbol_table new_scope = symbol_table(&table);
-        if (table.find_symbol(branches[0]->value).name != "NULL"){
-            fn = table.find_symbol(branches[0]->value);
-        }
-        if (branches[1]->node_type == "ARGUMENT_EXPRESSION_LIST"){
-            branches[1]->make_mips(new_scope, sp, pc);
-        }
-        std::cout << "beq r0 r0 " << fn.label << std::endl;
+      symbol fn = table.find_symbol(branches[0]->value);
+      symbol_table new_scope = symbol_table(&table);
+
+      if (branches[1]->node_type == "ARGUMENT_EXPRESSION_LIST"){
+          branches[1]->make_mips(new_scope, sp, pc);
+      }
+      if (table.find_symbol(branches[0]->value).name != "NULL"){
+        std::cout << "beq r0, r0, " << fn.name << std::endl;
+      }
     }
   }
 
@@ -253,7 +253,7 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
 
   if(node_type == "SIZE_OF"){/*std::cout<<node_type<<std::endl;*/}
 
-  if(node_type == "UNARY_OPERATor"){/*std::cout<<node_type<<std::endl;*/}
+  if(node_type == "UNARY_OPERATOR"){/*std::cout<<node_type<<std::endl;*/}
   if(node_type == "CAST_EXPRESSION"){
     /*std::cout<<node_type<<std::endl;*/
 
@@ -270,12 +270,12 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
   }
   if(node_type == "DECLARATION_SPECIFIERS"){/*std::cout<<node_type<<std::endl;*/}
 
-  if(node_type == "INIT_DECLARATor_LIST"){
+  if(node_type == "INIT_DECLARATOR_LIST"){
     /*std::cout<<node_type<<std::endl;*/
     branches[0]->make_mips(table, sp, pc);
     branches[1]->make_mips(table, sp, pc);
   }
-  if(node_type == "INIT_DECLARATor"){
+  if(node_type == "INIT_DECLARATOR"){
     /*std::cout<<node_type<<std::endl;*/
 
     if(branches[0]-> node_type=="IDENTIFIER"){
@@ -307,14 +307,14 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
     }
 
   }
-  if(node_type == "STorAGE_CLASS_SPECIFIER"){
+  if(node_type == "STORAGE_CLASS_SPECIFIER"){
     /*std::cout<<node_type<<std::endl;*/
   }
   if(node_type == "TYPE_SPECIFIER"){/*std::cout<<node_type<<std::endl;*/}
   if(node_type == "STRUCT_or_UNION_SPECIFIER"){
     /*std::cout<<node_type<<std::endl;*/
   }
-  if(node_type == "STRUCT_or_UNION"){
+  if(node_type == "STRUCT_OR_UNION"){
     /*std::cout<<node_type<<std::endl;*/
   }
   if(node_type == "STRUCT_DECLARATION_LIST"){
@@ -323,10 +323,10 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
   if(node_type == "STRUCT_DECLARATION"){
     /*std::cout<<node_type<<std::endl;*/
   }
-  if(node_type == "STRUCT_DECLARATor_LIST"){
+  if(node_type == "STRUCT_DECLARATOR_LIST"){
     /*std::cout<<node_type<<std::endl;*/
   }
-  if(node_type == "STRUCT_DECLARATor"){
+  if(node_type == "STRUCT_DECLARATOR"){
     /*std::cout<<node_type<<std::endl;*/
   }
   if(node_type == "ENUM_SPECIFIER"){
@@ -335,10 +335,10 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
   if(node_type == "ENUM"){
     /*std::cout<<node_type<<std::endl;*/
   }
-  if(node_type == "ENUMERATor_LIST"){
+  if(node_type == "ENUMERATOR_LIST"){
     /*std::cout<<node_type<<std::endl;*/
   }
-  if(node_type == "ENUMERATor"){
+  if(node_type == "ENUMERATOR"){
     /*std::cout<<node_type<<std::endl;*/
   }
   if(node_type == "ENUM_CONSTANT"){
@@ -347,8 +347,8 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
   if(node_type == "TYPE_QUALIFIER"){
     /*std::cout<<node_type<<std::endl;*/
   }
-  if(node_type == "DECLARATor"){/*std::cout<<node_type<<std::endl;*/}
-  if(node_type == "DIRECT_DECLARATor"){
+  if(node_type == "DECLARATOR"){/*std::cout<<node_type<<std::endl;*/}
+  if(node_type == "DIRECT_DECLARATOR"){
     /*std::cout<<node_type<<std::endl;*/
 
     if(value == "array_decl"){
@@ -362,6 +362,13 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
       }
       //table.var_pointer += array_size*4;
       return branches[0]->value;
+    }
+    if(value == "fn_dcl"){
+      symbol s;
+      s.name = branches[0]->value;
+      s.type = "function";
+      //s.value = number of arguments
+      table.insert(s);
     }
   }
   if(node_type == "POINTER"){
@@ -392,8 +399,8 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
   if(node_type == "TYPE_NAME"){
     /*std::cout<<node_type<<std::endl;*/
   }
-  if(node_type == "ABSTRACT_DECLARATor"){/*std::cout<<node_type<<std::endl;*/}
-  if(node_type == "DIRECT_ABSTRACT_DECLARATor"){
+  if(node_type == "ABSTRACT_DECLARATOR"){/*std::cout<<node_type<<std::endl;*/}
+  if(node_type == "DIRECT_ABSTRACT_DECLARATOR"){
     /*std::cout<<node_type<<std::endl;*/
   }
   if(node_type == "TYPEDEF_NAME"){

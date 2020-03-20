@@ -1,4 +1,4 @@
 #!/bin/bash
 make clean
 make
-(./compiler/bin/compiler < ./$1) > ./$2
+(./bin/compiler < ./$1.c) > ./$1.s

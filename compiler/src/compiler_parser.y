@@ -97,7 +97,7 @@ FUNCTION_DECLARATION : DECLARATION_SPECIFIERS DECLARATOR COMPOUND_STATEMENT {   
                      | DECLARATOR COMPOUND_STATEMENT {                          std::vector<ast_node*> branches = {NULL, $1,NULL, $2};
                                                                                 std::vector<std::string> branch_notes = {"DECLARATION_SPECIFIERS", "DECLARATOR", "DECLARATION_LIST", "COMPOUND_STATEMENT"};
                                                                                 $$ = new ast_node("FUNCTION_DECLARATION","", branches, branch_notes);}
-                                                                                
+
                      | DECLARATION_SPECIFIERS DECLARATOR DECLARATION_LIST COMPOUND_STATEMENT {   std::vector<ast_node*> branches = {$1, $2, $3, $4};
                                                                                 std::vector<std::string> branch_notes = {"DECLARATION_SPECIFIERS", "DECLARATOR", "DECLARATION_LIST", "COMPOUND_STATEMENT"};
                                                                                 $$ = new ast_node("FUNCTION_DECLARATION","", branches, branch_notes);}
@@ -105,7 +105,7 @@ FUNCTION_DECLARATION : DECLARATION_SPECIFIERS DECLARATOR COMPOUND_STATEMENT {   
                      | DECLARATOR DECLARATION_LIST COMPOUND_STATEMENT {                          std::vector<ast_node*> branches = {NULL, $1, $2, $3};
                                                                                 std::vector<std::string> branch_notes = {"DECLARATION_SPECIFIERS", "DECLARATOR", "DECLARATION_LIST", "COMPOUND_STATEMENT"};
                                                                                 $$ = new ast_node("FUNCTION_DECLARATION","", branches, branch_notes);}
-                                                                                
+
 STATEMENT : LABELED_STATEMENT {$$ = $1;}
           | COMPOUND_STATEMENT {$$ = $1;}
           | EXPRESSION_STATEMENT {$$ = $1;}
@@ -250,7 +250,7 @@ POSTFIX_EXPRESSION : PRIMARY_EXPRESSION { $$  = $1;}
 
                    | POSTFIX_EXPRESSION T_EMPTY_BRACKETS {                      std::vector<ast_node*> branches = {$1, NULL};
                                                                                 std::vector<std::string> branch_notes = {"POSTFIX_EXPRESSION", "ARGUMENT_EXPRESSION_LIST"};
-                                                                                $$ = new ast_node("POSTFIX_EXPRESSION","array_indexing", branches, branch_notes);}
+                                                                                $$ = new ast_node("POSTFIX_EXPRESSION","fn_call", branches, branch_notes);}
 
                    | POSTFIX_EXPRESSION T_LBRACKET ARGUMENT_EXPRESSION_LIST T_RBRACKET { std::vector<ast_node*> branches = {$1, $3};
                                                                                          std::vector<std::string> branch_notes = {"POSTFIX_EXPRESSION", "ARGUMENT_EXPRESSION_LIST"};
