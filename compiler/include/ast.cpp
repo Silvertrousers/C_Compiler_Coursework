@@ -133,15 +133,16 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
   if(node_type == "JUMP_STATEMENT"){/*std::cout<<node_type<<std::endl;*/
     if (branches[0]->node_type == "RETURN"){
       arg1 = branches[1]->make_mips(table, sp, pc);
-      if (branches[1]->value != ""){
-
-          std::cout<<"sw r3, "<<table.find_symbol(arg1).offset<<"("<<table.stack_pointer<<")"<<std::endl;
-          table.t1_free = false;
-      }
-      std::cout << "jr r31" << std::endl;
-      if (branches[1]->value != ""){
-          return "temp1";
-      }
+      std::cout<<"lw $v0, "<<table.find_symbol(arg1).offset<<"("<<table.stack_pointer<<")"<<std::endl;
+      std::cout << "jr $ra" << std::endl;
+      // if (branches[1]->value != ""){
+      //     std::cout<<"sw r3, "<<table.find_symbol(arg1).offset<<"("<<table.stack_pointer<<")"<<std::endl;
+      //     table.t1_free = false;
+      // }
+      //
+      // if (branches[1]->value != ""){
+      //     return "temp1";
+      // }
     }
   }
   if(node_type == "RETURN"){/*std::cout<<node_type<<std::endl;*/}
@@ -179,7 +180,15 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
           branches[1]->make_mips(new_scope, sp, pc);
       }
       if (table.find_symbol(branches[0]->value).name != "NULL"){
-        std::cout << "beq r0, r0, " << fn.name << std::endl;
+        std::cout << "jal " << fn.name << std::endl;
+      }
+      if(table.t1_free){
+        std::cout<<"sw $v0, "<<table.find_symbol("temp1").offset<<"("<<table.stack_pointer<<")"<<std::endl;
+        return "temp1";
+      }
+      if(table.t2_free){
+        std::cout<<"sw $v0, "<<table.find_symbol("temp2").offset<<"("<<table.stack_pointer<<")"<<std::endl;
+        return "temp2";
       }
     }
   }

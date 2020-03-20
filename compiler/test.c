@@ -1,8 +1,10 @@
 
 int f();
 int main(){
-  f();
+  return f();
 }
 int f(){
-  return 2;
+  int x[8];
+  x[0]=2;
+  return x[0];
 }
