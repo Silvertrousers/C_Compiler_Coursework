@@ -51,10 +51,10 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
     for (int i = 0; i < new_scope.symbols.size(); i++){
         arg1 = new_scope.symbols[i].name; //assuming the argument calls added them to new scope, these should be the 4 parameters.
         std::cout<<"lw $a0, "<<table.find_symbol(arg1).offset<<"("<<table.stack_pointer<<")"<<std::endl;
-        std::cout << "add $a0, $a1, r0" << std::endl;
-        std::cout << "add $a1, $a2, r0" << std::endl;
-        std::cout << "add $a2, $a3, r0" << std::endl;
-        std::cout << "add $a0, r0, r0" << std::endl;
+        std::cout << "add $a0, $a1, $zero" << std::endl;
+        std::cout << "add $a1, $a2, $zero" << std::endl;
+        std::cout << "add $a2, $a3, $zero" << std::endl;
+        std::cout << "add $a0, $zero, $zero" << std::endl;
     }
     std::cout<<branches[3]->make_mips(new_scope, sp, pc);//body
   }
@@ -86,10 +86,10 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
       arg1 = branches[1]->make_mips(new_scope, sp, pc);
       std::cout<<"lw $t0, "<<table.find_symbol(arg1).offset<<"("<<table.stack_pointer<<")"<<std::endl;
       //std::cout<<"lw $t1, "<<table.find_symbol(arg2).offset<<"("<<table.stack_pointer<<")"<<std::endl;
-      std::cout<< "beq $t0, r0, " << skip << std::endl;
+      std::cout<< "beq $t0, $zero, " << skip << std::endl;
       //branch if condition is not met to label else
       std::cout<<branches[2]->make_mips(new_scope, sp, pc);
-      std::cout<< "beq " << "r0, " << "r0, " << end << std::endl;
+      std::cout<< "beq " << "$zero, " << "$zero, " << end << std::endl;
       std::cout << skip  << ":"<< std::endl;
       if (branches[3]-> node_type == "T_ELSE"){
         std::cout<<branches[4]->make_mips(new_scope, sp, pc);
@@ -111,10 +111,10 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
       std::cout << ":" << start << std::endl;
       arg1 = branches[2]->make_mips(new_scope, sp, pc);
       std::cout<<"lw $t0, "<<table.find_symbol(arg1).offset<<"("<<table.stack_pointer<<")"<<std::endl;
-      std::cout<< "beq $t0, r0, " << end << std::endl;
+      std::cout<< "beq $t0, $zero, " << end << std::endl;
       branches[3]->make_mips(new_scope, sp, pc);
       branches[5]->make_mips(new_scope, sp, pc);
-      std::cout<< "beq " << "r0, " << "r0, " << start << std::endl;
+      std::cout<< "beq " << "$zero, " << "$zero, " << start << std::endl;
       //label end
       std::cout << end << ":" << std::endl;
     }
@@ -122,7 +122,7 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
       std::string end = makeName("end");
       arg1 = branches[1]->make_mips(new_scope, sp, pc);
       std::cout<<"lw $t0, "<<table.find_symbol(arg1).offset<<"("<<table.stack_pointer<<")"<<std::endl;
-      std::cout<< "beq $t0, r0, " << end << std::endl;
+      std::cout<< "beq $t0, $zero, " << end << std::endl;
       std::cout<<branches[5]->make_mips(new_scope, sp, pc);
       std::cout << end<< ":" << std::endl;
     }
@@ -143,7 +143,7 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
   if(node_type == "PRIMARY_EXPRESSION"){/*std::cout<<node_type<<std::endl;*/}
 
   if(node_type == "CONSTANT"){/*std::cout<<node_type<<std::endl;*/
-    std::cout<<"addi $t2, r0, "<<value<<std::endl;
+    std::cout<<"addi $t2, $zero, "<<value<<std::endl;
     if(table.t1_free == true){
       std::cout<<"sw $t2, "<<table.find_symbol("temp1").offset<<"("<<table.stack_pointer<<")"<<std::endl;
       return "temp1";
@@ -202,15 +202,15 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
       }
       if (branches[0]->node_type == "ASSIGNMENT_EXPRESSION"){
           arg1 = branches[0]->make_mips(table, sp, pc);
-          std::cout << "add $a3, $a2, r0" <<std::endl;
-          std::cout << "add $a2, $a1, r0" <<std::endl;
-          std::cout << "add $a1, $a0, r0" <<std::endl;
+          std::cout << "add $a3, $a2, $zero" <<std::endl;
+          std::cout << "add $a2, $a1, $zero" <<std::endl;
+          std::cout << "add $a1, $a0, $zero" <<std::endl;
           std::cout<<"lw $a0, "<<table.find_symbol(arg1).offset<<"("<<table.stack_pointer<<")"<<std::endl;
       }
       arg1 = branches[1]->make_mips(table, sp, pc);
-      std::cout << "add $a3, $a2, r0" <<std::endl;
-      std::cout << "add $a2, $a1, r0" <<std::endl;
-      std::cout << "add $a1, $a0, r0" <<std::endl;
+      std::cout << "add $a3, $a2, $zero" <<std::endl;
+      std::cout << "add $a2, $a1, $zero" <<std::endl;
+      std::cout << "add $a1, $a0, $zero" <<std::endl;
       std::cout<<"lw $a0, "<<table.find_symbol(arg2).offset<<"("<<table.stack_pointer<<")"<<std::endl;
   }
   if(node_type == "UNARY_EXPRESSION"){/*std::cout<<node_type<<std::endl;*/
@@ -226,7 +226,7 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
     if(value == "--"){
       arg1 = branches[0]->make_mips(table, sp, pc);
       std::cout<<"lw $t0, "<<table.find_symbol(arg1).offset<<"("<<table.stack_pointer<<")"<<std::endl;
-      std::cout<<"addi $t1,r0,1"<<std::endl;
+      std::cout<<"addi $t1,$zero,1"<<std::endl;
       std::cout<<"sub $t2,$t0,$t1"<<std::endl;//x=x+the rest
       std::cout<<"sw $t2, "<<table.find_symbol(arg1).offset<<"("<<table.stack_pointer<<")"<<std::endl;
       table.t1_free = true;
@@ -251,9 +251,9 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
       std::string skip = makeName("skip");
 
       std::cout<<"lw $t0, "<<table.find_symbol(arg1).offset<<"("<<table.stack_pointer<<")"<<std::endl;
-      std::cout<<"addi $t2, r0, 1"<<std::endl;
-      std::cout<<"beq $t2, r0, "<<skip<<std::endl;
-      std::cout<<"addi $t2, r0, 0"<<std::endl;
+      std::cout<<"addi $t2, $zero, 1"<<std::endl;
+      std::cout<<"beq $t2, $zero, "<<skip<<std::endl;
+      std::cout<<"addi $t2, $zero, 0"<<std::endl;
       std::cout<<skip<<":"<<std::endl;
       std::cout<<"Nor $t2,$t0,$t0"<<std::endl;//x=x+the rest
       std::cout<<"sw $t2, "<<table.find_symbol(arg1).offset<<"("<<table.stack_pointer<<")"<<std::endl;
@@ -555,12 +555,12 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
 
     var_or_const_instr("sub", "subi", arg1, arg2, table);
     std::cout<<"addi $t0,$t2,0"<<std::endl;
-    std::cout<<"addi $t2,r0,1"<<std::endl;//set result to 1
+    std::cout<<"addi $t2,$zero,1"<<std::endl;//set result to 1
 
-    if(value == "=="){std::cout<<"beq $t0,r0, "<<skip<<std::endl; }
-    if(value == "!="){std::cout<<"bne $t0,r0, "<<skip<<std::endl; }//this nots the less than to make a greater than instruction
+    if(value == "=="){std::cout<<"beq $t0,$zero, "<<skip<<std::endl; }
+    if(value == "!="){std::cout<<"bne $t0,$zero, "<<skip<<std::endl; }//this nots the less than to make a greater than instruction
 
-    std::cout<<"addi $t2,r0,0"<<std::endl;//set result to 0
+    std::cout<<"addi $t2,$zero,0"<<std::endl;//set result to 0
     std::cout<<skip<<":"<<std::endl;
 
     if(table.t1_free == true){
@@ -637,17 +637,17 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
     arg1 =branches[0]->make_mips(table, sp, pc);//eval arg1
     var_or_const_instr("xor", "xori", arg1, "0", table);//check if arg1 = 0
 
-    std::cout<<"beq $t2, r0, "<<sc<<std::endl;
+    std::cout<<"beq $t2, $zero, "<<sc<<std::endl;
     arg2 =branches[1]->make_mips(table, sp, pc);//else eval second arg
     var_or_const_instr("xor", "xori", arg2, "0", table);//check if arg2 = 0
 
-    std::cout<<"addi $t1,r0,1"<<std::endl;// set result to 1
-    std::cout<<"bne $t2, r0, "<<nsc<<std::endl;//result stays 1 if arg2 != 0
+    std::cout<<"addi $t1,$zero,1"<<std::endl;// set result to 1
+    std::cout<<"bne $t2, $zero, "<<nsc<<std::endl;//result stays 1 if arg2 != 0
     std::cout<<sc<<":"<<std::endl;
-    std::cout<<"addi $t1,r0,0"<<std::endl;// set result to 0
+    std::cout<<"addi $t1,$zero,0"<<std::endl;// set result to 0
     std::cout<<nsc<<":"<<std::endl;
 
-    std::cout<<"add $t2,$t1, r0"<<std::endl;
+    std::cout<<"add $t2,$t1, $zero"<<std::endl;
 
     if(table.t1_free == true){
       std::cout<<"sw $t2, "<<table.find_symbol("temp1").offset<<"("<<table.stack_pointer<<")"<<std::endl;
@@ -668,17 +668,17 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
     arg1 =branches[0]->make_mips(table, sp, pc);//eval arg1
     var_or_const_instr("xor", "xori", arg1, "0", table);//check if arg1 = 0
 
-    std::cout<<"bne $t2, r0, "<<sc<<std::endl;
+    std::cout<<"bne $t2, $zero, "<<sc<<std::endl;
     arg2 =branches[1]->make_mips(table, sp, pc);//else eval second arg
     var_or_const_instr("xor", "xori", arg2, "0", table);//check if arg2 = 0
 
-    std::cout<<"addi $t1,r0,0"<<std::endl;// set result to 0
-    std::cout<<"beq $t2, r0, "<<nsc<<std::endl;//result stays 1 if arg2 != 0
+    std::cout<<"addi $t1,$zero,0"<<std::endl;// set result to 0
+    std::cout<<"beq $t2, $zero, "<<nsc<<std::endl;//result stays 1 if arg2 != 0
     std::cout<<sc<<":"<<std::endl;
-    std::cout<<"addi $t1,r0,1"<<std::endl;// set result to 1
+    std::cout<<"addi $t1,$zero,1"<<std::endl;// set result to 1
     std::cout<<nsc<<":"<<std::endl;
 
-    std::cout<<"add $t2,$t1, r0"<<std::endl;
+    std::cout<<"add $t2,$t1, $zero"<<std::endl;
 
     if(table.t1_free == true){
       std::cout<<"sw $t2, "<<table.find_symbol("temp1").offset<<"("<<table.stack_pointer<<")"<<std::endl;
@@ -915,17 +915,17 @@ std::string var_or_const_instr(std::string v_instr, std::string c_instr, std::st
   }
   if(is_a_variable(arg1) && !is_a_variable(arg2)){
     std::cout<<"lw $t0, "<<table.find_symbol(arg1).offset<<"("<<table.stack_pointer<<")"<<std::endl;
-    std::cout<<"addi $t1, r0, "<<arg2<<std::endl;
+    std::cout<<"addi $t1, $zero, "<<arg2<<std::endl;
     std::cout<<v_instr<<" $t2, $t0, $t1"<<std::endl;
   }
   if(!is_a_variable(arg1) && is_a_variable(arg2)){
     std::cout<<"lw $t0, "<<table.find_symbol(arg2).offset<<"("<<table.stack_pointer<<")"<<std::endl;
-    std::cout<<"addi $t1, r0, "<<arg1<<std::endl;
+    std::cout<<"addi $t1, $zero, "<<arg1<<std::endl;
     std::cout<<v_instr<<" $t2, $t0, $t1"<<std::endl;
   }
   if(!is_a_variable(arg1) && !is_a_variable(arg2)){
 
-    std::cout<<"addi $t0, r0, "<<arg1<<std::endl; //load $t0 -> arg1
+    std::cout<<"addi $t0, $zero, "<<arg1<<std::endl; //load $t0 -> arg1
     std::cout<<"addi $t1, $zero, "<<arg2<<std::endl; //load $t1 -> arg2
 
     std::cout<<v_instr<<" $t2, $t0, $t1"<<std::endl;
