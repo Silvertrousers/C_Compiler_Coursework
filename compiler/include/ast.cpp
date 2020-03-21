@@ -926,7 +926,7 @@ std::string var_or_const_instr(std::string v_instr, std::string c_instr, std::st
   if(!is_a_variable(arg1) && !is_a_variable(arg2)){
 
     std::cout<<"addi $t0, r0, "<<arg1<<std::endl; //load $t0 -> arg1
-    std::cout<<"addi $t1, r0, "<<arg2<<std::endl; //load $t1 -> arg2
+    std::cout<<"addi $t1, $zero, "<<arg2<<std::endl; //load $t1 -> arg2
 
     std::cout<<v_instr<<" $t2, $t0, $t1"<<std::endl;
   }
