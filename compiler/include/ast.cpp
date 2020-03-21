@@ -50,11 +50,11 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
     branches[2]->make_mips(new_scope, sp, pc);//arguments
     for (int i = 0; i < new_scope.symbols.size(); i++){
         arg1 = new_scope.symbols[i].name; //assuming the argument calls added them to new scope, these should be the 4 parameters.
-        std::cout<<"lw r4, "<<table.find_symbol(arg1).offset<<"("<<table.stack_pointer<<")"<<std::endl;
-        std::cout << "add r4, r5, r0" << std::endl;
-        std::cout << "add r5, r6, r0" << std::endl;
-        std::cout << "add r6, r7, r0" << std::endl;
-        std::cout << "add r4, r0, r0" << std::endl;
+        std::cout<<"lw $a0, "<<table.find_symbol(arg1).offset<<"("<<table.stack_pointer<<")"<<std::endl;
+        std::cout << "add $a0, $a1, r0" << std::endl;
+        std::cout << "add $a1, $a2, r0" << std::endl;
+        std::cout << "add $a2, $a3, r0" << std::endl;
+        std::cout << "add $a0, r0, r0" << std::endl;
     }
     std::cout<<branches[3]->make_mips(new_scope, sp, pc);//body
   }
@@ -84,9 +84,9 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
       std::string skip = makeName("skip");
       std::string end = makeName("end");
       arg1 = branches[1]->make_mips(new_scope, sp, pc);
-      std::cout<<"lw r1, "<<table.find_symbol(arg1).offset<<"("<<table.stack_pointer<<")"<<std::endl;
-      //std::cout<<"lw r2, "<<table.find_symbol(arg2).offset<<"("<<table.stack_pointer<<")"<<std::endl;
-      std::cout<< "beq r1, r0, " << skip << std::endl;
+      std::cout<<"lw $t0, "<<table.find_symbol(arg1).offset<<"("<<table.stack_pointer<<")"<<std::endl;
+      //std::cout<<"lw $t1, "<<table.find_symbol(arg2).offset<<"("<<table.stack_pointer<<")"<<std::endl;
+      std::cout<< "beq $t0, r0, " << skip << std::endl;
       //branch if condition is not met to label else
       std::cout<<branches[2]->make_mips(new_scope, sp, pc);
       std::cout<< "beq " << "r0, " << "r0, " << end << std::endl;
@@ -110,8 +110,8 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
       std::string end = makeName("end");
       std::cout << ":" << start << std::endl;
       arg1 = branches[2]->make_mips(new_scope, sp, pc);
-      std::cout<<"lw r1, "<<table.find_symbol(arg1).offset<<"("<<table.stack_pointer<<")"<<std::endl;
-      std::cout<< "beq r1, r0, " << end << std::endl;
+      std::cout<<"lw $t0, "<<table.find_symbol(arg1).offset<<"("<<table.stack_pointer<<")"<<std::endl;
+      std::cout<< "beq $t0, r0, " << end << std::endl;
       branches[3]->make_mips(new_scope, sp, pc);
       branches[5]->make_mips(new_scope, sp, pc);
       std::cout<< "beq " << "r0, " << "r0, " << start << std::endl;
@@ -121,8 +121,8 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
     if (branches[0]-> node_type == "T_WHILE"){
       std::string end = makeName("end");
       arg1 = branches[1]->make_mips(new_scope, sp, pc);
-      std::cout<<"lw r1, "<<table.find_symbol(arg1).offset<<"("<<table.stack_pointer<<")"<<std::endl;
-      std::cout<< "beq r1, r0, " << end << std::endl;
+      std::cout<<"lw $t0, "<<table.find_symbol(arg1).offset<<"("<<table.stack_pointer<<")"<<std::endl;
+      std::cout<< "beq $t0, r0, " << end << std::endl;
       std::cout<<branches[5]->make_mips(new_scope, sp, pc);
       std::cout << end<< ":" << std::endl;
     }
@@ -143,14 +143,14 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
   if(node_type == "PRIMARY_EXPRESSION"){/*std::cout<<node_type<<std::endl;*/}
 
   if(node_type == "CONSTANT"){/*std::cout<<node_type<<std::endl;*/
-    std::cout<<"addi r3, r0, "<<value<<std::endl;
+    std::cout<<"addi $t2, r0, "<<value<<std::endl;
     if(table.t1_free == true){
-      std::cout<<"sw r3, "<<table.find_symbol("temp1").offset<<"("<<table.stack_pointer<<")"<<std::endl;
+      std::cout<<"sw $t2, "<<table.find_symbol("temp1").offset<<"("<<table.stack_pointer<<")"<<std::endl;
       return "temp1";
       table.t1_free = false;
     }
     if(table.t2_free == true){
-      std::cout<<"sw r3, "<<table.find_symbol("temp2").offset<<"("<<table.stack_pointer<<")"<<std::endl;
+      std::cout<<"sw $t2, "<<table.find_symbol("temp2").offset<<"("<<table.stack_pointer<<")"<<std::endl;
       return "temp2";
       table.t2_free = false;
     }
@@ -202,33 +202,33 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
       }
       if (branches[0]->node_type == "ASSIGNMENT_EXPRESSION"){
           arg1 = branches[0]->make_mips(table, sp, pc);
-          std::cout << "add r7, r6, r0" <<std::endl;
-          std::cout << "add r6, r5, r0" <<std::endl;
-          std::cout << "add r5, r4, r0" <<std::endl;
-          std::cout<<"lw r4, "<<table.find_symbol(arg1).offset<<"("<<table.stack_pointer<<")"<<std::endl;
+          std::cout << "add $a3, $a2, r0" <<std::endl;
+          std::cout << "add $a2, $a1, r0" <<std::endl;
+          std::cout << "add $a1, $a0, r0" <<std::endl;
+          std::cout<<"lw $a0, "<<table.find_symbol(arg1).offset<<"("<<table.stack_pointer<<")"<<std::endl;
       }
       arg1 = branches[1]->make_mips(table, sp, pc);
-      std::cout << "add r7, r6, r0" <<std::endl;
-      std::cout << "add r6, r5, r0" <<std::endl;
-      std::cout << "add r5, r4, r0" <<std::endl;
-      std::cout<<"lw r4, "<<table.find_symbol(arg2).offset<<"("<<table.stack_pointer<<")"<<std::endl;
+      std::cout << "add $a3, $a2, r0" <<std::endl;
+      std::cout << "add $a2, $a1, r0" <<std::endl;
+      std::cout << "add $a1, $a0, r0" <<std::endl;
+      std::cout<<"lw $a0, "<<table.find_symbol(arg2).offset<<"("<<table.stack_pointer<<")"<<std::endl;
   }
   if(node_type == "UNARY_EXPRESSION"){/*std::cout<<node_type<<std::endl;*/
     if(value == "++"){
       arg1 = branches[0]->make_mips(table, sp, pc);
-      std::cout<<"lw r1, "<<table.find_symbol(arg1).offset<<"("<<table.stack_pointer<<")"<<std::endl;
-      std::cout<<"addi r3,r1,1"<<std::endl;//x=x+the rest
-      std::cout<<"sw r3, "<<table.find_symbol(arg1).offset<<"("<<table.stack_pointer<<")"<<std::endl;
+      std::cout<<"lw $t0, "<<table.find_symbol(arg1).offset<<"("<<table.stack_pointer<<")"<<std::endl;
+      std::cout<<"addi $t2,$t0,1"<<std::endl;//x=x+the rest
+      std::cout<<"sw $t2, "<<table.find_symbol(arg1).offset<<"("<<table.stack_pointer<<")"<<std::endl;
       table.t1_free = true;
       table.t2_free = true;
       return arg1;
     }
     if(value == "--"){
       arg1 = branches[0]->make_mips(table, sp, pc);
-      std::cout<<"lw r1, "<<table.find_symbol(arg1).offset<<"("<<table.stack_pointer<<")"<<std::endl;
-      std::cout<<"addi r2,r0,1"<<std::endl;
-      std::cout<<"sub r3,r1,r2"<<std::endl;//x=x+the rest
-      std::cout<<"sw r3, "<<table.find_symbol(arg1).offset<<"("<<table.stack_pointer<<")"<<std::endl;
+      std::cout<<"lw $t0, "<<table.find_symbol(arg1).offset<<"("<<table.stack_pointer<<")"<<std::endl;
+      std::cout<<"addi $t1,r0,1"<<std::endl;
+      std::cout<<"sub $t2,$t0,$t1"<<std::endl;//x=x+the rest
+      std::cout<<"sw $t2, "<<table.find_symbol(arg1).offset<<"("<<table.stack_pointer<<")"<<std::endl;
       table.t1_free = true;
       table.t2_free = true;
       return arg1;
@@ -239,9 +239,9 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
     if(branches[0]->value == "minus"){}//type level demotion, do later
     if(branches[0]->value == "bitwise_not"){
       arg1 = branches[0]->make_mips(table, sp, pc);
-      std::cout<<"lw r1, "<<table.find_symbol(arg1).offset<<"("<<table.stack_pointer<<")"<<std::endl;
-      std::cout<<"Nor r3,r1,r1"<<std::endl;//x=x+the rest
-      std::cout<<"sw r3, "<<table.find_symbol(arg1).offset<<"("<<table.stack_pointer<<")"<<std::endl;
+      std::cout<<"lw $t0, "<<table.find_symbol(arg1).offset<<"("<<table.stack_pointer<<")"<<std::endl;
+      std::cout<<"Nor $t2,$t0,$t0"<<std::endl;//x=x+the rest
+      std::cout<<"sw $t2, "<<table.find_symbol(arg1).offset<<"("<<table.stack_pointer<<")"<<std::endl;
       table.t1_free = true;
       table.t2_free = true;
       return arg1;
@@ -250,13 +250,13 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
       arg1 = branches[0]->make_mips(table, sp, pc);
       std::string skip = makeName("skip");
 
-      std::cout<<"lw r1, "<<table.find_symbol(arg1).offset<<"("<<table.stack_pointer<<")"<<std::endl;
-      std::cout<<"addi r3, r0, 1"<<std::endl;
-      std::cout<<"beq r3, r0, "<<skip<<std::endl;
-      std::cout<<"addi r3, r0, 0"<<std::endl;
+      std::cout<<"lw $t0, "<<table.find_symbol(arg1).offset<<"("<<table.stack_pointer<<")"<<std::endl;
+      std::cout<<"addi $t2, r0, 1"<<std::endl;
+      std::cout<<"beq $t2, r0, "<<skip<<std::endl;
+      std::cout<<"addi $t2, r0, 0"<<std::endl;
       std::cout<<skip<<":"<<std::endl;
-      std::cout<<"Nor r3,r1,r1"<<std::endl;//x=x+the rest
-      std::cout<<"sw r3, "<<table.find_symbol(arg1).offset<<"("<<table.stack_pointer<<")"<<std::endl;
+      std::cout<<"Nor $t2,$t0,$t0"<<std::endl;//x=x+the rest
+      std::cout<<"sw $t2, "<<table.find_symbol(arg1).offset<<"("<<table.stack_pointer<<")"<<std::endl;
       table.t1_free = true;
       table.t2_free = true;
       return arg1;
@@ -302,8 +302,8 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
         arg1 = branches[1]->make_mips(table, sp, pc);
         s.value = table.find_symbol(arg1).value;
         table.insert(s);
-        std::cout<<"lw r3, "<<table.find_symbol(arg1).offset<<"("<<table.stack_pointer<<")"<<std::endl;
-        std::cout<<"sw r3, "<<table.find_symbol(s.name).offset<<"("<<table.stack_pointer<<")"<<std::endl;
+        std::cout<<"lw $t2, "<<table.find_symbol(arg1).offset<<"("<<table.stack_pointer<<")"<<std::endl;
+        std::cout<<"sw $t2, "<<table.find_symbol(s.name).offset<<"("<<table.stack_pointer<<")"<<std::endl;
       }
       return s.name;
     }
@@ -312,8 +312,8 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
       arg2 = branches[1]->make_mips(table, sp, pc);
       if(branches[1]->node_type == "NULL"){}
       else{
-        std::cout<<"lw r3, "<<table.find_symbol(arg2).offset<<"("<<table.stack_pointer<<")"<<std::endl;
-        std::cout<<"sw r3, "<<table.find_symbol(arg1).offset<<"("<<table.stack_pointer<<")"<<std::endl;
+        std::cout<<"lw $t2, "<<table.find_symbol(arg2).offset<<"("<<table.stack_pointer<<")"<<std::endl;
+        std::cout<<"sw $t2, "<<table.find_symbol(arg1).offset<<"("<<table.stack_pointer<<")"<<std::endl;
       }
       return arg1;
     }
@@ -430,18 +430,18 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
     if(value == "*"){
       arg1 =branches[0]->make_mips(table, sp, pc);//need a way to check if arg1 is a constant
       arg2 =branches[1]->make_mips(table, sp, pc);
-      std::cout<<"lw r1, "<<table.find_symbol(arg1).offset<<"("<<table.stack_pointer<<")"<<std::endl;
-      std::cout<<"lw r2, "<<table.find_symbol(arg2).offset<<"("<<table.stack_pointer<<")"<<std::endl;
-      std::cout<<"MULT r1, r2"<<std::endl;
-      std::cout<<"MFLO r3"<<std::endl;
+      std::cout<<"lw $t0, "<<table.find_symbol(arg1).offset<<"("<<table.stack_pointer<<")"<<std::endl;
+      std::cout<<"lw $t1, "<<table.find_symbol(arg2).offset<<"("<<table.stack_pointer<<")"<<std::endl;
+      std::cout<<"MULT $t0, $t1"<<std::endl;
+      std::cout<<"MFLO $t2"<<std::endl;
 
       if(table.t1_free == true){
-        std::cout<<"sw r3, "<<table.find_symbol("temp1").offset<<"("<<table.stack_pointer<<")"<<std::endl;
+        std::cout<<"sw $t2, "<<table.find_symbol("temp1").offset<<"("<<table.stack_pointer<<")"<<std::endl;
         table.t1_free = false;
         return "temp1";
       }
       if(table.t2_free == true){
-        std::cout<<"sw r3, "<<table.find_symbol("temp2").offset<<"("<<table.stack_pointer<<")"<<std::endl;
+        std::cout<<"sw $t2, "<<table.find_symbol("temp2").offset<<"("<<table.stack_pointer<<")"<<std::endl;
         table.t2_free = false;
         return "temp2";
       }
@@ -449,19 +449,19 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
     if(value == "/" or value == "%"){
       arg1 =branches[0]->make_mips(table, sp, pc);//need a way to check if arg1 is a constant
       arg2 =branches[1]->make_mips(table, sp, pc);
-      std::cout<<"lw r1, "<<table.find_symbol(arg1).offset<<"("<<table.stack_pointer<<")"<<std::endl;
-      std::cout<<"lw r2, "<<table.find_symbol(arg2).offset<<"("<<table.stack_pointer<<")"<<std::endl;
-      std::cout<<"DIV r1, r2"<<std::endl;
-      if(value == "/"){std::cout<<"MFLO r3"<<std::endl;}//get quotient
-      if(value == "%"){std::cout<<"MFHI r3"<<std::endl;}//get remainder
+      std::cout<<"lw $t0, "<<table.find_symbol(arg1).offset<<"("<<table.stack_pointer<<")"<<std::endl;
+      std::cout<<"lw $t1, "<<table.find_symbol(arg2).offset<<"("<<table.stack_pointer<<")"<<std::endl;
+      std::cout<<"DIV $t0, $t1"<<std::endl;
+      if(value == "/"){std::cout<<"MFLO $t2"<<std::endl;}//get quotient
+      if(value == "%"){std::cout<<"MFHI $t2"<<std::endl;}//get remainder
 
       if(table.t1_free == true){
-        std::cout<<"sw r3, "<<table.find_symbol("temp1").offset<<"("<<table.stack_pointer<<")"<<std::endl;
+        std::cout<<"sw $t2, "<<table.find_symbol("temp1").offset<<"("<<table.stack_pointer<<")"<<std::endl;
         table.t1_free = false;
         return "temp1";
       }
       if(table.t2_free == true){
-        std::cout<<"sw r3, "<<table.find_symbol("temp2").offset<<"("<<table.stack_pointer<<")"<<std::endl;
+        std::cout<<"sw $t2, "<<table.find_symbol("temp2").offset<<"("<<table.stack_pointer<<")"<<std::endl;
         table.t2_free = false;
         return "temp2";
       }
@@ -476,12 +476,12 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
 
 
       if(table.t1_free == true){
-        std::cout<<"sw r3, "<<table.find_symbol("temp1").offset<<"("<<table.stack_pointer<<")"<<std::endl;
+        std::cout<<"sw $t2, "<<table.find_symbol("temp1").offset<<"("<<table.stack_pointer<<")"<<std::endl;
         table.t1_free = false;
         return "temp1";
       }
       if(table.t2_free == true){
-        std::cout<<"sw r3, "<<table.find_symbol("temp2").offset<<"("<<table.stack_pointer<<")"<<std::endl;
+        std::cout<<"sw $t2, "<<table.find_symbol("temp2").offset<<"("<<table.stack_pointer<<")"<<std::endl;
         table.t2_free = false;
         return "temp2";
       }
@@ -492,12 +492,12 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
       var_or_const_instr("sub", "sub", arg1, arg2, table);
 
       if(table.t1_free == true){
-        std::cout<<"sw r3, "<<table.find_symbol("temp1").offset<<"("<<table.stack_pointer<<")"<<std::endl;
+        std::cout<<"sw $t2, "<<table.find_symbol("temp1").offset<<"("<<table.stack_pointer<<")"<<std::endl;
         table.t1_free = false;
         return "temp1";
       }
       if(table.t2_free == true){
-        std::cout<<"sw r3, "<<table.find_symbol("temp2").offset<<"("<<table.stack_pointer<<")"<<std::endl;
+        std::cout<<"sw $t2, "<<table.find_symbol("temp2").offset<<"("<<table.stack_pointer<<")"<<std::endl;
         table.t2_free = false;
         return "temp2";
       }
@@ -512,12 +512,12 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
     if(value == ">>"){var_or_const_instr("srlv", "srl", arg1, arg2, table);}//changes for unsigned ints (gotta use sra)
 
     if(table.t1_free == true){
-      std::cout<<"sw r3, "<<table.find_symbol("temp1").offset<<"("<<table.stack_pointer<<")"<<std::endl;
+      std::cout<<"sw $t2, "<<table.find_symbol("temp1").offset<<"("<<table.stack_pointer<<")"<<std::endl;
       table.t1_free = false;
       return "temp1";
     }
     if(table.t2_free == true){
-      std::cout<<"sw r3, "<<table.find_symbol("temp2").offset<<"("<<table.stack_pointer<<")"<<std::endl;
+      std::cout<<"sw $t2, "<<table.find_symbol("temp2").offset<<"("<<table.stack_pointer<<")"<<std::endl;
       table.t2_free = false;
       return "temp2";
     }
@@ -532,17 +532,17 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
 
     if(value == "<"){}
     if(value == ">"){
-      std::cout<<"xori r3, r3, 1"<<std::endl;//if set to 1, this will turn the 1 to a 0
+      std::cout<<"xori $t2, $t2, 1"<<std::endl;//if set to 1, this will turn the 1 to a 0
     }//this nots the less than to make a greater than instruction
 
 
     if(table.t1_free == true){
-      std::cout<<"sw r3, "<<table.find_symbol("temp1").offset<<"("<<table.stack_pointer<<")"<<std::endl;
+      std::cout<<"sw $t2, "<<table.find_symbol("temp1").offset<<"("<<table.stack_pointer<<")"<<std::endl;
       table.t1_free = false;
       return "temp1";
     }
     if(table.t2_free == true){
-      std::cout<<"sw r3, "<<table.find_symbol("temp2").offset<<"("<<table.stack_pointer<<")"<<std::endl;
+      std::cout<<"sw $t2, "<<table.find_symbol("temp2").offset<<"("<<table.stack_pointer<<")"<<std::endl;
       table.t2_free = false;
       return "temp2";
     }
@@ -554,22 +554,22 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
     std::string skip = makeName("skip");
 
     var_or_const_instr("sub", "subi", arg1, arg2, table);
-    std::cout<<"addi r1,r3,0"<<std::endl;
-    std::cout<<"addi r3,r0,1"<<std::endl;//set result to 1
+    std::cout<<"addi $t0,$t2,0"<<std::endl;
+    std::cout<<"addi $t2,r0,1"<<std::endl;//set result to 1
 
-    if(value == "=="){std::cout<<"beq r1,r0, "<<skip<<std::endl; }
-    if(value == "!="){std::cout<<"bne r1,r0, "<<skip<<std::endl; }//this nots the less than to make a greater than instruction
+    if(value == "=="){std::cout<<"beq $t0,r0, "<<skip<<std::endl; }
+    if(value == "!="){std::cout<<"bne $t0,r0, "<<skip<<std::endl; }//this nots the less than to make a greater than instruction
 
-    std::cout<<"addi r3,r0,0"<<std::endl;//set result to 0
+    std::cout<<"addi $t2,r0,0"<<std::endl;//set result to 0
     std::cout<<skip<<":"<<std::endl;
 
     if(table.t1_free == true){
-      std::cout<<"sw r3, "<<table.find_symbol("temp1").offset<<"("<<table.stack_pointer<<")"<<std::endl;
+      std::cout<<"sw $t2, "<<table.find_symbol("temp1").offset<<"("<<table.stack_pointer<<")"<<std::endl;
       table.t1_free = false;
       return "temp1";
     }
     if(table.t2_free == true){
-      std::cout<<"sw r3, "<<table.find_symbol("temp2").offset<<"("<<table.stack_pointer<<")"<<std::endl;
+      std::cout<<"sw $t2, "<<table.find_symbol("temp2").offset<<"("<<table.stack_pointer<<")"<<std::endl;
       table.t2_free = false;
       return "temp2";
     }
@@ -582,12 +582,12 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
     var_or_const_instr("AND", "ANDI", arg1, arg2, table);
 
     if(table.t1_free == true){
-      std::cout<<"sw r3, "<<table.find_symbol("temp1").offset<<"("<<table.stack_pointer<<")"<<std::endl;
+      std::cout<<"sw $t2, "<<table.find_symbol("temp1").offset<<"("<<table.stack_pointer<<")"<<std::endl;
       table.t1_free = false;
       return "temp1";
     }
     if(table.t2_free == true){
-      std::cout<<"sw r3, "<<table.find_symbol("temp2").offset<<"("<<table.stack_pointer<<")"<<std::endl;
+      std::cout<<"sw $t2, "<<table.find_symbol("temp2").offset<<"("<<table.stack_pointer<<")"<<std::endl;
       table.t2_free = false;
       return "temp2";
     }
@@ -600,12 +600,12 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
     var_or_const_instr("xor", "xori", arg1, arg2, table);
 
     if(table.t1_free == true){
-      std::cout<<"sw r3, "<<table.find_symbol("temp1").offset<<"("<<table.stack_pointer<<")"<<std::endl;
+      std::cout<<"sw $t2, "<<table.find_symbol("temp1").offset<<"("<<table.stack_pointer<<")"<<std::endl;
       table.t1_free = false;
       return "temp1";
     }
     if(table.t2_free == true){
-      std::cout<<"sw r3, "<<table.find_symbol("temp2").offset<<"("<<table.stack_pointer<<")"<<std::endl;
+      std::cout<<"sw $t2, "<<table.find_symbol("temp2").offset<<"("<<table.stack_pointer<<")"<<std::endl;
       table.t2_free = false;
       return "temp2";
     }
@@ -618,12 +618,12 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
     var_or_const_instr("or", "ori", arg1, arg2, table);
 
     if(table.t1_free == true){
-      std::cout<<"sw r3, "<<table.find_symbol("temp1").offset<<"("<<table.stack_pointer<<")"<<std::endl;
+      std::cout<<"sw $t2, "<<table.find_symbol("temp1").offset<<"("<<table.stack_pointer<<")"<<std::endl;
       table.t1_free = false;
       return "temp1";
     }
     if(table.t2_free == true){
-      std::cout<<"sw r3, "<<table.find_symbol("temp2").offset<<"("<<table.stack_pointer<<")"<<std::endl;
+      std::cout<<"sw $t2, "<<table.find_symbol("temp2").offset<<"("<<table.stack_pointer<<")"<<std::endl;
       table.t2_free = false;
       return "temp2";
     }
@@ -637,25 +637,25 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
     arg1 =branches[0]->make_mips(table, sp, pc);//eval arg1
     var_or_const_instr("xor", "xori", arg1, "0", table);//check if arg1 = 0
 
-    std::cout<<"beq r3, r0, "<<sc<<std::endl;
+    std::cout<<"beq $t2, r0, "<<sc<<std::endl;
     arg2 =branches[1]->make_mips(table, sp, pc);//else eval second arg
     var_or_const_instr("xor", "xori", arg2, "0", table);//check if arg2 = 0
 
-    std::cout<<"addi r2,r0,1"<<std::endl;// set result to 1
-    std::cout<<"bne r3, r0, "<<nsc<<std::endl;//result stays 1 if arg2 != 0
+    std::cout<<"addi $t1,r0,1"<<std::endl;// set result to 1
+    std::cout<<"bne $t2, r0, "<<nsc<<std::endl;//result stays 1 if arg2 != 0
     std::cout<<sc<<":"<<std::endl;
-    std::cout<<"addi r2,r0,0"<<std::endl;// set result to 0
+    std::cout<<"addi $t1,r0,0"<<std::endl;// set result to 0
     std::cout<<nsc<<":"<<std::endl;
 
-    std::cout<<"add r3,r2, r0"<<std::endl;
+    std::cout<<"add $t2,$t1, r0"<<std::endl;
 
     if(table.t1_free == true){
-      std::cout<<"sw r3, "<<table.find_symbol("temp1").offset<<"("<<table.stack_pointer<<")"<<std::endl;
+      std::cout<<"sw $t2, "<<table.find_symbol("temp1").offset<<"("<<table.stack_pointer<<")"<<std::endl;
       table.t1_free = false;
       return "temp1";
     }
     if(table.t2_free == true){
-      std::cout<<"sw r3, "<<table.find_symbol("temp2").offset<<"("<<table.stack_pointer<<")"<<std::endl;
+      std::cout<<"sw $t2, "<<table.find_symbol("temp2").offset<<"("<<table.stack_pointer<<")"<<std::endl;
       table.t2_free = false;
       return "temp2";
     }
@@ -668,25 +668,25 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
     arg1 =branches[0]->make_mips(table, sp, pc);//eval arg1
     var_or_const_instr("xor", "xori", arg1, "0", table);//check if arg1 = 0
 
-    std::cout<<"bne r3, r0, "<<sc<<std::endl;
+    std::cout<<"bne $t2, r0, "<<sc<<std::endl;
     arg2 =branches[1]->make_mips(table, sp, pc);//else eval second arg
     var_or_const_instr("xor", "xori", arg2, "0", table);//check if arg2 = 0
 
-    std::cout<<"addi r2,r0,0"<<std::endl;// set result to 0
-    std::cout<<"beq r3, r0, "<<nsc<<std::endl;//result stays 1 if arg2 != 0
+    std::cout<<"addi $t1,r0,0"<<std::endl;// set result to 0
+    std::cout<<"beq $t2, r0, "<<nsc<<std::endl;//result stays 1 if arg2 != 0
     std::cout<<sc<<":"<<std::endl;
-    std::cout<<"addi r2,r0,1"<<std::endl;// set result to 1
+    std::cout<<"addi $t1,r0,1"<<std::endl;// set result to 1
     std::cout<<nsc<<":"<<std::endl;
 
-    std::cout<<"add r3,r2, r0"<<std::endl;
+    std::cout<<"add $t2,$t1, r0"<<std::endl;
 
     if(table.t1_free == true){
-      std::cout<<"sw r3, "<<table.find_symbol("temp1").offset<<"("<<table.stack_pointer<<")"<<std::endl;
+      std::cout<<"sw $t2, "<<table.find_symbol("temp1").offset<<"("<<table.stack_pointer<<")"<<std::endl;
       table.t1_free = false;
       return "temp1";
     }
     if(table.t2_free == true){
-      std::cout<<"sw r3, "<<table.find_symbol("temp2").offset<<"("<<table.stack_pointer<<")"<<std::endl;
+      std::cout<<"sw $t2, "<<table.find_symbol("temp2").offset<<"("<<table.stack_pointer<<")"<<std::endl;
       table.t2_free = false;
       return "temp2";
     }
@@ -697,114 +697,114 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
 
     if(branches[1]->value == "="){
       std::string res = branches[2]->make_mips(table, sp, pc);
-      std::cout<<"lw r3, "<<table.find_symbol(res).offset<<"("<<table.stack_pointer<<")"<<std::endl;//this is the location of temp1
-      std::cout<<"sw r3, "<<table.find_symbol(s).offset<<"("<<table.stack_pointer<<")"<<std::endl;
+      std::cout<<"lw $t2, "<<table.find_symbol(res).offset<<"("<<table.stack_pointer<<")"<<std::endl;//this is the location of temp1
+      std::cout<<"sw $t2, "<<table.find_symbol(s).offset<<"("<<table.stack_pointer<<")"<<std::endl;
       table.t1_free = true;
       table.t2_free = true;
     }
     if(branches[1]->value == "+="){
       std::string res = branches[2]->make_mips(table, sp, pc);
-      std::cout<<"lw r1, "<<table.find_symbol(res).offset<<"("<<table.stack_pointer<<")"<<std::endl;//this is the location of temp1
-      std::cout<<"lw r2, "<<table.find_symbol(s).offset<<"("<<table.stack_pointer<<")"<<std::endl;//this is the location of old x
+      std::cout<<"lw $t0, "<<table.find_symbol(res).offset<<"("<<table.stack_pointer<<")"<<std::endl;//this is the location of temp1
+      std::cout<<"lw $t1, "<<table.find_symbol(s).offset<<"("<<table.stack_pointer<<")"<<std::endl;//this is the location of old x
 
-      std::cout<<"add r3,r2,r1"<<std::endl;//x=x+the rest
-      std::cout<<"sw r3, "<<table.find_symbol(s).offset<<"("<<table.stack_pointer<<")"<<std::endl;
+      std::cout<<"add $t2,$t1,$t0"<<std::endl;//x=x+the rest
+      std::cout<<"sw $t2, "<<table.find_symbol(s).offset<<"("<<table.stack_pointer<<")"<<std::endl;
       table.t1_free = true;
       table.t2_free = true;
     }
     if(branches[1]->value == "-="){
       std::string res = branches[2]->make_mips(table, sp, pc);
-      std::cout<<"lw r1, "<<table.find_symbol(res).offset<<"("<<table.stack_pointer<<")"<<std::endl;//this is the location of temp1
-      std::cout<<"lw r2, "<<table.find_symbol(s).offset<<"("<<table.stack_pointer<<")"<<std::endl;//this is the location of old x
+      std::cout<<"lw $t0, "<<table.find_symbol(res).offset<<"("<<table.stack_pointer<<")"<<std::endl;//this is the location of temp1
+      std::cout<<"lw $t1, "<<table.find_symbol(s).offset<<"("<<table.stack_pointer<<")"<<std::endl;//this is the location of old x
 
-      std::cout<<"sub r3,r2,r1"<<std::endl;//x=x+the rest
-      std::cout<<"sw r3, "<<table.find_symbol(s).offset<<"("<<table.stack_pointer<<")"<<std::endl;
+      std::cout<<"sub $t2,$t1,$t0"<<std::endl;//x=x+the rest
+      std::cout<<"sw $t2, "<<table.find_symbol(s).offset<<"("<<table.stack_pointer<<")"<<std::endl;
       table.t1_free = true;
       table.t2_free = true;
     }
     if(branches[1]->value == "*="){
       std::string res = branches[2]->make_mips(table, sp, pc);
-      std::cout<<"lw r1, "<<table.find_symbol(res).offset<<"("<<table.stack_pointer<<")"<<std::endl;//this is the location of temp1
-      std::cout<<"lw r2, "<<table.find_symbol(s).offset<<"("<<table.stack_pointer<<")"<<std::endl;//this is the location of old x
+      std::cout<<"lw $t0, "<<table.find_symbol(res).offset<<"("<<table.stack_pointer<<")"<<std::endl;//this is the location of temp1
+      std::cout<<"lw $t1, "<<table.find_symbol(s).offset<<"("<<table.stack_pointer<<")"<<std::endl;//this is the location of old x
 
-      std::cout<<"MULT r2,r1"<<std::endl;//x=x+the rest
-      std::cout<<"MFLO r3"<<std::endl;
+      std::cout<<"MULT $t1,$t0"<<std::endl;//x=x+the rest
+      std::cout<<"MFLO $t2"<<std::endl;
 
-      std::cout<<"sw r3, "<<table.find_symbol(s).offset<<"("<<table.stack_pointer<<")"<<std::endl;
+      std::cout<<"sw $t2, "<<table.find_symbol(s).offset<<"("<<table.stack_pointer<<")"<<std::endl;
       table.t1_free = true;
       table.t2_free = true;
     }
     if(branches[1]->value == "/="){
       std::string res = branches[2]->make_mips(table, sp, pc);
-      std::cout<<"lw r1, "<<table.find_symbol(res).offset<<"("<<table.stack_pointer<<")"<<std::endl;//this is the location of temp1
-      std::cout<<"lw r2, "<<table.find_symbol(s).offset<<"("<<table.stack_pointer<<")"<<std::endl;//this is the location of old x
+      std::cout<<"lw $t0, "<<table.find_symbol(res).offset<<"("<<table.stack_pointer<<")"<<std::endl;//this is the location of temp1
+      std::cout<<"lw $t1, "<<table.find_symbol(s).offset<<"("<<table.stack_pointer<<")"<<std::endl;//this is the location of old x
 
-      std::cout<<"DIV r2,r1"<<std::endl;//x=x+the rest
-      std::cout<<"MFLO r3"<<std::endl;
+      std::cout<<"DIV $t1,$t0"<<std::endl;//x=x+the rest
+      std::cout<<"MFLO $t2"<<std::endl;
 
-      std::cout<<"sw r3, "<<table.find_symbol(s).offset<<"("<<table.stack_pointer<<")"<<std::endl;
+      std::cout<<"sw $t2, "<<table.find_symbol(s).offset<<"("<<table.stack_pointer<<")"<<std::endl;
       table.t1_free = true;
       table.t2_free = true;
     }
     if(branches[1]->value == "%="){
       std::string res = branches[2]->make_mips(table, sp, pc);
-      std::cout<<"lw r1, "<<table.find_symbol(res).offset<<"("<<table.stack_pointer<<")"<<std::endl;//this is the location of temp1
-      std::cout<<"lw r2, "<<table.find_symbol(s).offset<<"("<<table.stack_pointer<<")"<<std::endl;//this is the location of old x
+      std::cout<<"lw $t0, "<<table.find_symbol(res).offset<<"("<<table.stack_pointer<<")"<<std::endl;//this is the location of temp1
+      std::cout<<"lw $t1, "<<table.find_symbol(s).offset<<"("<<table.stack_pointer<<")"<<std::endl;//this is the location of old x
 
-      std::cout<<"DIV r2,r1"<<std::endl;//x=x+the rest
-      std::cout<<"MFHI r3"<<std::endl;
+      std::cout<<"DIV $t1,$t0"<<std::endl;//x=x+the rest
+      std::cout<<"MFHI $t2"<<std::endl;
 
-      std::cout<<"sw r3, "<<table.find_symbol(s).offset<<"("<<table.stack_pointer<<")"<<std::endl;
+      std::cout<<"sw $t2, "<<table.find_symbol(s).offset<<"("<<table.stack_pointer<<")"<<std::endl;
       table.t1_free = true;
       table.t2_free = true;
     }
     if(branches[1]->value == "<<="){
       std::string res = branches[2]->make_mips(table, sp, pc);
-      std::cout<<"lw r1, "<<table.find_symbol(res).offset<<"("<<table.stack_pointer<<")"<<std::endl;//this is the location of temp1
-      std::cout<<"lw r2, "<<table.find_symbol(s).offset<<"("<<table.stack_pointer<<")"<<std::endl;//this is the location of old x
+      std::cout<<"lw $t0, "<<table.find_symbol(res).offset<<"("<<table.stack_pointer<<")"<<std::endl;//this is the location of temp1
+      std::cout<<"lw $t1, "<<table.find_symbol(s).offset<<"("<<table.stack_pointer<<")"<<std::endl;//this is the location of old x
 
-      std::cout<<"sllv r3,r2,r1"<<std::endl;//x=x+the rest
-      std::cout<<"sw r3, "<<table.find_symbol(s).offset<<"("<<table.stack_pointer<<")"<<std::endl;
+      std::cout<<"sllv $t2,$t1,$t0"<<std::endl;//x=x+the rest
+      std::cout<<"sw $t2, "<<table.find_symbol(s).offset<<"("<<table.stack_pointer<<")"<<std::endl;
       table.t1_free = true;
       table.t2_free = true;
     }
     if(branches[1]->value == ">>="){
       std::string res = branches[2]->make_mips(table, sp, pc);
-      std::cout<<"lw r1, "<<table.find_symbol(res).offset<<"("<<table.stack_pointer<<")"<<std::endl;//this is the location of temp1
-      std::cout<<"lw r2, "<<table.find_symbol(s).offset<<"("<<table.stack_pointer<<")"<<std::endl;//this is the location of old x
+      std::cout<<"lw $t0, "<<table.find_symbol(res).offset<<"("<<table.stack_pointer<<")"<<std::endl;//this is the location of temp1
+      std::cout<<"lw $t1, "<<table.find_symbol(s).offset<<"("<<table.stack_pointer<<")"<<std::endl;//this is the location of old x
 
-      std::cout<<"srlv r3,r2,r1"<<std::endl;//x=x+the rest
-      std::cout<<"sw r3, "<<table.find_symbol(s).offset<<"("<<table.stack_pointer<<")"<<std::endl;
+      std::cout<<"srlv $t2,$t1,$t0"<<std::endl;//x=x+the rest
+      std::cout<<"sw $t2, "<<table.find_symbol(s).offset<<"("<<table.stack_pointer<<")"<<std::endl;
       table.t1_free = true;
       table.t2_free = true;
     }
     if(branches[1]->value == "&="){
       std::string res = branches[2]->make_mips(table, sp, pc);
-      std::cout<<"lw r1, "<<table.find_symbol(res).offset<<"("<<table.stack_pointer<<")"<<std::endl;//this is the location of temp1
-      std::cout<<"lw r2, "<<table.find_symbol(s).offset<<"("<<table.stack_pointer<<")"<<std::endl;//this is the location of old x
+      std::cout<<"lw $t0, "<<table.find_symbol(res).offset<<"("<<table.stack_pointer<<")"<<std::endl;//this is the location of temp1
+      std::cout<<"lw $t1, "<<table.find_symbol(s).offset<<"("<<table.stack_pointer<<")"<<std::endl;//this is the location of old x
 
-      std::cout<<"AND r3,r2,r1"<<std::endl;//x=x+the rest
-      std::cout<<"sw r3, "<<table.find_symbol(s).offset<<"("<<table.stack_pointer<<")"<<std::endl;
+      std::cout<<"AND $t2,$t1,$t0"<<std::endl;//x=x+the rest
+      std::cout<<"sw $t2, "<<table.find_symbol(s).offset<<"("<<table.stack_pointer<<")"<<std::endl;
       table.t1_free = true;
       table.t2_free = true;
     }
     if(branches[1]->value == "|="){
       std::string res = branches[2]->make_mips(table, sp, pc);
-      std::cout<<"lw r1, "<<table.find_symbol(res).offset<<"("<<table.stack_pointer<<")"<<std::endl;//this is the location of temp1
-      std::cout<<"lw r2, "<<table.find_symbol(s).offset<<"("<<table.stack_pointer<<")"<<std::endl;//this is the location of old x
+      std::cout<<"lw $t0, "<<table.find_symbol(res).offset<<"("<<table.stack_pointer<<")"<<std::endl;//this is the location of temp1
+      std::cout<<"lw $t1, "<<table.find_symbol(s).offset<<"("<<table.stack_pointer<<")"<<std::endl;//this is the location of old x
 
-      std::cout<<"or r3,r2,r1"<<std::endl;//x=x+the rest
-      std::cout<<"sw r3, "<<table.find_symbol(s).offset<<"("<<table.stack_pointer<<")"<<std::endl;
+      std::cout<<"or $t2,$t1,$t0"<<std::endl;//x=x+the rest
+      std::cout<<"sw $t2, "<<table.find_symbol(s).offset<<"("<<table.stack_pointer<<")"<<std::endl;
       table.t1_free = true;
       table.t2_free = true;
     }
     if(branches[1]->value == "^="){
       std::string res = branches[2]->make_mips(table, sp, pc);
-      std::cout<<"lw r1, "<<table.find_symbol(res).offset<<"("<<table.stack_pointer<<")"<<std::endl;//this is the location of temp1
-      std::cout<<"lw r2, "<<table.find_symbol(s).offset<<"("<<table.stack_pointer<<")"<<std::endl;//this is the location of old x
+      std::cout<<"lw $t0, "<<table.find_symbol(res).offset<<"("<<table.stack_pointer<<")"<<std::endl;//this is the location of temp1
+      std::cout<<"lw $t1, "<<table.find_symbol(s).offset<<"("<<table.stack_pointer<<")"<<std::endl;//this is the location of old x
 
-      std::cout<<"xor r3,r2,r1"<<std::endl;//x=x+the rest
-      std::cout<<"sw r3, "<<table.find_symbol(s).offset<<"("<<table.stack_pointer<<")"<<std::endl;
+      std::cout<<"xor $t2,$t1,$t0"<<std::endl;//x=x+the rest
+      std::cout<<"sw $t2, "<<table.find_symbol(s).offset<<"("<<table.stack_pointer<<")"<<std::endl;
       table.t1_free = true;
       table.t2_free = true;
     }
@@ -909,28 +909,28 @@ std::string makeName(std::string in){
 
 std::string var_or_const_instr(std::string v_instr, std::string c_instr, std::string arg1, std::string arg2, symbol_table table){
   if(is_a_variable(arg1) && is_a_variable(arg2)){
-    std::cout<<"lw r1, "<<table.find_symbol(arg1).offset<<"("<<table.stack_pointer<<")"<<std::endl;
-    std::cout<<"lw r2, "<<table.find_symbol(arg2).offset<<"("<<table.stack_pointer<<")"<<std::endl;
-    std::cout<<v_instr<<" r3, r1, r2"<<std::endl;
+    std::cout<<"lw $t0, "<<table.find_symbol(arg1).offset<<"("<<table.stack_pointer<<")"<<std::endl;
+    std::cout<<"lw $t1, "<<table.find_symbol(arg2).offset<<"("<<table.stack_pointer<<")"<<std::endl;
+    std::cout<<v_instr<<" $t2, $t0, $t1"<<std::endl;
   }
   if(is_a_variable(arg1) && !is_a_variable(arg2)){
-    std::cout<<"lw r1, "<<table.find_symbol(arg1).offset<<"("<<table.stack_pointer<<")"<<std::endl;
-    std::cout<<"addi r2, r0, "<<arg2<<std::endl;
-    std::cout<<v_instr<<" r3, r1, r2"<<std::endl;
+    std::cout<<"lw $t0, "<<table.find_symbol(arg1).offset<<"("<<table.stack_pointer<<")"<<std::endl;
+    std::cout<<"addi $t1, r0, "<<arg2<<std::endl;
+    std::cout<<v_instr<<" $t2, $t0, $t1"<<std::endl;
   }
   if(!is_a_variable(arg1) && is_a_variable(arg2)){
-    std::cout<<"lw r1, "<<table.find_symbol(arg2).offset<<"("<<table.stack_pointer<<")"<<std::endl;
-    std::cout<<"addi r2, r0, "<<arg1<<std::endl;
-    std::cout<<v_instr<<" r3, r1, r2"<<std::endl;
+    std::cout<<"lw $t0, "<<table.find_symbol(arg2).offset<<"("<<table.stack_pointer<<")"<<std::endl;
+    std::cout<<"addi $t1, r0, "<<arg1<<std::endl;
+    std::cout<<v_instr<<" $t2, $t0, $t1"<<std::endl;
   }
   if(!is_a_variable(arg1) && !is_a_variable(arg2)){
 
-    std::cout<<"addi r1, r0, "<<arg1<<std::endl; //load r1 -> arg1
-    std::cout<<"addi r2, r0, "<<arg2<<std::endl; //load r2 -> arg2
+    std::cout<<"addi $t0, r0, "<<arg1<<std::endl; //load $t0 -> arg1
+    std::cout<<"addi $t1, r0, "<<arg2<<std::endl; //load $t1 -> arg2
 
-    std::cout<<v_instr<<" r3, r1, r2"<<std::endl;
+    std::cout<<v_instr<<" $t2, $t0, $t1"<<std::endl;
   }
-  return "r3";
+  return "$t2";
 }
 
 bool is_a_variable(std::string in){
