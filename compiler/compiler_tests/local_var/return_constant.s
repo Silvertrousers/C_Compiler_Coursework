@@ -1,15 +1,20 @@
 f:
-lw r4, 4(0)
-add r4, r5, r0
-add r5, r6, r0
-add r6, r7, r0
-add r4, r0, r0
-lw r4, 8(0)
-add r4, r5, r0
-add r5, r6, r0
-add r6, r7, r0
-add r4, r0, r0
-addi r3, r0, 5678
-sw r3, 4(16)
-lw $v0, 4(16)
+.globl f
+addi $sp, $zero, 0
+lw $a0, 4($sp)
+add $a0, $a1, $zero
+add $a1, $a2, $zero
+add $a2, $a3, $zero
+add $a0, $zero, $zero
+addi $sp, $zero, 0
+lw $a0, 8($sp)
+add $a0, $a1, $zero
+add $a1, $a2, $zero
+add $a2, $a3, $zero
+add $a0, $zero, $zero
+addi $t2, $zero, 5678
+addi $sp, $zero, 16
+sw $t2, 4($sp)
+addi $sp, $zero, 16
+lw $v0, 4($sp)
 jr $ra
