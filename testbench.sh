@@ -1,3 +1,4 @@
+#!/bin/bash
 ./bin/c_compiler -S $1.c -o $1.s
 gcc $1.c -o $1
 ./$1

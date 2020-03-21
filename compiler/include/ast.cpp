@@ -127,37 +127,32 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
       std::cout << end<< ":" << std::endl;
     }
   }
-  if(node_type == "T_For"){/*std::cout<<node_type<<std::endl;*/}
+  if(node_type == "T_FOR"){/*std::cout<<node_type<<std::endl;*/}
   if(node_type == "T_WHILE"){/*std::cout<<node_type<<std::endl;*/}
   if(node_type == "T_DO"){/*std::cout<<node_type<<std::endl;*/}
   if(node_type == "JUMP_STATEMENT"){/*std::cout<<node_type<<std::endl;*/
     if (branches[0]->node_type == "RETURN"){
-      arg1 = branches[1]->make_mips(table, sp, pc);
-      std::cout<<"lw $v0, "<<table.find_symbol(arg1).offset<<"("<<table.stack_pointer<<")"<<std::endl;
+      if (branches[1]->node_type != "NULL"){
+        arg1 = branches[1]->make_mips(table, sp, pc);
+        std::cout<<"lw $v0, "<<table.find_symbol(arg1).offset<<"("<<table.stack_pointer<<")"<<std::endl;
+      }
       std::cout << "jr $ra" << std::endl;
-      // if (branches[1]->value != ""){
-      //     std::cout<<"sw r3, "<<table.find_symbol(arg1).offset<<"("<<table.stack_pointer<<")"<<std::endl;
-      //     table.t1_free = false;
-      // }
-      //
-      // if (branches[1]->value != ""){
-      //     return "temp1";
-      // }
     }
   }
-  if(node_type == "RETURN"){/*std::cout<<node_type<<std::endl;*/}
 
   if(node_type == "PRIMARY_EXPRESSION"){/*std::cout<<node_type<<std::endl;*/}
 
   if(node_type == "CONSTANT"){/*std::cout<<node_type<<std::endl;*/
     std::cout<<"addi r3, r0, "<<value<<std::endl;
-    if(table.t1_free){
+    if(table.t1_free == true){
       std::cout<<"sw r3, "<<table.find_symbol("temp1").offset<<"("<<table.stack_pointer<<")"<<std::endl;
       return "temp1";
+      table.t1_free = false;
     }
-    if(table.t2_free){
+    if(table.t2_free == true){
       std::cout<<"sw r3, "<<table.find_symbol("temp2").offset<<"("<<table.stack_pointer<<")"<<std::endl;
       return "temp2";
+      table.t2_free = false;
     }
 
   }
@@ -191,10 +186,12 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
       if(table.t1_free){
         std::cout<<"sw $v0, "<<table.find_symbol("temp1").offset<<"("<<table.stack_pointer<<")"<<std::endl;
         return "temp1";
+        table.t1_free = false;
       }
       if(table.t2_free){
         std::cout<<"sw $v0, "<<table.find_symbol("temp2").offset<<"("<<table.stack_pointer<<")"<<std::endl;
         return "temp2";
+        table.t1_free = false;
       }
     }
   }
@@ -470,7 +467,7 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
       }
     }
   }
-  if(node_type == "addiTIVE_EXPRESSION"){
+  if(node_type == "ADDITIVE_EXPRESSION"){
     /*std::cout<<node_type<<std::endl;*/
     if(value == "+"){
       arg1 =branches[0]->make_mips(table, sp, pc);//need a way to check if arg1 is a constant
@@ -820,7 +817,7 @@ int ast_node::eval_expr(){
 
   if(node_type == "SIZE_OF"){/*std::cout<<node_type<<std::endl;*/}
 
-  if(node_type == "UNARY_OPERATor"){/*std::cout<<node_type<<std::endl;*/
+  if(node_type == "UNARY_OPERATOR"){/*std::cout<<node_type<<std::endl;*/
 
   }
   if(node_type == "CAST_EXPRESSION"){
@@ -838,7 +835,7 @@ int ast_node::eval_expr(){
       return (branches[0]->eval_expr() % branches[1]->eval_expr());
     }
   }
-  if(node_type == "addiTIVE_EXPRESSION"){
+  if(node_type == "ADDITIVE_EXPRESSION"){
     /*std::cout<<node_type<<std::endl;*/
     if(value == "+"){
       return (branches[0]->eval_expr() + branches[1]->eval_expr());
@@ -873,11 +870,11 @@ int ast_node::eval_expr(){
     /*std::cout<<node_type<<std::endl;*/
     return (branches[0]->eval_expr() & branches[1]->eval_expr());
   }
-  if(node_type == "EXCLUSIVE_or_EXPRESSION"){
+  if(node_type == "EXCLUSIVE_OR_EXPRESSION"){
     /*std::cout<<node_type<<std::endl;*/
     return (branches[0]->eval_expr() ^ branches[1]->eval_expr());
   }
-  if(node_type == "INCLUSIVE_or_EXPRESSION"){
+  if(node_type == "INCLUSIVE_OR_EXPRESSION"){
     /*std::cout<<node_type<<std::endl;*/
     return (branches[0]->eval_expr() | branches[1]->eval_expr());
   }//hi
@@ -885,7 +882,7 @@ int ast_node::eval_expr(){
     /*std::cout<<node_type<<std::endl;*/
     return (branches[0]->eval_expr() && branches[1]->eval_expr());
   }
-  if(node_type == "LOGICAL_or_EXPRESSION"){
+  if(node_type == "LOGICAL_OR_EXPRESSION"){
     /*std::cout<<node_type<<std::endl;*/
     return (branches[0]->eval_expr() || branches[1]->eval_expr());
   }
