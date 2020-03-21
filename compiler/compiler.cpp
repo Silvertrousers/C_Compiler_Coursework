@@ -13,7 +13,8 @@ int main()
     symbol_table s = symbol_table();
     s.global_scope = &s;
     s.stack_pointer = 0;
-
+    std::cout<<"f:"<<std::endl;
+    std::cout<<".globl f"<<std::endl;
     ast_node * ast=parseAST();
     std::string a = ast->make_mips(s, sp, pc);
     //s.print_table();
