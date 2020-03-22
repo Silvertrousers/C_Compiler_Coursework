@@ -7,7 +7,31 @@
 
 #include <regex>
 
-std::string makeName(std::string in);
+
+static int name_counter = 0;
+static int start_counter = 0;
+static int end_counter = 0;
+static int case_counter = 0;
+
+std::string makeName(std::string in){
+    name_counter++;
+    return in + std::to_string(name_counter);
+}
+
+std::string makeCaseStart(bool increment){
+    if (increment == 1){
+        case_counter++;
+    }
+    return "casestart" + std::to_string(case_counter);
+}
+
+std::string makeCaseEnd(bool increment){
+    if (increment == 1){
+        case_counter++;
+    }
+    return "caseend" + std::to_string(case_counter);
+}
+
 bool is_a_variable(std::string in);
 std::string var_or_const_instr(std::string v_instr, std::string c_instr, std::string arg1, std::string arg2, symbol_table table);
 
@@ -62,7 +86,24 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
   }
 
   if(node_type == "STATEMENT"){/*std::cout<<node_type<<std::endl;*/}
-  if(node_type == "LABELED_STATEMENT"){/*std::cout<<node_type<<std::endl;*/}
+  if(node_type == "LABELED_STATEMENT"){/*std::cout<<node_type<<std::endl;*/
+      if (branches[0]->node_type == "T_CASE"){
+          std::string casestart = makeCaseStart(1);
+          std::string caseend = makeCaseEnd(0);
+          std::cout << "beq $zero, $zero," << caseend << std::endl;
+          std::cout<<"nop"<<std::endl;
+          std::cout << casestart << ":" << std::endl;
+          arg1 = branches[1]->make_mips(table, sp, pc);
+          std::cout<<"lw $t0, "<<table.find_symbol("3").offset<<"($sp)"<<std::endl;
+          std::cout<<"nop"<<std::endl;
+          std::cout<<"lw $t1, "<<table.find_symbol(arg1).offset<<"($sp)"<<std::endl;
+          std::cout<<"nop"<<std::endl;
+          std::cout<<"bne $t0, $t1, casestart" << std::to_string(case_counter+1) << std::endl;
+          std::cout<<"nop"<<std::endl;
+          std::cout << caseend << ":" << std::endl;
+          branches[2]->make_mips(table, sp, pc);
+      }
+  }
   if(node_type == "DEFAULT"){/*std::cout<<node_type<<std::endl;*/}
   if(node_type == "CASE"){/*std::cout<<node_type<<std::endl;*/}
   if(node_type == "COMPOUND_STATEMENT"){/*std::cout<<node_type<<std::endl;*/
@@ -100,6 +141,22 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
         std::cout<<branches[4]->make_mips(new_scope, sp, pc);
       }
       std::cout << end  << ":"<< std::endl;
+    }
+    if (branches[0]->node_type == "T_SWITCH"){
+        arg1 = branches[1]->make_mips(new_scope, sp, pc);
+        std::cout<<"lw $t0, "<<table.find_symbol(arg1).offset<<"($sp)"<<std::endl;
+        std::cout<<"nop"<<std::endl;
+        symbol temp;
+        temp.name = "3";
+        temp.type = "switch_value";
+        table.insert(temp);
+        std::cout<<"sw $t0, "<<table.find_symbol("3").offset<<"($sp)"<<std::endl;
+        std::cout<<"nop"<<std::endl;
+        std::cout << "beq $zero, $zero, casestart" << std::to_string(case_counter+1);
+        branches[2]->make_mips(new_scope, sp, pc);
+        std::string temp = makeCaseEnd(1);
+        std::cout << temp << ":" << std::endl;
+        case_counter++;
     }
   }
   if(node_type == "T_SWITCH"){/*std::cout<<node_type<<std::endl;*/}
@@ -1049,10 +1106,6 @@ int ast_node::eval_expr(){
   }
   if(node_type == "IDENTIFIER"){/*std::cout<<node_type<<std::endl;*/
   }
-}
-
-std::string makeName(std::string in){
-  return in;
 }
 
 std::string var_or_const_instr(std::string v_instr, std::string c_instr, std::string arg1, std::string arg2, symbol_table table){
