@@ -1,4 +1,4 @@
-int main()
+int f()
 {
-    return 7+13;
+    return 5678;
 }
