@@ -19,6 +19,20 @@ std::string makeName(std::string in){
     return in + std::to_string(name_counter);
 }
 
+std::string makeStart(bool increment){
+    if (increment == 1){
+        start_counter++;
+    }
+    return "start" + std::to_string(start_counter);
+}
+
+std::string makeEnd(bool increment){
+    if (increment == 1){
+        end_counter++;
+    }
+    return "end" + std::to_string(end_counter);
+}
+
 std::string makeCaseStart(bool increment){
     if (increment == 1){
         case_counter++;
@@ -173,9 +187,9 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
 
     if (branches[0]-> node_type == "FOR"){
       std::cout<<branches[1]->make_mips(new_scope, sp, pc);
-      std::string start = makeStart("start", 1);
+      std::string start = makeStart(1);
       new_scope.start_label = start;
-      std::string end = makeEnd("end", 1);
+      std::string end = makeEnd(1);
       new_scope.end_label = end;
       std::cout << start << ":" << std::endl;
       arg1 = branches[2]->make_mips(new_scope, sp, pc);
@@ -193,9 +207,9 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
     }
     if (branches[0]-> node_type == "T_WHILE"){
       std::cout<<branches[1]->make_mips(new_scope, sp, pc);
-      std::string start = makeStart("start", 1);
+      std::string start = makeStart(1);
       new_scope.start_label = start;
-      std::string end = makeEnd("end", 1);
+      std::string end = makeEnd(1);
       new_scope.end_label = end;
       std::cout << start << ":" << std::endl;
       arg1 = branches[1]->make_mips(new_scope, sp, pc);
