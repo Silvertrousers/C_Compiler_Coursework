@@ -236,6 +236,14 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
       std::cout << "jr $ra" << std::endl;
       std::cout<<"nop"<<std::endl;
     }
+    if (branches[0]->node_type == "T_BREAK"){
+        std::cout << "beq $zero, $zero," << table.end_label;
+        std::cout << "nop" << std::endl;
+    }
+    if (branches[0]->node_type == "T_CONTINUE"){
+        std::cout << "beq $zero, $zero," << table.start_label;
+        std::cout << "nop" << std::endl;
+    }
   }
 
   if(node_type == "PRIMARY_EXPRESSION"){/*std::cout<<node_type<<std::endl;*/}
