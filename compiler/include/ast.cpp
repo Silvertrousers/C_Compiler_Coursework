@@ -1,4 +1,5 @@
 
+
 #ifndef ast_cpp
 #define ast_cpp
 #include <iostream>
@@ -154,8 +155,8 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
         std::cout<<"nop"<<std::endl;
         std::cout << "beq $zero, $zero, casestart" << std::to_string(case_counter+1);
         branches[2]->make_mips(new_scope, sp, pc);
-        std::string temp = makeCaseEnd(1);
-        std::cout << temp << ":" << std::endl;
+        std::string temp_name = makeCaseEnd(1);
+        std::cout << temp_name << ":" << std::endl;
         case_counter++;
     }
   }
