@@ -1,14 +1,14 @@
 f:
 .globl f
 f:
-addi $sp, $gp, 0
+addi $sp, $gp, 16
 lw $a0, 4($sp)
 nop
 add $a0, $a1, $zero
 add $a1, $a2, $zero
 add $a2, $a3, $zero
 add $a0, $zero, $zero
-addi $sp, $gp, 0
+addi $sp, $gp, 16
 lw $a0, 8($sp)
 nop
 add $a0, $a1, $zero
@@ -24,46 +24,6 @@ lw $t2, 4($sp)
 nop
 sw $t2, 12($sp)
 nop
-addi $t2, $zero, 10
-addi $sp, $gp, 32
-sw $t2, 4($sp)
-nop
-addi $sp, $gp, 32
-lw $t0, 12($sp)
-nop
-lw $t1, 4($sp)
-nop
-SLT $t2, $t0, $t1
-nop
-xori $t2, $t2, 1
-addi $sp, $gp, 32
-sw $t2, 4($sp)
-nop
-addi $sp, $gp, 16
-lw $t0, 4($sp)
-nop
-beq $t0, $zero, end1
-nop
-addi $t2, $zero, 1
-addi $sp, $gp, 32
-sw $t2, 8($sp)
-nop
-addi $sp, $gp, 32
-lw $t0, 12($sp)
-nop
-lw $t1, 8($sp)
-nop
-sub $t2, $t0, $t1
-nop
-addi $sp, $gp, 32
-sw $t2, 8($sp)
-nop
-addi $sp, $gp, 32
-lw $t2, 8($sp)
-nop
-sw $t2, 12($sp)
-nop
-end1:
 addi $sp, $gp, 16
 lw $2, 12($sp)
 nop

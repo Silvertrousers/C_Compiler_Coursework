@@ -65,6 +65,10 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
     temp.type = "function";
     temp.label = pc;
     table.insert(temp);
+    if(table.stack_pointer == 0){
+      std::cout<<temp.name<<":"<<std::endl;
+      std::cout<<".globl "<<temp.name<<std::endl;
+    }
     //symbol_table new_scope = symbol_table(&newscope);
 
     /*std::cout<<node_type<<std::endl;*/
@@ -75,8 +79,8 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
     branches[2]->make_mips(new_scope, sp, pc);//arguments
     for (int i = 0; i < new_scope.symbols.size(); i++){
         arg1 = new_scope.symbols[i].name; //assuming the argument calls added them to new scope, these should be the 4 parameters.
-        std::cout<<"addi $sp, $gp, "<<table.stack_pointer<<std::endl;
-        std::cout<<"lw $a0, "<<table.find_symbol(arg1).offset<<"($sp)"<<std::endl;
+        std::cout<<"addi $sp, $gp, "<<new_scope.stack_pointer<<std::endl;
+        std::cout<<"lw $a0, "<<new_scope.find_symbol(arg1).offset<<"($sp)"<<std::endl;
         std::cout<<"nop"<<std::endl;
         std::cout << "add $a0, $a1, $zero" << std::endl;
         std::cout << "add $a1, $a2, $zero" << std::endl;
@@ -167,11 +171,11 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
   if(node_type == "ITERATION_STATEMENT"){/*std::cout<<node_type<<std::endl;*/
     symbol_table new_scope(&table);
 
-    if (branches[0]-> node_type == "T_For"){
+    if (branches[0]-> node_type == "FOR"){
       std::cout<<branches[1]->make_mips(new_scope, sp, pc);
       std::string start = makeName("start");
       std::string end = makeName("end");
-      std::cout << ":" << start << std::endl;
+      std::cout << start << ":" << std::endl;
       arg1 = branches[2]->make_mips(new_scope, sp, pc);
       std::cout<<"addi $sp, $gp, "<<table.stack_pointer<<std::endl;
       std::cout<<"lw $t0, "<<table.find_symbol(arg1).offset<<"($sp)"<<std::endl;
@@ -185,7 +189,7 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
       //label end
       std::cout << end << ":" << std::endl;
     }
-    if (branches[0]-> node_type == "T_WHILE"){
+    if (branches[0]-> node_type == "WHILE"){
       std::string end = makeName("end");
       arg1 = branches[1]->make_mips(new_scope, sp, pc);
       std::cout<<"addi $sp, $gp, "<<table.stack_pointer<<std::endl;
@@ -267,14 +271,14 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
       //fn call return value goes to register $v0, which is then stored in temp1/2 to be used in operations
       if(table.t1_free){
         std::cout<<"addi $sp, $gp, "<<table.stack_pointer<<std::endl;
-        std::cout<<"sw $v0, "<<table.find_symbol("temp1").offset<<"($sp)"<<std::endl;
+        std::cout<<"sw $2, "<<table.find_symbol("temp1").offset<<"($sp)"<<std::endl;
         std::cout<<"nop"<<std::endl;
         return "temp1";
         table.t1_free = false;
       }
       if(table.t2_free){
         std::cout<<"addi $sp, $gp, "<<table.stack_pointer<<std::endl;
-        std::cout<<"sw $v0, "<<table.find_symbol("temp2").offset<<"($sp)"<<std::endl;
+        std::cout<<"sw $2, "<<table.find_symbol("temp2").offset<<"($sp)"<<std::endl;
         std::cout<<"nop"<<std::endl;
         return "temp2";
         table.t1_free = false;

@@ -127,3 +127,38 @@ mips-linux-gnu-gcc -mfp32 -static -o $a $a.o $a"_driver".c
 qemu-mips $a
 echo $a ": " $?
 echo "=============================="
+a="./compiler_tests/default/test_ADD0"
+(./bin/compiler < $a.c) > $a.s
+mips-linux-gnu-gcc -mfp32 -o $a.o -c $a.s
+mips-linux-gnu-gcc -mfp32 -static -o $a $a.o $a"_driver".c
+qemu-mips $a
+echo $a ": " $?
+echo "=============================="
+a="./compiler_tests/default/test_ADD1"
+(./bin/compiler < $a.c) > $a.s
+mips-linux-gnu-gcc -mfp32 -o $a.o -c $a.s
+mips-linux-gnu-gcc -mfp32 -static -o $a $a.o $a"_driver".c
+qemu-mips $a
+echo $a ": " $?
+echo "=============================="
+a="./compiler_tests/default/test_CALL"
+(./bin/compiler < $a.c) > $a.s
+mips-linux-gnu-gcc -mfp32 -o $a.o -c $a.s
+mips-linux-gnu-gcc -mfp32 -static -o $a $a.o $a"_driver".c
+qemu-mips $a
+echo $a ": " $?
+echo "=============================="
+a="./compiler_tests/default/test_LOCAL"
+(./bin/compiler < $a.c) > $a.s
+mips-linux-gnu-gcc -mfp32 -o $a.o -c $a.s
+mips-linux-gnu-gcc -mfp32 -static -o $a $a.o $a"_driver".c
+qemu-mips $a
+echo $a ": " $?
+echo "=============================="
+a="./compiler_tests/default/test_RETURN"
+(./bin/compiler < $a.c) > $a.s
+mips-linux-gnu-gcc -mfp32 -o $a.o -c $a.s
+mips-linux-gnu-gcc -mfp32 -static -o $a $a.o $a"_driver".c
+qemu-mips $a
+echo $a ": " $?
+echo "=============================="
