@@ -173,11 +173,13 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
 
     if (branches[0]-> node_type == "FOR"){
       std::cout<<branches[1]->make_mips(new_scope, sp, pc);
-      std::string start = makeName("start");
-      std::string end = makeName("end");
+      std::string start = makeStart("start", 1);
+      new_scope.start_label = start;
+      std::string end = makeEnd("end", 1);
+      new_scope.end_label = end;
       std::cout << start << ":" << std::endl;
       arg1 = branches[2]->make_mips(new_scope, sp, pc);
-      std::cout<<"addi $sp, $gp, "<<table.stack_pointer<<std::endl;
+      std::cout<<"addi $sp, $zero, "<<table.stack_pointer<<std::endl;
       std::cout<<"lw $t0, "<<table.find_symbol(arg1).offset<<"($sp)"<<std::endl;
       std::cout<<"nop"<<std::endl;
       std::cout<< "beq $t0, $zero, " << end << std::endl;
@@ -189,10 +191,15 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
       //label end
       std::cout << end << ":" << std::endl;
     }
-    if (branches[0]-> node_type == "WHILE"){
-      std::string end = makeName("end");
+    if (branches[0]-> node_type == "T_WHILE"){
+      std::cout<<branches[1]->make_mips(new_scope, sp, pc);
+      std::string start = makeStart("start", 1);
+      new_scope.start_label = start;
+      std::string end = makeEnd("end", 1);
+      new_scope.end_label = end;
+      std::cout << start << ":" << std::endl;
       arg1 = branches[1]->make_mips(new_scope, sp, pc);
-      std::cout<<"addi $sp, $gp, "<<table.stack_pointer<<std::endl;
+      std::cout<<"addi $sp, $zero, "<<table.stack_pointer<<std::endl;
       std::cout<<"lw $t0, "<<table.find_symbol(arg1).offset<<"($sp)"<<std::endl;
       std::cout<<"nop"<<std::endl;
       std::cout<< "beq $t0, $zero, " << end << std::endl;
