@@ -25,6 +25,8 @@ class symbol_table{
     bool t2_free;
     int stack_pointer;
     int var_pointer;
+    std::string start_label;
+    std::string end_label;
     std::vector<symbol> symbols;
     symbol null_symbol;
     symbol_table *parent;
