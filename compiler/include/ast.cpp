@@ -317,6 +317,13 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
   }
 
   if(node_type == "ARGUMENT_EXPRESSION_LIST"){/*std::cout<<node_type<<std::endl;*/
+      arg1 = branches[1]->make_mips(table, sp, pc);
+      std::cout << "add $a3, $a2, $zero" <<std::endl;
+      std::cout << "add $a2, $a1, $zero" <<std::endl;
+      std::cout << "add $a1, $a0, $zero" <<std::endl;
+      std::cout<<"addi $sp, $gp, "<<table.stack_pointer<<std::endl;
+      std::cout<<"lw $a0, "<<table.find_symbol(arg1).offset<<"($sp)"<<std::endl;
+      std::cout<<"nop"<<std::endl;
       if (branches[0]->node_type == "ARGUMENT_EXPRESSION_LIST"){
           branches[0]->make_mips(table, sp, pc);
       }
@@ -329,13 +336,6 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
           std::cout<<"lw $a0, "<<table.find_symbol(arg1).offset<<"($sp)"<<std::endl;
           std::cout<<"nop"<<std::endl;
       }
-      arg1 = branches[1]->make_mips(table, sp, pc);
-      std::cout << "add $a3, $a2, $zero" <<std::endl;
-      std::cout << "add $a2, $a1, $zero" <<std::endl;
-      std::cout << "add $a1, $a0, $zero" <<std::endl;
-      std::cout<<"addi $sp, $gp, "<<table.stack_pointer<<std::endl;
-      std::cout<<"lw $a0, "<<table.find_symbol(arg2).offset<<"($sp)"<<std::endl;
-      std::cout<<"nop"<<std::endl;
   }
   if(node_type == "UNARY_EXPRESSION"){/*std::cout<<node_type<<std::endl;*/
     if(value == "++"){
@@ -543,10 +543,37 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
     /*std::cout<<node_type<<std::endl;*/
   }
   if(node_type == "PARAMETER_LIST"){
-    /*std::cout<<node_type<<std::endl;*/
+      /*std::cout<<node_type<<std::endl;*/
+      if (branches[0]->node_type == "ARGUMENT_EXPRESSION_LIST"){
+          branches[0]->make_mips(table, sp, pc);
+      }
+      if (branches[0]->node_type == "ASSIGNMENT_EXPRESSION"){
+          arg1 = branches[0]->make_mips(table, sp, pc);
+          std::cout<<"addi $sp, $gp, "<<table.stack_pointer<<std::endl;
+          std::cout<<"lw $a0, "<<table.find_symbol(arg1).offset<<"($sp)"<<std::endl;
+          std::cout<<"nop"<<std::endl;
+          std::cout << "add $a0, $a1, $zero" <<std::endl;
+          std::cout << "add $a1, $a2, $zero" <<std::endl;
+          std::cout << "add $a2, $a3, $zero" <<std::endl;
+      }
+      arg1 = branches[1]->make_mips(table, sp, pc);
+      std::cout<<"addi $sp, $gp, "<<table.stack_pointer<<std::endl;
+      std::cout<<"lw $a0, "<<table.find_symbol(arg1).offset<<"($sp)"<<std::endl;
+      std::cout<<"nop"<<std::endl;
+      std::cout << "add $a0, $a1, $zero" <<std::endl;
+      std::cout << "add $a1, $a2, $zero" <<std::endl;
+      std::cout << "add $a2, $a3, $zero" <<std::endl;
   }
   if(node_type == "PARAMETER_DECLARATION"){
     /*std::cout<<node_type<<std::endl;*/
+    if(branches[1]-> node_type=="IDENTIFIER"){
+      symbol s;
+      s.name = branches[0]->value;
+      s.type = "int";
+      s.value = "0";
+      table.insert(s);
+      return s.name;
+    }
   }
   if(node_type == "IDENTIFIER_LIST"){
     /*std::cout<<node_type<<std::endl;*/
