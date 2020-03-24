@@ -49,7 +49,7 @@
 %type<nodePtr> STRUCT_DECLARATOR_LIST STRUCT_DECLARATOR ENUM_SPECIFIER ENUMERATOR_LIST ENUMERATOR TYPE_QUALIFIER
 %type<nodePtr> DECLARATOR DIRECT_DECLARATOR POINTER TYPE_QUALIFIER_LIST PARAMETER_TYPE_LIST PARAMETER_LIST PARAMETER_DECLARATION
 %type<nodePtr> IDENTIFIER_LIST TYPE_NAME ABSTRACT_DECLARATOR DIRECT_ABSTRACT_DECLARATOR TYPEDEF_NAME INITIALIZER INITIALIZER_LIST
-%type<nodePtr> SIZE_OF RETURN FOR WHILE DO SWITCH IF ELSE IDENTIFIER ENUM ENUM_CONSTANT DEREFERENCE ELIPSIS CASE DEFAULT
+%type<nodePtr> SIZE_OF RETURN FOR WHILE DO SWITCH IF ELSE IDENTIFIER ENUM ENUM_CONSTANT DEREFERENCE ELIPSIS CASE DEFAULT F_DECLARATION_LIST F_DECLARATION
 
 
 %type<_text> T_AUTO T_BREAK T_CASE T_CHAR T_CONTINUE T_DEFAULT T_DO T_DOUBLE
@@ -105,6 +105,7 @@ FUNCTION_DECLARATION : DECLARATION_SPECIFIERS DECLARATOR COMPOUND_STATEMENT {   
                      | DECLARATOR F_DECLARATION_LIST COMPOUND_STATEMENT {                          std::vector<ast_node*> branches = {NULL, $1, $2, $3};
                                                                                 std::vector<std::string> branch_notes = {"DECLARATION_SPECIFIERS", "DECLARATOR", "F_DECLARATION_LIST", "COMPOUND_STATEMENT"};
                                                                                 $$ = new ast_node("FUNCTION_DECLARATION","", branches, branch_notes);}
+FN_DECL_WITH_ARGS :
 
 STATEMENT : LABELED_STATEMENT {$$ = $1;}
           | COMPOUND_STATEMENT {$$ = $1;}
@@ -427,18 +428,18 @@ F_DECLARATION_LIST : F_DECLARATION {                               std::vector<a
                                                                                 std::vector<std::string> branch_notes = {"F_DECLARATION_LIST", "F_DECLARATION"};
                                                                                 $$ = new ast_node("F_DECLARATION_LIST","", branches, branch_notes);}
 
-                   | F_DECLARATION_LIST T_COMMA F_DECLARATION {                               std::vector<ast_node*> branches = {$1, $2};
+                   | F_DECLARATION_LIST T_COMMA F_DECLARATION {                               std::vector<ast_node*> branches = {$1, $3};
                                                                                 std::vector<std::string> branch_notes = {"F_DECLARATION_LIST", "F_DECLARATION"};
                                                                                 $$ = new ast_node("F_DECLARATION_LIST","", branches, branch_notes);}
 
 F_DECLARATION : DECLARATION_SPECIFIERS {                              std::vector<ast_node*> branches = {$1, NULL};
                                                                                 std::vector<std::string> branch_notes = {"DECLARATION_SPECIFIERS","INIT_DECLARATOR_LIST"};
                                                                                 $$ = new ast_node("F_DECLARATION","", branches, branch_notes);}
-                                                                                
+
               | DECLARATION_SPECIFIERS INIT_DECLARATOR_LIST {         std::vector<ast_node*> branches = {$1, $2};
                                                                                 std::vector<std::string> branch_notes = {"DECLARATION_SPECIFIERS","INIT_DECLARATOR_LIST"};
                                                                                 $$ = new ast_node("F_DECLARATION","", branches, branch_notes);}
-                                                                                
+
 DECLARATION : DECLARATION_SPECIFIERS T_SEMICOLON {                              std::vector<ast_node*> branches = {$1, NULL};
                                                                                 std::vector<std::string> branch_notes = {"DECLARATION_SPECIFIERS","INIT_DECLARATOR_LIST"};
                                                                                 $$ = new ast_node("DECLARATION","", branches, branch_notes);}
@@ -599,7 +600,7 @@ DIRECT_DECLARATOR : IDENTIFIER {$$ = $1; }
 
                   | DIRECT_DECLARATOR T_LBRACKET IDENTIFIER_LIST T_RBRACKET   { std::vector<ast_node*> branches = {$1, $3};
                                                                                 std::vector<std::string> branch_notes = {"DIRECT_DECLARATOR","IDENTIFIER_LIST"};
-                                                                                $$ = new ast_node("DIRECT_DECLARATOR","fn_dcl ", branches, branch_notes);}
+                                                                                $$ = new ast_node("DIRECT_DECLARATOR","fn_call ", branches, branch_notes);}
 
 POINTER : DEREFERENCE {$$ = $1;}
         | DEREFERENCE TYPE_QUALIFIER_LIST {                                     std::vector<ast_node*> branches = {$1, $2};

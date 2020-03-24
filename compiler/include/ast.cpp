@@ -90,8 +90,7 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
     //fn name should already be in the stack
     //assign memory locations to labels has already been done since symbol table keeps track of stack
     std::cout<<temp.name<<":"<<std::endl;
-    std::cout<<branches[0]->node_type<<" "<<branches[1]->node_type<<" "<<branches[2]->node_type<<" "<<branches[3]->node_type<<std::endl;
-    branches[2]->make_mips(new_scope, sp, pc);//arguments
+    branches[1]->make_mips(new_scope, sp, pc);//arguments
 
     for (int i = 0; i < new_scope.symbols.size(); i++){
         arg1 = new_scope.symbols[i].name; //assuming the argument calls added them to new scope, these should be the 4 parameters.
@@ -518,12 +517,16 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
       //table.var_pointer += array_size*4;
       return branches[0]->value;
     }
+
     if(value == "fn_dcl"){
       symbol s;
       s.name = branches[0]->value;
       s.type = "function";
       //s.value = number of arguments
       table.insert(s);
+      if(branches[1]->node_type != "NULL"){
+        branches[1]->make_mips(table, sp, pc);
+      }
     }
   }
   if(node_type == "POINTER"){

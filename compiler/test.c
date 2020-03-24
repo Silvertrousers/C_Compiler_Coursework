@@ -1,4 +1,4 @@
-int f()
+int f(int x, int y)
 {
-    return 5678;
+    return x+y;
 }

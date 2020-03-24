@@ -1,7 +1,6 @@
 f:
 .globl f
 f:
-TYPE_SPECIFIER DIRECT_DECLARATOR NULL COMPOUND_STATEMENT
 addi $sp, $gp, 16
 lw $a0, 4($sp)
 nop
@@ -17,9 +16,16 @@ add $a1, $a2, $zero
 add $a2, $a3, $zero
 add $a0, $zero, $zero
 addi $sp, $gp, 16
-lw $t0, 32651($sp)
+lw $a0, 12($sp)
 nop
-lw $t1, 32651($sp)
+add $a0, $a1, $zero
+add $a1, $a2, $zero
+add $a2, $a3, $zero
+add $a0, $zero, $zero
+addi $sp, $gp, 16
+lw $t0, 32745($sp)
+nop
+lw $t1, 32745($sp)
 nop
 sub $t2, $t0, $t1
 nop
@@ -29,10 +35,10 @@ nop
 addi $sp, $gp, 16
 lw $t2, 4($sp)
 nop
-sw $t2, 12($sp)
+sw $t2, 16($sp)
 nop
 addi $sp, $gp, 16
-lw $2, 12($sp)
+lw $2, 16($sp)
 nop
 jr $ra
 nop

@@ -1,7 +1,7 @@
 
-int f();
+int f(int x, int y);
 
 int main()
 {
-    return !(f()==5678);
+    return !(f(1,2)==3);
 }
