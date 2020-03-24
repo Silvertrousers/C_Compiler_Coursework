@@ -1,6 +1,7 @@
 f:
 .globl f
 f:
+TYPE_SPECIFIER DIRECT_DECLARATOR NULL COMPOUND_STATEMENT
 addi $sp, $gp, 16
 lw $a0, 4($sp)
 nop
@@ -16,7 +17,7 @@ add $a1, $a2, $zero
 add $a2, $a3, $zero
 add $a0, $zero, $zero
 addi $sp, $gp, 16
-lw $t0, 32552($sp)
+lw $t0, 32722($sp)
 nop
 addi $t1, $zero, 0
 xor $t2, $t0, $t1
@@ -24,7 +25,7 @@ nop
 beq $t2, $zero, short_circuit1
 nop
 addi $sp, $gp, 16
-lw $t0, 32552($sp)
+lw $t0, 32722($sp)
 nop
 addi $t1, $zero, 0
 xor $t2, $t0, $t1

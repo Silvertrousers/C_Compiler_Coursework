@@ -2768,7 +2768,7 @@ yyreduce:
 
   case 134:
 #line 429 "src/compiler_parser.y" /* yacc.c:1646  */
-    {                              std::vector<ast_node*> branches = {NULL, NULL};
+    {                              std::vector<ast_node*> branches = {NULL, (yyvsp[-1].nodePtr)};
                                                                                 std::vector<std::string> branch_notes = {"DECLARATION_SPECIFIERS","INIT_DECLARATOR_LIST"};
                                                                                 (yyval.nodePtr) = new ast_node("DECLARATION","", branches, branch_notes);}
 #line 2775 "src/compiler_parser.tab.cpp" /* yacc.c:1646  */

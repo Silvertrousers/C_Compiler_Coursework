@@ -426,7 +426,7 @@ EXPR : ASSIGNMENT_EXPRESSION { $$ = $1; }
                                                                                 std::vector<std::string> branch_notes = {"EXPR","ASSIGNMENT_EXPRESSION"};
                                                                                 $$ = new ast_node("EXPR","", branches, branch_notes);}
 
-DECLARATION : DECLARATION_SPECIFIERS T_SEMICOLON {                              std::vector<ast_node*> branches = {NULL, NULL};
+DECLARATION : DECLARATION_SPECIFIERS T_SEMICOLON {                              std::vector<ast_node*> branches = {$1, NULL};
                                                                                 std::vector<std::string> branch_notes = {"DECLARATION_SPECIFIERS","INIT_DECLARATOR_LIST"};
                                                                                 $$ = new ast_node("DECLARATION","", branches, branch_notes);}
 

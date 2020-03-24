@@ -1,6 +1,7 @@
 f:
 .globl f
 f:
+TYPE_SPECIFIER DIRECT_DECLARATOR NULL COMPOUND_STATEMENT
 addi $sp, $gp, 16
 lw $a0, 4($sp)
 nop
@@ -16,9 +17,9 @@ add $a1, $a2, $zero
 add $a2, $a3, $zero
 add $a0, $zero, $zero
 addi $sp, $gp, 16
-lw $t0, 32701($sp)
+lw $t0, 32521($sp)
 nop
-lw $t1, 32701($sp)
+lw $t1, 32521($sp)
 nop
 AND $t2, $t0, $t1
 nop

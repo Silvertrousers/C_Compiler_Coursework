@@ -90,6 +90,7 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
     //fn name should already be in the stack
     //assign memory locations to labels has already been done since symbol table keeps track of stack
     std::cout<<temp.name<<":"<<std::endl;
+    std::cout<<branches[0]->node_type<<" "<<branches[1]->node_type<<" "<<branches[2]->node_type<<" "<<branches[3]->node_type<<std::endl;
     branches[2]->make_mips(new_scope, sp, pc);//arguments
 
     for (int i = 0; i < new_scope.symbols.size(); i++){
