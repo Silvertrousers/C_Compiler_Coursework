@@ -91,6 +91,7 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
     //assign memory locations to labels has already been done since symbol table keeps track of stack
     std::cout<<temp.name<<":"<<std::endl;
     branches[2]->make_mips(new_scope, sp, pc);//arguments
+
     for (int i = 0; i < new_scope.symbols.size(); i++){
         arg1 = new_scope.symbols[i].name; //assuming the argument calls added them to new scope, these should be the 4 parameters.
         std::cout<<"addi $sp, $gp, "<<new_scope.stack_pointer<<std::endl;

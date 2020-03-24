@@ -90,15 +90,15 @@ EXTERNAL_DECLARATION : FUNCTION_DECLARATION {$$ = $1;}
                      | DECLARATION {$$ = $1; }
 
 
-FUNCTION_DECLARATION : DECLARATION_SPECIFIERS DECLARATOR COMPOUND_STATEMENT {   std::vector<ast_node*> branches = {$1, $2, NULL, $3};
+FUNCTION_DECLARATION :  DECLARATION_SPECIFIERS DECLARATOR DECLARATION_LIST COMPOUND_STATEMENT {   std::vector<ast_node*> branches = {$1, $2, $3, $4};
+                                                                                                  std::vector<std::string> branch_notes = {"DECLARATION_SPECIFIERS", "DECLARATOR", "DECLARATION_LIST", "COMPOUND_STATEMENT"};
+                                                                                                  $$ = new ast_node("FUNCTION_DECLARATION","", branches, branch_notes);}
+
+                     | DECLARATION_SPECIFIERS DECLARATOR COMPOUND_STATEMENT {   std::vector<ast_node*> branches = {$1, $2, NULL, $3};
                                                                                 std::vector<std::string> branch_notes = {"DECLARATION_SPECIFIERS", "DECLARATOR", "DECLARATION_LIST", "COMPOUND_STATEMENT"};
                                                                                 $$ = new ast_node("FUNCTION_DECLARATION","", branches, branch_notes);}
 
                      | DECLARATOR COMPOUND_STATEMENT {                          std::vector<ast_node*> branches = {NULL, $1,NULL, $2};
-                                                                                std::vector<std::string> branch_notes = {"DECLARATION_SPECIFIERS", "DECLARATOR", "DECLARATION_LIST", "COMPOUND_STATEMENT"};
-                                                                                $$ = new ast_node("FUNCTION_DECLARATION","", branches, branch_notes);}
-
-                     | DECLARATION_SPECIFIERS DECLARATOR DECLARATION_LIST COMPOUND_STATEMENT {   std::vector<ast_node*> branches = {$1, $2, $3, $4};
                                                                                 std::vector<std::string> branch_notes = {"DECLARATION_SPECIFIERS", "DECLARATOR", "DECLARATION_LIST", "COMPOUND_STATEMENT"};
                                                                                 $$ = new ast_node("FUNCTION_DECLARATION","", branches, branch_notes);}
 
@@ -141,7 +141,10 @@ COMPOUND_STATEMENT : T_LCURLY_BRACKET DECLARATION_LIST STATEMENT_LIST T_RCURLY_B
                                                                                           $$ = new ast_node("COMPOUND_STATEMENT","", branches, branch_notes);}
                    | T_ECURLY_BRACKETS {$$ = new ast_node("COMPOUND_STATEMENT","");}
 
-DECLARATION_LIST : DECLARATION { $$ = $1; }
+DECLARATION_LIST : DECLARATION {                                                std::vector<ast_node*> branches = {NULL, $1};
+                                                                                std::vector<std::string> branch_notes = {"DECLARATION_LIST", "DECLARATION"};
+                                                                                $$ = new ast_node("DECLARATION_LIST","", branches, branch_notes);}
+
                  | DECLARATION_LIST DECLARATION {                               std::vector<ast_node*> branches = {$1, $2};
                                                                                 std::vector<std::string> branch_notes = {"DECLARATION_LIST", "DECLARATION"};
                                                                                 $$ = new ast_node("DECLARATION_LIST","", branches, branch_notes);}

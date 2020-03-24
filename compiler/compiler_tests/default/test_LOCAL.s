@@ -1,6 +1,20 @@
 ffff:
 .globl ffff
 ffff:
+table: 0
+stack_pointer: 16
+var_pointer: 8
+temp1: int: 0:4
+temp2: int: 0:8
+----------------
+table: 1
+stack_pointer: 0
+var_pointer: 16
+temp1: int: 0:4
+temp2: int: 0:8
+return_address: int: 0:12
+ffff: function: :16
+----------------
 addi $sp, $gp, 16
 lw $a0, 4($sp)
 nop
