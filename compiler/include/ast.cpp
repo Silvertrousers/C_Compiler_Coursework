@@ -13,6 +13,7 @@ static int name_counter = 0;
 static int start_counter = 0;
 static int end_counter = 0;
 static int case_counter = 0;
+static int default_counter = 0;
 
 std::string makeName(std::string in){
     name_counter++;
@@ -45,6 +46,13 @@ std::string makeCaseEnd(bool increment){
         case_counter++;
     }
     return "caseend" + std::to_string(case_counter);
+}
+
+std::string makeDefault(bool increment){
+    if (increment == 1){
+        default_counter++;
+    }
+    return "default" + std::to_string(default_counter);
 }
 
 bool is_a_variable(std::string in);
@@ -123,6 +131,11 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
           std::cout << caseend << ":" << std::endl;
           branches[2]->make_mips(table, sp, pc);
       }
+      if (branches[0]->node_type == "T_DEFAULT"){
+          std::string def_start = makeDefault(1);
+          std::cout << def_start << ":" << std::endl;
+          branches[1]->make_mips(table, sp, pc);
+      }
   }
   if(node_type == "DEFAULT"){/*std::cout<<node_type<<std::endl;*/}
   if(node_type == "CASE"){/*std::cout<<node_type<<std::endl;*/}
@@ -163,7 +176,13 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
       std::cout << end  << ":"<< std::endl;
     }
     if (branches[0]->node_type == "T_SWITCH"){
+        std::string start = makeStart(1);
+        new_scope.start_label = start;
+        std::string end = makeEnd(1);
+        new_scope.end_label = end;
+        std::cout << start << ":" << std::endl;
         arg1 = branches[1]->make_mips(new_scope, sp, pc);
+        int def_no = default_counter;
         std::cout<<"lw $t0, "<<table.find_symbol(arg1).offset<<"($sp)"<<std::endl;
         std::cout<<"nop"<<std::endl;
         symbol temp;
@@ -174,8 +193,15 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
         std::cout<<"nop"<<std::endl;
         std::cout << "beq $zero, $zero, casestart" << std::to_string(case_counter+1);
         branches[2]->make_mips(new_scope, sp, pc);
-        std::string temp_name = makeCaseEnd(1);
+        std::cout << "beq $zero, $zero, " << end << std::endl;
+        std::cout << "nop" << std::endl;
+        std::string temp_name = makeCaseStart(1);
         std::cout << temp_name << ":" << std::endl;
+        if (def_no != default_counter){
+            std::cout << "beq $zero, $zero, default" << std::to_string(default_counter) << std::endl;
+            std::cout << "nop" << std::endl;
+        }
+        std::cout << end << ":" << std::endl;
         case_counter++;
     }
   }
