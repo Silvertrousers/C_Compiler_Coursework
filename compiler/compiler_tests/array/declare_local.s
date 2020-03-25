@@ -1,29 +1,8 @@
 f:
 .globl f
 f:
-table: 0
-stack_pointer: 16
-var_pointer: 8
-temp1: int: 0:4
-temp2: int: 0:8
-----------------
-table: 1
-stack_pointer: 0
-var_pointer: 16
-temp1: int: 0:4
-temp2: int: 0:8
-return_address: int: 0:12
-f: function: :16
-----------------
-addi $sp, $gp, 16
+addi $sp, $gp, 0
 lw $a0, 4($sp)
-nop
-add $a0, $a1, $zero
-add $a1, $a2, $zero
-add $a2, $a3, $zero
-add $a0, $zero, $zero
-addi $sp, $gp, 16
-lw $a0, 8($sp)
 nop
 add $a0, $a1, $zero
 add $a1, $a2, $zero
@@ -36,10 +15,10 @@ nop
 addi $sp, $gp, 16
 lw $t2, 4($sp)
 nop
-sw $t2, 12($sp)
+sw $t2, 16($sp)
 nop
 addi $sp, $gp, 16
-lw $2, 12($sp)
+lw $2, 16($sp)
 nop
 jr $ra
 nop

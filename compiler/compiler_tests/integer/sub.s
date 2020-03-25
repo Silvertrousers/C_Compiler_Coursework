@@ -39,7 +39,7 @@ nop
 addi $sp, $gp, 16
 sw $t2, 4($sp)
 nop
-addi $sp, $gp, -512829683
+addi $sp, $gp, 16
 lw $t2, 4($sp)
 nop
 sw $t2, 24($sp)

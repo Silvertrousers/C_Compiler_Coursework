@@ -28,8 +28,19 @@ add $a0, $a1, $zero
 add $a1, $a2, $zero
 add $a2, $a3, $zero
 add $a0, $zero, $zero
-addi $sp, $gp, -371714291
-lw $t2, 0($sp)
+addi $sp, $gp, 16
+lw $t0, 16($sp)
+nop
+addi $sp, $gp, 16
+lw $t1, 20($sp)
+nop
+or $t2, $t0, $t1
+nop
+addi $sp, $gp, 16
+sw $t2, 4($sp)
+nop
+addi $sp, $gp, 16
+lw $t2, 4($sp)
 nop
 sw $t2, 24($sp)
 nop
