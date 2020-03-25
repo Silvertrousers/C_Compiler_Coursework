@@ -211,8 +211,8 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
   if(node_type == "ITERATION_STATEMENT"){/*std::cout<<node_type<<std::endl;*/
     symbol_table new_scope(&table);
 
-    if (branches[0]-> node_type == "FOR"){
-      std::cout<<branches[1]->make_mips(new_scope, sp, pc);
+    if (branches[0]-> node_type == "T_FOR"){
+      branches[1]->make_mips(new_scope, sp, pc);
       std::string start = makeStart(1);
       new_scope.start_label = start;
       std::string end = makeEnd(1);
@@ -225,7 +225,7 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
       std::cout<< "beq $t0, $zero, " << end << std::endl;
       std::cout<<"nop"<<std::endl;
       branches[3]->make_mips(new_scope, sp, pc);
-      branches[5]->make_mips(new_scope, sp, pc);
+      branches[4]->make_mips(new_scope, sp, pc);
       std::cout<< "beq " << "$zero, " << "$zero, " << start << std::endl;
       std::cout<<"nop"<<std::endl;
       //label end
@@ -742,7 +742,7 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
     arg1 =branches[0]->make_mips(table, sp, pc);
     arg2 =branches[1]->make_mips(table, sp, pc);
 
-    var_or_const_instr("SLT", "SLTI", arg1, arg2, table);
+    var_or_const_instr("slt", "slti", arg1, arg2, table);
 
     if(value == "<"){}
     if(value == ">"){

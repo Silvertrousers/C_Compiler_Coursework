@@ -34,7 +34,7 @@ nop
 addi $sp, $gp, 16
 lw $t1, 20($sp)
 nop
-SLT $t2, $t0, $t1
+slt $t2, $t0, $t1
 nop
 addi $sp, $gp, 16
 sw $t2, 4($sp)

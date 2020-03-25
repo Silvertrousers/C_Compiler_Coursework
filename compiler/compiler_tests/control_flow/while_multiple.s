@@ -27,7 +27,7 @@ nop
 addi $sp, $gp, 36
 lw $t1, 4($sp)
 nop
-SLT $t2, $t0, $t1
+slt $t2, $t0, $t1
 nop
 xori $t2, $t2, 1
 addi $sp, $gp, 16
@@ -44,7 +44,7 @@ nop
 addi $sp, $gp, 36
 lw $t1, 8($sp)
 nop
-SLT $t2, $t0, $t1
+slt $t2, $t0, $t1
 nop
 xori $t2, $t2, 1
 addi $sp, $gp, 16
@@ -59,12 +59,12 @@ addi $t2, $zero, 1
 addi $sp, $gp, 16
 lw $t0, 16($sp)
 nop
-addi $sp, $gp, -1843490403
+addi $sp, $gp, 2090668397
 lw $t1, 0($sp)
 nop
 sub $t2, $t0, $t1
 nop
-addi $sp, $gp, -1843490403
+addi $sp, $gp, 2090668397
 lw $t2, 0($sp)
 nop
 sw $t2, 16($sp)
