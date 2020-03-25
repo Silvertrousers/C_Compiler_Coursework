@@ -60,8 +60,8 @@ std::string var_or_const_instr(std::string v_instr, std::string c_instr, std::st
 
 std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
 
-  //std::cout<<node_type<<std::endl;
-  //table.print_table(0);
+  // std::cout<<node_type<<std::endl;
+  // table.print_table(0);
 
   std::string arg1, arg2;
   for(int i=0;i<branches.size();i++){
@@ -99,10 +99,9 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
     //assign memory locations to labels has already been done since symbol table keeps track of stack
     std::cout<<temp.name<<":"<<std::endl;
     branches[1]->make_mips(new_scope, sp, pc);//arguments
-
     for (int i = 0; i < (new_scope.symbols.size()-2); i++){
         arg1 = new_scope.symbols[i].name; //assuming the argument calls added them to new scope, these should be the 4 parameters.
-        std::cout<<"addi $sp, $gp, "<<new_scope.stack_pointer<<std::endl;
+        std::cout<<"addi $sp, $gp, "<<std::to_string(table.find_symbol(arg1).stack_pointer)<<std::endl;
         std::cout<<"lw $a0, "<<new_scope.find_symbol(arg1).offset<<"($sp)"<<std::endl;
         std::cout<<"nop"<<std::endl;
         std::cout << "add $a0, $a1, $zero" << std::endl;
@@ -220,7 +219,7 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
       new_scope.end_label = end;
       std::cout << start << ":" << std::endl;
       arg1 = branches[2]->make_mips(new_scope, sp, pc);
-      std::cout<<"addi $sp, $zero, "<<table.stack_pointer<<std::endl;
+      std::cout<<"addi $sp, $zero, "<<std::to_string(table.find_symbol(arg1).stack_pointer)<<std::endl;
       std::cout<<"lw $t0, "<<table.find_symbol(arg1).offset<<"($sp)"<<std::endl;
       std::cout<<"nop"<<std::endl;
       std::cout<< "beq $t0, $zero, " << end << std::endl;
@@ -240,7 +239,7 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
       new_scope.end_label = end;
       std::cout << start << ":" << std::endl;
       arg1 = branches[1]->make_mips(new_scope, sp, pc);
-      std::cout<<"addi $sp, $zero, "<<table.stack_pointer<<std::endl;
+      std::cout<<"addi $sp, $zero, "<<std::to_string(table.find_symbol(arg1).stack_pointer)<<std::endl;
       std::cout<<"lw $t0, "<<table.find_symbol(arg1).offset<<"($sp)"<<std::endl;
       std::cout<<"nop"<<std::endl;
       std::cout<< "beq $t0, $zero, " << end << std::endl;
@@ -278,14 +277,14 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
   if(node_type == "CONSTANT"){/*std::cout<<node_type<<std::endl;*/
     std::cout<<"addi $t2, $zero, "<<value<<std::endl;
     if(table.t1_free == true){
-      std::cout<<"addi $sp, $gp, "<<std::to_string(table.find_symbol(arg1).stack_pointer)<<std::endl;
+      std::cout<<"addi $sp, $gp, "<<std::to_string(table.stack_pointer)<<std::endl;
       std::cout<<"sw $t2, "<<table.find_symbol("temp1").offset<<"($sp)"<<std::endl;
       std::cout<<"nop"<<std::endl;
       return "temp1";
       table.t1_free = false;
     }
     if(table.t2_free == true){
-      std::cout<<"addi $sp, $gp, "<<std::to_string(table.find_symbol(arg1).stack_pointer)<<std::endl;
+      std::cout<<"addi $sp, $gp, "<<std::to_string(table.stack_pointer)<<std::endl;
       std::cout<<"sw $t2, "<<table.find_symbol("temp2").offset<<"($sp)"<<std::endl;
       std::cout<<"nop"<<std::endl;
       return "temp2";
@@ -571,18 +570,8 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
   if(node_type == "PARAMETER_LIST"){
       /*std::cout<<node_type<<std::endl;*/
 
-      if (branches[0]->node_type == "ARGUMENT_EXPRESSION_LIST"){
-          branches[0]->make_mips(table, sp, pc);
-      }
-      if (branches[0]->node_type == "ASSIGNMENT_EXPRESSION"){
-          arg1 = branches[0]->make_mips(table, sp, pc);
-          std::cout<<"addi $sp, $gp, "<<std::to_string(table.find_symbol(arg1).stack_pointer)<<std::endl;
-          std::cout<<"sw $a0, "<<table.find_symbol(arg1).offset<<"($sp)"<<std::endl;
-          std::cout<<"nop"<<std::endl;
-          std::cout << "add $a0, $a1, $zero" <<std::endl;
-          std::cout << "add $a1, $a2, $zero" <<std::endl;
-          std::cout << "add $a2, $a3, $zero" <<std::endl;
-      }
+
+      branches[0]->make_mips(table, sp, pc);
       arg1 = branches[1]->make_mips(table, sp, pc);
       std::cout<<"addi $sp, $gp, "<<std::to_string(table.find_symbol(arg1).stack_pointer)<<std::endl;
       std::cout<<"sw $a0, "<<table.find_symbol(arg1).offset<<"($sp)"<<std::endl;
@@ -1206,6 +1195,7 @@ std::string var_or_const_instr(std::string v_instr, std::string c_instr, std::st
     std::cout<<"addi $sp, $gp, "<<std::to_string(table.find_symbol(arg1).stack_pointer)<<std::endl;
     std::cout<<"lw $t0, "<<table.find_symbol(arg1).offset<<"($sp)"<<std::endl;
     std::cout<<"nop"<<std::endl;
+    std::cout<<"addi $sp, $gp, "<<std::to_string(table.find_symbol(arg2).stack_pointer)<<std::endl;
     std::cout<<"lw $t1, "<<table.find_symbol(arg2).offset<<"($sp)"<<std::endl;
     std::cout<<"nop"<<std::endl;
     std::cout<<v_instr<<" $t2, $t0, $t1"<<std::endl;

@@ -13,7 +13,7 @@ void symbol_table::print_table(int depth) {
 	std::cout<<"stack_pointer: "<<stack_pointer<<std::endl;
 	std::cout<<"var_pointer: "<<var_pointer<<std::endl;
 	for (int i = 0; i < symbols.size(); i++) {
-		std::cout << symbols[i].name << ": " << symbols[i].type<<": "<<symbols[i].value<<":"<<symbols[i].offset << std::endl;
+		std::cout << symbols[i].name << ": " << symbols[i].type<<": "<<symbols[i].value<<":"<<symbols[i].offset<<"("<<symbols[i].stack_pointer<<")" << std::endl;
 	}
 	std::cout << "----------------" << std::endl;
 	if (parent != NULL) {
