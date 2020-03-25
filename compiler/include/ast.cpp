@@ -317,25 +317,41 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
   }
 
   if(node_type == "ARGUMENT_EXPRESSION_LIST"){/*std::cout<<node_type<<std::endl;*/
+
+      if (branches[0]->node_type == "ARGUMENT_EXPRESSION_LIST"){
+          branches[0]->make_mips(table, sp, pc);
+      }
       arg1 = branches[1]->make_mips(table, sp, pc);
+      if(table.a0_free){
+        std::cout<<"addi $sp, $gp, "<<std::to_string(table.find_symbol(arg1).stack_pointer)<<std::endl;
+        std::cout<<"lw $a0, "<<table.find_symbol(arg1).offset<<"($sp)"<<std::endl;
+        std::cout<<"nop"<<std::endl;
+        table.a0_free = false;
+      }
+      if(table.a1_free){
+        std::cout<<"addi $sp, $gp, "<<std::to_string(table.find_symbol(arg1).stack_pointer)<<std::endl;
+        std::cout<<"lw $a1, "<<table.find_symbol(arg1).offset<<"($sp)"<<std::endl;
+        std::cout<<"nop"<<std::endl;
+        table.a1_free = false;
+      }
+      if(table.a2_free){
+        std::cout<<"addi $sp, $gp, "<<std::to_string(table.find_symbol(arg1).stack_pointer)<<std::endl;
+        std::cout<<"lw $a2, "<<table.find_symbol(arg1).offset<<"($sp)"<<std::endl;
+        std::cout<<"nop"<<std::endl;
+        table.a2_free = false;
+      }
+      if(table.a3_free){
+        std::cout<<"addi $sp, $gp, "<<std::to_string(table.find_symbol(arg1).stack_pointer)<<std::endl;
+        std::cout<<"lw $a3, "<<table.find_symbol(arg1).offset<<"($sp)"<<std::endl;
+        std::cout<<"nop"<<std::endl;
+        table.a3_free = false;
+      }
       std::cout << "add $a3, $a2, $zero" <<std::endl;
       std::cout << "add $a2, $a1, $zero" <<std::endl;
       std::cout << "add $a1, $a0, $zero" <<std::endl;
       std::cout<<"addi $sp, $gp, "<<std::to_string(table.find_symbol(arg1).stack_pointer)<<std::endl;
       std::cout<<"lw $a0, "<<table.find_symbol(arg1).offset<<"($sp)"<<std::endl;
       std::cout<<"nop"<<std::endl;
-      if (branches[0]->node_type == "ARGUMENT_EXPRESSION_LIST"){
-          branches[0]->make_mips(table, sp, pc);
-      }
-      if (branches[0]->node_type == "ASSIGNMENT_EXPRESSION"){
-          arg1 = branches[0]->make_mips(table, sp, pc);
-          std::cout << "add $a3, $a2, $zero" <<std::endl;
-          std::cout << "add $a2, $a1, $zero" <<std::endl;
-          std::cout << "add $a1, $a0, $zero" <<std::endl;
-          std::cout<<"addi $sp, $gp, "<<std::to_string(table.find_symbol(arg1).stack_pointer)<<std::endl;
-          std::cout<<"lw $a0, "<<table.find_symbol(arg1).offset<<"($sp)"<<std::endl;
-          std::cout<<"nop"<<std::endl;
-      }
   }
   if(node_type == "UNARY_EXPRESSION"){/*std::cout<<node_type<<std::endl;*/
     if(value == "++"){
@@ -545,27 +561,31 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
   if(node_type == "PARAMETER_LIST"){
       /*std::cout<<node_type<<std::endl;*/
 
-      if (branches[0]->node_type == "ARGUMENT_EXPRESSION_LIST"){
-          branches[0]->make_mips(table, sp, pc);
-          branches[1]->make_mips(table, sp, pc);
-      }
-      if (branches[0]->node_type == "ASSIGNMENT_EXPRESSION"){
-          arg1 = branches[0]->make_mips(table, sp, pc);
-          std::cout<<"addi $sp, $gp, "<<std::to_string(table.find_symbol(arg1).stack_pointer)<<std::endl;
-          std::cout<<"lw $a0, "<<table.find_symbol(arg1).offset<<"($sp)"<<std::endl;
-          std::cout<<"nop"<<std::endl;
-          std::cout << "add $a0, $a1, $zero" <<std::endl;
-          std::cout << "add $a1, $a2, $zero" <<std::endl;
-          std::cout << "add $a2, $a3, $zero" <<std::endl;
-      }
+
       branches[0]->make_mips(table, sp, pc);
       arg1 = branches[1]->make_mips(table, sp, pc);
       std::cout<<"addi $sp, $gp, "<<std::to_string(table.find_symbol(arg1).stack_pointer)<<std::endl;
-      std::cout<<"lw $a0, "<<table.find_symbol(arg1).offset<<"($sp)"<<std::endl;
-      std::cout<<"nop"<<std::endl;
-      std::cout << "add $a0, $a1, $zero" <<std::endl;
-      std::cout << "add $a1, $a2, $zero" <<std::endl;
-      std::cout << "add $a2, $a3, $zero" <<std::endl;
+      if(!table.a0_free){
+        std::cout<<"sw $a0, "<<table.find_symbol(arg1).offset<<"($sp)"<<std::endl;
+        std::cout<<"nop"<<std::endl;
+        table.a0_free=true;
+      }
+      if(!table.a1_free){
+        std::cout<<"sw $a1, "<<table.find_symbol(arg1).offset<<"($sp)"<<std::endl;
+        std::cout<<"nop"<<std::endl;
+        table.a1_free=true;
+      }
+      if(!table.a2_free){
+        std::cout<<"sw $a2, "<<table.find_symbol(arg1).offset<<"($sp)"<<std::endl;
+        std::cout<<"nop"<<std::endl;
+        table.a2_free=true;
+      }
+      if(!table.a3_free){
+        std::cout<<"sw $a3, "<<table.find_symbol(arg1).offset<<"($sp)"<<std::endl;
+        std::cout<<"nop"<<std::endl;
+        table.a3_free=true;
+      }
+
   }
   if(node_type == "PARAMETER_DECLARATION"){
     /*std::cout<<node_type<<std::endl;*/

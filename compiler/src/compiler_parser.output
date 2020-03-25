@@ -1,6 +1,5 @@
 Nonterminals useless in grammar
 
-   FN_DECL_WITH_ARGS
    ELIPSIS
    IDENTIFIER_LIST
    F_DECLARATION
@@ -15,12 +14,10 @@ Terminals unused in grammar
 
 Rules useless in grammar
 
-  228 FN_DECL_WITH_ARGS: %empty
+  228 ELIPSIS: T_DOT T_DOT T_DOT
 
-  229 ELIPSIS: T_DOT T_DOT T_DOT
-
-  230 IDENTIFIER_LIST: IDENTIFIER
-  231                | IDENTIFIER_LIST T_COMMA IDENTIFIER
+  229 IDENTIFIER_LIST: IDENTIFIER
+  230                | IDENTIFIER_LIST T_COMMA IDENTIFIER
 
 
 State 339 conflicts: 1 shift/reduce

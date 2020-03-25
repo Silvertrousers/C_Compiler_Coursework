@@ -98,7 +98,7 @@ FUNCTION_DECLARATION : DECLARATION_SPECIFIERS DECLARATOR COMPOUND_STATEMENT {   
                                                                                 std::vector<std::string> branch_notes = {"DECLARATION_SPECIFIERS", "DECLARATOR", "COMPOUND_STATEMENT"};
                                                                                 $$ = new ast_node("FUNCTION_DECLARATION","", branches, branch_notes);}
 
-FN_DECL_WITH_ARGS :
+
 
 STATEMENT : LABELED_STATEMENT {$$ = $1;}
           | COMPOUND_STATEMENT {$$ = $1;}
@@ -266,7 +266,11 @@ POSTFIX_EXPRESSION : PRIMARY_EXPRESSION { $$  = $1;}
                                                                                 std::vector<std::string> branch_notes = {"POSTFIX_EXPRESSION"};
                                                                                 $$ = new ast_node("POSTFIX_EXPRESSION","--", branches, branch_notes);}
 
-ARGUMENT_EXPRESSION_LIST : ASSIGNMENT_EXPRESSION { $$  = $1;}
+ARGUMENT_EXPRESSION_LIST : ASSIGNMENT_EXPRESSION  {   std::vector<ast_node*> branches = {NULL, $1};
+                                                             std::vector<std::string> branch_notes = {"ARGUMENT_EXPRESSION_LIST", "ASSIGNMENT_EXPRESSION"};
+                                                             $$ = new ast_node("ARGUMENT_EXPRESSION_LIST","", branches, branch_notes);}
+
+
                          | ARGUMENT_EXPRESSION_LIST T_COMMA ASSIGNMENT_EXPRESSION {   std::vector<ast_node*> branches = {$1, $3};
                                                                                       std::vector<std::string> branch_notes = {"ARGUMENT_EXPRESSION_LIST", "ASSIGNMENT_EXPRESSION"};
                                                                                       $$ = new ast_node("ARGUMENT_EXPRESSION_LIST","", branches, branch_notes);}
@@ -604,7 +608,10 @@ PARAMETER_TYPE_LIST : PARAMETER_LIST { $$ = $1; }
 */
 ELIPSIS : T_DOT T_DOT T_DOT {$$ = new ast_node("ELIPSIS","...");}
 
-PARAMETER_LIST : PARAMETER_DECLARATION { $$ = $1; }
+PARAMETER_LIST : PARAMETER_DECLARATION {                                        std::vector<ast_node*> branches = {NULL, $1};
+                                                                                std::vector<std::string> branch_notes = {"PARAMETER_LIST","PARAMETER_DECLARATION"};
+                                                                                $$ = new ast_node("PARAMETER_LIST","", branches, branch_notes);}
+
                | PARAMETER_LIST T_COMMA PARAMETER_DECLARATION {                 std::vector<ast_node*> branches = {$1, $3};
                                                                                 std::vector<std::string> branch_notes = {"PARAMETER_LIST","PARAMETER_DECLARATION"};
                                                                                 $$ = new ast_node("PARAMETER_LIST","", branches, branch_notes);}

@@ -56,6 +56,10 @@ symbol_table::symbol_table(){
 	insert(ra);
 	t1_free = true;
 	t2_free = true;
+	a0_free = true;
+	a1_free = true;
+	a2_free = true;
+	a3_free = true;
 }
 
 symbol_table::symbol_table(symbol_table *parent_scope){
@@ -75,5 +79,9 @@ symbol_table::symbol_table(symbol_table *parent_scope){
 	insert(temp2);
 	t1_free = true;
 	t2_free = true;
+	a0_free = parent->a0_free;
+	a1_free = parent->a1_free;
+	a2_free = parent->a2_free;
+	a3_free = parent->a3_free;
 }
 symbol_table::~symbol_table(){}

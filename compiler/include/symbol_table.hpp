@@ -24,6 +24,10 @@ class symbol_table{
     ~symbol_table();
     bool t1_free;
     bool t2_free;
+    bool a0_free;
+    bool a1_free;
+    bool a2_free;
+    bool a3_free;
     int stack_pointer;
     int var_pointer;
     std::string start_label;
