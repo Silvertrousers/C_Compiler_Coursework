@@ -219,7 +219,7 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
       new_scope.end_label = end;
       std::cout << start << ":" << std::endl;
       arg1 = branches[2]->make_mips(new_scope, sp, pc);
-      std::cout<<"addi $sp, $zero, "<<std::to_string(table.find_symbol(arg1).stack_pointer)<<std::endl;
+      std::cout<<"addi $sp, $gp, "<<std::to_string(table.find_symbol(arg1).stack_pointer)<<std::endl;
       std::cout<<"lw $t0, "<<table.find_symbol(arg1).offset<<"($sp)"<<std::endl;
       std::cout<<"nop"<<std::endl;
       std::cout<< "beq $t0, $zero, " << end << std::endl;
@@ -230,6 +230,7 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
       std::cout<<"nop"<<std::endl;
       //label end
       std::cout << end << ":" << std::endl;
+      return ";";
     }
     if (branches[0]-> node_type == "T_WHILE"){
       std::cout<<branches[1]->make_mips(new_scope, sp, pc);

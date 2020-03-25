@@ -42,7 +42,7 @@ nop
 addi $sp, $gp, 16
 sw $t2, 4($sp)
 nop
-addi $sp, $zero, 16
+addi $sp, $gp, 16
 lw $t0, 4($sp)
 nop
 beq $t0, $zero, end1
