@@ -2,6 +2,12 @@ f:
 .globl f
 f:
 addi $sp, $gp, 16
+lw $a0, 20($sp)
+nop
+add $a0, $a1, $zero
+add $a1, $a2, $zero
+add $a2, $a3, $zero
+addi $sp, $gp, 16
 lw $a0, 4($sp)
 nop
 add $a0, $a1, $zero
@@ -23,7 +29,7 @@ add $a1, $a2, $zero
 add $a2, $a3, $zero
 add $a0, $zero, $zero
 addi $sp, $gp, 16
-lw $t0, 32730($sp)
+lw $t0, 16($sp)
 nop
 addi $t1, $zero, 0
 xor $t2, $t0, $t1
@@ -31,7 +37,7 @@ nop
 beq $t2, $zero, short_circuit1
 nop
 addi $sp, $gp, 16
-lw $t0, 32730($sp)
+lw $t0, 20($sp)
 nop
 addi $t1, $zero, 0
 xor $t2, $t0, $t1

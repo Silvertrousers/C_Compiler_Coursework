@@ -11,6 +11,7 @@ struct symbol{
   std::string value;
   float numerical_value;
   int offset;
+  int stack_pointer;
 };
 
 class symbol_table{

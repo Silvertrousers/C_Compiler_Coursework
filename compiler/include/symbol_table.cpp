@@ -4,6 +4,7 @@
 void symbol_table::insert(symbol s){
 	var_pointer += 4;
 	s.offset = var_pointer;
+	s.stack_pointer = stack_pointer;
 	symbols.push_back(s);
 }
 
