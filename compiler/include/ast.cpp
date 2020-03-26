@@ -569,8 +569,18 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
   if(node_type == "PARAMETER_LIST"){
       /*std::cout<<node_type<<std::endl;*/
 
-
-      branches[0]->make_mips(table, sp, pc);
+      if (branches[0]->node_type == "PARAMETER_LIST"){
+          branches[0]->make_mips(table, sp, pc);
+      }
+      if (branches[0]->node_type == "PARAMETER_DECLARATION"){
+          arg1 = branches[0]->make_mips(table, sp, pc);
+          std::cout<<"addi $sp, $gp, "<<std::to_string(table.find_symbol(arg1).stack_pointer)<<std::endl;
+          std::cout<<"sw $a0, "<<table.find_symbol(arg1).offset<<"($sp)"<<std::endl;
+          std::cout<<"nop"<<std::endl;
+          std::cout << "add $a0, $a1, $zero" <<std::endl;
+          std::cout << "add $a1, $a2, $zero" <<std::endl;
+          std::cout << "add $a2, $a3, $zero" <<std::endl;
+      }
       arg1 = branches[1]->make_mips(table, sp, pc);
       std::cout<<"addi $sp, $gp, "<<std::to_string(table.find_symbol(arg1).stack_pointer)<<std::endl;
       std::cout<<"sw $a0, "<<table.find_symbol(arg1).offset<<"($sp)"<<std::endl;
