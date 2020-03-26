@@ -1,7 +1,8 @@
 
-int f();
+int bsqrt(int lo, int hi, int v);
 
 int main()
 {
-    return !(f()==5678);
+    int x;
+    return !(bsqrt(1,1000,64)==8);
 }

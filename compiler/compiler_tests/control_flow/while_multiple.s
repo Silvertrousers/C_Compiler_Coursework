@@ -42,7 +42,7 @@ xori $t2, $t2, 1
 addi $sp, $gp, 36
 sw $t2, 4($sp)
 nop
-temp1start1:
+start1:
 #RELATIONAL_EXPRESSION
 #IDENTIFIER
 #CONSTANT
@@ -62,7 +62,7 @@ xori $t2, $t2, 1
 addi $sp, $gp, 36
 sw $t2, 8($sp)
 nop
-addi $sp, $zero, 16
+addi $sp, $gp, 36
 lw $t0, 8($sp)
 nop
 beq $t0, $zero, end1

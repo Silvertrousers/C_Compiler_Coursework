@@ -24,9 +24,9 @@ sw $t2, 16($sp)
 nop
 #ITERATION_STATEMENT
 #IDENTIFIER
-xstart1:
+start1:
 #IDENTIFIER
-addi $sp, $zero, 16
+addi $sp, $gp, 16
 lw $t0, 16($sp)
 nop
 beq $t0, $zero, end1

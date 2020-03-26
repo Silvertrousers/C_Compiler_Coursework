@@ -228,15 +228,15 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
       return ";";
     }
     if (branches[0]-> node_type == "T_WHILE"){
-      std::cout<<branches[1]->make_mips(new_scope, sp, pc);
+      branches[1]->make_mips(new_scope, sp, pc);
       std::string start = makeStart(1);
       new_scope.start_label = start;
       std::string end = makeEnd(1);
       new_scope.end_label = end;
       std::cout << start << ":" << std::endl;
       arg1 = branches[1]->make_mips(new_scope, sp, pc);
-      std::cout<<"addi $sp, $zero, "<<std::to_string(table.find_symbol(arg1).stack_pointer)<<std::endl;
-      std::cout<<"lw $t0, "<<table.find_symbol(arg1).offset<<"($sp)"<<std::endl;
+      std::cout<<"addi $sp, $gp, "<<std::to_string(new_scope.find_symbol(arg1).stack_pointer)<<std::endl;
+      std::cout<<"lw $t0, "<<new_scope.find_symbol(arg1).offset<<"($sp)"<<std::endl;
       std::cout<<"nop"<<std::endl;
       std::cout<< "beq $t0, $zero, " << end << std::endl;
       std::cout<<"nop"<<std::endl;
@@ -481,12 +481,15 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
       arg2 = branches[1]->make_mips(table, sp, pc);
       if(branches[1]->node_type == "NULL"){}
       else{
-        std::cout<<"addi $sp, $gp, "<<std::to_string(table.find_symbol(arg1).stack_pointer)<<std::endl;
+        std::cout<<"addi $sp, $gp, "<<std::to_string(table.find_symbol(arg2).stack_pointer)<<std::endl;
         std::cout<<"lw $t2, "<<table.find_symbol(arg2).offset<<"($sp)"<<std::endl;
         std::cout<<"nop"<<std::endl;
+        std::cout<<"addi $sp, $gp, "<<std::to_string(table.find_symbol(arg1).stack_pointer)<<std::endl;
         std::cout<<"sw $t2, "<<table.find_symbol(arg1).offset<<"($sp)"<<std::endl;
         std::cout<<"nop"<<std::endl;
       }
+      table.t1_free = true;
+      table.t2_free = true;
       return arg1;
     }
 
@@ -646,6 +649,7 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
       std::cout<<"addi $sp, $gp, "<<std::to_string(table.find_symbol(arg1).stack_pointer)<<std::endl;
       std::cout<<"lw $t0, "<<table.find_symbol(arg1).offset<<"($sp)"<<std::endl;
       std::cout<<"nop"<<std::endl;
+      std::cout<<"addi $sp, $gp, "<<std::to_string(table.find_symbol(arg2).stack_pointer)<<std::endl;
       std::cout<<"lw $t1, "<<table.find_symbol(arg2).offset<<"($sp)"<<std::endl;
       std::cout<<"nop"<<std::endl;
       std::cout<<"MULT $t0, $t1"<<std::endl;

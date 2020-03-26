@@ -1,10 +1,17 @@
-int f()
+int bsqrt(int lo, int hi, int val)
 {
-    int x;
-    x=5678;
-    {
-        int x;
-        x=1234;
+    while(lo+1 < hi){
+        int mid=(lo+hi)>>1;
+        int sqr=mid*mid;
+        if(sqr <= val){
+            lo=mid;
+        }else{
+            hi=mid;
+        }
     }
-    return x;
+    if( lo*lo < val ) {
+        return hi;
+    }else{
+        return lo;
+    }
 }

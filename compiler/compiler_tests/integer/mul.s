@@ -29,6 +29,7 @@ add $a3, $zero, $zero
 addi $sp, $gp, 16
 lw $t0, 16($sp)
 nop
+addi $sp, $gp, 16
 lw $t1, 20($sp)
 nop
 MULT $t0, $t1
