@@ -88,13 +88,12 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
     temp.label = pc;
     table.insert(temp);
     if(table.stack_pointer == 0){
-      std::cout<<temp.name<<":"<<std::endl;
       std::cout<<".globl "<<temp.name<<std::endl;
     }
     //symbol_table new_scope = symbol_table(&newscope);
 
     /*std::cout<<node_type<<std::endl;*/
-    std::cout<<branches[0]->make_mips(new_scope, sp, pc);//reutrn type
+    branches[0]->make_mips(new_scope, sp, pc);//reutrn type
     //fn name should already be in the stack
     //assign memory locations to labels has already been done since symbol table keeps track of stack
     std::cout<<temp.name<<":"<<std::endl;
@@ -303,27 +302,27 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
       }
       if (table.find_symbol(branches[0]->value).name != "NULL"){
         //save old return address
-        std::cout<<"addi $sp, $gp, "<<std::to_string(table.find_symbol(arg1).stack_pointer)<<std::endl;
+        std::cout<<"addi $sp, $gp, "<<std::to_string(table.find_symbol(fn.name).stack_pointer)<<std::endl;
         std::cout<<"sw $ra, "<<table.find_symbol("return_address").offset<<"($sp)"<<std::endl;
         std::cout<<"nop"<<std::endl;
         //put in new return address for fn call
         std::cout << "jal " << fn.name << std::endl;
         std::cout<<"nop"<<std::endl;
         //put back old return address
-        std::cout<<"addi $sp, $gp, "<<std::to_string(table.find_symbol(arg1).stack_pointer)<<std::endl;
+        std::cout<<"addi $sp, $gp, "<<std::to_string(table.find_symbol(fn.name).stack_pointer)<<std::endl;
         std::cout<<"lw $ra, "<<table.find_symbol("return_address").offset<<"($sp)"<<std::endl;
         std::cout<<"nop"<<std::endl;
       }
       //fn call return value goes to register $v0, which is then stored in temp1/2 to be used in operations
       if(table.t1_free){
-        std::cout<<"addi $sp, $gp, "<<std::to_string(table.find_symbol(arg1).stack_pointer)<<std::endl;
+        std::cout<<"addi $sp, $gp, "<<std::to_string(table.find_symbol(fn.name).stack_pointer)<<std::endl;
         std::cout<<"sw $2, "<<table.find_symbol("temp1").offset<<"($sp)"<<std::endl;
         std::cout<<"nop"<<std::endl;
         return "temp1";
         table.t1_free = false;
       }
       if(table.t2_free){
-        std::cout<<"addi $sp, $gp, "<<std::to_string(table.find_symbol(arg1).stack_pointer)<<std::endl;
+        std::cout<<"addi $sp, $gp, "<<std::to_string(table.find_symbol(fn.name).stack_pointer)<<std::endl;
         std::cout<<"sw $2, "<<table.find_symbol("temp2").offset<<"($sp)"<<std::endl;
         std::cout<<"nop"<<std::endl;
         return "temp2";

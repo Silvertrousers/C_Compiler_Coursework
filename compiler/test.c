@@ -1,4 +1,20 @@
-int f(int x, int y)
+
+
+int f();
+
+int g()
 {
-    return x||y;
+    return 10;
+}
+
+int main()
+{
+    return !( 10==f() );
+}
+
+int g();
+
+int f()
+{
+    return g();
 }
