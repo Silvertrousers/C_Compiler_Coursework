@@ -97,7 +97,19 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
     //fn name should already be in the stack
     //assign memory locations to labels has already been done since symbol table keeps track of stack
     std::cout<<temp.name<<":"<<std::endl;
-    branches[1]->make_mips(new_scope, sp, pc);//arguments
+    if (branches[1]->node_type == "PARAMETER_LIST"){
+        branches[1]->make_mips(new_scope, sp, pc);//arguments
+    }
+    if (branches[1]->node_type == "PARAMETER_DECLARATION"){
+      arg1 = branches[1]->make_mips(table, sp, pc);
+      std::cout<<"addi $sp, $gp, "<<std::to_string(table.find_symbol(arg1).stack_pointer)<<std::endl;
+      std::cout<<"sw $a0, "<<table.find_symbol(arg1).offset<<"($sp)"<<std::endl;
+      std::cout<<"nop"<<std::endl;
+      std::cout << "add $a0, $a1, $zero" <<std::endl;
+      std::cout << "add $a1, $a2, $zero" <<std::endl;
+      std::cout << "add $a2, $a3, $zero" <<std::endl;
+      std::cout << "add $a3, $zero, $zero" <<std::endl;
+    }
     std::cout<<branches[2]->make_mips(new_scope, sp, pc);//body
   }
 
@@ -305,6 +317,15 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
 
       if (branches[1]->node_type == "ARGUMENT_EXPRESSION_LIST"){
           branches[1]->make_mips(new_scope, sp, pc);
+      }
+      if (branches[1]->node_type == "ASSIGNMENT_EXPRESSION"){
+          arg1 = branches[0]->make_mips(table, sp, pc);
+          std::cout << "add $a3, $a2, $zero" <<std::endl;
+          std::cout << "add $a2, $a1, $zero" <<std::endl;
+          std::cout << "add $a1, $a0, $zero" <<std::endl;
+          std::cout<<"addi $sp, $gp, "<<std::to_string(table.find_symbol(arg1).stack_pointer)<<std::endl;
+          std::cout<<"lw $a0, "<<table.find_symbol(arg1).offset<<"($sp)"<<std::endl;
+          std::cout<<"nop"<<std::endl;
       }
       if (table.find_symbol(branches[0]->value).name != "NULL"){
         //save old return address
