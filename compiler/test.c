@@ -4,12 +4,13 @@ int f();
 
 int g()
 {
-    return 10;
+    int x;
+    return ! (x+10);
 }
 
 int main()
 {
-    return !( 10==f() );
+    return !(10==f());
 }
 
 int g();

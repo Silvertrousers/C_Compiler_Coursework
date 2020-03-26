@@ -104,10 +104,10 @@ Grammar
 
    52 RETURN: T_RETURN
 
-   53 PRIMARY_EXPRESSION: IDENTIFIER
-   54                   | CONSTANT
-   55                   | T_STRING
-   56                   | T_LBRACKET EXPR T_RBRACKET
+   53 PRIMARY_EXPRESSION: T_LBRACKET EXPR T_RBRACKET
+   54                   | IDENTIFIER
+   55                   | CONSTANT
+   56                   | T_STRING
 
    57 CONSTANT: T_DEC_INT
    58         | T_OCTAL_INT
@@ -341,88 +341,88 @@ Terminals, with rules where they appear
 
 $end (0) 0
 error (256)
-T_AUTO (258) 146
-T_BREAK (259) 49
-T_CASE (260) 18
-T_CHAR (261) 149
-T_CONTINUE (262) 48
-T_DEFAULT (263) 17
-T_DO (264) 47
-T_DOUBLE (265) 154
-T_ELSE (266) 34
-T_ENUM (267) 179
-T_EXTERN (268) 144
-T_FLOAT (269) 153
-T_FOR (270) 45
-T_IF (271) 33
-T_INT (272) 151
-T_LONG (273) 152
-T_REGISTER (274) 147
-T_RETURN (275) 52
-T_SHORT (276) 150
-T_SIGNED (277) 155
-T_SIZEOF (278) 76
-T_STATIC (279) 145
-T_STRUCT (280) 163
-T_SWITCH (281) 32
-T_TYPEDEF (282) 143
-T_UNSIGNED (283) 156
-T_VOID (284) 148
-T_VOLATILE (285) 185
-T_WHILE (286) 46
-T_TIMES (287) 78 86
-T_DIVIDE (288) 87
-T_PLUS (289) 79 90
-T_MINUS (290) 80 91
-T_EXPONENT (291) 106
-T_DECREMENT (292) 67 72
-T_INCREMENT (293) 66 71
-T_LESS_THAN (294) 96
-T_GREATER_THAN (295) 97
-T_EQUALS (296) 117 142 183
-T_AND (297) 77 104
-T_OR (298) 108
-T_BITWISE_NOT (299) 81
-T_LOGICAL_NOT (300) 82
-T_AND_AND (301) 110
-T_OR_OR (302) 112
-T_MODULO_EQUALS (303) 120
-T_LEFT_SHIFT_EQUALS (304) 123
-T_RIGHT_SHIFT_EQUALS (305) 124
-T_NOT_EQUALS_EQUALS (306) 102
-T_EQUALS_EQUALS (307) 101
-T_PLUS_EQUALS (308) 121
-T_MINUS_EQUALS (309) 122
-T_TIMES_EQUALS (310) 118
-T_DIVIDE_EQUALS (311) 119
-T_LESS_THAN_OR_EQUAL_TO (312) 98
-T_GREATER_THAN_OR_EQUAL_TO (313) 99
-T_AND_EQUALS (314) 125
-T_OR_EQUALS (315) 127
-T_XOR_EQUALS (316) 126
-T_ARROW (317) 65
-T_RIGHT_SHIFT (318) 94
-T_LEFT_SHIFT (319) 93
-T_MODULO (320) 88
-T_COMMA (321) 69 130 140 172 181 203 225 227
-T_DOT (322) 64
-T_COLON (323) 14 15 16 114 174 175
-T_SEMICOLON (324) 27 28 36 37 38 39 40 41 42 43 44 48 49 50 51 131
+T_EQUALS (258) 117 142 183
+T_MODULO_EQUALS (259) 120
+T_LEFT_SHIFT_EQUALS (260) 123
+T_RIGHT_SHIFT_EQUALS (261) 124
+T_PLUS_EQUALS (262) 121
+T_MINUS_EQUALS (263) 122
+T_TIMES_EQUALS (264) 118
+T_DIVIDE_EQUALS (265) 119
+T_AND_EQUALS (266) 125
+T_OR_EQUALS (267) 127
+T_XOR_EQUALS (268) 126
+T_LBRACKET (269) 29 30 31 35 36 37 38 39 40 41 42 43 44 53 63 75 84
+    189 192 213 218 219
+T_RBRACKET (270) 29 30 31 35 36 37 38 39 40 41 42 43 44 53 63 75 84
+    189 192 213 218 219
+T_LSQ_BRACKET (271) 61 191 214 215
+T_RSQ_BRACKET (272) 61 191 214 215
+T_RCURLY_BRACKET (273) 19 20 21 161 162 177 178 224 225
+T_LCURLY_BRACKET (274) 19 20 21 161 162 177 178 224 225
+T_LOGICAL_NOT (275) 82
+T_BITWISE_NOT (276) 81
+T_INCREMENT (277) 66 71
+T_DECREMENT (278) 67 72
+T_EQUALS_EQUALS (279) 101
+T_NOT_EQUALS_EQUALS (280) 102
+T_LESS_THAN_OR_EQUAL_TO (281) 98
+T_GREATER_THAN_OR_EQUAL_TO (282) 99
+T_PLUS (283) 79 90
+T_MINUS (284) 80 91
+T_RIGHT_SHIFT (285) 94
+T_LEFT_SHIFT (286) 93
+T_LESS_THAN (287) 96
+T_GREATER_THAN (288) 97
+T_AND (289) 77 104
+T_OR (290) 108
+T_AND_AND (291) 110
+T_OR_OR (292) 112
+T_DIVIDE (293) 87
+T_TIMES (294) 78 86
+T_MODULO (295) 88
+T_EXPONENT (296) 106
+T_AUTO (297) 146
+T_BREAK (298) 49
+T_CASE (299) 18
+T_CHAR (300) 149
+T_CONTINUE (301) 48
+T_DEFAULT (302) 17
+T_DO (303) 47
+T_DOUBLE (304) 154
+T_ELSE (305) 34
+T_ENUM (306) 179
+T_EXTERN (307) 144
+T_FLOAT (308) 153
+T_FOR (309) 45
+T_IF (310) 33
+T_INT (311) 151
+T_LONG (312) 152
+T_REGISTER (313) 147
+T_RETURN (314) 52
+T_SHORT (315) 150
+T_SIGNED (316) 155
+T_SIZEOF (317) 76
+T_STATIC (318) 145
+T_STRUCT (319) 163
+T_SWITCH (320) 32
+T_TYPEDEF (321) 143
+T_UNSIGNED (322) 156
+T_VOID (323) 148
+T_VOLATILE (324) 185
+T_WHILE (325) 46
+T_ARROW (326) 65
+T_COMMA (327) 69 130 140 172 181 203 225 227
+T_DOT (328) 64
+T_COLON (329) 14 15 16 114 174 175
+T_SEMICOLON (330) 27 28 36 37 38 39 40 41 42 43 44 48 49 50 51 131
     132
-T_QUESTION (325) 114
-T_LBRACKET (326) 29 30 31 35 36 37 38 39 40 41 42 43 44 56 63 75 84
-    189 192 213 218 219
-T_RBRACKET (327) 29 30 31 35 36 37 38 39 40 41 42 43 44 56 63 75 84
-    189 192 213 218 219
-T_LSQ_BRACKET (328) 61 191 214 215
-T_RSQ_BRACKET (329) 61 191 214 215
-T_RCURLY_BRACKET (330) 19 20 21 161 162 177 178 224 225
-T_LCURLY_BRACKET (331) 19 20 21 161 162 177 178 224 225
+T_QUESTION (331) 114
 T_EMPTY_BRACKETS (332) 62 193 220 221
 T_ECURLY_BRACKETS (333) 22
 T_ESQ_BRACKETS (334) 190 216 217
 T_IDENTIFIER (335) 207
-T_STRING (336) 55
+T_STRING (336) 56
 T_DEC_INT (337) 57
 T_OCTAL_INT (338) 58
 T_HEX_INT (339) 59
@@ -485,7 +485,7 @@ RETURN (112)
 PRIMARY_EXPRESSION (113)
     on left: 53 54 55 56, on right: 60
 CONSTANT (114)
-    on left: 57 58 59, on right: 54
+    on left: 57 58 59, on right: 55
 POSTFIX_EXPRESSION (115)
     on left: 60 61 62 63 64 65 66 67, on right: 61 62 63 64 65 66 67
     70
@@ -530,7 +530,7 @@ CONSTANT_EXPRESSION (134)
     on left: 128, on right: 15 174 175 183 191 214 215
 EXPR (135)
     on left: 129 130, on right: 27 29 30 31 35 36 37 38 39 40 41 42
-    43 50 56 61 114 130
+    43 50 53 61 114 130
 DECLARATION (136)
     on left: 131 132, on right: 5 23 24
 DECLARATION_SPECIFIERS (137)
@@ -589,7 +589,7 @@ PARAMETER_LIST (161)
 PARAMETER_DECLARATION (162)
     on left: 204 205 206, on right: 202 203
 IDENTIFIER (163)
-    on left: 207, on right: 14 53 64 65 160 162 176 177 188
+    on left: 207, on right: 14 54 64 65 160 162 176 177 188
 TYPE_NAME (164)
     on left: 208 209, on right: 75 84
 ABSTRACT_DECLARATOR (165)
@@ -609,24 +609,24 @@ State 0
 
     0 $accept: . PROGRAM $end
 
-    T_AUTO         shift, and go to state 1
-    T_CHAR         shift, and go to state 2
-    T_DOUBLE       shift, and go to state 3
-    T_ENUM         shift, and go to state 4
-    T_EXTERN       shift, and go to state 5
-    T_FLOAT        shift, and go to state 6
-    T_INT          shift, and go to state 7
-    T_LONG         shift, and go to state 8
-    T_REGISTER     shift, and go to state 9
-    T_SHORT        shift, and go to state 10
-    T_SIGNED       shift, and go to state 11
-    T_STATIC       shift, and go to state 12
-    T_STRUCT       shift, and go to state 13
-    T_TYPEDEF      shift, and go to state 14
-    T_UNSIGNED     shift, and go to state 15
-    T_VOID         shift, and go to state 16
-    T_VOLATILE     shift, and go to state 17
-    T_LBRACKET     shift, and go to state 18
+    T_LBRACKET     shift, and go to state 1
+    T_AUTO         shift, and go to state 2
+    T_CHAR         shift, and go to state 3
+    T_DOUBLE       shift, and go to state 4
+    T_ENUM         shift, and go to state 5
+    T_EXTERN       shift, and go to state 6
+    T_FLOAT        shift, and go to state 7
+    T_INT          shift, and go to state 8
+    T_LONG         shift, and go to state 9
+    T_REGISTER     shift, and go to state 10
+    T_SHORT        shift, and go to state 11
+    T_SIGNED       shift, and go to state 12
+    T_STATIC       shift, and go to state 13
+    T_STRUCT       shift, and go to state 14
+    T_TYPEDEF      shift, and go to state 15
+    T_UNSIGNED     shift, and go to state 16
+    T_VOID         shift, and go to state 17
+    T_VOLATILE     shift, and go to state 18
     T_IDENTIFIER   shift, and go to state 19
     T_DEREFERENCE  shift, and go to state 20
     T_CUSTOM_TYPE  shift, and go to state 21
@@ -654,128 +654,9 @@ State 0
 
 State 1
 
-  146 STORAGE_CLASS_SPECIFIER: T_AUTO .
-
-    $default  reduce using rule 146 (STORAGE_CLASS_SPECIFIER)
-
-
-State 2
-
-  149 TYPE_SPECIFIER: T_CHAR .
-
-    $default  reduce using rule 149 (TYPE_SPECIFIER)
-
-
-State 3
-
-  154 TYPE_SPECIFIER: T_DOUBLE .
-
-    $default  reduce using rule 154 (TYPE_SPECIFIER)
-
-
-State 4
-
-  179 ENUM: T_ENUM .
-
-    $default  reduce using rule 179 (ENUM)
-
-
-State 5
-
-  144 STORAGE_CLASS_SPECIFIER: T_EXTERN .
-
-    $default  reduce using rule 144 (STORAGE_CLASS_SPECIFIER)
-
-
-State 6
-
-  153 TYPE_SPECIFIER: T_FLOAT .
-
-    $default  reduce using rule 153 (TYPE_SPECIFIER)
-
-
-State 7
-
-  151 TYPE_SPECIFIER: T_INT .
-
-    $default  reduce using rule 151 (TYPE_SPECIFIER)
-
-
-State 8
-
-  152 TYPE_SPECIFIER: T_LONG .
-
-    $default  reduce using rule 152 (TYPE_SPECIFIER)
-
-
-State 9
-
-  147 STORAGE_CLASS_SPECIFIER: T_REGISTER .
-
-    $default  reduce using rule 147 (STORAGE_CLASS_SPECIFIER)
-
-
-State 10
-
-  150 TYPE_SPECIFIER: T_SHORT .
-
-    $default  reduce using rule 150 (TYPE_SPECIFIER)
-
-
-State 11
-
-  155 TYPE_SPECIFIER: T_SIGNED .
-
-    $default  reduce using rule 155 (TYPE_SPECIFIER)
-
-
-State 12
-
-  145 STORAGE_CLASS_SPECIFIER: T_STATIC .
-
-    $default  reduce using rule 145 (STORAGE_CLASS_SPECIFIER)
-
-
-State 13
-
-  163 STRUCT_OR_UNION: T_STRUCT .
-
-    $default  reduce using rule 163 (STRUCT_OR_UNION)
-
-
-State 14
-
-  143 STORAGE_CLASS_SPECIFIER: T_TYPEDEF .
-
-    $default  reduce using rule 143 (STORAGE_CLASS_SPECIFIER)
-
-
-State 15
-
-  156 TYPE_SPECIFIER: T_UNSIGNED .
-
-    $default  reduce using rule 156 (TYPE_SPECIFIER)
-
-
-State 16
-
-  148 TYPE_SPECIFIER: T_VOID .
-
-    $default  reduce using rule 148 (TYPE_SPECIFIER)
-
-
-State 17
-
-  185 TYPE_QUALIFIER: T_VOLATILE .
-
-    $default  reduce using rule 185 (TYPE_QUALIFIER)
-
-
-State 18
-
   189 DIRECT_DECLARATOR: T_LBRACKET . DECLARATOR T_RBRACKET
 
-    T_LBRACKET     shift, and go to state 18
+    T_LBRACKET     shift, and go to state 1
     T_IDENTIFIER   shift, and go to state 19
     T_DEREFERENCE  shift, and go to state 20
 
@@ -784,6 +665,125 @@ State 18
     POINTER            go to state 37
     DEREFERENCE        go to state 38
     IDENTIFIER         go to state 39
+
+
+State 2
+
+  146 STORAGE_CLASS_SPECIFIER: T_AUTO .
+
+    $default  reduce using rule 146 (STORAGE_CLASS_SPECIFIER)
+
+
+State 3
+
+  149 TYPE_SPECIFIER: T_CHAR .
+
+    $default  reduce using rule 149 (TYPE_SPECIFIER)
+
+
+State 4
+
+  154 TYPE_SPECIFIER: T_DOUBLE .
+
+    $default  reduce using rule 154 (TYPE_SPECIFIER)
+
+
+State 5
+
+  179 ENUM: T_ENUM .
+
+    $default  reduce using rule 179 (ENUM)
+
+
+State 6
+
+  144 STORAGE_CLASS_SPECIFIER: T_EXTERN .
+
+    $default  reduce using rule 144 (STORAGE_CLASS_SPECIFIER)
+
+
+State 7
+
+  153 TYPE_SPECIFIER: T_FLOAT .
+
+    $default  reduce using rule 153 (TYPE_SPECIFIER)
+
+
+State 8
+
+  151 TYPE_SPECIFIER: T_INT .
+
+    $default  reduce using rule 151 (TYPE_SPECIFIER)
+
+
+State 9
+
+  152 TYPE_SPECIFIER: T_LONG .
+
+    $default  reduce using rule 152 (TYPE_SPECIFIER)
+
+
+State 10
+
+  147 STORAGE_CLASS_SPECIFIER: T_REGISTER .
+
+    $default  reduce using rule 147 (STORAGE_CLASS_SPECIFIER)
+
+
+State 11
+
+  150 TYPE_SPECIFIER: T_SHORT .
+
+    $default  reduce using rule 150 (TYPE_SPECIFIER)
+
+
+State 12
+
+  155 TYPE_SPECIFIER: T_SIGNED .
+
+    $default  reduce using rule 155 (TYPE_SPECIFIER)
+
+
+State 13
+
+  145 STORAGE_CLASS_SPECIFIER: T_STATIC .
+
+    $default  reduce using rule 145 (STORAGE_CLASS_SPECIFIER)
+
+
+State 14
+
+  163 STRUCT_OR_UNION: T_STRUCT .
+
+    $default  reduce using rule 163 (STRUCT_OR_UNION)
+
+
+State 15
+
+  143 STORAGE_CLASS_SPECIFIER: T_TYPEDEF .
+
+    $default  reduce using rule 143 (STORAGE_CLASS_SPECIFIER)
+
+
+State 16
+
+  156 TYPE_SPECIFIER: T_UNSIGNED .
+
+    $default  reduce using rule 156 (TYPE_SPECIFIER)
+
+
+State 17
+
+  148 TYPE_SPECIFIER: T_VOID .
+
+    $default  reduce using rule 148 (TYPE_SPECIFIER)
+
+
+State 18
+
+  185 TYPE_QUALIFIER: T_VOLATILE .
+
+    $default  reduce using rule 185 (TYPE_QUALIFIER)
 
 
 State 19
@@ -819,24 +819,24 @@ State 23
     1 PROGRAM: TRANSLATION_UNIT .
     3 TRANSLATION_UNIT: TRANSLATION_UNIT . EXTERNAL_DECLARATION
 
-    T_AUTO         shift, and go to state 1
-    T_CHAR         shift, and go to state 2
-    T_DOUBLE       shift, and go to state 3
-    T_ENUM         shift, and go to state 4
-    T_EXTERN       shift, and go to state 5
-    T_FLOAT        shift, and go to state 6
-    T_INT          shift, and go to state 7
-    T_LONG         shift, and go to state 8
-    T_REGISTER     shift, and go to state 9
-    T_SHORT        shift, and go to state 10
-    T_SIGNED       shift, and go to state 11
-    T_STATIC       shift, and go to state 12
-    T_STRUCT       shift, and go to state 13
-    T_TYPEDEF      shift, and go to state 14
-    T_UNSIGNED     shift, and go to state 15
-    T_VOID         shift, and go to state 16
-    T_VOLATILE     shift, and go to state 17
-    T_LBRACKET     shift, and go to state 18
+    T_LBRACKET     shift, and go to state 1
+    T_AUTO         shift, and go to state 2
+    T_CHAR         shift, and go to state 3
+    T_DOUBLE       shift, and go to state 4
+    T_ENUM         shift, and go to state 5
+    T_EXTERN       shift, and go to state 6
+    T_FLOAT        shift, and go to state 7
+    T_INT          shift, and go to state 8
+    T_LONG         shift, and go to state 9
+    T_REGISTER     shift, and go to state 10
+    T_SHORT        shift, and go to state 11
+    T_SIGNED       shift, and go to state 12
+    T_STATIC       shift, and go to state 13
+    T_STRUCT       shift, and go to state 14
+    T_TYPEDEF      shift, and go to state 15
+    T_UNSIGNED     shift, and go to state 16
+    T_VOID         shift, and go to state 17
+    T_VOLATILE     shift, and go to state 18
     T_IDENTIFIER   shift, and go to state 19
     T_DEREFERENCE  shift, and go to state 20
     T_CUSTOM_TYPE  shift, and go to state 21
@@ -889,8 +889,8 @@ State 27
   131 DECLARATION: DECLARATION_SPECIFIERS . T_SEMICOLON
   132            | DECLARATION_SPECIFIERS . INIT_DECLARATOR_LIST T_SEMICOLON
 
+    T_LBRACKET     shift, and go to state 1
     T_SEMICOLON    shift, and go to state 44
-    T_LBRACKET     shift, and go to state 18
     T_IDENTIFIER   shift, and go to state 19
     T_DEREFERENCE  shift, and go to state 20
 
@@ -908,23 +908,23 @@ State 28
   133 DECLARATION_SPECIFIERS: STORAGE_CLASS_SPECIFIER .
   134                       | STORAGE_CLASS_SPECIFIER . DECLARATION_SPECIFIERS
 
-    T_AUTO         shift, and go to state 1
-    T_CHAR         shift, and go to state 2
-    T_DOUBLE       shift, and go to state 3
-    T_ENUM         shift, and go to state 4
-    T_EXTERN       shift, and go to state 5
-    T_FLOAT        shift, and go to state 6
-    T_INT          shift, and go to state 7
-    T_LONG         shift, and go to state 8
-    T_REGISTER     shift, and go to state 9
-    T_SHORT        shift, and go to state 10
-    T_SIGNED       shift, and go to state 11
-    T_STATIC       shift, and go to state 12
-    T_STRUCT       shift, and go to state 13
-    T_TYPEDEF      shift, and go to state 14
-    T_UNSIGNED     shift, and go to state 15
-    T_VOID         shift, and go to state 16
-    T_VOLATILE     shift, and go to state 17
+    T_AUTO         shift, and go to state 2
+    T_CHAR         shift, and go to state 3
+    T_DOUBLE       shift, and go to state 4
+    T_ENUM         shift, and go to state 5
+    T_EXTERN       shift, and go to state 6
+    T_FLOAT        shift, and go to state 7
+    T_INT          shift, and go to state 8
+    T_LONG         shift, and go to state 9
+    T_REGISTER     shift, and go to state 10
+    T_SHORT        shift, and go to state 11
+    T_SIGNED       shift, and go to state 12
+    T_STATIC       shift, and go to state 13
+    T_STRUCT       shift, and go to state 14
+    T_TYPEDEF      shift, and go to state 15
+    T_UNSIGNED     shift, and go to state 16
+    T_VOID         shift, and go to state 17
+    T_VOLATILE     shift, and go to state 18
     T_CUSTOM_TYPE  shift, and go to state 21
 
     $default  reduce using rule 133 (DECLARATION_SPECIFIERS)
@@ -945,23 +945,23 @@ State 29
   135 DECLARATION_SPECIFIERS: TYPE_SPECIFIER .
   136                       | TYPE_SPECIFIER . DECLARATION_SPECIFIERS
 
-    T_AUTO         shift, and go to state 1
-    T_CHAR         shift, and go to state 2
-    T_DOUBLE       shift, and go to state 3
-    T_ENUM         shift, and go to state 4
-    T_EXTERN       shift, and go to state 5
-    T_FLOAT        shift, and go to state 6
-    T_INT          shift, and go to state 7
-    T_LONG         shift, and go to state 8
-    T_REGISTER     shift, and go to state 9
-    T_SHORT        shift, and go to state 10
-    T_SIGNED       shift, and go to state 11
-    T_STATIC       shift, and go to state 12
-    T_STRUCT       shift, and go to state 13
-    T_TYPEDEF      shift, and go to state 14
-    T_UNSIGNED     shift, and go to state 15
-    T_VOID         shift, and go to state 16
-    T_VOLATILE     shift, and go to state 17
+    T_AUTO         shift, and go to state 2
+    T_CHAR         shift, and go to state 3
+    T_DOUBLE       shift, and go to state 4
+    T_ENUM         shift, and go to state 5
+    T_EXTERN       shift, and go to state 6
+    T_FLOAT        shift, and go to state 7
+    T_INT          shift, and go to state 8
+    T_LONG         shift, and go to state 9
+    T_REGISTER     shift, and go to state 10
+    T_SHORT        shift, and go to state 11
+    T_SIGNED       shift, and go to state 12
+    T_STATIC       shift, and go to state 13
+    T_STRUCT       shift, and go to state 14
+    T_TYPEDEF      shift, and go to state 15
+    T_UNSIGNED     shift, and go to state 16
+    T_VOID         shift, and go to state 17
+    T_VOLATILE     shift, and go to state 18
     T_CUSTOM_TYPE  shift, and go to state 21
 
     $default  reduce using rule 135 (DECLARATION_SPECIFIERS)
@@ -1020,23 +1020,23 @@ State 34
   137 DECLARATION_SPECIFIERS: TYPE_QUALIFIER .
   138                       | TYPE_QUALIFIER . DECLARATION_SPECIFIERS
 
-    T_AUTO         shift, and go to state 1
-    T_CHAR         shift, and go to state 2
-    T_DOUBLE       shift, and go to state 3
-    T_ENUM         shift, and go to state 4
-    T_EXTERN       shift, and go to state 5
-    T_FLOAT        shift, and go to state 6
-    T_INT          shift, and go to state 7
-    T_LONG         shift, and go to state 8
-    T_REGISTER     shift, and go to state 9
-    T_SHORT        shift, and go to state 10
-    T_SIGNED       shift, and go to state 11
-    T_STATIC       shift, and go to state 12
-    T_STRUCT       shift, and go to state 13
-    T_TYPEDEF      shift, and go to state 14
-    T_UNSIGNED     shift, and go to state 15
-    T_VOID         shift, and go to state 16
-    T_VOLATILE     shift, and go to state 17
+    T_AUTO         shift, and go to state 2
+    T_CHAR         shift, and go to state 3
+    T_DOUBLE       shift, and go to state 4
+    T_ENUM         shift, and go to state 5
+    T_EXTERN       shift, and go to state 6
+    T_FLOAT        shift, and go to state 7
+    T_INT          shift, and go to state 8
+    T_LONG         shift, and go to state 9
+    T_REGISTER     shift, and go to state 10
+    T_SHORT        shift, and go to state 11
+    T_SIGNED       shift, and go to state 12
+    T_STATIC       shift, and go to state 13
+    T_STRUCT       shift, and go to state 14
+    T_TYPEDEF      shift, and go to state 15
+    T_UNSIGNED     shift, and go to state 16
+    T_VOID         shift, and go to state 17
+    T_VOLATILE     shift, and go to state 18
     T_CUSTOM_TYPE  shift, and go to state 21
 
     $default  reduce using rule 137 (DECLARATION_SPECIFIERS)
@@ -1082,7 +1082,7 @@ State 37
 
   187 DECLARATOR: POINTER . DIRECT_DECLARATOR
 
-    T_LBRACKET    shift, and go to state 18
+    T_LBRACKET    shift, and go to state 1
     T_IDENTIFIER  shift, and go to state 19
 
     DIRECT_DECLARATOR  go to state 62
@@ -1096,7 +1096,7 @@ State 38
   196        | DEREFERENCE . POINTER
   197        | DEREFERENCE . TYPE_QUALIFIER_LIST POINTER
 
-    T_VOLATILE     shift, and go to state 17
+    T_VOLATILE     shift, and go to state 18
     T_DEREFERENCE  shift, and go to state 20
 
     $default  reduce using rule 194 (POINTER)
@@ -1198,18 +1198,18 @@ State 50
 
   161 STRUCT_OR_UNION_SPECIFIER: STRUCT_OR_UNION T_LCURLY_BRACKET . STRUCT_DECLARATION_LIST T_RCURLY_BRACKET
 
-    T_CHAR         shift, and go to state 2
-    T_DOUBLE       shift, and go to state 3
-    T_ENUM         shift, and go to state 4
-    T_FLOAT        shift, and go to state 6
-    T_INT          shift, and go to state 7
-    T_LONG         shift, and go to state 8
-    T_SHORT        shift, and go to state 10
-    T_SIGNED       shift, and go to state 11
-    T_STRUCT       shift, and go to state 13
-    T_UNSIGNED     shift, and go to state 15
-    T_VOID         shift, and go to state 16
-    T_VOLATILE     shift, and go to state 17
+    T_CHAR         shift, and go to state 3
+    T_DOUBLE       shift, and go to state 4
+    T_ENUM         shift, and go to state 5
+    T_FLOAT        shift, and go to state 7
+    T_INT          shift, and go to state 8
+    T_LONG         shift, and go to state 9
+    T_SHORT        shift, and go to state 11
+    T_SIGNED       shift, and go to state 12
+    T_STRUCT       shift, and go to state 14
+    T_UNSIGNED     shift, and go to state 16
+    T_VOID         shift, and go to state 17
+    T_VOLATILE     shift, and go to state 18
     T_CUSTOM_TYPE  shift, and go to state 21
 
     TYPE_SPECIFIER             go to state 71
@@ -1268,45 +1268,45 @@ State 55
    20                   | T_LCURLY_BRACKET . STATEMENT_LIST T_RCURLY_BRACKET
    21                   | T_LCURLY_BRACKET . DECLARATION_LIST T_RCURLY_BRACKET
 
-    T_AUTO             shift, and go to state 1
-    T_BREAK            shift, and go to state 82
-    T_CASE             shift, and go to state 83
-    T_CHAR             shift, and go to state 2
-    T_CONTINUE         shift, and go to state 84
-    T_DEFAULT          shift, and go to state 85
-    T_DO               shift, and go to state 86
-    T_DOUBLE           shift, and go to state 3
-    T_ENUM             shift, and go to state 4
-    T_EXTERN           shift, and go to state 5
-    T_FLOAT            shift, and go to state 6
-    T_FOR              shift, and go to state 87
-    T_IF               shift, and go to state 88
-    T_INT              shift, and go to state 7
-    T_LONG             shift, and go to state 8
-    T_REGISTER         shift, and go to state 9
-    T_RETURN           shift, and go to state 89
-    T_SHORT            shift, and go to state 10
-    T_SIGNED           shift, and go to state 11
-    T_SIZEOF           shift, and go to state 90
-    T_STATIC           shift, and go to state 12
-    T_STRUCT           shift, and go to state 13
-    T_SWITCH           shift, and go to state 91
-    T_TYPEDEF          shift, and go to state 14
-    T_UNSIGNED         shift, and go to state 15
-    T_VOID             shift, and go to state 16
-    T_VOLATILE         shift, and go to state 17
-    T_WHILE            shift, and go to state 92
-    T_TIMES            shift, and go to state 93
-    T_PLUS             shift, and go to state 94
-    T_MINUS            shift, and go to state 95
-    T_DECREMENT        shift, and go to state 96
-    T_INCREMENT        shift, and go to state 97
-    T_AND              shift, and go to state 98
-    T_BITWISE_NOT      shift, and go to state 99
-    T_LOGICAL_NOT      shift, and go to state 100
-    T_SEMICOLON        shift, and go to state 101
-    T_LBRACKET         shift, and go to state 102
+    T_LBRACKET         shift, and go to state 82
     T_LCURLY_BRACKET   shift, and go to state 55
+    T_LOGICAL_NOT      shift, and go to state 83
+    T_BITWISE_NOT      shift, and go to state 84
+    T_INCREMENT        shift, and go to state 85
+    T_DECREMENT        shift, and go to state 86
+    T_PLUS             shift, and go to state 87
+    T_MINUS            shift, and go to state 88
+    T_AND              shift, and go to state 89
+    T_TIMES            shift, and go to state 90
+    T_AUTO             shift, and go to state 2
+    T_BREAK            shift, and go to state 91
+    T_CASE             shift, and go to state 92
+    T_CHAR             shift, and go to state 3
+    T_CONTINUE         shift, and go to state 93
+    T_DEFAULT          shift, and go to state 94
+    T_DO               shift, and go to state 95
+    T_DOUBLE           shift, and go to state 4
+    T_ENUM             shift, and go to state 5
+    T_EXTERN           shift, and go to state 6
+    T_FLOAT            shift, and go to state 7
+    T_FOR              shift, and go to state 96
+    T_IF               shift, and go to state 97
+    T_INT              shift, and go to state 8
+    T_LONG             shift, and go to state 9
+    T_REGISTER         shift, and go to state 10
+    T_RETURN           shift, and go to state 98
+    T_SHORT            shift, and go to state 11
+    T_SIGNED           shift, and go to state 12
+    T_SIZEOF           shift, and go to state 99
+    T_STATIC           shift, and go to state 13
+    T_STRUCT           shift, and go to state 14
+    T_SWITCH           shift, and go to state 100
+    T_TYPEDEF          shift, and go to state 15
+    T_UNSIGNED         shift, and go to state 16
+    T_VOID             shift, and go to state 17
+    T_VOLATILE         shift, and go to state 18
+    T_WHILE            shift, and go to state 101
+    T_SEMICOLON        shift, and go to state 102
     T_ECURLY_BRACKETS  shift, and go to state 56
     T_IDENTIFIER       shift, and go to state 19
     T_STRING           shift, and go to state 103
@@ -1383,23 +1383,23 @@ State 58
 
   192 DIRECT_DECLARATOR: DIRECT_DECLARATOR T_LBRACKET . PARAMETER_TYPE_LIST T_RBRACKET
 
-    T_AUTO         shift, and go to state 1
-    T_CHAR         shift, and go to state 2
-    T_DOUBLE       shift, and go to state 3
-    T_ENUM         shift, and go to state 4
-    T_EXTERN       shift, and go to state 5
-    T_FLOAT        shift, and go to state 6
-    T_INT          shift, and go to state 7
-    T_LONG         shift, and go to state 8
-    T_REGISTER     shift, and go to state 9
-    T_SHORT        shift, and go to state 10
-    T_SIGNED       shift, and go to state 11
-    T_STATIC       shift, and go to state 12
-    T_STRUCT       shift, and go to state 13
-    T_TYPEDEF      shift, and go to state 14
-    T_UNSIGNED     shift, and go to state 15
-    T_VOID         shift, and go to state 16
-    T_VOLATILE     shift, and go to state 17
+    T_AUTO         shift, and go to state 2
+    T_CHAR         shift, and go to state 3
+    T_DOUBLE       shift, and go to state 4
+    T_ENUM         shift, and go to state 5
+    T_EXTERN       shift, and go to state 6
+    T_FLOAT        shift, and go to state 7
+    T_INT          shift, and go to state 8
+    T_LONG         shift, and go to state 9
+    T_REGISTER     shift, and go to state 10
+    T_SHORT        shift, and go to state 11
+    T_SIGNED       shift, and go to state 12
+    T_STATIC       shift, and go to state 13
+    T_STRUCT       shift, and go to state 14
+    T_TYPEDEF      shift, and go to state 15
+    T_UNSIGNED     shift, and go to state 16
+    T_VOID         shift, and go to state 17
+    T_VOLATILE     shift, and go to state 18
     T_CUSTOM_TYPE  shift, and go to state 21
 
     DECLARATION_SPECIFIERS     go to state 147
@@ -1420,16 +1420,16 @@ State 59
 
   191 DIRECT_DECLARATOR: DIRECT_DECLARATOR T_LSQ_BRACKET . CONSTANT_EXPRESSION T_RSQ_BRACKET
 
-    T_SIZEOF       shift, and go to state 90
-    T_TIMES        shift, and go to state 93
-    T_PLUS         shift, and go to state 94
-    T_MINUS        shift, and go to state 95
-    T_DECREMENT    shift, and go to state 96
-    T_INCREMENT    shift, and go to state 97
-    T_AND          shift, and go to state 98
-    T_BITWISE_NOT  shift, and go to state 99
-    T_LOGICAL_NOT  shift, and go to state 100
-    T_LBRACKET     shift, and go to state 102
+    T_LBRACKET     shift, and go to state 82
+    T_LOGICAL_NOT  shift, and go to state 83
+    T_BITWISE_NOT  shift, and go to state 84
+    T_INCREMENT    shift, and go to state 85
+    T_DECREMENT    shift, and go to state 86
+    T_PLUS         shift, and go to state 87
+    T_MINUS        shift, and go to state 88
+    T_AND          shift, and go to state 89
+    T_TIMES        shift, and go to state 90
+    T_SIZEOF       shift, and go to state 99
     T_IDENTIFIER   shift, and go to state 19
     T_STRING       shift, and go to state 103
     T_DEC_INT      shift, and go to state 104
@@ -1508,7 +1508,7 @@ State 65
   197        | DEREFERENCE TYPE_QUALIFIER_LIST . POINTER
   200 TYPE_QUALIFIER_LIST: TYPE_QUALIFIER_LIST . TYPE_QUALIFIER
 
-    T_VOLATILE     shift, and go to state 17
+    T_VOLATILE     shift, and go to state 18
     T_DEREFERENCE  shift, and go to state 20
 
     $default  reduce using rule 195 (POINTER)
@@ -1529,7 +1529,7 @@ State 67
 
   140 INIT_DECLARATOR_LIST: INIT_DECLARATOR_LIST T_COMMA . INIT_DECLARATOR
 
-    T_LBRACKET     shift, and go to state 18
+    T_LBRACKET     shift, and go to state 1
     T_IDENTIFIER   shift, and go to state 19
     T_DEREFERENCE  shift, and go to state 20
 
@@ -1552,17 +1552,17 @@ State 69
 
   142 INIT_DECLARATOR: DECLARATOR T_EQUALS . INITIALIZER
 
-    T_SIZEOF          shift, and go to state 90
-    T_TIMES           shift, and go to state 93
-    T_PLUS            shift, and go to state 94
-    T_MINUS           shift, and go to state 95
-    T_DECREMENT       shift, and go to state 96
-    T_INCREMENT       shift, and go to state 97
-    T_AND             shift, and go to state 98
-    T_BITWISE_NOT     shift, and go to state 99
-    T_LOGICAL_NOT     shift, and go to state 100
-    T_LBRACKET        shift, and go to state 102
+    T_LBRACKET        shift, and go to state 82
     T_LCURLY_BRACKET  shift, and go to state 159
+    T_LOGICAL_NOT     shift, and go to state 83
+    T_BITWISE_NOT     shift, and go to state 84
+    T_INCREMENT       shift, and go to state 85
+    T_DECREMENT       shift, and go to state 86
+    T_PLUS            shift, and go to state 87
+    T_MINUS           shift, and go to state 88
+    T_AND             shift, and go to state 89
+    T_TIMES           shift, and go to state 90
+    T_SIZEOF          shift, and go to state 99
     T_IDENTIFIER      shift, and go to state 19
     T_STRING          shift, and go to state 103
     T_DEC_INT         shift, and go to state 104
@@ -1604,18 +1604,18 @@ State 71
   167 SPECIFIER_QUALIFIER_LIST: TYPE_SPECIFIER .
   168                         | TYPE_SPECIFIER . SPECIFIER_QUALIFIER_LIST
 
-    T_CHAR         shift, and go to state 2
-    T_DOUBLE       shift, and go to state 3
-    T_ENUM         shift, and go to state 4
-    T_FLOAT        shift, and go to state 6
-    T_INT          shift, and go to state 7
-    T_LONG         shift, and go to state 8
-    T_SHORT        shift, and go to state 10
-    T_SIGNED       shift, and go to state 11
-    T_STRUCT       shift, and go to state 13
-    T_UNSIGNED     shift, and go to state 15
-    T_VOID         shift, and go to state 16
-    T_VOLATILE     shift, and go to state 17
+    T_CHAR         shift, and go to state 3
+    T_DOUBLE       shift, and go to state 4
+    T_ENUM         shift, and go to state 5
+    T_FLOAT        shift, and go to state 7
+    T_INT          shift, and go to state 8
+    T_LONG         shift, and go to state 9
+    T_SHORT        shift, and go to state 11
+    T_SIGNED       shift, and go to state 12
+    T_STRUCT       shift, and go to state 14
+    T_UNSIGNED     shift, and go to state 16
+    T_VOID         shift, and go to state 17
+    T_VOLATILE     shift, and go to state 18
     T_CUSTOM_TYPE  shift, and go to state 21
 
     $default  reduce using rule 167 (SPECIFIER_QUALIFIER_LIST)
@@ -1635,19 +1635,19 @@ State 72
   161 STRUCT_OR_UNION_SPECIFIER: STRUCT_OR_UNION T_LCURLY_BRACKET STRUCT_DECLARATION_LIST . T_RCURLY_BRACKET
   165 STRUCT_DECLARATION_LIST: STRUCT_DECLARATION_LIST . STRUCT_DECLARATION
 
-    T_CHAR            shift, and go to state 2
-    T_DOUBLE          shift, and go to state 3
-    T_ENUM            shift, and go to state 4
-    T_FLOAT           shift, and go to state 6
-    T_INT             shift, and go to state 7
-    T_LONG            shift, and go to state 8
-    T_SHORT           shift, and go to state 10
-    T_SIGNED          shift, and go to state 11
-    T_STRUCT          shift, and go to state 13
-    T_UNSIGNED        shift, and go to state 15
-    T_VOID            shift, and go to state 16
-    T_VOLATILE        shift, and go to state 17
     T_RCURLY_BRACKET  shift, and go to state 163
+    T_CHAR            shift, and go to state 3
+    T_DOUBLE          shift, and go to state 4
+    T_ENUM            shift, and go to state 5
+    T_FLOAT           shift, and go to state 7
+    T_INT             shift, and go to state 8
+    T_LONG            shift, and go to state 9
+    T_SHORT           shift, and go to state 11
+    T_SIGNED          shift, and go to state 12
+    T_STRUCT          shift, and go to state 14
+    T_UNSIGNED        shift, and go to state 16
+    T_VOID            shift, and go to state 17
+    T_VOLATILE        shift, and go to state 18
     T_CUSTOM_TYPE     shift, and go to state 21
 
     TYPE_SPECIFIER             go to state 71
@@ -1672,8 +1672,8 @@ State 74
 
   166 STRUCT_DECLARATION: SPECIFIER_QUALIFIER_LIST . STRUCT_DECLARATOR_LIST
 
+    T_LBRACKET     shift, and go to state 1
     T_COLON        shift, and go to state 165
-    T_LBRACKET     shift, and go to state 18
     T_IDENTIFIER   shift, and go to state 19
     T_DEREFERENCE  shift, and go to state 20
 
@@ -1691,18 +1691,18 @@ State 75
   169 SPECIFIER_QUALIFIER_LIST: TYPE_QUALIFIER .
   170                         | TYPE_QUALIFIER . SPECIFIER_QUALIFIER_LIST
 
-    T_CHAR         shift, and go to state 2
-    T_DOUBLE       shift, and go to state 3
-    T_ENUM         shift, and go to state 4
-    T_FLOAT        shift, and go to state 6
-    T_INT          shift, and go to state 7
-    T_LONG         shift, and go to state 8
-    T_SHORT        shift, and go to state 10
-    T_SIGNED       shift, and go to state 11
-    T_STRUCT       shift, and go to state 13
-    T_UNSIGNED     shift, and go to state 15
-    T_VOID         shift, and go to state 16
-    T_VOLATILE     shift, and go to state 17
+    T_CHAR         shift, and go to state 3
+    T_DOUBLE       shift, and go to state 4
+    T_ENUM         shift, and go to state 5
+    T_FLOAT        shift, and go to state 7
+    T_INT          shift, and go to state 8
+    T_LONG         shift, and go to state 9
+    T_SHORT        shift, and go to state 11
+    T_SIGNED       shift, and go to state 12
+    T_STRUCT       shift, and go to state 14
+    T_UNSIGNED     shift, and go to state 16
+    T_VOID         shift, and go to state 17
+    T_VOLATILE     shift, and go to state 18
     T_CUSTOM_TYPE  shift, and go to state 21
 
     $default  reduce using rule 169 (SPECIFIER_QUALIFIER_LIST)
@@ -1721,18 +1721,18 @@ State 76
 
   162 STRUCT_OR_UNION_SPECIFIER: STRUCT_OR_UNION IDENTIFIER T_LCURLY_BRACKET . STRUCT_DECLARATION_LIST T_RCURLY_BRACKET
 
-    T_CHAR         shift, and go to state 2
-    T_DOUBLE       shift, and go to state 3
-    T_ENUM         shift, and go to state 4
-    T_FLOAT        shift, and go to state 6
-    T_INT          shift, and go to state 7
-    T_LONG         shift, and go to state 8
-    T_SHORT        shift, and go to state 10
-    T_SIGNED       shift, and go to state 11
-    T_STRUCT       shift, and go to state 13
-    T_UNSIGNED     shift, and go to state 15
-    T_VOID         shift, and go to state 16
-    T_VOLATILE     shift, and go to state 17
+    T_CHAR         shift, and go to state 3
+    T_DOUBLE       shift, and go to state 4
+    T_ENUM         shift, and go to state 5
+    T_FLOAT        shift, and go to state 7
+    T_INT          shift, and go to state 8
+    T_LONG         shift, and go to state 9
+    T_SHORT        shift, and go to state 11
+    T_SIGNED       shift, and go to state 12
+    T_STRUCT       shift, and go to state 14
+    T_UNSIGNED     shift, and go to state 16
+    T_VOID         shift, and go to state 17
+    T_VOLATILE     shift, and go to state 18
     T_CUSTOM_TYPE  shift, and go to state 21
 
     TYPE_SPECIFIER             go to state 71
@@ -1759,8 +1759,8 @@ State 78
   178 ENUM_SPECIFIER: ENUM T_LCURLY_BRACKET ENUMERATOR_LIST . T_RCURLY_BRACKET
   181 ENUMERATOR_LIST: ENUMERATOR_LIST . T_COMMA ENUMERATOR
 
-    T_COMMA           shift, and go to state 171
-    T_RCURLY_BRACKET  shift, and go to state 172
+    T_RCURLY_BRACKET  shift, and go to state 171
+    T_COMMA           shift, and go to state 172
 
 
 State 79
@@ -1793,215 +1793,31 @@ State 81
 
 State 82
 
-   49 JUMP_STATEMENT: T_BREAK . T_SEMICOLON
-
-    T_SEMICOLON  shift, and go to state 175
-
-
-State 83
-
-   18 CASE: T_CASE .
-
-    $default  reduce using rule 18 (CASE)
-
-
-State 84
-
-   48 JUMP_STATEMENT: T_CONTINUE . T_SEMICOLON
-
-    T_SEMICOLON  shift, and go to state 176
-
-
-State 85
-
-   17 DEFAULT: T_DEFAULT .
-
-    $default  reduce using rule 17 (DEFAULT)
-
-
-State 86
-
-   47 DO: T_DO .
-
-    $default  reduce using rule 47 (DO)
-
-
-State 87
-
-   45 FOR: T_FOR .
-
-    $default  reduce using rule 45 (FOR)
-
-
-State 88
-
-   33 IF: T_IF .
-
-    $default  reduce using rule 33 (IF)
-
-
-State 89
-
-   52 RETURN: T_RETURN .
-
-    $default  reduce using rule 52 (RETURN)
-
-
-State 90
-
-   76 SIZE_OF: T_SIZEOF .
-
-    $default  reduce using rule 76 (SIZE_OF)
-
-
-State 91
-
-   32 SWITCH: T_SWITCH .
-
-    $default  reduce using rule 32 (SWITCH)
-
-
-State 92
-
-   46 WHILE: T_WHILE .
-
-    $default  reduce using rule 46 (WHILE)
-
-
-State 93
-
-   78 UNARY_OPERATOR: T_TIMES .
-
-    $default  reduce using rule 78 (UNARY_OPERATOR)
-
-
-State 94
-
-   79 UNARY_OPERATOR: T_PLUS .
-
-    $default  reduce using rule 79 (UNARY_OPERATOR)
-
-
-State 95
-
-   80 UNARY_OPERATOR: T_MINUS .
-
-    $default  reduce using rule 80 (UNARY_OPERATOR)
-
-
-State 96
-
-   72 UNARY_EXPRESSION: T_DECREMENT . UNARY_EXPRESSION
-
-    T_SIZEOF       shift, and go to state 90
-    T_TIMES        shift, and go to state 93
-    T_PLUS         shift, and go to state 94
-    T_MINUS        shift, and go to state 95
-    T_DECREMENT    shift, and go to state 96
-    T_INCREMENT    shift, and go to state 97
-    T_AND          shift, and go to state 98
-    T_BITWISE_NOT  shift, and go to state 99
-    T_LOGICAL_NOT  shift, and go to state 100
-    T_LBRACKET     shift, and go to state 177
-    T_IDENTIFIER   shift, and go to state 19
-    T_STRING       shift, and go to state 103
-    T_DEC_INT      shift, and go to state 104
-    T_OCTAL_INT    shift, and go to state 105
-    T_HEX_INT      shift, and go to state 106
-
-    PRIMARY_EXPRESSION  go to state 124
-    CONSTANT            go to state 125
-    POSTFIX_EXPRESSION  go to state 126
-    UNARY_EXPRESSION    go to state 178
-    SIZE_OF             go to state 128
-    UNARY_OPERATOR      go to state 129
-    IDENTIFIER          go to state 154
-
-
-State 97
-
-   71 UNARY_EXPRESSION: T_INCREMENT . UNARY_EXPRESSION
-
-    T_SIZEOF       shift, and go to state 90
-    T_TIMES        shift, and go to state 93
-    T_PLUS         shift, and go to state 94
-    T_MINUS        shift, and go to state 95
-    T_DECREMENT    shift, and go to state 96
-    T_INCREMENT    shift, and go to state 97
-    T_AND          shift, and go to state 98
-    T_BITWISE_NOT  shift, and go to state 99
-    T_LOGICAL_NOT  shift, and go to state 100
-    T_LBRACKET     shift, and go to state 177
-    T_IDENTIFIER   shift, and go to state 19
-    T_STRING       shift, and go to state 103
-    T_DEC_INT      shift, and go to state 104
-    T_OCTAL_INT    shift, and go to state 105
-    T_HEX_INT      shift, and go to state 106
-
-    PRIMARY_EXPRESSION  go to state 124
-    CONSTANT            go to state 125
-    POSTFIX_EXPRESSION  go to state 126
-    UNARY_EXPRESSION    go to state 179
-    SIZE_OF             go to state 128
-    UNARY_OPERATOR      go to state 129
-    IDENTIFIER          go to state 154
-
-
-State 98
-
-   77 UNARY_OPERATOR: T_AND .
-
-    $default  reduce using rule 77 (UNARY_OPERATOR)
-
-
-State 99
-
-   81 UNARY_OPERATOR: T_BITWISE_NOT .
-
-    $default  reduce using rule 81 (UNARY_OPERATOR)
-
-
-State 100
-
-   82 UNARY_OPERATOR: T_LOGICAL_NOT .
-
-    $default  reduce using rule 82 (UNARY_OPERATOR)
-
-
-State 101
-
-   28 EXPRESSION_STATEMENT: T_SEMICOLON .
-
-    $default  reduce using rule 28 (EXPRESSION_STATEMENT)
-
-
-State 102
-
-   56 PRIMARY_EXPRESSION: T_LBRACKET . EXPR T_RBRACKET
+   53 PRIMARY_EXPRESSION: T_LBRACKET . EXPR T_RBRACKET
    84 CAST_EXPRESSION: T_LBRACKET . TYPE_NAME T_RBRACKET CAST_EXPRESSION
 
-    T_CHAR         shift, and go to state 2
-    T_DOUBLE       shift, and go to state 3
-    T_ENUM         shift, and go to state 4
-    T_FLOAT        shift, and go to state 6
-    T_INT          shift, and go to state 7
-    T_LONG         shift, and go to state 8
-    T_SHORT        shift, and go to state 10
-    T_SIGNED       shift, and go to state 11
-    T_SIZEOF       shift, and go to state 90
-    T_STRUCT       shift, and go to state 13
-    T_UNSIGNED     shift, and go to state 15
-    T_VOID         shift, and go to state 16
-    T_VOLATILE     shift, and go to state 17
-    T_TIMES        shift, and go to state 93
-    T_PLUS         shift, and go to state 94
-    T_MINUS        shift, and go to state 95
-    T_DECREMENT    shift, and go to state 96
-    T_INCREMENT    shift, and go to state 97
-    T_AND          shift, and go to state 98
-    T_BITWISE_NOT  shift, and go to state 99
-    T_LOGICAL_NOT  shift, and go to state 100
-    T_LBRACKET     shift, and go to state 102
+    T_LBRACKET     shift, and go to state 82
+    T_LOGICAL_NOT  shift, and go to state 83
+    T_BITWISE_NOT  shift, and go to state 84
+    T_INCREMENT    shift, and go to state 85
+    T_DECREMENT    shift, and go to state 86
+    T_PLUS         shift, and go to state 87
+    T_MINUS        shift, and go to state 88
+    T_AND          shift, and go to state 89
+    T_TIMES        shift, and go to state 90
+    T_CHAR         shift, and go to state 3
+    T_DOUBLE       shift, and go to state 4
+    T_ENUM         shift, and go to state 5
+    T_FLOAT        shift, and go to state 7
+    T_INT          shift, and go to state 8
+    T_LONG         shift, and go to state 9
+    T_SHORT        shift, and go to state 11
+    T_SIGNED       shift, and go to state 12
+    T_SIZEOF       shift, and go to state 99
+    T_STRUCT       shift, and go to state 14
+    T_UNSIGNED     shift, and go to state 16
+    T_VOID         shift, and go to state 17
+    T_VOLATILE     shift, and go to state 18
     T_IDENTIFIER   shift, and go to state 19
     T_STRING       shift, and go to state 103
     T_DEC_INT      shift, and go to state 104
@@ -2028,24 +1844,208 @@ State 102
     LOGICAL_OR_EXPRESSION      go to state 140
     CONDITIONAL_EXPRESSION     go to state 141
     ASSIGNMENT_EXPRESSION      go to state 142
-    EXPR                       go to state 180
+    EXPR                       go to state 175
     TYPE_SPECIFIER             go to state 71
     STRUCT_OR_UNION_SPECIFIER  go to state 30
     STRUCT_OR_UNION            go to state 31
-    SPECIFIER_QUALIFIER_LIST   go to state 181
+    SPECIFIER_QUALIFIER_LIST   go to state 176
     ENUM_SPECIFIER             go to state 32
     ENUM                       go to state 33
     TYPE_QUALIFIER             go to state 75
     IDENTIFIER                 go to state 154
-    TYPE_NAME                  go to state 182
+    TYPE_NAME                  go to state 177
     TYPEDEF_NAME               go to state 40
+
+
+State 83
+
+   82 UNARY_OPERATOR: T_LOGICAL_NOT .
+
+    $default  reduce using rule 82 (UNARY_OPERATOR)
+
+
+State 84
+
+   81 UNARY_OPERATOR: T_BITWISE_NOT .
+
+    $default  reduce using rule 81 (UNARY_OPERATOR)
+
+
+State 85
+
+   71 UNARY_EXPRESSION: T_INCREMENT . UNARY_EXPRESSION
+
+    T_LBRACKET     shift, and go to state 178
+    T_LOGICAL_NOT  shift, and go to state 83
+    T_BITWISE_NOT  shift, and go to state 84
+    T_INCREMENT    shift, and go to state 85
+    T_DECREMENT    shift, and go to state 86
+    T_PLUS         shift, and go to state 87
+    T_MINUS        shift, and go to state 88
+    T_AND          shift, and go to state 89
+    T_TIMES        shift, and go to state 90
+    T_SIZEOF       shift, and go to state 99
+    T_IDENTIFIER   shift, and go to state 19
+    T_STRING       shift, and go to state 103
+    T_DEC_INT      shift, and go to state 104
+    T_OCTAL_INT    shift, and go to state 105
+    T_HEX_INT      shift, and go to state 106
+
+    PRIMARY_EXPRESSION  go to state 124
+    CONSTANT            go to state 125
+    POSTFIX_EXPRESSION  go to state 126
+    UNARY_EXPRESSION    go to state 179
+    SIZE_OF             go to state 128
+    UNARY_OPERATOR      go to state 129
+    IDENTIFIER          go to state 154
+
+
+State 86
+
+   72 UNARY_EXPRESSION: T_DECREMENT . UNARY_EXPRESSION
+
+    T_LBRACKET     shift, and go to state 178
+    T_LOGICAL_NOT  shift, and go to state 83
+    T_BITWISE_NOT  shift, and go to state 84
+    T_INCREMENT    shift, and go to state 85
+    T_DECREMENT    shift, and go to state 86
+    T_PLUS         shift, and go to state 87
+    T_MINUS        shift, and go to state 88
+    T_AND          shift, and go to state 89
+    T_TIMES        shift, and go to state 90
+    T_SIZEOF       shift, and go to state 99
+    T_IDENTIFIER   shift, and go to state 19
+    T_STRING       shift, and go to state 103
+    T_DEC_INT      shift, and go to state 104
+    T_OCTAL_INT    shift, and go to state 105
+    T_HEX_INT      shift, and go to state 106
+
+    PRIMARY_EXPRESSION  go to state 124
+    CONSTANT            go to state 125
+    POSTFIX_EXPRESSION  go to state 126
+    UNARY_EXPRESSION    go to state 180
+    SIZE_OF             go to state 128
+    UNARY_OPERATOR      go to state 129
+    IDENTIFIER          go to state 154
+
+
+State 87
+
+   79 UNARY_OPERATOR: T_PLUS .
+
+    $default  reduce using rule 79 (UNARY_OPERATOR)
+
+
+State 88
+
+   80 UNARY_OPERATOR: T_MINUS .
+
+    $default  reduce using rule 80 (UNARY_OPERATOR)
+
+
+State 89
+
+   77 UNARY_OPERATOR: T_AND .
+
+    $default  reduce using rule 77 (UNARY_OPERATOR)
+
+
+State 90
+
+   78 UNARY_OPERATOR: T_TIMES .
+
+    $default  reduce using rule 78 (UNARY_OPERATOR)
+
+
+State 91
+
+   49 JUMP_STATEMENT: T_BREAK . T_SEMICOLON
+
+    T_SEMICOLON  shift, and go to state 181
+
+
+State 92
+
+   18 CASE: T_CASE .
+
+    $default  reduce using rule 18 (CASE)
+
+
+State 93
+
+   48 JUMP_STATEMENT: T_CONTINUE . T_SEMICOLON
+
+    T_SEMICOLON  shift, and go to state 182
+
+
+State 94
+
+   17 DEFAULT: T_DEFAULT .
+
+    $default  reduce using rule 17 (DEFAULT)
+
+
+State 95
+
+   47 DO: T_DO .
+
+    $default  reduce using rule 47 (DO)
+
+
+State 96
+
+   45 FOR: T_FOR .
+
+    $default  reduce using rule 45 (FOR)
+
+
+State 97
+
+   33 IF: T_IF .
+
+    $default  reduce using rule 33 (IF)
+
+
+State 98
+
+   52 RETURN: T_RETURN .
+
+    $default  reduce using rule 52 (RETURN)
+
+
+State 99
+
+   76 SIZE_OF: T_SIZEOF .
+
+    $default  reduce using rule 76 (SIZE_OF)
+
+
+State 100
+
+   32 SWITCH: T_SWITCH .
+
+    $default  reduce using rule 32 (SWITCH)
+
+
+State 101
+
+   46 WHILE: T_WHILE .
+
+    $default  reduce using rule 46 (WHILE)
+
+
+State 102
+
+   28 EXPRESSION_STATEMENT: T_SEMICOLON .
+
+    $default  reduce using rule 28 (EXPRESSION_STATEMENT)
 
 
 State 103
 
-   55 PRIMARY_EXPRESSION: T_STRING .
+   56 PRIMARY_EXPRESSION: T_STRING .
 
-    $default  reduce using rule 55 (PRIMARY_EXPRESSION)
+    $default  reduce using rule 56 (PRIMARY_EXPRESSION)
 
 
 State 104
@@ -2094,16 +2094,16 @@ State 110
 
    15 LABELED_STATEMENT: CASE . CONSTANT_EXPRESSION T_COLON STATEMENT
 
-    T_SIZEOF       shift, and go to state 90
-    T_TIMES        shift, and go to state 93
-    T_PLUS         shift, and go to state 94
-    T_MINUS        shift, and go to state 95
-    T_DECREMENT    shift, and go to state 96
-    T_INCREMENT    shift, and go to state 97
-    T_AND          shift, and go to state 98
-    T_BITWISE_NOT  shift, and go to state 99
-    T_LOGICAL_NOT  shift, and go to state 100
-    T_LBRACKET     shift, and go to state 102
+    T_LBRACKET     shift, and go to state 82
+    T_LOGICAL_NOT  shift, and go to state 83
+    T_BITWISE_NOT  shift, and go to state 84
+    T_INCREMENT    shift, and go to state 85
+    T_DECREMENT    shift, and go to state 86
+    T_PLUS         shift, and go to state 87
+    T_MINUS        shift, and go to state 88
+    T_AND          shift, and go to state 89
+    T_TIMES        shift, and go to state 90
+    T_SIZEOF       shift, and go to state 99
     T_IDENTIFIER   shift, and go to state 19
     T_STRING       shift, and go to state 103
     T_DEC_INT      shift, and go to state 104
@@ -2145,46 +2145,46 @@ State 112
    21                   | T_LCURLY_BRACKET DECLARATION_LIST . T_RCURLY_BRACKET
    24 DECLARATION_LIST: DECLARATION_LIST . DECLARATION
 
-    T_AUTO             shift, and go to state 1
-    T_BREAK            shift, and go to state 82
-    T_CASE             shift, and go to state 83
-    T_CHAR             shift, and go to state 2
-    T_CONTINUE         shift, and go to state 84
-    T_DEFAULT          shift, and go to state 85
-    T_DO               shift, and go to state 86
-    T_DOUBLE           shift, and go to state 3
-    T_ENUM             shift, and go to state 4
-    T_EXTERN           shift, and go to state 5
-    T_FLOAT            shift, and go to state 6
-    T_FOR              shift, and go to state 87
-    T_IF               shift, and go to state 88
-    T_INT              shift, and go to state 7
-    T_LONG             shift, and go to state 8
-    T_REGISTER         shift, and go to state 9
-    T_RETURN           shift, and go to state 89
-    T_SHORT            shift, and go to state 10
-    T_SIGNED           shift, and go to state 11
-    T_SIZEOF           shift, and go to state 90
-    T_STATIC           shift, and go to state 12
-    T_STRUCT           shift, and go to state 13
-    T_SWITCH           shift, and go to state 91
-    T_TYPEDEF          shift, and go to state 14
-    T_UNSIGNED         shift, and go to state 15
-    T_VOID             shift, and go to state 16
-    T_VOLATILE         shift, and go to state 17
-    T_WHILE            shift, and go to state 92
-    T_TIMES            shift, and go to state 93
-    T_PLUS             shift, and go to state 94
-    T_MINUS            shift, and go to state 95
-    T_DECREMENT        shift, and go to state 96
-    T_INCREMENT        shift, and go to state 97
-    T_AND              shift, and go to state 98
-    T_BITWISE_NOT      shift, and go to state 99
-    T_LOGICAL_NOT      shift, and go to state 100
-    T_SEMICOLON        shift, and go to state 101
-    T_LBRACKET         shift, and go to state 102
+    T_LBRACKET         shift, and go to state 82
     T_RCURLY_BRACKET   shift, and go to state 185
     T_LCURLY_BRACKET   shift, and go to state 55
+    T_LOGICAL_NOT      shift, and go to state 83
+    T_BITWISE_NOT      shift, and go to state 84
+    T_INCREMENT        shift, and go to state 85
+    T_DECREMENT        shift, and go to state 86
+    T_PLUS             shift, and go to state 87
+    T_MINUS            shift, and go to state 88
+    T_AND              shift, and go to state 89
+    T_TIMES            shift, and go to state 90
+    T_AUTO             shift, and go to state 2
+    T_BREAK            shift, and go to state 91
+    T_CASE             shift, and go to state 92
+    T_CHAR             shift, and go to state 3
+    T_CONTINUE         shift, and go to state 93
+    T_DEFAULT          shift, and go to state 94
+    T_DO               shift, and go to state 95
+    T_DOUBLE           shift, and go to state 4
+    T_ENUM             shift, and go to state 5
+    T_EXTERN           shift, and go to state 6
+    T_FLOAT            shift, and go to state 7
+    T_FOR              shift, and go to state 96
+    T_IF               shift, and go to state 97
+    T_INT              shift, and go to state 8
+    T_LONG             shift, and go to state 9
+    T_REGISTER         shift, and go to state 10
+    T_RETURN           shift, and go to state 98
+    T_SHORT            shift, and go to state 11
+    T_SIGNED           shift, and go to state 12
+    T_SIZEOF           shift, and go to state 99
+    T_STATIC           shift, and go to state 13
+    T_STRUCT           shift, and go to state 14
+    T_SWITCH           shift, and go to state 100
+    T_TYPEDEF          shift, and go to state 15
+    T_UNSIGNED         shift, and go to state 16
+    T_VOID             shift, and go to state 17
+    T_VOLATILE         shift, and go to state 18
+    T_WHILE            shift, and go to state 101
+    T_SEMICOLON        shift, and go to state 102
     T_ECURLY_BRACKETS  shift, and go to state 56
     T_IDENTIFIER       shift, and go to state 19
     T_STRING           shift, and go to state 103
@@ -2247,29 +2247,29 @@ State 113
    20 COMPOUND_STATEMENT: T_LCURLY_BRACKET STATEMENT_LIST . T_RCURLY_BRACKET
    26 STATEMENT_LIST: STATEMENT_LIST . STATEMENT
 
-    T_BREAK            shift, and go to state 82
-    T_CASE             shift, and go to state 83
-    T_CONTINUE         shift, and go to state 84
-    T_DEFAULT          shift, and go to state 85
-    T_DO               shift, and go to state 86
-    T_FOR              shift, and go to state 87
-    T_IF               shift, and go to state 88
-    T_RETURN           shift, and go to state 89
-    T_SIZEOF           shift, and go to state 90
-    T_SWITCH           shift, and go to state 91
-    T_WHILE            shift, and go to state 92
-    T_TIMES            shift, and go to state 93
-    T_PLUS             shift, and go to state 94
-    T_MINUS            shift, and go to state 95
-    T_DECREMENT        shift, and go to state 96
-    T_INCREMENT        shift, and go to state 97
-    T_AND              shift, and go to state 98
-    T_BITWISE_NOT      shift, and go to state 99
-    T_LOGICAL_NOT      shift, and go to state 100
-    T_SEMICOLON        shift, and go to state 101
-    T_LBRACKET         shift, and go to state 102
+    T_LBRACKET         shift, and go to state 82
     T_RCURLY_BRACKET   shift, and go to state 188
     T_LCURLY_BRACKET   shift, and go to state 55
+    T_LOGICAL_NOT      shift, and go to state 83
+    T_BITWISE_NOT      shift, and go to state 84
+    T_INCREMENT        shift, and go to state 85
+    T_DECREMENT        shift, and go to state 86
+    T_PLUS             shift, and go to state 87
+    T_MINUS            shift, and go to state 88
+    T_AND              shift, and go to state 89
+    T_TIMES            shift, and go to state 90
+    T_BREAK            shift, and go to state 91
+    T_CASE             shift, and go to state 92
+    T_CONTINUE         shift, and go to state 93
+    T_DEFAULT          shift, and go to state 94
+    T_DO               shift, and go to state 95
+    T_FOR              shift, and go to state 96
+    T_IF               shift, and go to state 97
+    T_RETURN           shift, and go to state 98
+    T_SIZEOF           shift, and go to state 99
+    T_SWITCH           shift, and go to state 100
+    T_WHILE            shift, and go to state 101
+    T_SEMICOLON        shift, and go to state 102
     T_ECURLY_BRACKETS  shift, and go to state 56
     T_IDENTIFIER       shift, and go to state 19
     T_STRING           shift, and go to state 103
@@ -2376,28 +2376,28 @@ State 121
 
    36 ITERATION_STATEMENT: DO . STATEMENT WHILE T_LBRACKET EXPR T_RBRACKET T_SEMICOLON
 
-    T_BREAK            shift, and go to state 82
-    T_CASE             shift, and go to state 83
-    T_CONTINUE         shift, and go to state 84
-    T_DEFAULT          shift, and go to state 85
-    T_DO               shift, and go to state 86
-    T_FOR              shift, and go to state 87
-    T_IF               shift, and go to state 88
-    T_RETURN           shift, and go to state 89
-    T_SIZEOF           shift, and go to state 90
-    T_SWITCH           shift, and go to state 91
-    T_WHILE            shift, and go to state 92
-    T_TIMES            shift, and go to state 93
-    T_PLUS             shift, and go to state 94
-    T_MINUS            shift, and go to state 95
-    T_DECREMENT        shift, and go to state 96
-    T_INCREMENT        shift, and go to state 97
-    T_AND              shift, and go to state 98
-    T_BITWISE_NOT      shift, and go to state 99
-    T_LOGICAL_NOT      shift, and go to state 100
-    T_SEMICOLON        shift, and go to state 101
-    T_LBRACKET         shift, and go to state 102
+    T_LBRACKET         shift, and go to state 82
     T_LCURLY_BRACKET   shift, and go to state 55
+    T_LOGICAL_NOT      shift, and go to state 83
+    T_BITWISE_NOT      shift, and go to state 84
+    T_INCREMENT        shift, and go to state 85
+    T_DECREMENT        shift, and go to state 86
+    T_PLUS             shift, and go to state 87
+    T_MINUS            shift, and go to state 88
+    T_AND              shift, and go to state 89
+    T_TIMES            shift, and go to state 90
+    T_BREAK            shift, and go to state 91
+    T_CASE             shift, and go to state 92
+    T_CONTINUE         shift, and go to state 93
+    T_DEFAULT          shift, and go to state 94
+    T_DO               shift, and go to state 95
+    T_FOR              shift, and go to state 96
+    T_IF               shift, and go to state 97
+    T_RETURN           shift, and go to state 98
+    T_SIZEOF           shift, and go to state 99
+    T_SWITCH           shift, and go to state 100
+    T_WHILE            shift, and go to state 101
+    T_SEMICOLON        shift, and go to state 102
     T_ECURLY_BRACKETS  shift, and go to state 56
     T_IDENTIFIER       shift, and go to state 19
     T_STRING           shift, and go to state 103
@@ -2455,17 +2455,17 @@ State 123
    50 JUMP_STATEMENT: RETURN . EXPR T_SEMICOLON
    51               | RETURN . T_SEMICOLON
 
-    T_SIZEOF       shift, and go to state 90
-    T_TIMES        shift, and go to state 93
-    T_PLUS         shift, and go to state 94
-    T_MINUS        shift, and go to state 95
-    T_DECREMENT    shift, and go to state 96
-    T_INCREMENT    shift, and go to state 97
-    T_AND          shift, and go to state 98
-    T_BITWISE_NOT  shift, and go to state 99
-    T_LOGICAL_NOT  shift, and go to state 100
+    T_LBRACKET     shift, and go to state 82
+    T_LOGICAL_NOT  shift, and go to state 83
+    T_BITWISE_NOT  shift, and go to state 84
+    T_INCREMENT    shift, and go to state 85
+    T_DECREMENT    shift, and go to state 86
+    T_PLUS         shift, and go to state 87
+    T_MINUS        shift, and go to state 88
+    T_AND          shift, and go to state 89
+    T_TIMES        shift, and go to state 90
+    T_SIZEOF       shift, and go to state 99
     T_SEMICOLON    shift, and go to state 195
-    T_LBRACKET     shift, and go to state 102
     T_IDENTIFIER   shift, and go to state 19
     T_STRING       shift, and go to state 103
     T_DEC_INT      shift, and go to state 104
@@ -2504,9 +2504,9 @@ State 124
 
 State 125
 
-   54 PRIMARY_EXPRESSION: CONSTANT .
+   55 PRIMARY_EXPRESSION: CONSTANT .
 
-    $default  reduce using rule 54 (PRIMARY_EXPRESSION)
+    $default  reduce using rule 55 (PRIMARY_EXPRESSION)
 
 
 State 126
@@ -2520,12 +2520,12 @@ State 126
    67                   | POSTFIX_EXPRESSION . T_DECREMENT
    70 UNARY_EXPRESSION: POSTFIX_EXPRESSION .
 
-    T_DECREMENT       shift, and go to state 197
-    T_INCREMENT       shift, and go to state 198
-    T_ARROW           shift, and go to state 199
-    T_DOT             shift, and go to state 200
-    T_LBRACKET        shift, and go to state 201
-    T_LSQ_BRACKET     shift, and go to state 202
+    T_LBRACKET        shift, and go to state 197
+    T_LSQ_BRACKET     shift, and go to state 198
+    T_INCREMENT       shift, and go to state 199
+    T_DECREMENT       shift, and go to state 200
+    T_ARROW           shift, and go to state 201
+    T_DOT             shift, and go to state 202
     T_EMPTY_BRACKETS  shift, and go to state 203
 
     $default  reduce using rule 70 (UNARY_EXPRESSION)
@@ -2558,16 +2558,16 @@ State 128
    74 UNARY_EXPRESSION: SIZE_OF . UNARY_EXPRESSION
    75                 | SIZE_OF . T_LBRACKET TYPE_NAME T_RBRACKET
 
-    T_SIZEOF       shift, and go to state 90
-    T_TIMES        shift, and go to state 93
-    T_PLUS         shift, and go to state 94
-    T_MINUS        shift, and go to state 95
-    T_DECREMENT    shift, and go to state 96
-    T_INCREMENT    shift, and go to state 97
-    T_AND          shift, and go to state 98
-    T_BITWISE_NOT  shift, and go to state 99
-    T_LOGICAL_NOT  shift, and go to state 100
     T_LBRACKET     shift, and go to state 216
+    T_LOGICAL_NOT  shift, and go to state 83
+    T_BITWISE_NOT  shift, and go to state 84
+    T_INCREMENT    shift, and go to state 85
+    T_DECREMENT    shift, and go to state 86
+    T_PLUS         shift, and go to state 87
+    T_MINUS        shift, and go to state 88
+    T_AND          shift, and go to state 89
+    T_TIMES        shift, and go to state 90
+    T_SIZEOF       shift, and go to state 99
     T_IDENTIFIER   shift, and go to state 19
     T_STRING       shift, and go to state 103
     T_DEC_INT      shift, and go to state 104
@@ -2587,16 +2587,16 @@ State 129
 
    73 UNARY_EXPRESSION: UNARY_OPERATOR . CAST_EXPRESSION
 
-    T_SIZEOF       shift, and go to state 90
-    T_TIMES        shift, and go to state 93
-    T_PLUS         shift, and go to state 94
-    T_MINUS        shift, and go to state 95
-    T_DECREMENT    shift, and go to state 96
-    T_INCREMENT    shift, and go to state 97
-    T_AND          shift, and go to state 98
-    T_BITWISE_NOT  shift, and go to state 99
-    T_LOGICAL_NOT  shift, and go to state 100
-    T_LBRACKET     shift, and go to state 102
+    T_LBRACKET     shift, and go to state 82
+    T_LOGICAL_NOT  shift, and go to state 83
+    T_BITWISE_NOT  shift, and go to state 84
+    T_INCREMENT    shift, and go to state 85
+    T_DECREMENT    shift, and go to state 86
+    T_PLUS         shift, and go to state 87
+    T_MINUS        shift, and go to state 88
+    T_AND          shift, and go to state 89
+    T_TIMES        shift, and go to state 90
+    T_SIZEOF       shift, and go to state 99
     T_IDENTIFIER   shift, and go to state 19
     T_STRING       shift, and go to state 103
     T_DEC_INT      shift, and go to state 104
@@ -2627,8 +2627,8 @@ State 131
    88                          | MULTIPLICATIVE_EXPRESSION . T_MODULO CAST_EXPRESSION
    89 ADDITIVE_EXPRESSION: MULTIPLICATIVE_EXPRESSION .
 
-    T_TIMES   shift, and go to state 219
-    T_DIVIDE  shift, and go to state 220
+    T_DIVIDE  shift, and go to state 219
+    T_TIMES   shift, and go to state 220
     T_MODULO  shift, and go to state 221
 
     $default  reduce using rule 89 (ADDITIVE_EXPRESSION)
@@ -2666,10 +2666,10 @@ State 134
    99                      | RELATIONAL_EXPRESSION . T_GREATER_THAN_OR_EQUAL_TO SHIFT_EXPRESSION
   100 EQUALITY_EXPRESSION: RELATIONAL_EXPRESSION .
 
-    T_LESS_THAN                 shift, and go to state 226
-    T_GREATER_THAN              shift, and go to state 227
-    T_LESS_THAN_OR_EQUAL_TO     shift, and go to state 228
-    T_GREATER_THAN_OR_EQUAL_TO  shift, and go to state 229
+    T_LESS_THAN_OR_EQUAL_TO     shift, and go to state 226
+    T_GREATER_THAN_OR_EQUAL_TO  shift, and go to state 227
+    T_LESS_THAN                 shift, and go to state 228
+    T_GREATER_THAN              shift, and go to state 229
 
     $default  reduce using rule 100 (EQUALITY_EXPRESSION)
 
@@ -2680,8 +2680,8 @@ State 135
   102                    | EQUALITY_EXPRESSION . T_NOT_EQUALS_EQUALS RELATIONAL_EXPRESSION
   103 AND_EXPRESSION: EQUALITY_EXPRESSION .
 
-    T_NOT_EQUALS_EQUALS  shift, and go to state 230
-    T_EQUALS_EQUALS      shift, and go to state 231
+    T_EQUALS_EQUALS      shift, and go to state 230
+    T_NOT_EQUALS_EQUALS  shift, and go to state 231
 
     $default  reduce using rule 103 (AND_EXPRESSION)
 
@@ -2773,8 +2773,8 @@ State 145
   131 DECLARATION: DECLARATION_SPECIFIERS . T_SEMICOLON
   132            | DECLARATION_SPECIFIERS . INIT_DECLARATOR_LIST T_SEMICOLON
 
+    T_LBRACKET     shift, and go to state 1
     T_SEMICOLON    shift, and go to state 44
-    T_LBRACKET     shift, and go to state 18
     T_IDENTIFIER   shift, and go to state 19
     T_DEREFERENCE  shift, and go to state 20
 
@@ -2790,11 +2790,11 @@ State 145
 State 146
 
    14 LABELED_STATEMENT: IDENTIFIER . T_COLON STATEMENT
-   53 PRIMARY_EXPRESSION: IDENTIFIER .
+   54 PRIMARY_EXPRESSION: IDENTIFIER .
 
     T_COLON  shift, and go to state 240
 
-    $default  reduce using rule 53 (PRIMARY_EXPRESSION)
+    $default  reduce using rule 54 (PRIMARY_EXPRESSION)
 
 
 State 147
@@ -2868,9 +2868,9 @@ State 153
 
 State 154
 
-   53 PRIMARY_EXPRESSION: IDENTIFIER .
+   54 PRIMARY_EXPRESSION: IDENTIFIER .
 
-    $default  reduce using rule 53 (PRIMARY_EXPRESSION)
+    $default  reduce using rule 54 (PRIMARY_EXPRESSION)
 
 
 State 155
@@ -2909,17 +2909,17 @@ State 159
   224 INITIALIZER: T_LCURLY_BRACKET . INITIALIZER_LIST T_RCURLY_BRACKET
   225            | T_LCURLY_BRACKET . INITIALIZER_LIST T_COMMA T_RCURLY_BRACKET
 
-    T_SIZEOF          shift, and go to state 90
-    T_TIMES           shift, and go to state 93
-    T_PLUS            shift, and go to state 94
-    T_MINUS           shift, and go to state 95
-    T_DECREMENT       shift, and go to state 96
-    T_INCREMENT       shift, and go to state 97
-    T_AND             shift, and go to state 98
-    T_BITWISE_NOT     shift, and go to state 99
-    T_LOGICAL_NOT     shift, and go to state 100
-    T_LBRACKET        shift, and go to state 102
+    T_LBRACKET        shift, and go to state 82
     T_LCURLY_BRACKET  shift, and go to state 159
+    T_LOGICAL_NOT     shift, and go to state 83
+    T_BITWISE_NOT     shift, and go to state 84
+    T_INCREMENT       shift, and go to state 85
+    T_DECREMENT       shift, and go to state 86
+    T_PLUS            shift, and go to state 87
+    T_MINUS           shift, and go to state 88
+    T_AND             shift, and go to state 89
+    T_TIMES           shift, and go to state 90
+    T_SIZEOF          shift, and go to state 99
     T_IDENTIFIER      shift, and go to state 19
     T_STRING          shift, and go to state 103
     T_DEC_INT         shift, and go to state 104
@@ -2989,16 +2989,16 @@ State 165
 
   175 STRUCT_DECLARATOR: T_COLON . CONSTANT_EXPRESSION
 
-    T_SIZEOF       shift, and go to state 90
-    T_TIMES        shift, and go to state 93
-    T_PLUS         shift, and go to state 94
-    T_MINUS        shift, and go to state 95
-    T_DECREMENT    shift, and go to state 96
-    T_INCREMENT    shift, and go to state 97
-    T_AND          shift, and go to state 98
-    T_BITWISE_NOT  shift, and go to state 99
-    T_LOGICAL_NOT  shift, and go to state 100
-    T_LBRACKET     shift, and go to state 102
+    T_LBRACKET     shift, and go to state 82
+    T_LOGICAL_NOT  shift, and go to state 83
+    T_BITWISE_NOT  shift, and go to state 84
+    T_INCREMENT    shift, and go to state 85
+    T_DECREMENT    shift, and go to state 86
+    T_PLUS         shift, and go to state 87
+    T_MINUS        shift, and go to state 88
+    T_AND          shift, and go to state 89
+    T_TIMES        shift, and go to state 90
+    T_SIZEOF       shift, and go to state 99
     T_IDENTIFIER   shift, and go to state 19
     T_STRING       shift, and go to state 103
     T_DEC_INT      shift, and go to state 104
@@ -3066,19 +3066,19 @@ State 170
   162 STRUCT_OR_UNION_SPECIFIER: STRUCT_OR_UNION IDENTIFIER T_LCURLY_BRACKET STRUCT_DECLARATION_LIST . T_RCURLY_BRACKET
   165 STRUCT_DECLARATION_LIST: STRUCT_DECLARATION_LIST . STRUCT_DECLARATION
 
-    T_CHAR            shift, and go to state 2
-    T_DOUBLE          shift, and go to state 3
-    T_ENUM            shift, and go to state 4
-    T_FLOAT           shift, and go to state 6
-    T_INT             shift, and go to state 7
-    T_LONG            shift, and go to state 8
-    T_SHORT           shift, and go to state 10
-    T_SIGNED          shift, and go to state 11
-    T_STRUCT          shift, and go to state 13
-    T_UNSIGNED        shift, and go to state 15
-    T_VOID            shift, and go to state 16
-    T_VOLATILE        shift, and go to state 17
     T_RCURLY_BRACKET  shift, and go to state 257
+    T_CHAR            shift, and go to state 3
+    T_DOUBLE          shift, and go to state 4
+    T_ENUM            shift, and go to state 5
+    T_FLOAT           shift, and go to state 7
+    T_INT             shift, and go to state 8
+    T_LONG            shift, and go to state 9
+    T_SHORT           shift, and go to state 11
+    T_SIGNED          shift, and go to state 12
+    T_STRUCT          shift, and go to state 14
+    T_UNSIGNED        shift, and go to state 16
+    T_VOID            shift, and go to state 17
+    T_VOLATILE        shift, and go to state 18
     T_CUSTOM_TYPE     shift, and go to state 21
 
     TYPE_SPECIFIER             go to state 71
@@ -3094,6 +3094,13 @@ State 170
 
 State 171
 
+  178 ENUM_SPECIFIER: ENUM T_LCURLY_BRACKET ENUMERATOR_LIST T_RCURLY_BRACKET .
+
+    $default  reduce using rule 178 (ENUM_SPECIFIER)
+
+
+State 172
+
   181 ENUMERATOR_LIST: ENUMERATOR_LIST T_COMMA . ENUMERATOR
 
     T_ENUM_CONSTANT  shift, and go to state 77
@@ -3102,27 +3109,20 @@ State 171
     ENUM_CONSTANT  go to state 80
 
 
-State 172
-
-  178 ENUM_SPECIFIER: ENUM T_LCURLY_BRACKET ENUMERATOR_LIST T_RCURLY_BRACKET .
-
-    $default  reduce using rule 178 (ENUM_SPECIFIER)
-
-
 State 173
 
   183 ENUMERATOR: ENUM_CONSTANT T_EQUALS . CONSTANT_EXPRESSION
 
-    T_SIZEOF       shift, and go to state 90
-    T_TIMES        shift, and go to state 93
-    T_PLUS         shift, and go to state 94
-    T_MINUS        shift, and go to state 95
-    T_DECREMENT    shift, and go to state 96
-    T_INCREMENT    shift, and go to state 97
-    T_AND          shift, and go to state 98
-    T_BITWISE_NOT  shift, and go to state 99
-    T_LOGICAL_NOT  shift, and go to state 100
-    T_LBRACKET     shift, and go to state 102
+    T_LBRACKET     shift, and go to state 82
+    T_LOGICAL_NOT  shift, and go to state 83
+    T_BITWISE_NOT  shift, and go to state 84
+    T_INCREMENT    shift, and go to state 85
+    T_DECREMENT    shift, and go to state 86
+    T_PLUS         shift, and go to state 87
+    T_MINUS        shift, and go to state 88
+    T_AND          shift, and go to state 89
+    T_TIMES        shift, and go to state 90
+    T_SIZEOF       shift, and go to state 99
     T_IDENTIFIER   shift, and go to state 19
     T_STRING       shift, and go to state 103
     T_DEC_INT      shift, and go to state 104
@@ -3156,38 +3156,59 @@ State 174
   177 ENUM_SPECIFIER: ENUM IDENTIFIER T_LCURLY_BRACKET ENUMERATOR_LIST . T_RCURLY_BRACKET
   181 ENUMERATOR_LIST: ENUMERATOR_LIST . T_COMMA ENUMERATOR
 
-    T_COMMA           shift, and go to state 171
     T_RCURLY_BRACKET  shift, and go to state 260
+    T_COMMA           shift, and go to state 172
 
 
 State 175
 
-   49 JUMP_STATEMENT: T_BREAK T_SEMICOLON .
+   53 PRIMARY_EXPRESSION: T_LBRACKET EXPR . T_RBRACKET
+  130 EXPR: EXPR . T_COMMA ASSIGNMENT_EXPRESSION
 
-    $default  reduce using rule 49 (JUMP_STATEMENT)
+    T_RBRACKET  shift, and go to state 261
+    T_COMMA     shift, and go to state 238
 
 
 State 176
 
-   48 JUMP_STATEMENT: T_CONTINUE T_SEMICOLON .
+  208 TYPE_NAME: SPECIFIER_QUALIFIER_LIST .
+  209          | SPECIFIER_QUALIFIER_LIST . ABSTRACT_DECLARATOR
 
-    $default  reduce using rule 48 (JUMP_STATEMENT)
+    T_LBRACKET        shift, and go to state 262
+    T_LSQ_BRACKET     shift, and go to state 242
+    T_EMPTY_BRACKETS  shift, and go to state 243
+    T_ESQ_BRACKETS    shift, and go to state 244
+    T_DEREFERENCE     shift, and go to state 20
+
+    $default  reduce using rule 208 (TYPE_NAME)
+
+    POINTER                     go to state 263
+    DEREFERENCE                 go to state 38
+    ABSTRACT_DECLARATOR         go to state 264
+    DIRECT_ABSTRACT_DECLARATOR  go to state 248
 
 
 State 177
 
-   56 PRIMARY_EXPRESSION: T_LBRACKET . EXPR T_RBRACKET
+   84 CAST_EXPRESSION: T_LBRACKET TYPE_NAME . T_RBRACKET CAST_EXPRESSION
 
-    T_SIZEOF       shift, and go to state 90
-    T_TIMES        shift, and go to state 93
-    T_PLUS         shift, and go to state 94
-    T_MINUS        shift, and go to state 95
-    T_DECREMENT    shift, and go to state 96
-    T_INCREMENT    shift, and go to state 97
-    T_AND          shift, and go to state 98
-    T_BITWISE_NOT  shift, and go to state 99
-    T_LOGICAL_NOT  shift, and go to state 100
-    T_LBRACKET     shift, and go to state 102
+    T_RBRACKET  shift, and go to state 265
+
+
+State 178
+
+   53 PRIMARY_EXPRESSION: T_LBRACKET . EXPR T_RBRACKET
+
+    T_LBRACKET     shift, and go to state 82
+    T_LOGICAL_NOT  shift, and go to state 83
+    T_BITWISE_NOT  shift, and go to state 84
+    T_INCREMENT    shift, and go to state 85
+    T_DECREMENT    shift, and go to state 86
+    T_PLUS         shift, and go to state 87
+    T_MINUS        shift, and go to state 88
+    T_AND          shift, and go to state 89
+    T_TIMES        shift, and go to state 90
+    T_SIZEOF       shift, and go to state 99
     T_IDENTIFIER   shift, and go to state 19
     T_STRING       shift, and go to state 103
     T_DEC_INT      shift, and go to state 104
@@ -3213,15 +3234,8 @@ State 177
     LOGICAL_OR_EXPRESSION      go to state 140
     CONDITIONAL_EXPRESSION     go to state 141
     ASSIGNMENT_EXPRESSION      go to state 142
-    EXPR                       go to state 180
+    EXPR                       go to state 175
     IDENTIFIER                 go to state 154
-
-
-State 178
-
-   72 UNARY_EXPRESSION: T_DECREMENT UNARY_EXPRESSION .
-
-    $default  reduce using rule 72 (UNARY_EXPRESSION)
 
 
 State 179
@@ -3233,65 +3247,51 @@ State 179
 
 State 180
 
-   56 PRIMARY_EXPRESSION: T_LBRACKET EXPR . T_RBRACKET
-  130 EXPR: EXPR . T_COMMA ASSIGNMENT_EXPRESSION
+   72 UNARY_EXPRESSION: T_DECREMENT UNARY_EXPRESSION .
 
-    T_COMMA     shift, and go to state 238
-    T_RBRACKET  shift, and go to state 261
+    $default  reduce using rule 72 (UNARY_EXPRESSION)
 
 
 State 181
 
-  208 TYPE_NAME: SPECIFIER_QUALIFIER_LIST .
-  209          | SPECIFIER_QUALIFIER_LIST . ABSTRACT_DECLARATOR
+   49 JUMP_STATEMENT: T_BREAK T_SEMICOLON .
 
-    T_LBRACKET        shift, and go to state 262
-    T_LSQ_BRACKET     shift, and go to state 242
-    T_EMPTY_BRACKETS  shift, and go to state 243
-    T_ESQ_BRACKETS    shift, and go to state 244
-    T_DEREFERENCE     shift, and go to state 20
-
-    $default  reduce using rule 208 (TYPE_NAME)
-
-    POINTER                     go to state 263
-    DEREFERENCE                 go to state 38
-    ABSTRACT_DECLARATOR         go to state 264
-    DIRECT_ABSTRACT_DECLARATOR  go to state 248
+    $default  reduce using rule 49 (JUMP_STATEMENT)
 
 
 State 182
 
-   84 CAST_EXPRESSION: T_LBRACKET TYPE_NAME . T_RBRACKET CAST_EXPRESSION
+   48 JUMP_STATEMENT: T_CONTINUE T_SEMICOLON .
 
-    T_RBRACKET  shift, and go to state 265
+    $default  reduce using rule 48 (JUMP_STATEMENT)
 
 
 State 183
 
    16 LABELED_STATEMENT: DEFAULT T_COLON . STATEMENT
 
-    T_BREAK            shift, and go to state 82
-    T_CASE             shift, and go to state 83
-    T_CONTINUE         shift, and go to state 84
-    T_DEFAULT          shift, and go to state 85
-    T_DO               shift, and go to state 86
-    T_FOR              shift, and go to state 87
-    T_IF               shift, and go to state 88
-    T_RETURN           shift, and go to state 89
-    T_SIZEOF           shift, and go to state 90
-    T_SWITCH           shift, and go to state 91
-    T_WHILE            shift, and go to state 92
-    T_TIMES            shift, and go to state 93
-    T_PLUS             shift, and go to state 94
-    T_MINUS            shift, and go to state 95
-    T_DECREMENT        shift, and go to state 96
-    T_INCREMENT        shift, and go to state 97
-    T_AND              shift, and go to state 98
-    T_BITWISE_NOT      shift, and go to state 99
-    T_LOGICAL_NOT      shift, and go to state 100
-    T_SEMICOLON        shift, and go to state 101
-    T_LBRACKET         shift, and go to state 102
+    T_LBRACKET         shift, and go to state 82
     T_LCURLY_BRACKET   shift, and go to state 55
+    T_LOGICAL_NOT      shift, and go to state 83
+    T_BITWISE_NOT      shift, and go to state 84
+    T_INCREMENT        shift, and go to state 85
+    T_DECREMENT        shift, and go to state 86
+    T_PLUS             shift, and go to state 87
+    T_MINUS            shift, and go to state 88
+    T_AND              shift, and go to state 89
+    T_TIMES            shift, and go to state 90
+    T_BREAK            shift, and go to state 91
+    T_CASE             shift, and go to state 92
+    T_CONTINUE         shift, and go to state 93
+    T_DEFAULT          shift, and go to state 94
+    T_DO               shift, and go to state 95
+    T_FOR              shift, and go to state 96
+    T_IF               shift, and go to state 97
+    T_RETURN           shift, and go to state 98
+    T_SIZEOF           shift, and go to state 99
+    T_SWITCH           shift, and go to state 100
+    T_WHILE            shift, and go to state 101
+    T_SEMICOLON        shift, and go to state 102
     T_ECURLY_BRACKETS  shift, and go to state 56
     T_IDENTIFIER       shift, and go to state 19
     T_STRING           shift, and go to state 103
@@ -3356,29 +3356,29 @@ State 186
    19 COMPOUND_STATEMENT: T_LCURLY_BRACKET DECLARATION_LIST STATEMENT_LIST . T_RCURLY_BRACKET
    26 STATEMENT_LIST: STATEMENT_LIST . STATEMENT
 
-    T_BREAK            shift, and go to state 82
-    T_CASE             shift, and go to state 83
-    T_CONTINUE         shift, and go to state 84
-    T_DEFAULT          shift, and go to state 85
-    T_DO               shift, and go to state 86
-    T_FOR              shift, and go to state 87
-    T_IF               shift, and go to state 88
-    T_RETURN           shift, and go to state 89
-    T_SIZEOF           shift, and go to state 90
-    T_SWITCH           shift, and go to state 91
-    T_WHILE            shift, and go to state 92
-    T_TIMES            shift, and go to state 93
-    T_PLUS             shift, and go to state 94
-    T_MINUS            shift, and go to state 95
-    T_DECREMENT        shift, and go to state 96
-    T_INCREMENT        shift, and go to state 97
-    T_AND              shift, and go to state 98
-    T_BITWISE_NOT      shift, and go to state 99
-    T_LOGICAL_NOT      shift, and go to state 100
-    T_SEMICOLON        shift, and go to state 101
-    T_LBRACKET         shift, and go to state 102
+    T_LBRACKET         shift, and go to state 82
     T_RCURLY_BRACKET   shift, and go to state 268
     T_LCURLY_BRACKET   shift, and go to state 55
+    T_LOGICAL_NOT      shift, and go to state 83
+    T_BITWISE_NOT      shift, and go to state 84
+    T_INCREMENT        shift, and go to state 85
+    T_DECREMENT        shift, and go to state 86
+    T_PLUS             shift, and go to state 87
+    T_MINUS            shift, and go to state 88
+    T_AND              shift, and go to state 89
+    T_TIMES            shift, and go to state 90
+    T_BREAK            shift, and go to state 91
+    T_CASE             shift, and go to state 92
+    T_CONTINUE         shift, and go to state 93
+    T_DEFAULT          shift, and go to state 94
+    T_DO               shift, and go to state 95
+    T_FOR              shift, and go to state 96
+    T_IF               shift, and go to state 97
+    T_RETURN           shift, and go to state 98
+    T_SIZEOF           shift, and go to state 99
+    T_SWITCH           shift, and go to state 100
+    T_WHILE            shift, and go to state 101
+    T_SEMICOLON        shift, and go to state 102
     T_ECURLY_BRACKETS  shift, and go to state 56
     T_IDENTIFIER       shift, and go to state 19
     T_STRING           shift, and go to state 103
@@ -3449,16 +3449,16 @@ State 190
 
    31 SELECTION_STATEMENT: SWITCH T_LBRACKET . EXPR T_RBRACKET STATEMENT
 
-    T_SIZEOF       shift, and go to state 90
-    T_TIMES        shift, and go to state 93
-    T_PLUS         shift, and go to state 94
-    T_MINUS        shift, and go to state 95
-    T_DECREMENT    shift, and go to state 96
-    T_INCREMENT    shift, and go to state 97
-    T_AND          shift, and go to state 98
-    T_BITWISE_NOT  shift, and go to state 99
-    T_LOGICAL_NOT  shift, and go to state 100
-    T_LBRACKET     shift, and go to state 102
+    T_LBRACKET     shift, and go to state 82
+    T_LOGICAL_NOT  shift, and go to state 83
+    T_BITWISE_NOT  shift, and go to state 84
+    T_INCREMENT    shift, and go to state 85
+    T_DECREMENT    shift, and go to state 86
+    T_PLUS         shift, and go to state 87
+    T_MINUS        shift, and go to state 88
+    T_AND          shift, and go to state 89
+    T_TIMES        shift, and go to state 90
+    T_SIZEOF       shift, and go to state 99
     T_IDENTIFIER   shift, and go to state 19
     T_STRING       shift, and go to state 103
     T_DEC_INT      shift, and go to state 104
@@ -3493,16 +3493,16 @@ State 191
    29 SELECTION_STATEMENT: IF T_LBRACKET . EXPR T_RBRACKET STATEMENT
    30                    | IF T_LBRACKET . EXPR T_RBRACKET STATEMENT ELSE STATEMENT
 
-    T_SIZEOF       shift, and go to state 90
-    T_TIMES        shift, and go to state 93
-    T_PLUS         shift, and go to state 94
-    T_MINUS        shift, and go to state 95
-    T_DECREMENT    shift, and go to state 96
-    T_INCREMENT    shift, and go to state 97
-    T_AND          shift, and go to state 98
-    T_BITWISE_NOT  shift, and go to state 99
-    T_LOGICAL_NOT  shift, and go to state 100
-    T_LBRACKET     shift, and go to state 102
+    T_LBRACKET     shift, and go to state 82
+    T_LOGICAL_NOT  shift, and go to state 83
+    T_BITWISE_NOT  shift, and go to state 84
+    T_INCREMENT    shift, and go to state 85
+    T_DECREMENT    shift, and go to state 86
+    T_PLUS         shift, and go to state 87
+    T_MINUS        shift, and go to state 88
+    T_AND          shift, and go to state 89
+    T_TIMES        shift, and go to state 90
+    T_SIZEOF       shift, and go to state 99
     T_IDENTIFIER   shift, and go to state 19
     T_STRING       shift, and go to state 103
     T_DEC_INT      shift, and go to state 104
@@ -3543,17 +3543,17 @@ State 192
    43                    | FOR T_LBRACKET . EXPR T_SEMICOLON T_SEMICOLON T_RBRACKET STATEMENT
    44                    | FOR T_LBRACKET . T_SEMICOLON T_SEMICOLON T_RBRACKET STATEMENT
 
-    T_SIZEOF       shift, and go to state 90
-    T_TIMES        shift, and go to state 93
-    T_PLUS         shift, and go to state 94
-    T_MINUS        shift, and go to state 95
-    T_DECREMENT    shift, and go to state 96
-    T_INCREMENT    shift, and go to state 97
-    T_AND          shift, and go to state 98
-    T_BITWISE_NOT  shift, and go to state 99
-    T_LOGICAL_NOT  shift, and go to state 100
+    T_LBRACKET     shift, and go to state 82
+    T_LOGICAL_NOT  shift, and go to state 83
+    T_BITWISE_NOT  shift, and go to state 84
+    T_INCREMENT    shift, and go to state 85
+    T_DECREMENT    shift, and go to state 86
+    T_PLUS         shift, and go to state 87
+    T_MINUS        shift, and go to state 88
+    T_AND          shift, and go to state 89
+    T_TIMES        shift, and go to state 90
+    T_SIZEOF       shift, and go to state 99
     T_SEMICOLON    shift, and go to state 271
-    T_LBRACKET     shift, and go to state 102
     T_IDENTIFIER   shift, and go to state 19
     T_STRING       shift, and go to state 103
     T_DEC_INT      shift, and go to state 104
@@ -3587,16 +3587,16 @@ State 193
 
    35 ITERATION_STATEMENT: WHILE T_LBRACKET . EXPR T_RBRACKET STATEMENT
 
-    T_SIZEOF       shift, and go to state 90
-    T_TIMES        shift, and go to state 93
-    T_PLUS         shift, and go to state 94
-    T_MINUS        shift, and go to state 95
-    T_DECREMENT    shift, and go to state 96
-    T_INCREMENT    shift, and go to state 97
-    T_AND          shift, and go to state 98
-    T_BITWISE_NOT  shift, and go to state 99
-    T_LOGICAL_NOT  shift, and go to state 100
-    T_LBRACKET     shift, and go to state 102
+    T_LBRACKET     shift, and go to state 82
+    T_LOGICAL_NOT  shift, and go to state 83
+    T_BITWISE_NOT  shift, and go to state 84
+    T_INCREMENT    shift, and go to state 85
+    T_DECREMENT    shift, and go to state 86
+    T_PLUS         shift, and go to state 87
+    T_MINUS        shift, and go to state 88
+    T_AND          shift, and go to state 89
+    T_TIMES        shift, and go to state 90
+    T_SIZEOF       shift, and go to state 99
     T_IDENTIFIER   shift, and go to state 19
     T_STRING       shift, and go to state 103
     T_DEC_INT      shift, and go to state 104
@@ -3630,7 +3630,7 @@ State 194
 
    36 ITERATION_STATEMENT: DO STATEMENT . WHILE T_LBRACKET EXPR T_RBRACKET T_SEMICOLON
 
-    T_WHILE  shift, and go to state 92
+    T_WHILE  shift, and go to state 101
 
     WHILE  go to state 274
 
@@ -3653,50 +3653,18 @@ State 196
 
 State 197
 
-   67 POSTFIX_EXPRESSION: POSTFIX_EXPRESSION T_DECREMENT .
-
-    $default  reduce using rule 67 (POSTFIX_EXPRESSION)
-
-
-State 198
-
-   66 POSTFIX_EXPRESSION: POSTFIX_EXPRESSION T_INCREMENT .
-
-    $default  reduce using rule 66 (POSTFIX_EXPRESSION)
-
-
-State 199
-
-   65 POSTFIX_EXPRESSION: POSTFIX_EXPRESSION T_ARROW . IDENTIFIER
-
-    T_IDENTIFIER  shift, and go to state 19
-
-    IDENTIFIER  go to state 276
-
-
-State 200
-
-   64 POSTFIX_EXPRESSION: POSTFIX_EXPRESSION T_DOT . IDENTIFIER
-
-    T_IDENTIFIER  shift, and go to state 19
-
-    IDENTIFIER  go to state 277
-
-
-State 201
-
    63 POSTFIX_EXPRESSION: POSTFIX_EXPRESSION T_LBRACKET . ARGUMENT_EXPRESSION_LIST T_RBRACKET
 
-    T_SIZEOF       shift, and go to state 90
-    T_TIMES        shift, and go to state 93
-    T_PLUS         shift, and go to state 94
-    T_MINUS        shift, and go to state 95
-    T_DECREMENT    shift, and go to state 96
-    T_INCREMENT    shift, and go to state 97
-    T_AND          shift, and go to state 98
-    T_BITWISE_NOT  shift, and go to state 99
-    T_LOGICAL_NOT  shift, and go to state 100
-    T_LBRACKET     shift, and go to state 102
+    T_LBRACKET     shift, and go to state 82
+    T_LOGICAL_NOT  shift, and go to state 83
+    T_BITWISE_NOT  shift, and go to state 84
+    T_INCREMENT    shift, and go to state 85
+    T_DECREMENT    shift, and go to state 86
+    T_PLUS         shift, and go to state 87
+    T_MINUS        shift, and go to state 88
+    T_AND          shift, and go to state 89
+    T_TIMES        shift, and go to state 90
+    T_SIZEOF       shift, and go to state 99
     T_IDENTIFIER   shift, and go to state 19
     T_STRING       shift, and go to state 103
     T_DEC_INT      shift, and go to state 104
@@ -3706,7 +3674,7 @@ State 201
     PRIMARY_EXPRESSION         go to state 124
     CONSTANT                   go to state 125
     POSTFIX_EXPRESSION         go to state 126
-    ARGUMENT_EXPRESSION_LIST   go to state 278
+    ARGUMENT_EXPRESSION_LIST   go to state 276
     UNARY_EXPRESSION           go to state 127
     SIZE_OF                    go to state 128
     UNARY_OPERATOR             go to state 129
@@ -3722,24 +3690,24 @@ State 201
     LOGICAL_AND_EXPRESSION     go to state 139
     LOGICAL_OR_EXPRESSION      go to state 140
     CONDITIONAL_EXPRESSION     go to state 141
-    ASSIGNMENT_EXPRESSION      go to state 279
+    ASSIGNMENT_EXPRESSION      go to state 277
     IDENTIFIER                 go to state 154
 
 
-State 202
+State 198
 
    61 POSTFIX_EXPRESSION: POSTFIX_EXPRESSION T_LSQ_BRACKET . EXPR T_RSQ_BRACKET
 
-    T_SIZEOF       shift, and go to state 90
-    T_TIMES        shift, and go to state 93
-    T_PLUS         shift, and go to state 94
-    T_MINUS        shift, and go to state 95
-    T_DECREMENT    shift, and go to state 96
-    T_INCREMENT    shift, and go to state 97
-    T_AND          shift, and go to state 98
-    T_BITWISE_NOT  shift, and go to state 99
-    T_LOGICAL_NOT  shift, and go to state 100
-    T_LBRACKET     shift, and go to state 102
+    T_LBRACKET     shift, and go to state 82
+    T_LOGICAL_NOT  shift, and go to state 83
+    T_BITWISE_NOT  shift, and go to state 84
+    T_INCREMENT    shift, and go to state 85
+    T_DECREMENT    shift, and go to state 86
+    T_PLUS         shift, and go to state 87
+    T_MINUS        shift, and go to state 88
+    T_AND          shift, and go to state 89
+    T_TIMES        shift, and go to state 90
+    T_SIZEOF       shift, and go to state 99
     T_IDENTIFIER   shift, and go to state 19
     T_STRING       shift, and go to state 103
     T_DEC_INT      shift, and go to state 104
@@ -3765,8 +3733,40 @@ State 202
     LOGICAL_OR_EXPRESSION      go to state 140
     CONDITIONAL_EXPRESSION     go to state 141
     ASSIGNMENT_EXPRESSION      go to state 142
-    EXPR                       go to state 280
+    EXPR                       go to state 278
     IDENTIFIER                 go to state 154
+
+
+State 199
+
+   66 POSTFIX_EXPRESSION: POSTFIX_EXPRESSION T_INCREMENT .
+
+    $default  reduce using rule 66 (POSTFIX_EXPRESSION)
+
+
+State 200
+
+   67 POSTFIX_EXPRESSION: POSTFIX_EXPRESSION T_DECREMENT .
+
+    $default  reduce using rule 67 (POSTFIX_EXPRESSION)
+
+
+State 201
+
+   65 POSTFIX_EXPRESSION: POSTFIX_EXPRESSION T_ARROW . IDENTIFIER
+
+    T_IDENTIFIER  shift, and go to state 19
+
+    IDENTIFIER  go to state 279
+
+
+State 202
+
+   64 POSTFIX_EXPRESSION: POSTFIX_EXPRESSION T_DOT . IDENTIFIER
+
+    T_IDENTIFIER  shift, and go to state 19
+
+    IDENTIFIER  go to state 280
 
 
 State 203
@@ -3857,16 +3857,16 @@ State 215
 
   116 ASSIGNMENT_EXPRESSION: UNARY_EXPRESSION ASSIGNMENT_OPERATOR . ASSIGNMENT_EXPRESSION
 
-    T_SIZEOF       shift, and go to state 90
-    T_TIMES        shift, and go to state 93
-    T_PLUS         shift, and go to state 94
-    T_MINUS        shift, and go to state 95
-    T_DECREMENT    shift, and go to state 96
-    T_INCREMENT    shift, and go to state 97
-    T_AND          shift, and go to state 98
-    T_BITWISE_NOT  shift, and go to state 99
-    T_LOGICAL_NOT  shift, and go to state 100
-    T_LBRACKET     shift, and go to state 102
+    T_LBRACKET     shift, and go to state 82
+    T_LOGICAL_NOT  shift, and go to state 83
+    T_BITWISE_NOT  shift, and go to state 84
+    T_INCREMENT    shift, and go to state 85
+    T_DECREMENT    shift, and go to state 86
+    T_PLUS         shift, and go to state 87
+    T_MINUS        shift, and go to state 88
+    T_AND          shift, and go to state 89
+    T_TIMES        shift, and go to state 90
+    T_SIZEOF       shift, and go to state 99
     T_IDENTIFIER   shift, and go to state 19
     T_STRING       shift, and go to state 103
     T_DEC_INT      shift, and go to state 104
@@ -3897,31 +3897,31 @@ State 215
 
 State 216
 
-   56 PRIMARY_EXPRESSION: T_LBRACKET . EXPR T_RBRACKET
+   53 PRIMARY_EXPRESSION: T_LBRACKET . EXPR T_RBRACKET
    75 UNARY_EXPRESSION: SIZE_OF T_LBRACKET . TYPE_NAME T_RBRACKET
 
-    T_CHAR         shift, and go to state 2
-    T_DOUBLE       shift, and go to state 3
-    T_ENUM         shift, and go to state 4
-    T_FLOAT        shift, and go to state 6
-    T_INT          shift, and go to state 7
-    T_LONG         shift, and go to state 8
-    T_SHORT        shift, and go to state 10
-    T_SIGNED       shift, and go to state 11
-    T_SIZEOF       shift, and go to state 90
-    T_STRUCT       shift, and go to state 13
-    T_UNSIGNED     shift, and go to state 15
-    T_VOID         shift, and go to state 16
-    T_VOLATILE     shift, and go to state 17
-    T_TIMES        shift, and go to state 93
-    T_PLUS         shift, and go to state 94
-    T_MINUS        shift, and go to state 95
-    T_DECREMENT    shift, and go to state 96
-    T_INCREMENT    shift, and go to state 97
-    T_AND          shift, and go to state 98
-    T_BITWISE_NOT  shift, and go to state 99
-    T_LOGICAL_NOT  shift, and go to state 100
-    T_LBRACKET     shift, and go to state 102
+    T_LBRACKET     shift, and go to state 82
+    T_LOGICAL_NOT  shift, and go to state 83
+    T_BITWISE_NOT  shift, and go to state 84
+    T_INCREMENT    shift, and go to state 85
+    T_DECREMENT    shift, and go to state 86
+    T_PLUS         shift, and go to state 87
+    T_MINUS        shift, and go to state 88
+    T_AND          shift, and go to state 89
+    T_TIMES        shift, and go to state 90
+    T_CHAR         shift, and go to state 3
+    T_DOUBLE       shift, and go to state 4
+    T_ENUM         shift, and go to state 5
+    T_FLOAT        shift, and go to state 7
+    T_INT          shift, and go to state 8
+    T_LONG         shift, and go to state 9
+    T_SHORT        shift, and go to state 11
+    T_SIGNED       shift, and go to state 12
+    T_SIZEOF       shift, and go to state 99
+    T_STRUCT       shift, and go to state 14
+    T_UNSIGNED     shift, and go to state 16
+    T_VOID         shift, and go to state 17
+    T_VOLATILE     shift, and go to state 18
     T_IDENTIFIER   shift, and go to state 19
     T_STRING       shift, and go to state 103
     T_DEC_INT      shift, and go to state 104
@@ -3948,11 +3948,11 @@ State 216
     LOGICAL_OR_EXPRESSION      go to state 140
     CONDITIONAL_EXPRESSION     go to state 141
     ASSIGNMENT_EXPRESSION      go to state 142
-    EXPR                       go to state 180
+    EXPR                       go to state 175
     TYPE_SPECIFIER             go to state 71
     STRUCT_OR_UNION_SPECIFIER  go to state 30
     STRUCT_OR_UNION            go to state 31
-    SPECIFIER_QUALIFIER_LIST   go to state 181
+    SPECIFIER_QUALIFIER_LIST   go to state 176
     ENUM_SPECIFIER             go to state 32
     ENUM                       go to state 33
     TYPE_QUALIFIER             go to state 75
@@ -3977,18 +3977,18 @@ State 218
 
 State 219
 
-   86 MULTIPLICATIVE_EXPRESSION: MULTIPLICATIVE_EXPRESSION T_TIMES . CAST_EXPRESSION
+   87 MULTIPLICATIVE_EXPRESSION: MULTIPLICATIVE_EXPRESSION T_DIVIDE . CAST_EXPRESSION
 
-    T_SIZEOF       shift, and go to state 90
-    T_TIMES        shift, and go to state 93
-    T_PLUS         shift, and go to state 94
-    T_MINUS        shift, and go to state 95
-    T_DECREMENT    shift, and go to state 96
-    T_INCREMENT    shift, and go to state 97
-    T_AND          shift, and go to state 98
-    T_BITWISE_NOT  shift, and go to state 99
-    T_LOGICAL_NOT  shift, and go to state 100
-    T_LBRACKET     shift, and go to state 102
+    T_LBRACKET     shift, and go to state 82
+    T_LOGICAL_NOT  shift, and go to state 83
+    T_BITWISE_NOT  shift, and go to state 84
+    T_INCREMENT    shift, and go to state 85
+    T_DECREMENT    shift, and go to state 86
+    T_PLUS         shift, and go to state 87
+    T_MINUS        shift, and go to state 88
+    T_AND          shift, and go to state 89
+    T_TIMES        shift, and go to state 90
+    T_SIZEOF       shift, and go to state 99
     T_IDENTIFIER   shift, and go to state 19
     T_STRING       shift, and go to state 103
     T_DEC_INT      shift, and go to state 104
@@ -4007,18 +4007,18 @@ State 219
 
 State 220
 
-   87 MULTIPLICATIVE_EXPRESSION: MULTIPLICATIVE_EXPRESSION T_DIVIDE . CAST_EXPRESSION
+   86 MULTIPLICATIVE_EXPRESSION: MULTIPLICATIVE_EXPRESSION T_TIMES . CAST_EXPRESSION
 
-    T_SIZEOF       shift, and go to state 90
-    T_TIMES        shift, and go to state 93
-    T_PLUS         shift, and go to state 94
-    T_MINUS        shift, and go to state 95
-    T_DECREMENT    shift, and go to state 96
-    T_INCREMENT    shift, and go to state 97
-    T_AND          shift, and go to state 98
-    T_BITWISE_NOT  shift, and go to state 99
-    T_LOGICAL_NOT  shift, and go to state 100
-    T_LBRACKET     shift, and go to state 102
+    T_LBRACKET     shift, and go to state 82
+    T_LOGICAL_NOT  shift, and go to state 83
+    T_BITWISE_NOT  shift, and go to state 84
+    T_INCREMENT    shift, and go to state 85
+    T_DECREMENT    shift, and go to state 86
+    T_PLUS         shift, and go to state 87
+    T_MINUS        shift, and go to state 88
+    T_AND          shift, and go to state 89
+    T_TIMES        shift, and go to state 90
+    T_SIZEOF       shift, and go to state 99
     T_IDENTIFIER   shift, and go to state 19
     T_STRING       shift, and go to state 103
     T_DEC_INT      shift, and go to state 104
@@ -4039,16 +4039,16 @@ State 221
 
    88 MULTIPLICATIVE_EXPRESSION: MULTIPLICATIVE_EXPRESSION T_MODULO . CAST_EXPRESSION
 
-    T_SIZEOF       shift, and go to state 90
-    T_TIMES        shift, and go to state 93
-    T_PLUS         shift, and go to state 94
-    T_MINUS        shift, and go to state 95
-    T_DECREMENT    shift, and go to state 96
-    T_INCREMENT    shift, and go to state 97
-    T_AND          shift, and go to state 98
-    T_BITWISE_NOT  shift, and go to state 99
-    T_LOGICAL_NOT  shift, and go to state 100
-    T_LBRACKET     shift, and go to state 102
+    T_LBRACKET     shift, and go to state 82
+    T_LOGICAL_NOT  shift, and go to state 83
+    T_BITWISE_NOT  shift, and go to state 84
+    T_INCREMENT    shift, and go to state 85
+    T_DECREMENT    shift, and go to state 86
+    T_PLUS         shift, and go to state 87
+    T_MINUS        shift, and go to state 88
+    T_AND          shift, and go to state 89
+    T_TIMES        shift, and go to state 90
+    T_SIZEOF       shift, and go to state 99
     T_IDENTIFIER   shift, and go to state 19
     T_STRING       shift, and go to state 103
     T_DEC_INT      shift, and go to state 104
@@ -4069,16 +4069,16 @@ State 222
 
    90 ADDITIVE_EXPRESSION: ADDITIVE_EXPRESSION T_PLUS . MULTIPLICATIVE_EXPRESSION
 
-    T_SIZEOF       shift, and go to state 90
-    T_TIMES        shift, and go to state 93
-    T_PLUS         shift, and go to state 94
-    T_MINUS        shift, and go to state 95
-    T_DECREMENT    shift, and go to state 96
-    T_INCREMENT    shift, and go to state 97
-    T_AND          shift, and go to state 98
-    T_BITWISE_NOT  shift, and go to state 99
-    T_LOGICAL_NOT  shift, and go to state 100
-    T_LBRACKET     shift, and go to state 102
+    T_LBRACKET     shift, and go to state 82
+    T_LOGICAL_NOT  shift, and go to state 83
+    T_BITWISE_NOT  shift, and go to state 84
+    T_INCREMENT    shift, and go to state 85
+    T_DECREMENT    shift, and go to state 86
+    T_PLUS         shift, and go to state 87
+    T_MINUS        shift, and go to state 88
+    T_AND          shift, and go to state 89
+    T_TIMES        shift, and go to state 90
+    T_SIZEOF       shift, and go to state 99
     T_IDENTIFIER   shift, and go to state 19
     T_STRING       shift, and go to state 103
     T_DEC_INT      shift, and go to state 104
@@ -4100,16 +4100,16 @@ State 223
 
    91 ADDITIVE_EXPRESSION: ADDITIVE_EXPRESSION T_MINUS . MULTIPLICATIVE_EXPRESSION
 
-    T_SIZEOF       shift, and go to state 90
-    T_TIMES        shift, and go to state 93
-    T_PLUS         shift, and go to state 94
-    T_MINUS        shift, and go to state 95
-    T_DECREMENT    shift, and go to state 96
-    T_INCREMENT    shift, and go to state 97
-    T_AND          shift, and go to state 98
-    T_BITWISE_NOT  shift, and go to state 99
-    T_LOGICAL_NOT  shift, and go to state 100
-    T_LBRACKET     shift, and go to state 102
+    T_LBRACKET     shift, and go to state 82
+    T_LOGICAL_NOT  shift, and go to state 83
+    T_BITWISE_NOT  shift, and go to state 84
+    T_INCREMENT    shift, and go to state 85
+    T_DECREMENT    shift, and go to state 86
+    T_PLUS         shift, and go to state 87
+    T_MINUS        shift, and go to state 88
+    T_AND          shift, and go to state 89
+    T_TIMES        shift, and go to state 90
+    T_SIZEOF       shift, and go to state 99
     T_IDENTIFIER   shift, and go to state 19
     T_STRING       shift, and go to state 103
     T_DEC_INT      shift, and go to state 104
@@ -4131,16 +4131,16 @@ State 224
 
    94 SHIFT_EXPRESSION: SHIFT_EXPRESSION T_RIGHT_SHIFT . ADDITIVE_EXPRESSION
 
-    T_SIZEOF       shift, and go to state 90
-    T_TIMES        shift, and go to state 93
-    T_PLUS         shift, and go to state 94
-    T_MINUS        shift, and go to state 95
-    T_DECREMENT    shift, and go to state 96
-    T_INCREMENT    shift, and go to state 97
-    T_AND          shift, and go to state 98
-    T_BITWISE_NOT  shift, and go to state 99
-    T_LOGICAL_NOT  shift, and go to state 100
-    T_LBRACKET     shift, and go to state 102
+    T_LBRACKET     shift, and go to state 82
+    T_LOGICAL_NOT  shift, and go to state 83
+    T_BITWISE_NOT  shift, and go to state 84
+    T_INCREMENT    shift, and go to state 85
+    T_DECREMENT    shift, and go to state 86
+    T_PLUS         shift, and go to state 87
+    T_MINUS        shift, and go to state 88
+    T_AND          shift, and go to state 89
+    T_TIMES        shift, and go to state 90
+    T_SIZEOF       shift, and go to state 99
     T_IDENTIFIER   shift, and go to state 19
     T_STRING       shift, and go to state 103
     T_DEC_INT      shift, and go to state 104
@@ -4163,16 +4163,16 @@ State 225
 
    93 SHIFT_EXPRESSION: SHIFT_EXPRESSION T_LEFT_SHIFT . ADDITIVE_EXPRESSION
 
-    T_SIZEOF       shift, and go to state 90
-    T_TIMES        shift, and go to state 93
-    T_PLUS         shift, and go to state 94
-    T_MINUS        shift, and go to state 95
-    T_DECREMENT    shift, and go to state 96
-    T_INCREMENT    shift, and go to state 97
-    T_AND          shift, and go to state 98
-    T_BITWISE_NOT  shift, and go to state 99
-    T_LOGICAL_NOT  shift, and go to state 100
-    T_LBRACKET     shift, and go to state 102
+    T_LBRACKET     shift, and go to state 82
+    T_LOGICAL_NOT  shift, and go to state 83
+    T_BITWISE_NOT  shift, and go to state 84
+    T_INCREMENT    shift, and go to state 85
+    T_DECREMENT    shift, and go to state 86
+    T_PLUS         shift, and go to state 87
+    T_MINUS        shift, and go to state 88
+    T_AND          shift, and go to state 89
+    T_TIMES        shift, and go to state 90
+    T_SIZEOF       shift, and go to state 99
     T_IDENTIFIER   shift, and go to state 19
     T_STRING       shift, and go to state 103
     T_DEC_INT      shift, and go to state 104
@@ -4193,18 +4193,18 @@ State 225
 
 State 226
 
-   96 RELATIONAL_EXPRESSION: RELATIONAL_EXPRESSION T_LESS_THAN . SHIFT_EXPRESSION
+   98 RELATIONAL_EXPRESSION: RELATIONAL_EXPRESSION T_LESS_THAN_OR_EQUAL_TO . SHIFT_EXPRESSION
 
-    T_SIZEOF       shift, and go to state 90
-    T_TIMES        shift, and go to state 93
-    T_PLUS         shift, and go to state 94
-    T_MINUS        shift, and go to state 95
-    T_DECREMENT    shift, and go to state 96
-    T_INCREMENT    shift, and go to state 97
-    T_AND          shift, and go to state 98
-    T_BITWISE_NOT  shift, and go to state 99
-    T_LOGICAL_NOT  shift, and go to state 100
-    T_LBRACKET     shift, and go to state 102
+    T_LBRACKET     shift, and go to state 82
+    T_LOGICAL_NOT  shift, and go to state 83
+    T_BITWISE_NOT  shift, and go to state 84
+    T_INCREMENT    shift, and go to state 85
+    T_DECREMENT    shift, and go to state 86
+    T_PLUS         shift, and go to state 87
+    T_MINUS        shift, and go to state 88
+    T_AND          shift, and go to state 89
+    T_TIMES        shift, and go to state 90
+    T_SIZEOF       shift, and go to state 99
     T_IDENTIFIER   shift, and go to state 19
     T_STRING       shift, and go to state 103
     T_DEC_INT      shift, and go to state 104
@@ -4226,18 +4226,18 @@ State 226
 
 State 227
 
-   97 RELATIONAL_EXPRESSION: RELATIONAL_EXPRESSION T_GREATER_THAN . SHIFT_EXPRESSION
+   99 RELATIONAL_EXPRESSION: RELATIONAL_EXPRESSION T_GREATER_THAN_OR_EQUAL_TO . SHIFT_EXPRESSION
 
-    T_SIZEOF       shift, and go to state 90
-    T_TIMES        shift, and go to state 93
-    T_PLUS         shift, and go to state 94
-    T_MINUS        shift, and go to state 95
-    T_DECREMENT    shift, and go to state 96
-    T_INCREMENT    shift, and go to state 97
-    T_AND          shift, and go to state 98
-    T_BITWISE_NOT  shift, and go to state 99
-    T_LOGICAL_NOT  shift, and go to state 100
-    T_LBRACKET     shift, and go to state 102
+    T_LBRACKET     shift, and go to state 82
+    T_LOGICAL_NOT  shift, and go to state 83
+    T_BITWISE_NOT  shift, and go to state 84
+    T_INCREMENT    shift, and go to state 85
+    T_DECREMENT    shift, and go to state 86
+    T_PLUS         shift, and go to state 87
+    T_MINUS        shift, and go to state 88
+    T_AND          shift, and go to state 89
+    T_TIMES        shift, and go to state 90
+    T_SIZEOF       shift, and go to state 99
     T_IDENTIFIER   shift, and go to state 19
     T_STRING       shift, and go to state 103
     T_DEC_INT      shift, and go to state 104
@@ -4259,18 +4259,18 @@ State 227
 
 State 228
 
-   98 RELATIONAL_EXPRESSION: RELATIONAL_EXPRESSION T_LESS_THAN_OR_EQUAL_TO . SHIFT_EXPRESSION
+   96 RELATIONAL_EXPRESSION: RELATIONAL_EXPRESSION T_LESS_THAN . SHIFT_EXPRESSION
 
-    T_SIZEOF       shift, and go to state 90
-    T_TIMES        shift, and go to state 93
-    T_PLUS         shift, and go to state 94
-    T_MINUS        shift, and go to state 95
-    T_DECREMENT    shift, and go to state 96
-    T_INCREMENT    shift, and go to state 97
-    T_AND          shift, and go to state 98
-    T_BITWISE_NOT  shift, and go to state 99
-    T_LOGICAL_NOT  shift, and go to state 100
-    T_LBRACKET     shift, and go to state 102
+    T_LBRACKET     shift, and go to state 82
+    T_LOGICAL_NOT  shift, and go to state 83
+    T_BITWISE_NOT  shift, and go to state 84
+    T_INCREMENT    shift, and go to state 85
+    T_DECREMENT    shift, and go to state 86
+    T_PLUS         shift, and go to state 87
+    T_MINUS        shift, and go to state 88
+    T_AND          shift, and go to state 89
+    T_TIMES        shift, and go to state 90
+    T_SIZEOF       shift, and go to state 99
     T_IDENTIFIER   shift, and go to state 19
     T_STRING       shift, and go to state 103
     T_DEC_INT      shift, and go to state 104
@@ -4292,18 +4292,18 @@ State 228
 
 State 229
 
-   99 RELATIONAL_EXPRESSION: RELATIONAL_EXPRESSION T_GREATER_THAN_OR_EQUAL_TO . SHIFT_EXPRESSION
+   97 RELATIONAL_EXPRESSION: RELATIONAL_EXPRESSION T_GREATER_THAN . SHIFT_EXPRESSION
 
-    T_SIZEOF       shift, and go to state 90
-    T_TIMES        shift, and go to state 93
-    T_PLUS         shift, and go to state 94
-    T_MINUS        shift, and go to state 95
-    T_DECREMENT    shift, and go to state 96
-    T_INCREMENT    shift, and go to state 97
-    T_AND          shift, and go to state 98
-    T_BITWISE_NOT  shift, and go to state 99
-    T_LOGICAL_NOT  shift, and go to state 100
-    T_LBRACKET     shift, and go to state 102
+    T_LBRACKET     shift, and go to state 82
+    T_LOGICAL_NOT  shift, and go to state 83
+    T_BITWISE_NOT  shift, and go to state 84
+    T_INCREMENT    shift, and go to state 85
+    T_DECREMENT    shift, and go to state 86
+    T_PLUS         shift, and go to state 87
+    T_MINUS        shift, and go to state 88
+    T_AND          shift, and go to state 89
+    T_TIMES        shift, and go to state 90
+    T_SIZEOF       shift, and go to state 99
     T_IDENTIFIER   shift, and go to state 19
     T_STRING       shift, and go to state 103
     T_DEC_INT      shift, and go to state 104
@@ -4325,18 +4325,18 @@ State 229
 
 State 230
 
-  102 EQUALITY_EXPRESSION: EQUALITY_EXPRESSION T_NOT_EQUALS_EQUALS . RELATIONAL_EXPRESSION
+  101 EQUALITY_EXPRESSION: EQUALITY_EXPRESSION T_EQUALS_EQUALS . RELATIONAL_EXPRESSION
 
-    T_SIZEOF       shift, and go to state 90
-    T_TIMES        shift, and go to state 93
-    T_PLUS         shift, and go to state 94
-    T_MINUS        shift, and go to state 95
-    T_DECREMENT    shift, and go to state 96
-    T_INCREMENT    shift, and go to state 97
-    T_AND          shift, and go to state 98
-    T_BITWISE_NOT  shift, and go to state 99
-    T_LOGICAL_NOT  shift, and go to state 100
-    T_LBRACKET     shift, and go to state 102
+    T_LBRACKET     shift, and go to state 82
+    T_LOGICAL_NOT  shift, and go to state 83
+    T_BITWISE_NOT  shift, and go to state 84
+    T_INCREMENT    shift, and go to state 85
+    T_DECREMENT    shift, and go to state 86
+    T_PLUS         shift, and go to state 87
+    T_MINUS        shift, and go to state 88
+    T_AND          shift, and go to state 89
+    T_TIMES        shift, and go to state 90
+    T_SIZEOF       shift, and go to state 99
     T_IDENTIFIER   shift, and go to state 19
     T_STRING       shift, and go to state 103
     T_DEC_INT      shift, and go to state 104
@@ -4359,18 +4359,18 @@ State 230
 
 State 231
 
-  101 EQUALITY_EXPRESSION: EQUALITY_EXPRESSION T_EQUALS_EQUALS . RELATIONAL_EXPRESSION
+  102 EQUALITY_EXPRESSION: EQUALITY_EXPRESSION T_NOT_EQUALS_EQUALS . RELATIONAL_EXPRESSION
 
-    T_SIZEOF       shift, and go to state 90
-    T_TIMES        shift, and go to state 93
-    T_PLUS         shift, and go to state 94
-    T_MINUS        shift, and go to state 95
-    T_DECREMENT    shift, and go to state 96
-    T_INCREMENT    shift, and go to state 97
-    T_AND          shift, and go to state 98
-    T_BITWISE_NOT  shift, and go to state 99
-    T_LOGICAL_NOT  shift, and go to state 100
-    T_LBRACKET     shift, and go to state 102
+    T_LBRACKET     shift, and go to state 82
+    T_LOGICAL_NOT  shift, and go to state 83
+    T_BITWISE_NOT  shift, and go to state 84
+    T_INCREMENT    shift, and go to state 85
+    T_DECREMENT    shift, and go to state 86
+    T_PLUS         shift, and go to state 87
+    T_MINUS        shift, and go to state 88
+    T_AND          shift, and go to state 89
+    T_TIMES        shift, and go to state 90
+    T_SIZEOF       shift, and go to state 99
     T_IDENTIFIER   shift, and go to state 19
     T_STRING       shift, and go to state 103
     T_DEC_INT      shift, and go to state 104
@@ -4395,16 +4395,16 @@ State 232
 
   104 AND_EXPRESSION: AND_EXPRESSION T_AND . EQUALITY_EXPRESSION
 
-    T_SIZEOF       shift, and go to state 90
-    T_TIMES        shift, and go to state 93
-    T_PLUS         shift, and go to state 94
-    T_MINUS        shift, and go to state 95
-    T_DECREMENT    shift, and go to state 96
-    T_INCREMENT    shift, and go to state 97
-    T_AND          shift, and go to state 98
-    T_BITWISE_NOT  shift, and go to state 99
-    T_LOGICAL_NOT  shift, and go to state 100
-    T_LBRACKET     shift, and go to state 102
+    T_LBRACKET     shift, and go to state 82
+    T_LOGICAL_NOT  shift, and go to state 83
+    T_BITWISE_NOT  shift, and go to state 84
+    T_INCREMENT    shift, and go to state 85
+    T_DECREMENT    shift, and go to state 86
+    T_PLUS         shift, and go to state 87
+    T_MINUS        shift, and go to state 88
+    T_AND          shift, and go to state 89
+    T_TIMES        shift, and go to state 90
+    T_SIZEOF       shift, and go to state 99
     T_IDENTIFIER   shift, and go to state 19
     T_STRING       shift, and go to state 103
     T_DEC_INT      shift, and go to state 104
@@ -4430,16 +4430,16 @@ State 233
 
   106 EXCLUSIVE_OR_EXPRESSION: EXCLUSIVE_OR_EXPRESSION T_EXPONENT . AND_EXPRESSION
 
-    T_SIZEOF       shift, and go to state 90
-    T_TIMES        shift, and go to state 93
-    T_PLUS         shift, and go to state 94
-    T_MINUS        shift, and go to state 95
-    T_DECREMENT    shift, and go to state 96
-    T_INCREMENT    shift, and go to state 97
-    T_AND          shift, and go to state 98
-    T_BITWISE_NOT  shift, and go to state 99
-    T_LOGICAL_NOT  shift, and go to state 100
-    T_LBRACKET     shift, and go to state 102
+    T_LBRACKET     shift, and go to state 82
+    T_LOGICAL_NOT  shift, and go to state 83
+    T_BITWISE_NOT  shift, and go to state 84
+    T_INCREMENT    shift, and go to state 85
+    T_DECREMENT    shift, and go to state 86
+    T_PLUS         shift, and go to state 87
+    T_MINUS        shift, and go to state 88
+    T_AND          shift, and go to state 89
+    T_TIMES        shift, and go to state 90
+    T_SIZEOF       shift, and go to state 99
     T_IDENTIFIER   shift, and go to state 19
     T_STRING       shift, and go to state 103
     T_DEC_INT      shift, and go to state 104
@@ -4466,16 +4466,16 @@ State 234
 
   108 INCLUSIVE_OR_EXPRESSION: INCLUSIVE_OR_EXPRESSION T_OR . EXCLUSIVE_OR_EXPRESSION
 
-    T_SIZEOF       shift, and go to state 90
-    T_TIMES        shift, and go to state 93
-    T_PLUS         shift, and go to state 94
-    T_MINUS        shift, and go to state 95
-    T_DECREMENT    shift, and go to state 96
-    T_INCREMENT    shift, and go to state 97
-    T_AND          shift, and go to state 98
-    T_BITWISE_NOT  shift, and go to state 99
-    T_LOGICAL_NOT  shift, and go to state 100
-    T_LBRACKET     shift, and go to state 102
+    T_LBRACKET     shift, and go to state 82
+    T_LOGICAL_NOT  shift, and go to state 83
+    T_BITWISE_NOT  shift, and go to state 84
+    T_INCREMENT    shift, and go to state 85
+    T_DECREMENT    shift, and go to state 86
+    T_PLUS         shift, and go to state 87
+    T_MINUS        shift, and go to state 88
+    T_AND          shift, and go to state 89
+    T_TIMES        shift, and go to state 90
+    T_SIZEOF       shift, and go to state 99
     T_IDENTIFIER   shift, and go to state 19
     T_STRING       shift, and go to state 103
     T_DEC_INT      shift, and go to state 104
@@ -4503,16 +4503,16 @@ State 235
 
   110 LOGICAL_AND_EXPRESSION: LOGICAL_AND_EXPRESSION T_AND_AND . INCLUSIVE_OR_EXPRESSION
 
-    T_SIZEOF       shift, and go to state 90
-    T_TIMES        shift, and go to state 93
-    T_PLUS         shift, and go to state 94
-    T_MINUS        shift, and go to state 95
-    T_DECREMENT    shift, and go to state 96
-    T_INCREMENT    shift, and go to state 97
-    T_AND          shift, and go to state 98
-    T_BITWISE_NOT  shift, and go to state 99
-    T_LOGICAL_NOT  shift, and go to state 100
-    T_LBRACKET     shift, and go to state 102
+    T_LBRACKET     shift, and go to state 82
+    T_LOGICAL_NOT  shift, and go to state 83
+    T_BITWISE_NOT  shift, and go to state 84
+    T_INCREMENT    shift, and go to state 85
+    T_DECREMENT    shift, and go to state 86
+    T_PLUS         shift, and go to state 87
+    T_MINUS        shift, and go to state 88
+    T_AND          shift, and go to state 89
+    T_TIMES        shift, and go to state 90
+    T_SIZEOF       shift, and go to state 99
     T_IDENTIFIER   shift, and go to state 19
     T_STRING       shift, and go to state 103
     T_DEC_INT      shift, and go to state 104
@@ -4541,16 +4541,16 @@ State 236
 
   112 LOGICAL_OR_EXPRESSION: LOGICAL_OR_EXPRESSION T_OR_OR . LOGICAL_AND_EXPRESSION
 
-    T_SIZEOF       shift, and go to state 90
-    T_TIMES        shift, and go to state 93
-    T_PLUS         shift, and go to state 94
-    T_MINUS        shift, and go to state 95
-    T_DECREMENT    shift, and go to state 96
-    T_INCREMENT    shift, and go to state 97
-    T_AND          shift, and go to state 98
-    T_BITWISE_NOT  shift, and go to state 99
-    T_LOGICAL_NOT  shift, and go to state 100
-    T_LBRACKET     shift, and go to state 102
+    T_LBRACKET     shift, and go to state 82
+    T_LOGICAL_NOT  shift, and go to state 83
+    T_BITWISE_NOT  shift, and go to state 84
+    T_INCREMENT    shift, and go to state 85
+    T_DECREMENT    shift, and go to state 86
+    T_PLUS         shift, and go to state 87
+    T_MINUS        shift, and go to state 88
+    T_AND          shift, and go to state 89
+    T_TIMES        shift, and go to state 90
+    T_SIZEOF       shift, and go to state 99
     T_IDENTIFIER   shift, and go to state 19
     T_STRING       shift, and go to state 103
     T_DEC_INT      shift, and go to state 104
@@ -4580,16 +4580,16 @@ State 237
 
   114 CONDITIONAL_EXPRESSION: LOGICAL_OR_EXPRESSION T_QUESTION . EXPR T_COLON CONDITIONAL_EXPRESSION
 
-    T_SIZEOF       shift, and go to state 90
-    T_TIMES        shift, and go to state 93
-    T_PLUS         shift, and go to state 94
-    T_MINUS        shift, and go to state 95
-    T_DECREMENT    shift, and go to state 96
-    T_INCREMENT    shift, and go to state 97
-    T_AND          shift, and go to state 98
-    T_BITWISE_NOT  shift, and go to state 99
-    T_LOGICAL_NOT  shift, and go to state 100
-    T_LBRACKET     shift, and go to state 102
+    T_LBRACKET     shift, and go to state 82
+    T_LOGICAL_NOT  shift, and go to state 83
+    T_BITWISE_NOT  shift, and go to state 84
+    T_INCREMENT    shift, and go to state 85
+    T_DECREMENT    shift, and go to state 86
+    T_PLUS         shift, and go to state 87
+    T_MINUS        shift, and go to state 88
+    T_AND          shift, and go to state 89
+    T_TIMES        shift, and go to state 90
+    T_SIZEOF       shift, and go to state 99
     T_IDENTIFIER   shift, and go to state 19
     T_STRING       shift, and go to state 103
     T_DEC_INT      shift, and go to state 104
@@ -4623,16 +4623,16 @@ State 238
 
   130 EXPR: EXPR T_COMMA . ASSIGNMENT_EXPRESSION
 
-    T_SIZEOF       shift, and go to state 90
-    T_TIMES        shift, and go to state 93
-    T_PLUS         shift, and go to state 94
-    T_MINUS        shift, and go to state 95
-    T_DECREMENT    shift, and go to state 96
-    T_INCREMENT    shift, and go to state 97
-    T_AND          shift, and go to state 98
-    T_BITWISE_NOT  shift, and go to state 99
-    T_LOGICAL_NOT  shift, and go to state 100
-    T_LBRACKET     shift, and go to state 102
+    T_LBRACKET     shift, and go to state 82
+    T_LOGICAL_NOT  shift, and go to state 83
+    T_BITWISE_NOT  shift, and go to state 84
+    T_INCREMENT    shift, and go to state 85
+    T_DECREMENT    shift, and go to state 86
+    T_PLUS         shift, and go to state 87
+    T_MINUS        shift, and go to state 88
+    T_AND          shift, and go to state 89
+    T_TIMES        shift, and go to state 90
+    T_SIZEOF       shift, and go to state 99
     T_IDENTIFIER   shift, and go to state 19
     T_STRING       shift, and go to state 103
     T_DEC_INT      shift, and go to state 104
@@ -4672,28 +4672,28 @@ State 240
 
    14 LABELED_STATEMENT: IDENTIFIER T_COLON . STATEMENT
 
-    T_BREAK            shift, and go to state 82
-    T_CASE             shift, and go to state 83
-    T_CONTINUE         shift, and go to state 84
-    T_DEFAULT          shift, and go to state 85
-    T_DO               shift, and go to state 86
-    T_FOR              shift, and go to state 87
-    T_IF               shift, and go to state 88
-    T_RETURN           shift, and go to state 89
-    T_SIZEOF           shift, and go to state 90
-    T_SWITCH           shift, and go to state 91
-    T_WHILE            shift, and go to state 92
-    T_TIMES            shift, and go to state 93
-    T_PLUS             shift, and go to state 94
-    T_MINUS            shift, and go to state 95
-    T_DECREMENT        shift, and go to state 96
-    T_INCREMENT        shift, and go to state 97
-    T_AND              shift, and go to state 98
-    T_BITWISE_NOT      shift, and go to state 99
-    T_LOGICAL_NOT      shift, and go to state 100
-    T_SEMICOLON        shift, and go to state 101
-    T_LBRACKET         shift, and go to state 102
+    T_LBRACKET         shift, and go to state 82
     T_LCURLY_BRACKET   shift, and go to state 55
+    T_LOGICAL_NOT      shift, and go to state 83
+    T_BITWISE_NOT      shift, and go to state 84
+    T_INCREMENT        shift, and go to state 85
+    T_DECREMENT        shift, and go to state 86
+    T_PLUS             shift, and go to state 87
+    T_MINUS            shift, and go to state 88
+    T_AND              shift, and go to state 89
+    T_TIMES            shift, and go to state 90
+    T_BREAK            shift, and go to state 91
+    T_CASE             shift, and go to state 92
+    T_CONTINUE         shift, and go to state 93
+    T_DEFAULT          shift, and go to state 94
+    T_DO               shift, and go to state 95
+    T_FOR              shift, and go to state 96
+    T_IF               shift, and go to state 97
+    T_RETURN           shift, and go to state 98
+    T_SIZEOF           shift, and go to state 99
+    T_SWITCH           shift, and go to state 100
+    T_WHILE            shift, and go to state 101
+    T_SEMICOLON        shift, and go to state 102
     T_ECURLY_BRACKETS  shift, and go to state 56
     T_IDENTIFIER       shift, and go to state 19
     T_STRING           shift, and go to state 103
@@ -4745,25 +4745,25 @@ State 241
   213 DIRECT_ABSTRACT_DECLARATOR: T_LBRACKET . ABSTRACT_DECLARATOR T_RBRACKET
   219                           | T_LBRACKET . PARAMETER_TYPE_LIST T_RBRACKET
 
-    T_AUTO            shift, and go to state 1
-    T_CHAR            shift, and go to state 2
-    T_DOUBLE          shift, and go to state 3
-    T_ENUM            shift, and go to state 4
-    T_EXTERN          shift, and go to state 5
-    T_FLOAT           shift, and go to state 6
-    T_INT             shift, and go to state 7
-    T_LONG            shift, and go to state 8
-    T_REGISTER        shift, and go to state 9
-    T_SHORT           shift, and go to state 10
-    T_SIGNED          shift, and go to state 11
-    T_STATIC          shift, and go to state 12
-    T_STRUCT          shift, and go to state 13
-    T_TYPEDEF         shift, and go to state 14
-    T_UNSIGNED        shift, and go to state 15
-    T_VOID            shift, and go to state 16
-    T_VOLATILE        shift, and go to state 17
     T_LBRACKET        shift, and go to state 241
     T_LSQ_BRACKET     shift, and go to state 242
+    T_AUTO            shift, and go to state 2
+    T_CHAR            shift, and go to state 3
+    T_DOUBLE          shift, and go to state 4
+    T_ENUM            shift, and go to state 5
+    T_EXTERN          shift, and go to state 6
+    T_FLOAT           shift, and go to state 7
+    T_INT             shift, and go to state 8
+    T_LONG            shift, and go to state 9
+    T_REGISTER        shift, and go to state 10
+    T_SHORT           shift, and go to state 11
+    T_SIGNED          shift, and go to state 12
+    T_STATIC          shift, and go to state 13
+    T_STRUCT          shift, and go to state 14
+    T_TYPEDEF         shift, and go to state 15
+    T_UNSIGNED        shift, and go to state 16
+    T_VOID            shift, and go to state 17
+    T_VOLATILE        shift, and go to state 18
     T_EMPTY_BRACKETS  shift, and go to state 243
     T_ESQ_BRACKETS    shift, and go to state 244
     T_IDENTIFIER      shift, and go to state 19
@@ -4795,16 +4795,16 @@ State 242
 
   215 DIRECT_ABSTRACT_DECLARATOR: T_LSQ_BRACKET . CONSTANT_EXPRESSION T_RSQ_BRACKET
 
-    T_SIZEOF       shift, and go to state 90
-    T_TIMES        shift, and go to state 93
-    T_PLUS         shift, and go to state 94
-    T_MINUS        shift, and go to state 95
-    T_DECREMENT    shift, and go to state 96
-    T_INCREMENT    shift, and go to state 97
-    T_AND          shift, and go to state 98
-    T_BITWISE_NOT  shift, and go to state 99
-    T_LOGICAL_NOT  shift, and go to state 100
-    T_LBRACKET     shift, and go to state 102
+    T_LBRACKET     shift, and go to state 82
+    T_LOGICAL_NOT  shift, and go to state 83
+    T_BITWISE_NOT  shift, and go to state 84
+    T_INCREMENT    shift, and go to state 85
+    T_DECREMENT    shift, and go to state 86
+    T_PLUS         shift, and go to state 87
+    T_MINUS        shift, and go to state 88
+    T_AND          shift, and go to state 89
+    T_TIMES        shift, and go to state 90
+    T_SIZEOF       shift, and go to state 99
     T_IDENTIFIER   shift, and go to state 19
     T_STRING       shift, and go to state 103
     T_DEC_INT      shift, and go to state 104
@@ -4907,23 +4907,23 @@ State 250
 
   203 PARAMETER_LIST: PARAMETER_LIST T_COMMA . PARAMETER_DECLARATION
 
-    T_AUTO         shift, and go to state 1
-    T_CHAR         shift, and go to state 2
-    T_DOUBLE       shift, and go to state 3
-    T_ENUM         shift, and go to state 4
-    T_EXTERN       shift, and go to state 5
-    T_FLOAT        shift, and go to state 6
-    T_INT          shift, and go to state 7
-    T_LONG         shift, and go to state 8
-    T_REGISTER     shift, and go to state 9
-    T_SHORT        shift, and go to state 10
-    T_SIGNED       shift, and go to state 11
-    T_STATIC       shift, and go to state 12
-    T_STRUCT       shift, and go to state 13
-    T_TYPEDEF      shift, and go to state 14
-    T_UNSIGNED     shift, and go to state 15
-    T_VOID         shift, and go to state 16
-    T_VOLATILE     shift, and go to state 17
+    T_AUTO         shift, and go to state 2
+    T_CHAR         shift, and go to state 3
+    T_DOUBLE       shift, and go to state 4
+    T_ENUM         shift, and go to state 5
+    T_EXTERN       shift, and go to state 6
+    T_FLOAT        shift, and go to state 7
+    T_INT          shift, and go to state 8
+    T_LONG         shift, and go to state 9
+    T_REGISTER     shift, and go to state 10
+    T_SHORT        shift, and go to state 11
+    T_SIGNED       shift, and go to state 12
+    T_STATIC       shift, and go to state 13
+    T_STRUCT       shift, and go to state 14
+    T_TYPEDEF      shift, and go to state 15
+    T_UNSIGNED     shift, and go to state 16
+    T_VOID         shift, and go to state 17
+    T_VOLATILE     shift, and go to state 18
     T_CUSTOM_TYPE  shift, and go to state 21
 
     DECLARATION_SPECIFIERS     go to state 147
@@ -4958,8 +4958,8 @@ State 253
   225            | T_LCURLY_BRACKET INITIALIZER_LIST . T_COMMA T_RCURLY_BRACKET
   227 INITIALIZER_LIST: INITIALIZER_LIST . T_COMMA INITIALIZER
 
-    T_COMMA           shift, and go to state 313
-    T_RCURLY_BRACKET  shift, and go to state 314
+    T_RCURLY_BRACKET  shift, and go to state 313
+    T_COMMA           shift, and go to state 314
 
 
 State 254
@@ -4973,8 +4973,8 @@ State 255
 
   172 STRUCT_DECLARATOR_LIST: STRUCT_DECLARATOR_LIST T_COMMA . STRUCT_DECLARATOR
 
+    T_LBRACKET     shift, and go to state 1
     T_COLON        shift, and go to state 165
-    T_LBRACKET     shift, and go to state 18
     T_IDENTIFIER   shift, and go to state 19
     T_DEREFERENCE  shift, and go to state 20
 
@@ -4990,16 +4990,16 @@ State 256
 
   174 STRUCT_DECLARATOR: DECLARATOR T_COLON . CONSTANT_EXPRESSION
 
-    T_SIZEOF       shift, and go to state 90
-    T_TIMES        shift, and go to state 93
-    T_PLUS         shift, and go to state 94
-    T_MINUS        shift, and go to state 95
-    T_DECREMENT    shift, and go to state 96
-    T_INCREMENT    shift, and go to state 97
-    T_AND          shift, and go to state 98
-    T_BITWISE_NOT  shift, and go to state 99
-    T_LOGICAL_NOT  shift, and go to state 100
-    T_LBRACKET     shift, and go to state 102
+    T_LBRACKET     shift, and go to state 82
+    T_LOGICAL_NOT  shift, and go to state 83
+    T_BITWISE_NOT  shift, and go to state 84
+    T_INCREMENT    shift, and go to state 85
+    T_DECREMENT    shift, and go to state 86
+    T_PLUS         shift, and go to state 87
+    T_MINUS        shift, and go to state 88
+    T_AND          shift, and go to state 89
+    T_TIMES        shift, and go to state 90
+    T_SIZEOF       shift, and go to state 99
     T_IDENTIFIER   shift, and go to state 19
     T_STRING       shift, and go to state 103
     T_DEC_INT      shift, and go to state 104
@@ -5058,9 +5058,9 @@ State 260
 
 State 261
 
-   56 PRIMARY_EXPRESSION: T_LBRACKET EXPR T_RBRACKET .
+   53 PRIMARY_EXPRESSION: T_LBRACKET EXPR T_RBRACKET .
 
-    $default  reduce using rule 56 (PRIMARY_EXPRESSION)
+    $default  reduce using rule 53 (PRIMARY_EXPRESSION)
 
 
 State 262
@@ -5068,25 +5068,25 @@ State 262
   213 DIRECT_ABSTRACT_DECLARATOR: T_LBRACKET . ABSTRACT_DECLARATOR T_RBRACKET
   219                           | T_LBRACKET . PARAMETER_TYPE_LIST T_RBRACKET
 
-    T_AUTO            shift, and go to state 1
-    T_CHAR            shift, and go to state 2
-    T_DOUBLE          shift, and go to state 3
-    T_ENUM            shift, and go to state 4
-    T_EXTERN          shift, and go to state 5
-    T_FLOAT           shift, and go to state 6
-    T_INT             shift, and go to state 7
-    T_LONG            shift, and go to state 8
-    T_REGISTER        shift, and go to state 9
-    T_SHORT           shift, and go to state 10
-    T_SIGNED          shift, and go to state 11
-    T_STATIC          shift, and go to state 12
-    T_STRUCT          shift, and go to state 13
-    T_TYPEDEF         shift, and go to state 14
-    T_UNSIGNED        shift, and go to state 15
-    T_VOID            shift, and go to state 16
-    T_VOLATILE        shift, and go to state 17
     T_LBRACKET        shift, and go to state 262
     T_LSQ_BRACKET     shift, and go to state 242
+    T_AUTO            shift, and go to state 2
+    T_CHAR            shift, and go to state 3
+    T_DOUBLE          shift, and go to state 4
+    T_ENUM            shift, and go to state 5
+    T_EXTERN          shift, and go to state 6
+    T_FLOAT           shift, and go to state 7
+    T_INT             shift, and go to state 8
+    T_LONG            shift, and go to state 9
+    T_REGISTER        shift, and go to state 10
+    T_SHORT           shift, and go to state 11
+    T_SIGNED          shift, and go to state 12
+    T_STATIC          shift, and go to state 13
+    T_STRUCT          shift, and go to state 14
+    T_TYPEDEF         shift, and go to state 15
+    T_UNSIGNED        shift, and go to state 16
+    T_VOID            shift, and go to state 17
+    T_VOLATILE        shift, and go to state 18
     T_EMPTY_BRACKETS  shift, and go to state 243
     T_ESQ_BRACKETS    shift, and go to state 244
     T_DEREFERENCE     shift, and go to state 20
@@ -5136,16 +5136,16 @@ State 265
 
    84 CAST_EXPRESSION: T_LBRACKET TYPE_NAME T_RBRACKET . CAST_EXPRESSION
 
-    T_SIZEOF       shift, and go to state 90
-    T_TIMES        shift, and go to state 93
-    T_PLUS         shift, and go to state 94
-    T_MINUS        shift, and go to state 95
-    T_DECREMENT    shift, and go to state 96
-    T_INCREMENT    shift, and go to state 97
-    T_AND          shift, and go to state 98
-    T_BITWISE_NOT  shift, and go to state 99
-    T_LOGICAL_NOT  shift, and go to state 100
-    T_LBRACKET     shift, and go to state 102
+    T_LBRACKET     shift, and go to state 82
+    T_LOGICAL_NOT  shift, and go to state 83
+    T_BITWISE_NOT  shift, and go to state 84
+    T_INCREMENT    shift, and go to state 85
+    T_DECREMENT    shift, and go to state 86
+    T_PLUS         shift, and go to state 87
+    T_MINUS        shift, and go to state 88
+    T_AND          shift, and go to state 89
+    T_TIMES        shift, and go to state 90
+    T_SIZEOF       shift, and go to state 99
     T_IDENTIFIER   shift, and go to state 19
     T_STRING       shift, and go to state 103
     T_DEC_INT      shift, and go to state 104
@@ -5173,28 +5173,28 @@ State 267
 
    15 LABELED_STATEMENT: CASE CONSTANT_EXPRESSION T_COLON . STATEMENT
 
-    T_BREAK            shift, and go to state 82
-    T_CASE             shift, and go to state 83
-    T_CONTINUE         shift, and go to state 84
-    T_DEFAULT          shift, and go to state 85
-    T_DO               shift, and go to state 86
-    T_FOR              shift, and go to state 87
-    T_IF               shift, and go to state 88
-    T_RETURN           shift, and go to state 89
-    T_SIZEOF           shift, and go to state 90
-    T_SWITCH           shift, and go to state 91
-    T_WHILE            shift, and go to state 92
-    T_TIMES            shift, and go to state 93
-    T_PLUS             shift, and go to state 94
-    T_MINUS            shift, and go to state 95
-    T_DECREMENT        shift, and go to state 96
-    T_INCREMENT        shift, and go to state 97
-    T_AND              shift, and go to state 98
-    T_BITWISE_NOT      shift, and go to state 99
-    T_LOGICAL_NOT      shift, and go to state 100
-    T_SEMICOLON        shift, and go to state 101
-    T_LBRACKET         shift, and go to state 102
+    T_LBRACKET         shift, and go to state 82
     T_LCURLY_BRACKET   shift, and go to state 55
+    T_LOGICAL_NOT      shift, and go to state 83
+    T_BITWISE_NOT      shift, and go to state 84
+    T_INCREMENT        shift, and go to state 85
+    T_DECREMENT        shift, and go to state 86
+    T_PLUS             shift, and go to state 87
+    T_MINUS            shift, and go to state 88
+    T_AND              shift, and go to state 89
+    T_TIMES            shift, and go to state 90
+    T_BREAK            shift, and go to state 91
+    T_CASE             shift, and go to state 92
+    T_CONTINUE         shift, and go to state 93
+    T_DEFAULT          shift, and go to state 94
+    T_DO               shift, and go to state 95
+    T_FOR              shift, and go to state 96
+    T_IF               shift, and go to state 97
+    T_RETURN           shift, and go to state 98
+    T_SIZEOF           shift, and go to state 99
+    T_SWITCH           shift, and go to state 100
+    T_WHILE            shift, and go to state 101
+    T_SEMICOLON        shift, and go to state 102
     T_ECURLY_BRACKETS  shift, and go to state 56
     T_IDENTIFIER       shift, and go to state 19
     T_STRING           shift, and go to state 103
@@ -5252,8 +5252,8 @@ State 269
    31 SELECTION_STATEMENT: SWITCH T_LBRACKET EXPR . T_RBRACKET STATEMENT
   130 EXPR: EXPR . T_COMMA ASSIGNMENT_EXPRESSION
 
-    T_COMMA     shift, and go to state 238
     T_RBRACKET  shift, and go to state 319
+    T_COMMA     shift, and go to state 238
 
 
 State 270
@@ -5262,8 +5262,8 @@ State 270
    30                    | IF T_LBRACKET EXPR . T_RBRACKET STATEMENT ELSE STATEMENT
   130 EXPR: EXPR . T_COMMA ASSIGNMENT_EXPRESSION
 
-    T_COMMA     shift, and go to state 238
     T_RBRACKET  shift, and go to state 320
+    T_COMMA     shift, and go to state 238
 
 
 State 271
@@ -5273,17 +5273,17 @@ State 271
    42                    | FOR T_LBRACKET T_SEMICOLON . EXPR T_SEMICOLON T_RBRACKET STATEMENT
    44                    | FOR T_LBRACKET T_SEMICOLON . T_SEMICOLON T_RBRACKET STATEMENT
 
-    T_SIZEOF       shift, and go to state 90
-    T_TIMES        shift, and go to state 93
-    T_PLUS         shift, and go to state 94
-    T_MINUS        shift, and go to state 95
-    T_DECREMENT    shift, and go to state 96
-    T_INCREMENT    shift, and go to state 97
-    T_AND          shift, and go to state 98
-    T_BITWISE_NOT  shift, and go to state 99
-    T_LOGICAL_NOT  shift, and go to state 100
+    T_LBRACKET     shift, and go to state 82
+    T_LOGICAL_NOT  shift, and go to state 83
+    T_BITWISE_NOT  shift, and go to state 84
+    T_INCREMENT    shift, and go to state 85
+    T_DECREMENT    shift, and go to state 86
+    T_PLUS         shift, and go to state 87
+    T_MINUS        shift, and go to state 88
+    T_AND          shift, and go to state 89
+    T_TIMES        shift, and go to state 90
+    T_SIZEOF       shift, and go to state 99
     T_SEMICOLON    shift, and go to state 321
-    T_LBRACKET     shift, and go to state 102
     T_IDENTIFIER   shift, and go to state 19
     T_STRING       shift, and go to state 103
     T_DEC_INT      shift, and go to state 104
@@ -5330,8 +5330,8 @@ State 273
    35 ITERATION_STATEMENT: WHILE T_LBRACKET EXPR . T_RBRACKET STATEMENT
   130 EXPR: EXPR . T_COMMA ASSIGNMENT_EXPRESSION
 
-    T_COMMA     shift, and go to state 238
     T_RBRACKET  shift, and go to state 324
+    T_COMMA     shift, and go to state 238
 
 
 State 274
@@ -5350,41 +5350,41 @@ State 275
 
 State 276
 
-   65 POSTFIX_EXPRESSION: POSTFIX_EXPRESSION T_ARROW IDENTIFIER .
-
-    $default  reduce using rule 65 (POSTFIX_EXPRESSION)
-
-
-State 277
-
-   64 POSTFIX_EXPRESSION: POSTFIX_EXPRESSION T_DOT IDENTIFIER .
-
-    $default  reduce using rule 64 (POSTFIX_EXPRESSION)
-
-
-State 278
-
    63 POSTFIX_EXPRESSION: POSTFIX_EXPRESSION T_LBRACKET ARGUMENT_EXPRESSION_LIST . T_RBRACKET
    69 ARGUMENT_EXPRESSION_LIST: ARGUMENT_EXPRESSION_LIST . T_COMMA ASSIGNMENT_EXPRESSION
 
-    T_COMMA     shift, and go to state 326
-    T_RBRACKET  shift, and go to state 327
+    T_RBRACKET  shift, and go to state 326
+    T_COMMA     shift, and go to state 327
 
 
-State 279
+State 277
 
    68 ARGUMENT_EXPRESSION_LIST: ASSIGNMENT_EXPRESSION .
 
     $default  reduce using rule 68 (ARGUMENT_EXPRESSION_LIST)
 
 
-State 280
+State 278
 
    61 POSTFIX_EXPRESSION: POSTFIX_EXPRESSION T_LSQ_BRACKET EXPR . T_RSQ_BRACKET
   130 EXPR: EXPR . T_COMMA ASSIGNMENT_EXPRESSION
 
-    T_COMMA        shift, and go to state 238
     T_RSQ_BRACKET  shift, and go to state 328
+    T_COMMA        shift, and go to state 238
+
+
+State 279
+
+   65 POSTFIX_EXPRESSION: POSTFIX_EXPRESSION T_ARROW IDENTIFIER .
+
+    $default  reduce using rule 65 (POSTFIX_EXPRESSION)
+
+
+State 280
+
+   64 POSTFIX_EXPRESSION: POSTFIX_EXPRESSION T_DOT IDENTIFIER .
+
+    $default  reduce using rule 64 (POSTFIX_EXPRESSION)
 
 
 State 281
@@ -5403,16 +5403,16 @@ State 282
 
 State 283
 
-   86 MULTIPLICATIVE_EXPRESSION: MULTIPLICATIVE_EXPRESSION T_TIMES CAST_EXPRESSION .
+   87 MULTIPLICATIVE_EXPRESSION: MULTIPLICATIVE_EXPRESSION T_DIVIDE CAST_EXPRESSION .
 
-    $default  reduce using rule 86 (MULTIPLICATIVE_EXPRESSION)
+    $default  reduce using rule 87 (MULTIPLICATIVE_EXPRESSION)
 
 
 State 284
 
-   87 MULTIPLICATIVE_EXPRESSION: MULTIPLICATIVE_EXPRESSION T_DIVIDE CAST_EXPRESSION .
+   86 MULTIPLICATIVE_EXPRESSION: MULTIPLICATIVE_EXPRESSION T_TIMES CAST_EXPRESSION .
 
-    $default  reduce using rule 87 (MULTIPLICATIVE_EXPRESSION)
+    $default  reduce using rule 86 (MULTIPLICATIVE_EXPRESSION)
 
 
 State 285
@@ -5429,8 +5429,8 @@ State 286
    88                          | MULTIPLICATIVE_EXPRESSION . T_MODULO CAST_EXPRESSION
    90 ADDITIVE_EXPRESSION: ADDITIVE_EXPRESSION T_PLUS MULTIPLICATIVE_EXPRESSION .
 
-    T_TIMES   shift, and go to state 219
-    T_DIVIDE  shift, and go to state 220
+    T_DIVIDE  shift, and go to state 219
+    T_TIMES   shift, and go to state 220
     T_MODULO  shift, and go to state 221
 
     $default  reduce using rule 90 (ADDITIVE_EXPRESSION)
@@ -5443,8 +5443,8 @@ State 287
    88                          | MULTIPLICATIVE_EXPRESSION . T_MODULO CAST_EXPRESSION
    91 ADDITIVE_EXPRESSION: ADDITIVE_EXPRESSION T_MINUS MULTIPLICATIVE_EXPRESSION .
 
-    T_TIMES   shift, and go to state 219
-    T_DIVIDE  shift, and go to state 220
+    T_DIVIDE  shift, and go to state 219
+    T_TIMES   shift, and go to state 220
     T_MODULO  shift, and go to state 221
 
     $default  reduce using rule 91 (ADDITIVE_EXPRESSION)
@@ -5478,30 +5478,6 @@ State 290
 
    93 SHIFT_EXPRESSION: SHIFT_EXPRESSION . T_LEFT_SHIFT ADDITIVE_EXPRESSION
    94                 | SHIFT_EXPRESSION . T_RIGHT_SHIFT ADDITIVE_EXPRESSION
-   96 RELATIONAL_EXPRESSION: RELATIONAL_EXPRESSION T_LESS_THAN SHIFT_EXPRESSION .
-
-    T_RIGHT_SHIFT  shift, and go to state 224
-    T_LEFT_SHIFT   shift, and go to state 225
-
-    $default  reduce using rule 96 (RELATIONAL_EXPRESSION)
-
-
-State 291
-
-   93 SHIFT_EXPRESSION: SHIFT_EXPRESSION . T_LEFT_SHIFT ADDITIVE_EXPRESSION
-   94                 | SHIFT_EXPRESSION . T_RIGHT_SHIFT ADDITIVE_EXPRESSION
-   97 RELATIONAL_EXPRESSION: RELATIONAL_EXPRESSION T_GREATER_THAN SHIFT_EXPRESSION .
-
-    T_RIGHT_SHIFT  shift, and go to state 224
-    T_LEFT_SHIFT   shift, and go to state 225
-
-    $default  reduce using rule 97 (RELATIONAL_EXPRESSION)
-
-
-State 292
-
-   93 SHIFT_EXPRESSION: SHIFT_EXPRESSION . T_LEFT_SHIFT ADDITIVE_EXPRESSION
-   94                 | SHIFT_EXPRESSION . T_RIGHT_SHIFT ADDITIVE_EXPRESSION
    98 RELATIONAL_EXPRESSION: RELATIONAL_EXPRESSION T_LESS_THAN_OR_EQUAL_TO SHIFT_EXPRESSION .
 
     T_RIGHT_SHIFT  shift, and go to state 224
@@ -5510,7 +5486,7 @@ State 292
     $default  reduce using rule 98 (RELATIONAL_EXPRESSION)
 
 
-State 293
+State 291
 
    93 SHIFT_EXPRESSION: SHIFT_EXPRESSION . T_LEFT_SHIFT ADDITIVE_EXPRESSION
    94                 | SHIFT_EXPRESSION . T_RIGHT_SHIFT ADDITIVE_EXPRESSION
@@ -5522,20 +5498,44 @@ State 293
     $default  reduce using rule 99 (RELATIONAL_EXPRESSION)
 
 
+State 292
+
+   93 SHIFT_EXPRESSION: SHIFT_EXPRESSION . T_LEFT_SHIFT ADDITIVE_EXPRESSION
+   94                 | SHIFT_EXPRESSION . T_RIGHT_SHIFT ADDITIVE_EXPRESSION
+   96 RELATIONAL_EXPRESSION: RELATIONAL_EXPRESSION T_LESS_THAN SHIFT_EXPRESSION .
+
+    T_RIGHT_SHIFT  shift, and go to state 224
+    T_LEFT_SHIFT   shift, and go to state 225
+
+    $default  reduce using rule 96 (RELATIONAL_EXPRESSION)
+
+
+State 293
+
+   93 SHIFT_EXPRESSION: SHIFT_EXPRESSION . T_LEFT_SHIFT ADDITIVE_EXPRESSION
+   94                 | SHIFT_EXPRESSION . T_RIGHT_SHIFT ADDITIVE_EXPRESSION
+   97 RELATIONAL_EXPRESSION: RELATIONAL_EXPRESSION T_GREATER_THAN SHIFT_EXPRESSION .
+
+    T_RIGHT_SHIFT  shift, and go to state 224
+    T_LEFT_SHIFT   shift, and go to state 225
+
+    $default  reduce using rule 97 (RELATIONAL_EXPRESSION)
+
+
 State 294
 
    96 RELATIONAL_EXPRESSION: RELATIONAL_EXPRESSION . T_LESS_THAN SHIFT_EXPRESSION
    97                      | RELATIONAL_EXPRESSION . T_GREATER_THAN SHIFT_EXPRESSION
    98                      | RELATIONAL_EXPRESSION . T_LESS_THAN_OR_EQUAL_TO SHIFT_EXPRESSION
    99                      | RELATIONAL_EXPRESSION . T_GREATER_THAN_OR_EQUAL_TO SHIFT_EXPRESSION
-  102 EQUALITY_EXPRESSION: EQUALITY_EXPRESSION T_NOT_EQUALS_EQUALS RELATIONAL_EXPRESSION .
+  101 EQUALITY_EXPRESSION: EQUALITY_EXPRESSION T_EQUALS_EQUALS RELATIONAL_EXPRESSION .
 
-    T_LESS_THAN                 shift, and go to state 226
-    T_GREATER_THAN              shift, and go to state 227
-    T_LESS_THAN_OR_EQUAL_TO     shift, and go to state 228
-    T_GREATER_THAN_OR_EQUAL_TO  shift, and go to state 229
+    T_LESS_THAN_OR_EQUAL_TO     shift, and go to state 226
+    T_GREATER_THAN_OR_EQUAL_TO  shift, and go to state 227
+    T_LESS_THAN                 shift, and go to state 228
+    T_GREATER_THAN              shift, and go to state 229
 
-    $default  reduce using rule 102 (EQUALITY_EXPRESSION)
+    $default  reduce using rule 101 (EQUALITY_EXPRESSION)
 
 
 State 295
@@ -5544,14 +5544,14 @@ State 295
    97                      | RELATIONAL_EXPRESSION . T_GREATER_THAN SHIFT_EXPRESSION
    98                      | RELATIONAL_EXPRESSION . T_LESS_THAN_OR_EQUAL_TO SHIFT_EXPRESSION
    99                      | RELATIONAL_EXPRESSION . T_GREATER_THAN_OR_EQUAL_TO SHIFT_EXPRESSION
-  101 EQUALITY_EXPRESSION: EQUALITY_EXPRESSION T_EQUALS_EQUALS RELATIONAL_EXPRESSION .
+  102 EQUALITY_EXPRESSION: EQUALITY_EXPRESSION T_NOT_EQUALS_EQUALS RELATIONAL_EXPRESSION .
 
-    T_LESS_THAN                 shift, and go to state 226
-    T_GREATER_THAN              shift, and go to state 227
-    T_LESS_THAN_OR_EQUAL_TO     shift, and go to state 228
-    T_GREATER_THAN_OR_EQUAL_TO  shift, and go to state 229
+    T_LESS_THAN_OR_EQUAL_TO     shift, and go to state 226
+    T_GREATER_THAN_OR_EQUAL_TO  shift, and go to state 227
+    T_LESS_THAN                 shift, and go to state 228
+    T_GREATER_THAN              shift, and go to state 229
 
-    $default  reduce using rule 101 (EQUALITY_EXPRESSION)
+    $default  reduce using rule 102 (EQUALITY_EXPRESSION)
 
 
 State 296
@@ -5560,8 +5560,8 @@ State 296
   102                    | EQUALITY_EXPRESSION . T_NOT_EQUALS_EQUALS RELATIONAL_EXPRESSION
   104 AND_EXPRESSION: AND_EXPRESSION T_AND EQUALITY_EXPRESSION .
 
-    T_NOT_EQUALS_EQUALS  shift, and go to state 230
-    T_EQUALS_EQUALS      shift, and go to state 231
+    T_EQUALS_EQUALS      shift, and go to state 230
+    T_NOT_EQUALS_EQUALS  shift, and go to state 231
 
     $default  reduce using rule 104 (AND_EXPRESSION)
 
@@ -5670,23 +5670,23 @@ State 308
 
   218 DIRECT_ABSTRACT_DECLARATOR: DIRECT_ABSTRACT_DECLARATOR T_LBRACKET . PARAMETER_TYPE_LIST T_RBRACKET
 
-    T_AUTO         shift, and go to state 1
-    T_CHAR         shift, and go to state 2
-    T_DOUBLE       shift, and go to state 3
-    T_ENUM         shift, and go to state 4
-    T_EXTERN       shift, and go to state 5
-    T_FLOAT        shift, and go to state 6
-    T_INT          shift, and go to state 7
-    T_LONG         shift, and go to state 8
-    T_REGISTER     shift, and go to state 9
-    T_SHORT        shift, and go to state 10
-    T_SIGNED       shift, and go to state 11
-    T_STATIC       shift, and go to state 12
-    T_STRUCT       shift, and go to state 13
-    T_TYPEDEF      shift, and go to state 14
-    T_UNSIGNED     shift, and go to state 15
-    T_VOID         shift, and go to state 16
-    T_VOLATILE     shift, and go to state 17
+    T_AUTO         shift, and go to state 2
+    T_CHAR         shift, and go to state 3
+    T_DOUBLE       shift, and go to state 4
+    T_ENUM         shift, and go to state 5
+    T_EXTERN       shift, and go to state 6
+    T_FLOAT        shift, and go to state 7
+    T_INT          shift, and go to state 8
+    T_LONG         shift, and go to state 9
+    T_REGISTER     shift, and go to state 10
+    T_SHORT        shift, and go to state 11
+    T_SIGNED       shift, and go to state 12
+    T_STATIC       shift, and go to state 13
+    T_STRUCT       shift, and go to state 14
+    T_TYPEDEF      shift, and go to state 15
+    T_UNSIGNED     shift, and go to state 16
+    T_VOID         shift, and go to state 17
+    T_VOLATILE     shift, and go to state 18
     T_CUSTOM_TYPE  shift, and go to state 21
 
     DECLARATION_SPECIFIERS     go to state 147
@@ -5707,16 +5707,16 @@ State 309
 
   214 DIRECT_ABSTRACT_DECLARATOR: DIRECT_ABSTRACT_DECLARATOR T_LSQ_BRACKET . CONSTANT_EXPRESSION T_RSQ_BRACKET
 
-    T_SIZEOF       shift, and go to state 90
-    T_TIMES        shift, and go to state 93
-    T_PLUS         shift, and go to state 94
-    T_MINUS        shift, and go to state 95
-    T_DECREMENT    shift, and go to state 96
-    T_INCREMENT    shift, and go to state 97
-    T_AND          shift, and go to state 98
-    T_BITWISE_NOT  shift, and go to state 99
-    T_LOGICAL_NOT  shift, and go to state 100
-    T_LBRACKET     shift, and go to state 102
+    T_LBRACKET     shift, and go to state 82
+    T_LOGICAL_NOT  shift, and go to state 83
+    T_BITWISE_NOT  shift, and go to state 84
+    T_INCREMENT    shift, and go to state 85
+    T_DECREMENT    shift, and go to state 86
+    T_PLUS         shift, and go to state 87
+    T_MINUS        shift, and go to state 88
+    T_AND          shift, and go to state 89
+    T_TIMES        shift, and go to state 90
+    T_SIZEOF       shift, and go to state 99
     T_IDENTIFIER   shift, and go to state 19
     T_STRING       shift, and go to state 103
     T_DEC_INT      shift, and go to state 104
@@ -5768,21 +5768,28 @@ State 312
 
 State 313
 
+  224 INITIALIZER: T_LCURLY_BRACKET INITIALIZER_LIST T_RCURLY_BRACKET .
+
+    $default  reduce using rule 224 (INITIALIZER)
+
+
+State 314
+
   225 INITIALIZER: T_LCURLY_BRACKET INITIALIZER_LIST T_COMMA . T_RCURLY_BRACKET
   227 INITIALIZER_LIST: INITIALIZER_LIST T_COMMA . INITIALIZER
 
-    T_SIZEOF          shift, and go to state 90
-    T_TIMES           shift, and go to state 93
-    T_PLUS            shift, and go to state 94
-    T_MINUS           shift, and go to state 95
-    T_DECREMENT       shift, and go to state 96
-    T_INCREMENT       shift, and go to state 97
-    T_AND             shift, and go to state 98
-    T_BITWISE_NOT     shift, and go to state 99
-    T_LOGICAL_NOT     shift, and go to state 100
-    T_LBRACKET        shift, and go to state 102
+    T_LBRACKET        shift, and go to state 82
     T_RCURLY_BRACKET  shift, and go to state 336
     T_LCURLY_BRACKET  shift, and go to state 159
+    T_LOGICAL_NOT     shift, and go to state 83
+    T_BITWISE_NOT     shift, and go to state 84
+    T_INCREMENT       shift, and go to state 85
+    T_DECREMENT       shift, and go to state 86
+    T_PLUS            shift, and go to state 87
+    T_MINUS           shift, and go to state 88
+    T_AND             shift, and go to state 89
+    T_TIMES           shift, and go to state 90
+    T_SIZEOF          shift, and go to state 99
     T_IDENTIFIER      shift, and go to state 19
     T_STRING          shift, and go to state 103
     T_DEC_INT         shift, and go to state 104
@@ -5810,13 +5817,6 @@ State 313
     ASSIGNMENT_EXPRESSION      go to state 160
     IDENTIFIER                 go to state 154
     INITIALIZER                go to state 337
-
-
-State 314
-
-  224 INITIALIZER: T_LCURLY_BRACKET INITIALIZER_LIST T_RCURLY_BRACKET .
-
-    $default  reduce using rule 224 (INITIALIZER)
 
 
 State 315
@@ -5851,28 +5851,28 @@ State 319
 
    31 SELECTION_STATEMENT: SWITCH T_LBRACKET EXPR T_RBRACKET . STATEMENT
 
-    T_BREAK            shift, and go to state 82
-    T_CASE             shift, and go to state 83
-    T_CONTINUE         shift, and go to state 84
-    T_DEFAULT          shift, and go to state 85
-    T_DO               shift, and go to state 86
-    T_FOR              shift, and go to state 87
-    T_IF               shift, and go to state 88
-    T_RETURN           shift, and go to state 89
-    T_SIZEOF           shift, and go to state 90
-    T_SWITCH           shift, and go to state 91
-    T_WHILE            shift, and go to state 92
-    T_TIMES            shift, and go to state 93
-    T_PLUS             shift, and go to state 94
-    T_MINUS            shift, and go to state 95
-    T_DECREMENT        shift, and go to state 96
-    T_INCREMENT        shift, and go to state 97
-    T_AND              shift, and go to state 98
-    T_BITWISE_NOT      shift, and go to state 99
-    T_LOGICAL_NOT      shift, and go to state 100
-    T_SEMICOLON        shift, and go to state 101
-    T_LBRACKET         shift, and go to state 102
+    T_LBRACKET         shift, and go to state 82
     T_LCURLY_BRACKET   shift, and go to state 55
+    T_LOGICAL_NOT      shift, and go to state 83
+    T_BITWISE_NOT      shift, and go to state 84
+    T_INCREMENT        shift, and go to state 85
+    T_DECREMENT        shift, and go to state 86
+    T_PLUS             shift, and go to state 87
+    T_MINUS            shift, and go to state 88
+    T_AND              shift, and go to state 89
+    T_TIMES            shift, and go to state 90
+    T_BREAK            shift, and go to state 91
+    T_CASE             shift, and go to state 92
+    T_CONTINUE         shift, and go to state 93
+    T_DEFAULT          shift, and go to state 94
+    T_DO               shift, and go to state 95
+    T_FOR              shift, and go to state 96
+    T_IF               shift, and go to state 97
+    T_RETURN           shift, and go to state 98
+    T_SIZEOF           shift, and go to state 99
+    T_SWITCH           shift, and go to state 100
+    T_WHILE            shift, and go to state 101
+    T_SEMICOLON        shift, and go to state 102
     T_ECURLY_BRACKETS  shift, and go to state 56
     T_IDENTIFIER       shift, and go to state 19
     T_STRING           shift, and go to state 103
@@ -5923,28 +5923,28 @@ State 320
    29 SELECTION_STATEMENT: IF T_LBRACKET EXPR T_RBRACKET . STATEMENT
    30                    | IF T_LBRACKET EXPR T_RBRACKET . STATEMENT ELSE STATEMENT
 
-    T_BREAK            shift, and go to state 82
-    T_CASE             shift, and go to state 83
-    T_CONTINUE         shift, and go to state 84
-    T_DEFAULT          shift, and go to state 85
-    T_DO               shift, and go to state 86
-    T_FOR              shift, and go to state 87
-    T_IF               shift, and go to state 88
-    T_RETURN           shift, and go to state 89
-    T_SIZEOF           shift, and go to state 90
-    T_SWITCH           shift, and go to state 91
-    T_WHILE            shift, and go to state 92
-    T_TIMES            shift, and go to state 93
-    T_PLUS             shift, and go to state 94
-    T_MINUS            shift, and go to state 95
-    T_DECREMENT        shift, and go to state 96
-    T_INCREMENT        shift, and go to state 97
-    T_AND              shift, and go to state 98
-    T_BITWISE_NOT      shift, and go to state 99
-    T_LOGICAL_NOT      shift, and go to state 100
-    T_SEMICOLON        shift, and go to state 101
-    T_LBRACKET         shift, and go to state 102
+    T_LBRACKET         shift, and go to state 82
     T_LCURLY_BRACKET   shift, and go to state 55
+    T_LOGICAL_NOT      shift, and go to state 83
+    T_BITWISE_NOT      shift, and go to state 84
+    T_INCREMENT        shift, and go to state 85
+    T_DECREMENT        shift, and go to state 86
+    T_PLUS             shift, and go to state 87
+    T_MINUS            shift, and go to state 88
+    T_AND              shift, and go to state 89
+    T_TIMES            shift, and go to state 90
+    T_BREAK            shift, and go to state 91
+    T_CASE             shift, and go to state 92
+    T_CONTINUE         shift, and go to state 93
+    T_DEFAULT          shift, and go to state 94
+    T_DO               shift, and go to state 95
+    T_FOR              shift, and go to state 96
+    T_IF               shift, and go to state 97
+    T_RETURN           shift, and go to state 98
+    T_SIZEOF           shift, and go to state 99
+    T_SWITCH           shift, and go to state 100
+    T_WHILE            shift, and go to state 101
+    T_SEMICOLON        shift, and go to state 102
     T_ECURLY_BRACKETS  shift, and go to state 56
     T_IDENTIFIER       shift, and go to state 19
     T_STRING           shift, and go to state 103
@@ -5995,17 +5995,17 @@ State 321
    41 ITERATION_STATEMENT: FOR T_LBRACKET T_SEMICOLON T_SEMICOLON . EXPR T_RBRACKET STATEMENT
    44                    | FOR T_LBRACKET T_SEMICOLON T_SEMICOLON . T_RBRACKET STATEMENT
 
-    T_SIZEOF       shift, and go to state 90
-    T_TIMES        shift, and go to state 93
-    T_PLUS         shift, and go to state 94
-    T_MINUS        shift, and go to state 95
-    T_DECREMENT    shift, and go to state 96
-    T_INCREMENT    shift, and go to state 97
-    T_AND          shift, and go to state 98
-    T_BITWISE_NOT  shift, and go to state 99
-    T_LOGICAL_NOT  shift, and go to state 100
-    T_LBRACKET     shift, and go to state 102
+    T_LBRACKET     shift, and go to state 82
     T_RBRACKET     shift, and go to state 340
+    T_LOGICAL_NOT  shift, and go to state 83
+    T_BITWISE_NOT  shift, and go to state 84
+    T_INCREMENT    shift, and go to state 85
+    T_DECREMENT    shift, and go to state 86
+    T_PLUS         shift, and go to state 87
+    T_MINUS        shift, and go to state 88
+    T_AND          shift, and go to state 89
+    T_TIMES        shift, and go to state 90
+    T_SIZEOF       shift, and go to state 99
     T_IDENTIFIER   shift, and go to state 19
     T_STRING       shift, and go to state 103
     T_DEC_INT      shift, and go to state 104
@@ -6052,17 +6052,17 @@ State 323
    40                    | FOR T_LBRACKET EXPR T_SEMICOLON . EXPR T_SEMICOLON T_RBRACKET STATEMENT
    43                    | FOR T_LBRACKET EXPR T_SEMICOLON . T_SEMICOLON T_RBRACKET STATEMENT
 
-    T_SIZEOF       shift, and go to state 90
-    T_TIMES        shift, and go to state 93
-    T_PLUS         shift, and go to state 94
-    T_MINUS        shift, and go to state 95
-    T_DECREMENT    shift, and go to state 96
-    T_INCREMENT    shift, and go to state 97
-    T_AND          shift, and go to state 98
-    T_BITWISE_NOT  shift, and go to state 99
-    T_LOGICAL_NOT  shift, and go to state 100
+    T_LBRACKET     shift, and go to state 82
+    T_LOGICAL_NOT  shift, and go to state 83
+    T_BITWISE_NOT  shift, and go to state 84
+    T_INCREMENT    shift, and go to state 85
+    T_DECREMENT    shift, and go to state 86
+    T_PLUS         shift, and go to state 87
+    T_MINUS        shift, and go to state 88
+    T_AND          shift, and go to state 89
+    T_TIMES        shift, and go to state 90
+    T_SIZEOF       shift, and go to state 99
     T_SEMICOLON    shift, and go to state 343
-    T_LBRACKET     shift, and go to state 102
     T_IDENTIFIER   shift, and go to state 19
     T_STRING       shift, and go to state 103
     T_DEC_INT      shift, and go to state 104
@@ -6096,28 +6096,28 @@ State 324
 
    35 ITERATION_STATEMENT: WHILE T_LBRACKET EXPR T_RBRACKET . STATEMENT
 
-    T_BREAK            shift, and go to state 82
-    T_CASE             shift, and go to state 83
-    T_CONTINUE         shift, and go to state 84
-    T_DEFAULT          shift, and go to state 85
-    T_DO               shift, and go to state 86
-    T_FOR              shift, and go to state 87
-    T_IF               shift, and go to state 88
-    T_RETURN           shift, and go to state 89
-    T_SIZEOF           shift, and go to state 90
-    T_SWITCH           shift, and go to state 91
-    T_WHILE            shift, and go to state 92
-    T_TIMES            shift, and go to state 93
-    T_PLUS             shift, and go to state 94
-    T_MINUS            shift, and go to state 95
-    T_DECREMENT        shift, and go to state 96
-    T_INCREMENT        shift, and go to state 97
-    T_AND              shift, and go to state 98
-    T_BITWISE_NOT      shift, and go to state 99
-    T_LOGICAL_NOT      shift, and go to state 100
-    T_SEMICOLON        shift, and go to state 101
-    T_LBRACKET         shift, and go to state 102
+    T_LBRACKET         shift, and go to state 82
     T_LCURLY_BRACKET   shift, and go to state 55
+    T_LOGICAL_NOT      shift, and go to state 83
+    T_BITWISE_NOT      shift, and go to state 84
+    T_INCREMENT        shift, and go to state 85
+    T_DECREMENT        shift, and go to state 86
+    T_PLUS             shift, and go to state 87
+    T_MINUS            shift, and go to state 88
+    T_AND              shift, and go to state 89
+    T_TIMES            shift, and go to state 90
+    T_BREAK            shift, and go to state 91
+    T_CASE             shift, and go to state 92
+    T_CONTINUE         shift, and go to state 93
+    T_DEFAULT          shift, and go to state 94
+    T_DO               shift, and go to state 95
+    T_FOR              shift, and go to state 96
+    T_IF               shift, and go to state 97
+    T_RETURN           shift, and go to state 98
+    T_SIZEOF           shift, and go to state 99
+    T_SWITCH           shift, and go to state 100
+    T_WHILE            shift, and go to state 101
+    T_SEMICOLON        shift, and go to state 102
     T_ECURLY_BRACKETS  shift, and go to state 56
     T_IDENTIFIER       shift, and go to state 19
     T_STRING           shift, and go to state 103
@@ -6167,16 +6167,16 @@ State 325
 
    36 ITERATION_STATEMENT: DO STATEMENT WHILE T_LBRACKET . EXPR T_RBRACKET T_SEMICOLON
 
-    T_SIZEOF       shift, and go to state 90
-    T_TIMES        shift, and go to state 93
-    T_PLUS         shift, and go to state 94
-    T_MINUS        shift, and go to state 95
-    T_DECREMENT    shift, and go to state 96
-    T_INCREMENT    shift, and go to state 97
-    T_AND          shift, and go to state 98
-    T_BITWISE_NOT  shift, and go to state 99
-    T_LOGICAL_NOT  shift, and go to state 100
-    T_LBRACKET     shift, and go to state 102
+    T_LBRACKET     shift, and go to state 82
+    T_LOGICAL_NOT  shift, and go to state 83
+    T_BITWISE_NOT  shift, and go to state 84
+    T_INCREMENT    shift, and go to state 85
+    T_DECREMENT    shift, and go to state 86
+    T_PLUS         shift, and go to state 87
+    T_MINUS        shift, and go to state 88
+    T_AND          shift, and go to state 89
+    T_TIMES        shift, and go to state 90
+    T_SIZEOF       shift, and go to state 99
     T_IDENTIFIER   shift, and go to state 19
     T_STRING       shift, and go to state 103
     T_DEC_INT      shift, and go to state 104
@@ -6208,18 +6208,25 @@ State 325
 
 State 326
 
+   63 POSTFIX_EXPRESSION: POSTFIX_EXPRESSION T_LBRACKET ARGUMENT_EXPRESSION_LIST T_RBRACKET .
+
+    $default  reduce using rule 63 (POSTFIX_EXPRESSION)
+
+
+State 327
+
    69 ARGUMENT_EXPRESSION_LIST: ARGUMENT_EXPRESSION_LIST T_COMMA . ASSIGNMENT_EXPRESSION
 
-    T_SIZEOF       shift, and go to state 90
-    T_TIMES        shift, and go to state 93
-    T_PLUS         shift, and go to state 94
-    T_MINUS        shift, and go to state 95
-    T_DECREMENT    shift, and go to state 96
-    T_INCREMENT    shift, and go to state 97
-    T_AND          shift, and go to state 98
-    T_BITWISE_NOT  shift, and go to state 99
-    T_LOGICAL_NOT  shift, and go to state 100
-    T_LBRACKET     shift, and go to state 102
+    T_LBRACKET     shift, and go to state 82
+    T_LOGICAL_NOT  shift, and go to state 83
+    T_BITWISE_NOT  shift, and go to state 84
+    T_INCREMENT    shift, and go to state 85
+    T_DECREMENT    shift, and go to state 86
+    T_PLUS         shift, and go to state 87
+    T_MINUS        shift, and go to state 88
+    T_AND          shift, and go to state 89
+    T_TIMES        shift, and go to state 90
+    T_SIZEOF       shift, and go to state 99
     T_IDENTIFIER   shift, and go to state 19
     T_STRING       shift, and go to state 103
     T_DEC_INT      shift, and go to state 104
@@ -6248,13 +6255,6 @@ State 326
     IDENTIFIER                 go to state 154
 
 
-State 327
-
-   63 POSTFIX_EXPRESSION: POSTFIX_EXPRESSION T_LBRACKET ARGUMENT_EXPRESSION_LIST T_RBRACKET .
-
-    $default  reduce using rule 63 (POSTFIX_EXPRESSION)
-
-
 State 328
 
    61 POSTFIX_EXPRESSION: POSTFIX_EXPRESSION T_LSQ_BRACKET EXPR T_RSQ_BRACKET .
@@ -6273,16 +6273,16 @@ State 330
 
   114 CONDITIONAL_EXPRESSION: LOGICAL_OR_EXPRESSION T_QUESTION EXPR T_COLON . CONDITIONAL_EXPRESSION
 
-    T_SIZEOF       shift, and go to state 90
-    T_TIMES        shift, and go to state 93
-    T_PLUS         shift, and go to state 94
-    T_MINUS        shift, and go to state 95
-    T_DECREMENT    shift, and go to state 96
-    T_INCREMENT    shift, and go to state 97
-    T_AND          shift, and go to state 98
-    T_BITWISE_NOT  shift, and go to state 99
-    T_LOGICAL_NOT  shift, and go to state 100
-    T_LBRACKET     shift, and go to state 102
+    T_LBRACKET     shift, and go to state 82
+    T_LOGICAL_NOT  shift, and go to state 83
+    T_BITWISE_NOT  shift, and go to state 84
+    T_INCREMENT    shift, and go to state 85
+    T_DECREMENT    shift, and go to state 86
+    T_PLUS         shift, and go to state 87
+    T_MINUS        shift, and go to state 88
+    T_AND          shift, and go to state 89
+    T_TIMES        shift, and go to state 90
+    T_SIZEOF       shift, and go to state 99
     T_IDENTIFIER   shift, and go to state 19
     T_STRING       shift, and go to state 103
     T_DEC_INT      shift, and go to state 104
@@ -6383,28 +6383,28 @@ State 340
 
    44 ITERATION_STATEMENT: FOR T_LBRACKET T_SEMICOLON T_SEMICOLON T_RBRACKET . STATEMENT
 
-    T_BREAK            shift, and go to state 82
-    T_CASE             shift, and go to state 83
-    T_CONTINUE         shift, and go to state 84
-    T_DEFAULT          shift, and go to state 85
-    T_DO               shift, and go to state 86
-    T_FOR              shift, and go to state 87
-    T_IF               shift, and go to state 88
-    T_RETURN           shift, and go to state 89
-    T_SIZEOF           shift, and go to state 90
-    T_SWITCH           shift, and go to state 91
-    T_WHILE            shift, and go to state 92
-    T_TIMES            shift, and go to state 93
-    T_PLUS             shift, and go to state 94
-    T_MINUS            shift, and go to state 95
-    T_DECREMENT        shift, and go to state 96
-    T_INCREMENT        shift, and go to state 97
-    T_AND              shift, and go to state 98
-    T_BITWISE_NOT      shift, and go to state 99
-    T_LOGICAL_NOT      shift, and go to state 100
-    T_SEMICOLON        shift, and go to state 101
-    T_LBRACKET         shift, and go to state 102
+    T_LBRACKET         shift, and go to state 82
     T_LCURLY_BRACKET   shift, and go to state 55
+    T_LOGICAL_NOT      shift, and go to state 83
+    T_BITWISE_NOT      shift, and go to state 84
+    T_INCREMENT        shift, and go to state 85
+    T_DECREMENT        shift, and go to state 86
+    T_PLUS             shift, and go to state 87
+    T_MINUS            shift, and go to state 88
+    T_AND              shift, and go to state 89
+    T_TIMES            shift, and go to state 90
+    T_BREAK            shift, and go to state 91
+    T_CASE             shift, and go to state 92
+    T_CONTINUE         shift, and go to state 93
+    T_DEFAULT          shift, and go to state 94
+    T_DO               shift, and go to state 95
+    T_FOR              shift, and go to state 96
+    T_IF               shift, and go to state 97
+    T_RETURN           shift, and go to state 98
+    T_SIZEOF           shift, and go to state 99
+    T_SWITCH           shift, and go to state 100
+    T_WHILE            shift, and go to state 101
+    T_SEMICOLON        shift, and go to state 102
     T_ECURLY_BRACKETS  shift, and go to state 56
     T_IDENTIFIER       shift, and go to state 19
     T_STRING           shift, and go to state 103
@@ -6455,8 +6455,8 @@ State 341
    41 ITERATION_STATEMENT: FOR T_LBRACKET T_SEMICOLON T_SEMICOLON EXPR . T_RBRACKET STATEMENT
   130 EXPR: EXPR . T_COMMA ASSIGNMENT_EXPRESSION
 
-    T_COMMA     shift, and go to state 238
     T_RBRACKET  shift, and go to state 354
+    T_COMMA     shift, and go to state 238
 
 
 State 342
@@ -6464,17 +6464,17 @@ State 342
    38 ITERATION_STATEMENT: FOR T_LBRACKET T_SEMICOLON EXPR T_SEMICOLON . EXPR T_RBRACKET STATEMENT
    42                    | FOR T_LBRACKET T_SEMICOLON EXPR T_SEMICOLON . T_RBRACKET STATEMENT
 
-    T_SIZEOF       shift, and go to state 90
-    T_TIMES        shift, and go to state 93
-    T_PLUS         shift, and go to state 94
-    T_MINUS        shift, and go to state 95
-    T_DECREMENT    shift, and go to state 96
-    T_INCREMENT    shift, and go to state 97
-    T_AND          shift, and go to state 98
-    T_BITWISE_NOT  shift, and go to state 99
-    T_LOGICAL_NOT  shift, and go to state 100
-    T_LBRACKET     shift, and go to state 102
+    T_LBRACKET     shift, and go to state 82
     T_RBRACKET     shift, and go to state 355
+    T_LOGICAL_NOT  shift, and go to state 83
+    T_BITWISE_NOT  shift, and go to state 84
+    T_INCREMENT    shift, and go to state 85
+    T_DECREMENT    shift, and go to state 86
+    T_PLUS         shift, and go to state 87
+    T_MINUS        shift, and go to state 88
+    T_AND          shift, and go to state 89
+    T_TIMES        shift, and go to state 90
+    T_SIZEOF       shift, and go to state 99
     T_IDENTIFIER   shift, and go to state 19
     T_STRING       shift, and go to state 103
     T_DEC_INT      shift, and go to state 104
@@ -6509,17 +6509,17 @@ State 343
    39 ITERATION_STATEMENT: FOR T_LBRACKET EXPR T_SEMICOLON T_SEMICOLON . EXPR T_RBRACKET STATEMENT
    43                    | FOR T_LBRACKET EXPR T_SEMICOLON T_SEMICOLON . T_RBRACKET STATEMENT
 
-    T_SIZEOF       shift, and go to state 90
-    T_TIMES        shift, and go to state 93
-    T_PLUS         shift, and go to state 94
-    T_MINUS        shift, and go to state 95
-    T_DECREMENT    shift, and go to state 96
-    T_INCREMENT    shift, and go to state 97
-    T_AND          shift, and go to state 98
-    T_BITWISE_NOT  shift, and go to state 99
-    T_LOGICAL_NOT  shift, and go to state 100
-    T_LBRACKET     shift, and go to state 102
+    T_LBRACKET     shift, and go to state 82
     T_RBRACKET     shift, and go to state 357
+    T_LOGICAL_NOT  shift, and go to state 83
+    T_BITWISE_NOT  shift, and go to state 84
+    T_INCREMENT    shift, and go to state 85
+    T_DECREMENT    shift, and go to state 86
+    T_PLUS         shift, and go to state 87
+    T_MINUS        shift, and go to state 88
+    T_AND          shift, and go to state 89
+    T_TIMES        shift, and go to state 90
+    T_SIZEOF       shift, and go to state 99
     T_IDENTIFIER   shift, and go to state 19
     T_STRING       shift, and go to state 103
     T_DEC_INT      shift, and go to state 104
@@ -6571,8 +6571,8 @@ State 346
    36 ITERATION_STATEMENT: DO STATEMENT WHILE T_LBRACKET EXPR . T_RBRACKET T_SEMICOLON
   130 EXPR: EXPR . T_COMMA ASSIGNMENT_EXPRESSION
 
-    T_COMMA     shift, and go to state 238
     T_RBRACKET  shift, and go to state 360
+    T_COMMA     shift, and go to state 238
 
 
 State 347
@@ -6614,28 +6614,28 @@ State 352
 
    30 SELECTION_STATEMENT: IF T_LBRACKET EXPR T_RBRACKET STATEMENT ELSE . STATEMENT
 
-    T_BREAK            shift, and go to state 82
-    T_CASE             shift, and go to state 83
-    T_CONTINUE         shift, and go to state 84
-    T_DEFAULT          shift, and go to state 85
-    T_DO               shift, and go to state 86
-    T_FOR              shift, and go to state 87
-    T_IF               shift, and go to state 88
-    T_RETURN           shift, and go to state 89
-    T_SIZEOF           shift, and go to state 90
-    T_SWITCH           shift, and go to state 91
-    T_WHILE            shift, and go to state 92
-    T_TIMES            shift, and go to state 93
-    T_PLUS             shift, and go to state 94
-    T_MINUS            shift, and go to state 95
-    T_DECREMENT        shift, and go to state 96
-    T_INCREMENT        shift, and go to state 97
-    T_AND              shift, and go to state 98
-    T_BITWISE_NOT      shift, and go to state 99
-    T_LOGICAL_NOT      shift, and go to state 100
-    T_SEMICOLON        shift, and go to state 101
-    T_LBRACKET         shift, and go to state 102
+    T_LBRACKET         shift, and go to state 82
     T_LCURLY_BRACKET   shift, and go to state 55
+    T_LOGICAL_NOT      shift, and go to state 83
+    T_BITWISE_NOT      shift, and go to state 84
+    T_INCREMENT        shift, and go to state 85
+    T_DECREMENT        shift, and go to state 86
+    T_PLUS             shift, and go to state 87
+    T_MINUS            shift, and go to state 88
+    T_AND              shift, and go to state 89
+    T_TIMES            shift, and go to state 90
+    T_BREAK            shift, and go to state 91
+    T_CASE             shift, and go to state 92
+    T_CONTINUE         shift, and go to state 93
+    T_DEFAULT          shift, and go to state 94
+    T_DO               shift, and go to state 95
+    T_FOR              shift, and go to state 96
+    T_IF               shift, and go to state 97
+    T_RETURN           shift, and go to state 98
+    T_SIZEOF           shift, and go to state 99
+    T_SWITCH           shift, and go to state 100
+    T_WHILE            shift, and go to state 101
+    T_SEMICOLON        shift, and go to state 102
     T_ECURLY_BRACKETS  shift, and go to state 56
     T_IDENTIFIER       shift, and go to state 19
     T_STRING           shift, and go to state 103
@@ -6692,28 +6692,28 @@ State 354
 
    41 ITERATION_STATEMENT: FOR T_LBRACKET T_SEMICOLON T_SEMICOLON EXPR T_RBRACKET . STATEMENT
 
-    T_BREAK            shift, and go to state 82
-    T_CASE             shift, and go to state 83
-    T_CONTINUE         shift, and go to state 84
-    T_DEFAULT          shift, and go to state 85
-    T_DO               shift, and go to state 86
-    T_FOR              shift, and go to state 87
-    T_IF               shift, and go to state 88
-    T_RETURN           shift, and go to state 89
-    T_SIZEOF           shift, and go to state 90
-    T_SWITCH           shift, and go to state 91
-    T_WHILE            shift, and go to state 92
-    T_TIMES            shift, and go to state 93
-    T_PLUS             shift, and go to state 94
-    T_MINUS            shift, and go to state 95
-    T_DECREMENT        shift, and go to state 96
-    T_INCREMENT        shift, and go to state 97
-    T_AND              shift, and go to state 98
-    T_BITWISE_NOT      shift, and go to state 99
-    T_LOGICAL_NOT      shift, and go to state 100
-    T_SEMICOLON        shift, and go to state 101
-    T_LBRACKET         shift, and go to state 102
+    T_LBRACKET         shift, and go to state 82
     T_LCURLY_BRACKET   shift, and go to state 55
+    T_LOGICAL_NOT      shift, and go to state 83
+    T_BITWISE_NOT      shift, and go to state 84
+    T_INCREMENT        shift, and go to state 85
+    T_DECREMENT        shift, and go to state 86
+    T_PLUS             shift, and go to state 87
+    T_MINUS            shift, and go to state 88
+    T_AND              shift, and go to state 89
+    T_TIMES            shift, and go to state 90
+    T_BREAK            shift, and go to state 91
+    T_CASE             shift, and go to state 92
+    T_CONTINUE         shift, and go to state 93
+    T_DEFAULT          shift, and go to state 94
+    T_DO               shift, and go to state 95
+    T_FOR              shift, and go to state 96
+    T_IF               shift, and go to state 97
+    T_RETURN           shift, and go to state 98
+    T_SIZEOF           shift, and go to state 99
+    T_SWITCH           shift, and go to state 100
+    T_WHILE            shift, and go to state 101
+    T_SEMICOLON        shift, and go to state 102
     T_ECURLY_BRACKETS  shift, and go to state 56
     T_IDENTIFIER       shift, and go to state 19
     T_STRING           shift, and go to state 103
@@ -6763,28 +6763,28 @@ State 355
 
    42 ITERATION_STATEMENT: FOR T_LBRACKET T_SEMICOLON EXPR T_SEMICOLON T_RBRACKET . STATEMENT
 
-    T_BREAK            shift, and go to state 82
-    T_CASE             shift, and go to state 83
-    T_CONTINUE         shift, and go to state 84
-    T_DEFAULT          shift, and go to state 85
-    T_DO               shift, and go to state 86
-    T_FOR              shift, and go to state 87
-    T_IF               shift, and go to state 88
-    T_RETURN           shift, and go to state 89
-    T_SIZEOF           shift, and go to state 90
-    T_SWITCH           shift, and go to state 91
-    T_WHILE            shift, and go to state 92
-    T_TIMES            shift, and go to state 93
-    T_PLUS             shift, and go to state 94
-    T_MINUS            shift, and go to state 95
-    T_DECREMENT        shift, and go to state 96
-    T_INCREMENT        shift, and go to state 97
-    T_AND              shift, and go to state 98
-    T_BITWISE_NOT      shift, and go to state 99
-    T_LOGICAL_NOT      shift, and go to state 100
-    T_SEMICOLON        shift, and go to state 101
-    T_LBRACKET         shift, and go to state 102
+    T_LBRACKET         shift, and go to state 82
     T_LCURLY_BRACKET   shift, and go to state 55
+    T_LOGICAL_NOT      shift, and go to state 83
+    T_BITWISE_NOT      shift, and go to state 84
+    T_INCREMENT        shift, and go to state 85
+    T_DECREMENT        shift, and go to state 86
+    T_PLUS             shift, and go to state 87
+    T_MINUS            shift, and go to state 88
+    T_AND              shift, and go to state 89
+    T_TIMES            shift, and go to state 90
+    T_BREAK            shift, and go to state 91
+    T_CASE             shift, and go to state 92
+    T_CONTINUE         shift, and go to state 93
+    T_DEFAULT          shift, and go to state 94
+    T_DO               shift, and go to state 95
+    T_FOR              shift, and go to state 96
+    T_IF               shift, and go to state 97
+    T_RETURN           shift, and go to state 98
+    T_SIZEOF           shift, and go to state 99
+    T_SWITCH           shift, and go to state 100
+    T_WHILE            shift, and go to state 101
+    T_SEMICOLON        shift, and go to state 102
     T_ECURLY_BRACKETS  shift, and go to state 56
     T_IDENTIFIER       shift, and go to state 19
     T_STRING           shift, and go to state 103
@@ -6835,36 +6835,36 @@ State 356
    38 ITERATION_STATEMENT: FOR T_LBRACKET T_SEMICOLON EXPR T_SEMICOLON EXPR . T_RBRACKET STATEMENT
   130 EXPR: EXPR . T_COMMA ASSIGNMENT_EXPRESSION
 
-    T_COMMA     shift, and go to state 238
     T_RBRACKET  shift, and go to state 364
+    T_COMMA     shift, and go to state 238
 
 
 State 357
 
    43 ITERATION_STATEMENT: FOR T_LBRACKET EXPR T_SEMICOLON T_SEMICOLON T_RBRACKET . STATEMENT
 
-    T_BREAK            shift, and go to state 82
-    T_CASE             shift, and go to state 83
-    T_CONTINUE         shift, and go to state 84
-    T_DEFAULT          shift, and go to state 85
-    T_DO               shift, and go to state 86
-    T_FOR              shift, and go to state 87
-    T_IF               shift, and go to state 88
-    T_RETURN           shift, and go to state 89
-    T_SIZEOF           shift, and go to state 90
-    T_SWITCH           shift, and go to state 91
-    T_WHILE            shift, and go to state 92
-    T_TIMES            shift, and go to state 93
-    T_PLUS             shift, and go to state 94
-    T_MINUS            shift, and go to state 95
-    T_DECREMENT        shift, and go to state 96
-    T_INCREMENT        shift, and go to state 97
-    T_AND              shift, and go to state 98
-    T_BITWISE_NOT      shift, and go to state 99
-    T_LOGICAL_NOT      shift, and go to state 100
-    T_SEMICOLON        shift, and go to state 101
-    T_LBRACKET         shift, and go to state 102
+    T_LBRACKET         shift, and go to state 82
     T_LCURLY_BRACKET   shift, and go to state 55
+    T_LOGICAL_NOT      shift, and go to state 83
+    T_BITWISE_NOT      shift, and go to state 84
+    T_INCREMENT        shift, and go to state 85
+    T_DECREMENT        shift, and go to state 86
+    T_PLUS             shift, and go to state 87
+    T_MINUS            shift, and go to state 88
+    T_AND              shift, and go to state 89
+    T_TIMES            shift, and go to state 90
+    T_BREAK            shift, and go to state 91
+    T_CASE             shift, and go to state 92
+    T_CONTINUE         shift, and go to state 93
+    T_DEFAULT          shift, and go to state 94
+    T_DO               shift, and go to state 95
+    T_FOR              shift, and go to state 96
+    T_IF               shift, and go to state 97
+    T_RETURN           shift, and go to state 98
+    T_SIZEOF           shift, and go to state 99
+    T_SWITCH           shift, and go to state 100
+    T_WHILE            shift, and go to state 101
+    T_SEMICOLON        shift, and go to state 102
     T_ECURLY_BRACKETS  shift, and go to state 56
     T_IDENTIFIER       shift, and go to state 19
     T_STRING           shift, and go to state 103
@@ -6915,8 +6915,8 @@ State 358
    39 ITERATION_STATEMENT: FOR T_LBRACKET EXPR T_SEMICOLON T_SEMICOLON EXPR . T_RBRACKET STATEMENT
   130 EXPR: EXPR . T_COMMA ASSIGNMENT_EXPRESSION
 
-    T_COMMA     shift, and go to state 238
     T_RBRACKET  shift, and go to state 366
+    T_COMMA     shift, and go to state 238
 
 
 State 359
@@ -6924,17 +6924,17 @@ State 359
    37 ITERATION_STATEMENT: FOR T_LBRACKET EXPR T_SEMICOLON EXPR T_SEMICOLON . EXPR T_RBRACKET STATEMENT
    40                    | FOR T_LBRACKET EXPR T_SEMICOLON EXPR T_SEMICOLON . T_RBRACKET STATEMENT
 
-    T_SIZEOF       shift, and go to state 90
-    T_TIMES        shift, and go to state 93
-    T_PLUS         shift, and go to state 94
-    T_MINUS        shift, and go to state 95
-    T_DECREMENT    shift, and go to state 96
-    T_INCREMENT    shift, and go to state 97
-    T_AND          shift, and go to state 98
-    T_BITWISE_NOT  shift, and go to state 99
-    T_LOGICAL_NOT  shift, and go to state 100
-    T_LBRACKET     shift, and go to state 102
+    T_LBRACKET     shift, and go to state 82
     T_RBRACKET     shift, and go to state 367
+    T_LOGICAL_NOT  shift, and go to state 83
+    T_BITWISE_NOT  shift, and go to state 84
+    T_INCREMENT    shift, and go to state 85
+    T_DECREMENT    shift, and go to state 86
+    T_PLUS         shift, and go to state 87
+    T_MINUS        shift, and go to state 88
+    T_AND          shift, and go to state 89
+    T_TIMES        shift, and go to state 90
+    T_SIZEOF       shift, and go to state 99
     T_IDENTIFIER   shift, and go to state 19
     T_STRING       shift, and go to state 103
     T_DEC_INT      shift, and go to state 104
@@ -6996,28 +6996,28 @@ State 364
 
    38 ITERATION_STATEMENT: FOR T_LBRACKET T_SEMICOLON EXPR T_SEMICOLON EXPR T_RBRACKET . STATEMENT
 
-    T_BREAK            shift, and go to state 82
-    T_CASE             shift, and go to state 83
-    T_CONTINUE         shift, and go to state 84
-    T_DEFAULT          shift, and go to state 85
-    T_DO               shift, and go to state 86
-    T_FOR              shift, and go to state 87
-    T_IF               shift, and go to state 88
-    T_RETURN           shift, and go to state 89
-    T_SIZEOF           shift, and go to state 90
-    T_SWITCH           shift, and go to state 91
-    T_WHILE            shift, and go to state 92
-    T_TIMES            shift, and go to state 93
-    T_PLUS             shift, and go to state 94
-    T_MINUS            shift, and go to state 95
-    T_DECREMENT        shift, and go to state 96
-    T_INCREMENT        shift, and go to state 97
-    T_AND              shift, and go to state 98
-    T_BITWISE_NOT      shift, and go to state 99
-    T_LOGICAL_NOT      shift, and go to state 100
-    T_SEMICOLON        shift, and go to state 101
-    T_LBRACKET         shift, and go to state 102
+    T_LBRACKET         shift, and go to state 82
     T_LCURLY_BRACKET   shift, and go to state 55
+    T_LOGICAL_NOT      shift, and go to state 83
+    T_BITWISE_NOT      shift, and go to state 84
+    T_INCREMENT        shift, and go to state 85
+    T_DECREMENT        shift, and go to state 86
+    T_PLUS             shift, and go to state 87
+    T_MINUS            shift, and go to state 88
+    T_AND              shift, and go to state 89
+    T_TIMES            shift, and go to state 90
+    T_BREAK            shift, and go to state 91
+    T_CASE             shift, and go to state 92
+    T_CONTINUE         shift, and go to state 93
+    T_DEFAULT          shift, and go to state 94
+    T_DO               shift, and go to state 95
+    T_FOR              shift, and go to state 96
+    T_IF               shift, and go to state 97
+    T_RETURN           shift, and go to state 98
+    T_SIZEOF           shift, and go to state 99
+    T_SWITCH           shift, and go to state 100
+    T_WHILE            shift, and go to state 101
+    T_SEMICOLON        shift, and go to state 102
     T_ECURLY_BRACKETS  shift, and go to state 56
     T_IDENTIFIER       shift, and go to state 19
     T_STRING           shift, and go to state 103
@@ -7074,28 +7074,28 @@ State 366
 
    39 ITERATION_STATEMENT: FOR T_LBRACKET EXPR T_SEMICOLON T_SEMICOLON EXPR T_RBRACKET . STATEMENT
 
-    T_BREAK            shift, and go to state 82
-    T_CASE             shift, and go to state 83
-    T_CONTINUE         shift, and go to state 84
-    T_DEFAULT          shift, and go to state 85
-    T_DO               shift, and go to state 86
-    T_FOR              shift, and go to state 87
-    T_IF               shift, and go to state 88
-    T_RETURN           shift, and go to state 89
-    T_SIZEOF           shift, and go to state 90
-    T_SWITCH           shift, and go to state 91
-    T_WHILE            shift, and go to state 92
-    T_TIMES            shift, and go to state 93
-    T_PLUS             shift, and go to state 94
-    T_MINUS            shift, and go to state 95
-    T_DECREMENT        shift, and go to state 96
-    T_INCREMENT        shift, and go to state 97
-    T_AND              shift, and go to state 98
-    T_BITWISE_NOT      shift, and go to state 99
-    T_LOGICAL_NOT      shift, and go to state 100
-    T_SEMICOLON        shift, and go to state 101
-    T_LBRACKET         shift, and go to state 102
+    T_LBRACKET         shift, and go to state 82
     T_LCURLY_BRACKET   shift, and go to state 55
+    T_LOGICAL_NOT      shift, and go to state 83
+    T_BITWISE_NOT      shift, and go to state 84
+    T_INCREMENT        shift, and go to state 85
+    T_DECREMENT        shift, and go to state 86
+    T_PLUS             shift, and go to state 87
+    T_MINUS            shift, and go to state 88
+    T_AND              shift, and go to state 89
+    T_TIMES            shift, and go to state 90
+    T_BREAK            shift, and go to state 91
+    T_CASE             shift, and go to state 92
+    T_CONTINUE         shift, and go to state 93
+    T_DEFAULT          shift, and go to state 94
+    T_DO               shift, and go to state 95
+    T_FOR              shift, and go to state 96
+    T_IF               shift, and go to state 97
+    T_RETURN           shift, and go to state 98
+    T_SIZEOF           shift, and go to state 99
+    T_SWITCH           shift, and go to state 100
+    T_WHILE            shift, and go to state 101
+    T_SEMICOLON        shift, and go to state 102
     T_ECURLY_BRACKETS  shift, and go to state 56
     T_IDENTIFIER       shift, and go to state 19
     T_STRING           shift, and go to state 103
@@ -7145,28 +7145,28 @@ State 367
 
    40 ITERATION_STATEMENT: FOR T_LBRACKET EXPR T_SEMICOLON EXPR T_SEMICOLON T_RBRACKET . STATEMENT
 
-    T_BREAK            shift, and go to state 82
-    T_CASE             shift, and go to state 83
-    T_CONTINUE         shift, and go to state 84
-    T_DEFAULT          shift, and go to state 85
-    T_DO               shift, and go to state 86
-    T_FOR              shift, and go to state 87
-    T_IF               shift, and go to state 88
-    T_RETURN           shift, and go to state 89
-    T_SIZEOF           shift, and go to state 90
-    T_SWITCH           shift, and go to state 91
-    T_WHILE            shift, and go to state 92
-    T_TIMES            shift, and go to state 93
-    T_PLUS             shift, and go to state 94
-    T_MINUS            shift, and go to state 95
-    T_DECREMENT        shift, and go to state 96
-    T_INCREMENT        shift, and go to state 97
-    T_AND              shift, and go to state 98
-    T_BITWISE_NOT      shift, and go to state 99
-    T_LOGICAL_NOT      shift, and go to state 100
-    T_SEMICOLON        shift, and go to state 101
-    T_LBRACKET         shift, and go to state 102
+    T_LBRACKET         shift, and go to state 82
     T_LCURLY_BRACKET   shift, and go to state 55
+    T_LOGICAL_NOT      shift, and go to state 83
+    T_BITWISE_NOT      shift, and go to state 84
+    T_INCREMENT        shift, and go to state 85
+    T_DECREMENT        shift, and go to state 86
+    T_PLUS             shift, and go to state 87
+    T_MINUS            shift, and go to state 88
+    T_AND              shift, and go to state 89
+    T_TIMES            shift, and go to state 90
+    T_BREAK            shift, and go to state 91
+    T_CASE             shift, and go to state 92
+    T_CONTINUE         shift, and go to state 93
+    T_DEFAULT          shift, and go to state 94
+    T_DO               shift, and go to state 95
+    T_FOR              shift, and go to state 96
+    T_IF               shift, and go to state 97
+    T_RETURN           shift, and go to state 98
+    T_SIZEOF           shift, and go to state 99
+    T_SWITCH           shift, and go to state 100
+    T_WHILE            shift, and go to state 101
+    T_SEMICOLON        shift, and go to state 102
     T_ECURLY_BRACKETS  shift, and go to state 56
     T_IDENTIFIER       shift, and go to state 19
     T_STRING           shift, and go to state 103
@@ -7217,8 +7217,8 @@ State 368
    37 ITERATION_STATEMENT: FOR T_LBRACKET EXPR T_SEMICOLON EXPR T_SEMICOLON EXPR . T_RBRACKET STATEMENT
   130 EXPR: EXPR . T_COMMA ASSIGNMENT_EXPRESSION
 
-    T_COMMA     shift, and go to state 238
     T_RBRACKET  shift, and go to state 373
+    T_COMMA     shift, and go to state 238
 
 
 State 369
@@ -7253,28 +7253,28 @@ State 373
 
    37 ITERATION_STATEMENT: FOR T_LBRACKET EXPR T_SEMICOLON EXPR T_SEMICOLON EXPR T_RBRACKET . STATEMENT
 
-    T_BREAK            shift, and go to state 82
-    T_CASE             shift, and go to state 83
-    T_CONTINUE         shift, and go to state 84
-    T_DEFAULT          shift, and go to state 85
-    T_DO               shift, and go to state 86
-    T_FOR              shift, and go to state 87
-    T_IF               shift, and go to state 88
-    T_RETURN           shift, and go to state 89
-    T_SIZEOF           shift, and go to state 90
-    T_SWITCH           shift, and go to state 91
-    T_WHILE            shift, and go to state 92
-    T_TIMES            shift, and go to state 93
-    T_PLUS             shift, and go to state 94
-    T_MINUS            shift, and go to state 95
-    T_DECREMENT        shift, and go to state 96
-    T_INCREMENT        shift, and go to state 97
-    T_AND              shift, and go to state 98
-    T_BITWISE_NOT      shift, and go to state 99
-    T_LOGICAL_NOT      shift, and go to state 100
-    T_SEMICOLON        shift, and go to state 101
-    T_LBRACKET         shift, and go to state 102
+    T_LBRACKET         shift, and go to state 82
     T_LCURLY_BRACKET   shift, and go to state 55
+    T_LOGICAL_NOT      shift, and go to state 83
+    T_BITWISE_NOT      shift, and go to state 84
+    T_INCREMENT        shift, and go to state 85
+    T_DECREMENT        shift, and go to state 86
+    T_PLUS             shift, and go to state 87
+    T_MINUS            shift, and go to state 88
+    T_AND              shift, and go to state 89
+    T_TIMES            shift, and go to state 90
+    T_BREAK            shift, and go to state 91
+    T_CASE             shift, and go to state 92
+    T_CONTINUE         shift, and go to state 93
+    T_DEFAULT          shift, and go to state 94
+    T_DO               shift, and go to state 95
+    T_FOR              shift, and go to state 96
+    T_IF               shift, and go to state 97
+    T_RETURN           shift, and go to state 98
+    T_SIZEOF           shift, and go to state 99
+    T_SWITCH           shift, and go to state 100
+    T_WHILE            shift, and go to state 101
+    T_SEMICOLON        shift, and go to state 102
     T_ECURLY_BRACKETS  shift, and go to state 56
     T_IDENTIFIER       shift, and go to state 19
     T_STRING           shift, and go to state 103

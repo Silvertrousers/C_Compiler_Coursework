@@ -60,7 +60,7 @@ std::string var_or_const_instr(std::string v_instr, std::string c_instr, std::st
 
 std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
 
-  //std::cout<<node_type<<std::endl;
+  std::cout<<node_type<<std::endl;
   //table.print_table(0);
 
   std::string arg1, arg2;
@@ -262,7 +262,10 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
     }
   }
 
-  if(node_type == "PRIMARY_EXPRESSION"){/*std::cout<<node_type<<std::endl;*/}
+  if(node_type == "PRIMARY_EXPRESSION"){/*std::cout<<node_type<<std::endl;*/
+    arg1  = branches[0]->make_mips(table, sp, pc);
+    return arg1;
+  }
 
   if(node_type == "CONSTANT"){/*std::cout<<node_type<<std::endl;*/
     std::cout<<"addi $t2, $zero, "<<value<<std::endl;
@@ -354,7 +357,8 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
   }
   if(node_type == "UNARY_EXPRESSION"){/*std::cout<<node_type<<std::endl;*/
     if(value == "++"){
-      arg1 = branches[0]->make_mips(table, sp, pc);
+      arg1 = branches[1]->make_mips(table, sp, pc);
+
       std::cout<<"addi $sp, $gp, "<<std::to_string(table.find_symbol(arg1).stack_pointer)<<std::endl;
       std::cout<<"lw $t0, "<<table.find_symbol(arg1).offset<<"($sp)"<<std::endl;
       std::cout<<"nop"<<std::endl;
@@ -366,7 +370,7 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
       return arg1;
     }
     if(value == "--"){
-      arg1 = branches[0]->make_mips(table, sp, pc);
+      arg1 = branches[1]->make_mips(table, sp, pc);
       std::cout<<"addi $sp, $gp, "<<std::to_string(table.find_symbol(arg1).stack_pointer)<<std::endl;
       std::cout<<"lw $t0, "<<table.find_symbol(arg1).offset<<"($sp)"<<std::endl;
       std::cout<<"nop"<<std::endl;
@@ -383,7 +387,7 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
     if(branches[0]->value == "plus"){}//type level promotion, do later
     if(branches[0]->value == "minus"){}//type level demotion, do later
     if(branches[0]->value == "bitwise_not"){
-      arg1 = branches[0]->make_mips(table, sp, pc);
+      arg1 = branches[1]->make_mips(table, sp, pc);
       std::cout<<"addi $sp, $gp, "<<std::to_string(table.find_symbol(arg1).stack_pointer)<<std::endl;
       std::cout<<"lw $t0, "<<table.find_symbol(arg1).offset<<"($sp)"<<std::endl;
       std::cout<<"nop"<<std::endl;
@@ -395,7 +399,8 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
       return arg1;
     }
     if(branches[0]->value == "logical_not"){
-      arg1 = branches[0]->make_mips(table, sp, pc);
+      arg1 = branches[1]->make_mips(table, sp, pc);
+      std::cout<<"arg1: "<<arg1<<std::endl;
       std::string skip = makeName("skip");
       std::cout<<"addi $sp, $gp, "<<std::to_string(table.find_symbol(arg1).stack_pointer)<<std::endl;
       std::cout<<"lw $t0, "<<table.find_symbol(arg1).offset<<"($sp)"<<std::endl;
@@ -768,7 +773,7 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
     }
   }
   if(node_type == "EQUALITY_EXPRESSION"){
-    /*std::cout<<node_type<<std::endl;*/
+    //std::cout<<node_type<<std::endl;
     arg1 =branches[0]->make_mips(table, sp, pc);
     arg2 =branches[1]->make_mips(table, sp, pc);
     std::string skip = makeName("skip");

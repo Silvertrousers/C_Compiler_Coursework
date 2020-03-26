@@ -15,21 +15,24 @@
   ast_node* nodePtr;
   std::string* _text;
 }
+%right T_EQUALS T_MODULO_EQUALS T_LEFT_SHIFT_EQUALS T_RIGHT_SHIFT_EQUALS T_PLUS_EQUALS T_MINUS_EQUALS T_TIMES_EQUALS T_DIVIDE_EQUALS T_AND_EQUALS T_OR_EQUALS T_XOR_EQUALS
+
+%right T_LBRACKET T_RBRACKET T_LSQ_BRACKET T_RSQ_BRACKET T_RCURLY_BRACKET T_LCURLY_BRACKET
+%precedence T_LOGICAL_NOT T_BITWISE_NOT T_INCREMENT T_DECREMENT
+%precedence T_EQUALS_EQUALS T_NOT_EQUALS_EQUALS T_LESS_THAN_OR_EQUAL_TO T_GREATER_THAN_OR_EQUAL_TO
+%precedence T_PLUS T_MINUS T_RIGHT_SHIFT T_LEFT_SHIFT T_LESS_THAN T_GREATER_THAN T_AND T_OR   T_AND_AND T_OR_OR
+%left T_DIVIDE T_TIMES T_MODULO
+%left T_EXPONENT
 
 %token T_AUTO T_BREAK T_CASE T_CHAR T_CONTINUE T_DEFAULT T_DO T_DOUBLE
 %token T_ELSE T_ENUM T_EXTERN T_FLOAT T_FOR  T_IF T_INT T_LONG T_REGISTER T_RETURN
 %token T_SHORT T_SIGNED T_SIZEOF T_STATIC T_STRUCT T_SWITCH
 %token T_TYPEDEF T_UNSIGNED T_VOID T_VOLATILE T_WHILE
-%token T_TIMES T_DIVIDE T_PLUS T_MINUS T_EXPONENT T_DECREMENT T_INCREMENT
-%token T_LESS_THAN T_GREATER_THAN T_EQUALS T_AND T_OR T_BITWISE_NOT T_LOGICAL_NOT
-%token T_AND_AND T_OR_OR
-%token T_MODULO_EQUALS T_LEFT_SHIFT_EQUALS T_RIGHT_SHIFT_EQUALS T_NOT_EQUALS_EQUALS T_EQUALS_EQUALS
-%token T_PLUS_EQUALS T_MINUS_EQUALS T_TIMES_EQUALS T_DIVIDE_EQUALS
-%token T_LESS_THAN_OR_EQUAL_TO T_GREATER_THAN_OR_EQUAL_TO
-%token T_AND_EQUALS T_OR_EQUALS T_XOR_EQUALS
-%token T_ARROW T_RIGHT_SHIFT T_LEFT_SHIFT
-%token T_MODULO T_COMMA T_DOT T_COLON T_SEMICOLON T_QUESTION
-%token T_LBRACKET T_RBRACKET T_LSQ_BRACKET T_RSQ_BRACKET T_RCURLY_BRACKET T_LCURLY_BRACKET
+
+
+%token T_ARROW
+%token  T_COMMA T_DOT T_COLON T_SEMICOLON T_QUESTION
+
 %token T_EMPTY_BRACKETS T_ECURLY_BRACKETS T_ESQ_BRACKETS
 %token T_IDENTIFIER T_STRING
 %token T_DEC_INT
@@ -70,11 +73,8 @@
 %type<_text> T_DEC_INT T_OCTAL_INT T_HEX_INT T_IDENTIFIER T_STRING T_ENUM_CONSTANT
 %type<_text> T_DEREFERENCE T_CUSTOM_TYPE
 
-%left T_PLUS T_MINUS
-%left T_DIVIDE T_TIMES
-%right T_EXPONENT
-%precedence T_IF
-%precedence T_ELSE
+
+
 
 %start PROGRAM
 
@@ -223,13 +223,13 @@ JUMP_STATEMENT : T_CONTINUE T_SEMICOLON {$$ = new ast_node("JUMP_STATEMENT", "co
 
 RETURN : T_RETURN {$$ = new ast_node("RETURN", "return");}
 
-PRIMARY_EXPRESSION : IDENTIFIER { $$ = $1; }
+PRIMARY_EXPRESSION : T_LBRACKET EXPR T_RBRACKET {                               std::vector<ast_node*> branches = {$2};
+                                                                                std::vector<std::string> branch_notes = {"EXPR"};
+                                                                                $$ = new ast_node("PRIMARY_EXPRESSION","", branches, branch_notes);}
+                   | IDENTIFIER { $$ = $1; }
                    | CONSTANT {$$ = $1;}
                    | T_STRING {$$ = new ast_node("PRIMARY_EXPRESSION", *$1);}
 
-                   | T_LBRACKET EXPR T_RBRACKET {                               std::vector<ast_node*> branches = {$2};
-                                                                                std::vector<std::string> branch_notes = {"EXPR"};
-                                                                                $$ = new ast_node("PRIMARY_EXPRESSION","", branches, branch_notes);}
 
 CONSTANT : T_DEC_INT   {$$ = new ast_node("CONSTANT", std::to_string((int)round(std::stoi(*$1)))); }
          | T_OCTAL_INT {$$ = new ast_node("CONSTANT", std::to_string((int)round(std::stoi(*$1, 0, 8)))); }
