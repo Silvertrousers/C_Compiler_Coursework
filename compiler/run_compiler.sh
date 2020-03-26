@@ -47,6 +47,57 @@ echo "=============================="
 # echo "=============================="
 echo "=============================="
 echo "=============================="
+a="./compiler_tests/local_var/constant_initialiser"
+(./bin/compiler < $a.c) > $a.s
+mips-linux-gnu-gcc -mfp32 -o $a.o -c $a.s
+mips-linux-gnu-gcc -mfp32 -static -o $a $a.o $a"_driver".c
+qemu-mips $a
+echo $a ": " $?
+echo "=============================="
+a="./compiler_tests/local_var/dual_var"
+(./bin/compiler < $a.c) > $a.s
+mips-linux-gnu-gcc -mfp32 -o $a.o -c $a.s
+mips-linux-gnu-gcc -mfp32 -static -o $a $a.o $a"_driver".c
+qemu-mips $a
+echo $a ": " $?
+echo "=============================="
+a="./compiler_tests/local_var/expression_initialiser"
+(./bin/compiler < $a.c) > $a.s
+mips-linux-gnu-gcc -mfp32 -o $a.o -c $a.s
+mips-linux-gnu-gcc -mfp32 -static -o $a $a.o $a"_driver".c
+qemu-mips $a
+echo $a ": " $?
+echo "=============================="
+a="./compiler_tests/local_var/identity"
+(./bin/compiler < $a.c) > $a.s
+mips-linux-gnu-gcc -mfp32 -o $a.o -c $a.s
+mips-linux-gnu-gcc -mfp32 -static -o $a $a.o $a"_driver".c
+qemu-mips $a
+echo $a ": " $?
+echo "=============================="
+a="./compiler_tests/local_var/return_constant"
+(./bin/compiler < $a.c) > $a.s
+mips-linux-gnu-gcc -mfp32 -o $a.o -c $a.s
+mips-linux-gnu-gcc -mfp32 -static -o $a $a.o $a"_driver".c
+qemu-mips $a
+echo $a ": " $?
+echo "=============================="
+a="./compiler_tests/local_var/scoped_var"
+(./bin/compiler < $a.c) > $a.s
+mips-linux-gnu-gcc -mfp32 -o $a.o -c $a.s
+mips-linux-gnu-gcc -mfp32 -static -o $a $a.o $a"_driver".c
+qemu-mips $a
+echo $a ": " $?
+echo "=============================="
+a="./compiler_tests/local_var/single_var"
+(./bin/compiler < $a.c) > $a.s
+mips-linux-gnu-gcc -mfp32 -o $a.o -c $a.s
+mips-linux-gnu-gcc -mfp32 -static -o $a $a.o $a"_driver".c
+qemu-mips $a
+echo $a ": " $?
+echo "=============================="
+echo "=============================="
+echo "=============================="
 a="./compiler_tests/control_flow/for_multiple"
 (./bin/compiler < $a.c) > $a.s
 mips-linux-gnu-gcc -mfp32 -o $a.o -c $a.s
@@ -241,6 +292,79 @@ qemu-mips $a
 echo $a ": " $?
 echo "=============================="
 a="./compiler_tests/integer/sub"
+(./bin/compiler < $a.c) > $a.s
+mips-linux-gnu-gcc -mfp32 -o $a.o -c $a.s
+mips-linux-gnu-gcc -mfp32 -static -o $a $a.o $a"_driver".c
+qemu-mips $a
+echo $a ": " $?
+echo "=============================="
+echo "=============================="
+echo "=============================="
+a="./compiler_tests/functions/call_constant_external"
+(./bin/compiler < $a.c) > $a.s
+mips-linux-gnu-gcc -mfp32 -o $a.o -c $a.s
+mips-linux-gnu-gcc -mfp32 -static -o $a $a.o $a"_driver".c
+qemu-mips $a
+echo $a ": " $?
+echo "=============================="
+a="./compiler_tests/functions/call_constant_internal"
+(./bin/compiler < $a.c) > $a.s
+mips-linux-gnu-gcc -mfp32 -o $a.o -c $a.s
+mips-linux-gnu-gcc -mfp32 -static -o $a $a.o $a"_driver".c
+qemu-mips $a
+echo $a ": " $?
+echo "=============================="
+a="./compiler_tests/functions/call_identity_external"
+(./bin/compiler < $a.c) > $a.s
+mips-linux-gnu-gcc -mfp32 -o $a.o -c $a.s
+mips-linux-gnu-gcc -mfp32 -static -o $a $a.o $a"_driver".c
+qemu-mips $a
+echo $a ": " $?
+echo "=============================="
+a="./compiler_tests/functions/call_identity_internal"
+(./bin/compiler < $a.c) > $a.s
+mips-linux-gnu-gcc -mfp32 -o $a.o -c $a.s
+mips-linux-gnu-gcc -mfp32 -static -o $a $a.o $a"_driver".c
+qemu-mips $a
+echo $a ": " $?
+echo "=============================="
+a="./compiler_tests/functions/call_mutual_recursive"
+(./bin/compiler < $a.c) > $a.s
+mips-linux-gnu-gcc -mfp32 -o $a.o -c $a.s
+mips-linux-gnu-gcc -mfp32 -static -o $a $a.o $a"_driver".c
+qemu-mips $a
+echo $a ": " $?
+echo "=============================="
+a="./compiler_tests/functions/call_recursive_internal"
+(./bin/compiler < $a.c) > $a.s
+mips-linux-gnu-gcc -mfp32 -o $a.o -c $a.s
+mips-linux-gnu-gcc -mfp32 -static -o $a $a.o $a"_driver".c
+qemu-mips $a
+echo $a ": " $?
+echo "=============================="
+
+a="./compiler_tests/functions/call_two_args_internal"
+(./bin/compiler < $a.c) > $a.s
+mips-linux-gnu-gcc -mfp32 -o $a.o -c $a.s
+mips-linux-gnu-gcc -mfp32 -static -o $a $a.o $a"_driver".c
+qemu-mips $a
+echo $a ": " $?
+echo "=============================="
+a="./compiler_tests/functions/call_two_args_external"
+(./bin/compiler < $a.c) > $a.s
+mips-linux-gnu-gcc -mfp32 -o $a.o -c $a.s
+mips-linux-gnu-gcc -mfp32 -static -o $a $a.o $a"_driver".c
+qemu-mips $a
+echo $a ": " $?
+echo "=============================="
+a="./compiler_tests/functions/call_five_args_internal"
+(./bin/compiler < $a.c) > $a.s
+mips-linux-gnu-gcc -mfp32 -o $a.o -c $a.s
+mips-linux-gnu-gcc -mfp32 -static -o $a $a.o $a"_driver".c
+qemu-mips $a
+echo $a ": " $?
+echo "=============================="
+a="./compiler_tests/functions/call_five_args_external"
 (./bin/compiler < $a.c) > $a.s
 mips-linux-gnu-gcc -mfp32 -o $a.o -c $a.s
 mips-linux-gnu-gcc -mfp32 -static -o $a $a.o $a"_driver".c

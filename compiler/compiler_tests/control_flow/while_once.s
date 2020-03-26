@@ -31,16 +31,17 @@ lw $t0, 16($sp)
 nop
 beq $t0, $zero, end1
 nop
+#STATEMENT
 #COMPOUND_STATEMENT
 #NULL
 #ASSIGNMENT_EXPRESSION
 #IDENTIFIER
 #CONSTANT
 addi $t2, $zero, 0
-addi $sp, $gp, 36
+addi $sp, $gp, 48
 sw $t2, 4($sp)
 nop
-addi $sp, $gp, 36
+addi $sp, $gp, 48
 lw $t2, 4($sp)
 nop
 addi $sp, $gp, 16

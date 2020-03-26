@@ -50,16 +50,17 @@ nop
 #Increment
 #POSTFIX_EXPRESSION
 #Body
+#STATEMENT
 #COMPOUND_STATEMENT
 #NULL
 #JUMP_STATEMENT
 #CONSTANT
 addi $t2, $zero, 1
-addi $sp, $gp, 36
-sw $t2, 8($sp)
+addi $sp, $gp, 48
+sw $t2, 4($sp)
 nop
-addi $sp, $gp, 36
-lw $2, 8($sp)
+addi $sp, $gp, 48
+lw $2, 4($sp)
 nop
 jr $ra
 nop

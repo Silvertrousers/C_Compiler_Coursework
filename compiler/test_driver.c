@@ -1,7 +1,7 @@
 
-int f(int x);
+int f();
 
 int main()
 {
-    return !( 40 == f(30) );
+    return !(f()==5678);
 }

@@ -67,6 +67,7 @@ lw $t0, 8($sp)
 nop
 beq $t0, $zero, end1
 nop
+#STATEMENT
 #COMPOUND_STATEMENT
 #NULL
 #ASSIGNMENT_EXPRESSION
@@ -75,16 +76,22 @@ nop
 #IDENTIFIER
 #CONSTANT
 addi $t2, $zero, 1
+addi $sp, $gp, 48
+sw $t2, 4($sp)
+nop
 addi $sp, $gp, 16
 lw $t0, 16($sp)
 nop
-addi $sp, $gp, -1611470723
-lw $t1, 0($sp)
+addi $sp, $gp, 48
+lw $t1, 4($sp)
 nop
 sub $t2, $t0, $t1
 nop
-addi $sp, $gp, -1611470723
-lw $t2, 0($sp)
+addi $sp, $gp, 48
+sw $t2, 4($sp)
+nop
+addi $sp, $gp, 48
+lw $t2, 4($sp)
 nop
 addi $sp, $gp, 16
 sw $t2, 16($sp)

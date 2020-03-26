@@ -101,7 +101,10 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
     std::cout<<branches[2]->make_mips(new_scope, sp, pc);//body
   }
 
-  if(node_type == "STATEMENT"){/*std::cout<<node_type<<std::endl;*/}
+  if(node_type == "STATEMENT"){/*std::cout<<node_type<<std::endl;*/
+    symbol_table new_scope = symbol_table(&table);
+    branches[0]->make_mips(new_scope, sp, pc);
+  }
   if(node_type == "LABELED_STATEMENT"){/*std::cout<<node_type<<std::endl;*/
       if (branches[0]->node_type == "T_CASE"){
           std::string casestart = makeCaseStart(1);
@@ -558,7 +561,7 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
           arg1 = branches[1]->make_mips(table, sp, pc);
           std::cout<<"addi $sp, $gp, "<<std::to_string(table.find_symbol(arg1).stack_pointer)<<std::endl;
           std::cout<<"sw $a0, "<<table.find_symbol(arg1).offset<<"($sp)"<<std::endl;
-          std::cout<<"nop"<<std::endl;  
+          std::cout<<"nop"<<std::endl;
       }
     }
   }

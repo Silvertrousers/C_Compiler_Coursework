@@ -75,15 +75,16 @@ addi $sp, $gp, 16
 sw $t2, 16($sp)
 nop
 #Body
+#STATEMENT
 #COMPOUND_STATEMENT
 #NULL
 #JUMP_STATEMENT
 #CONSTANT
 addi $t2, $zero, 1
-addi $sp, $gp, 36
+addi $sp, $gp, 48
 sw $t2, 4($sp)
 nop
-addi $sp, $gp, 36
+addi $sp, $gp, 48
 lw $2, 4($sp)
 nop
 jr $ra

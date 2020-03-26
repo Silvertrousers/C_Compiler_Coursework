@@ -101,7 +101,10 @@ FUNCTION_DECLARATION : DECLARATION_SPECIFIERS DECLARATOR COMPOUND_STATEMENT {   
 FN_DECL_WITH_ARGS :
 
 STATEMENT : LABELED_STATEMENT {$$ = $1;}
-          | COMPOUND_STATEMENT {$$ = $1;}
+          | COMPOUND_STATEMENT {                                                std::vector<ast_node*> branches = {$1};
+                                                                                std::vector<std::string> branch_notes = {"COMPOUND_STATEMENT"};
+                                                                                $$ = new ast_node("STATEMENT","", branches, branch_notes);}
+
           | EXPRESSION_STATEMENT {$$ = $1;}
           | SELECTION_STATEMENT {$$ = $1;}
           | ITERATION_STATEMENT {$$ = $1;}
