@@ -42,7 +42,6 @@ nop
 addi $sp, $gp, 36
 sw $t2, 4($sp)
 nop
-#temp1
 addi $sp, $gp, 36
 lw $t0, 4($sp)
 nop

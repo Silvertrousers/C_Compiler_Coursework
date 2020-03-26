@@ -78,12 +78,12 @@ addi $t2, $zero, 1
 addi $sp, $gp, 16
 lw $t0, 16($sp)
 nop
-addi $sp, $gp, -2126169923
+addi $sp, $gp, -1611470723
 lw $t1, 0($sp)
 nop
 sub $t2, $t0, $t1
 nop
-addi $sp, $gp, -2126169923
+addi $sp, $gp, -1611470723
 lw $t2, 0($sp)
 nop
 addi $sp, $gp, 16

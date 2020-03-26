@@ -1,10 +1,4 @@
-int f()
+int f(int a)
 {
-    int x;
-    int y;
-    y=0;
-    for(x=0; x<10; x=x+1){
-        y=y+1;
-    }
-    return y;
+    return a+10;
 }

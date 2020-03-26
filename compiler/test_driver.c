@@ -1,7 +1,7 @@
 
-int f();
+int f(int x);
 
 int main()
 {
-    return (f());
+    return !( 40 == f(30) );
 }
