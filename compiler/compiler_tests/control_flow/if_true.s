@@ -1,13 +1,13 @@
-f:
+#FUNCTION_DECLARATION
 .globl f
+#TYPE_SPECIFIER
 f:
-addi $sp, $gp, 0
-lw $a0, 4($sp)
-nop
-add $a0, $a1, $zero
-add $a1, $a2, $zero
-add $a2, $a3, $zero
-add $a0, $zero, $zero
+#DIRECT_DECLARATOR
+#COMPOUND_STATEMENT
+#NULL
+#STATEMENT_LIST
+#SELECTION_STATEMENT
+#CONSTANT
 addi $t2, $zero, 1
 addi $sp, $gp, 32
 sw $t2, 4($sp)
@@ -17,6 +17,10 @@ lw $t0, 4($sp)
 nop
 beq $t0, $zero, skip1
 nop
+#COMPOUND_STATEMENT
+#NULL
+#JUMP_STATEMENT
+#CONSTANT
 addi $t2, $zero, 11
 addi $sp, $gp, 32
 sw $t2, 4($sp)
@@ -30,6 +34,8 @@ beq $zero, $zero, end2
 nop
 skip1:
 end2:
+#JUMP_STATEMENT
+#CONSTANT
 addi $t2, $zero, 10
 addi $sp, $gp, 16
 sw $t2, 4($sp)

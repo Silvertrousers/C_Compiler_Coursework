@@ -1,13 +1,18 @@
-f:
+#TRANSLATION_UNIT
+#DECLARATION
+#TYPE_SPECIFIER
+#INIT_DECLARATOR
+#DIRECT_DECLARATOR
+#NULL
+#FUNCTION_DECLARATION
 .globl f
+#TYPE_SPECIFIER
 f:
-addi $sp, $gp, 0
-lw $a0, 4($sp)
-nop
-add $a0, $a1, $zero
-add $a1, $a2, $zero
-add $a2, $a3, $zero
-add $a0, $zero, $zero
+#DIRECT_DECLARATOR
+#COMPOUND_STATEMENT
+#NULL
+#JUMP_STATEMENT
+#CONSTANT
 addi $t2, $zero, 11
 addi $sp, $gp, 48
 sw $t2, 4($sp)
