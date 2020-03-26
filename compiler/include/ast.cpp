@@ -56,7 +56,7 @@ std::string makeDefault(bool increment){
 }
 
 bool is_a_variable(std::string in);
-std::string var_or_const_instr(std::string v_instr, std::string c_instr, std::string arg1, std::string arg2, symbol_table table);
+std::string var_or_const_instr(std::string v_instr, std::string c_instr, std::string arg1, std::string arg2, symbol_table& table);
 
 std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
 
@@ -1229,7 +1229,9 @@ int ast_node::eval_expr(){
   }
 }
 
-std::string var_or_const_instr(std::string v_instr, std::string c_instr, std::string arg1, std::string arg2, symbol_table table){
+std::string var_or_const_instr(std::string v_instr, std::string c_instr, std::string arg1, std::string arg2, symbol_table& table){
+  if(arg1 == "temp1" || arg2 == "temp1"){table.t1_free = true;}
+  if(arg1 == "temp2" || arg2 == "temp2"){table.t2_free = true;}
   if(is_a_variable(arg1) && is_a_variable(arg2)){
     std::cout<<"addi $sp, $gp, "<<std::to_string(table.find_symbol(arg1).stack_pointer)<<std::endl;
     std::cout<<"lw $t0, "<<table.find_symbol(arg1).offset<<"($sp)"<<std::endl;

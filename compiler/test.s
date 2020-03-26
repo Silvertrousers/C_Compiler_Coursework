@@ -62,7 +62,7 @@ nop
 slt $t2, $t0, $t1
 nop
 addi $sp, $gp, 44
-sw $t2, 8($sp)
+sw $t2, 4($sp)
 nop
 start1:
 #RELATIONAL_EXPRESSION
@@ -70,25 +70,34 @@ start1:
 #IDENTIFIER
 #CONSTANT
 addi $t2, $zero, 1
+addi $sp, $gp, 44
+sw $t2, 8($sp)
+nop
 addi $sp, $gp, 16
 lw $t0, 16($sp)
 nop
-addi $sp, $gp, 1011876765
-lw $t1, 0($sp)
+addi $sp, $gp, 44
+lw $t1, 8($sp)
 nop
 add $t2, $t0, $t1
 nop
+addi $sp, $gp, 44
+sw $t2, 8($sp)
+nop
 #IDENTIFIER
-addi $sp, $gp, 1011876765
-lw $t0, 0($sp)
+addi $sp, $gp, 44
+lw $t0, 8($sp)
 nop
 addi $sp, $gp, 16
 lw $t1, 20($sp)
 nop
 slt $t2, $t0, $t1
 nop
-addi $sp, $gp, 1011876765
-lw $t0, 0($sp)
+addi $sp, $gp, 44
+sw $t2, 8($sp)
+nop
+addi $sp, $gp, 44
+lw $t0, 8($sp)
 nop
 beq $t0, $zero, end1
 nop
@@ -128,10 +137,10 @@ nop
 srlv $t2, $t0, $t1
 nop
 addi $sp, $gp, 56
-sw $t2, 8($sp)
+sw $t2, 4($sp)
 nop
 addi $sp, $gp, 56
-lw $t2, 8($sp)
+lw $t2, 4($sp)
 nop
 sw $t2, 12($sp)
 nop
@@ -149,8 +158,11 @@ lw $t1, 12($sp)
 nop
 MULT $t0, $t1
 MFLO $t2
-addi $sp, $gp, 1011876765
-lw $t2, 0($sp)
+addi $sp, $gp, 56
+sw $t2, 8($sp)
+nop
+addi $sp, $gp, 56
+lw $t2, 8($sp)
 nop
 sw $t2, 16($sp)
 nop
@@ -229,10 +241,10 @@ nop
 slt $t2, $t0, $t1
 nop
 addi $sp, $gp, 44
-sw $t2, 8($sp)
+sw $t2, 4($sp)
 nop
 addi $sp, $gp, 16
-lw $t0, 8($sp)
+lw $t0, 4($sp)
 nop
 beq $t0, $zero, skip3
 nop
