@@ -4,7 +4,7 @@
 echo "=============================="
 (./bin/compiler < ./$1.c) > ./$1.s
 mips-linux-gnu-gcc -mfp32 -o $1.o -c $1.s
-#mips-linux-gnu-gcc -mfp32 -static -o $1 $1.o $1_driver.c
+mips-linux-gnu-gcc -mfp32 -static -o $1 $1.o $1_driver.c
 #mips-linux-gnu-gcc -S -mfp32 $1.c
 qemu-mips $1
 echo $1 ": " $?

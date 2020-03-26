@@ -60,7 +60,7 @@ std::string var_or_const_instr(std::string v_instr, std::string c_instr, std::st
 
 std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
 
-  std::cout<<node_type<<std::endl;
+  //std::cout<<node_type<<std::endl;
   //table.print_table(0);
 
   std::string arg1, arg2;
@@ -318,14 +318,14 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
       }
       //fn call return value goes to register $v0, which is then stored in temp1/2 to be used in operations
       if(table.t1_free){
-        std::cout<<"addi $sp, $gp, "<<std::to_string(table.find_symbol(fn.name).stack_pointer)<<std::endl;
+        std::cout<<"addi $sp, $gp, "<<std::to_string(table.stack_pointer)<<std::endl;
         std::cout<<"sw $2, "<<table.find_symbol("temp1").offset<<"($sp)"<<std::endl;
         std::cout<<"nop"<<std::endl;
         return "temp1";
         table.t1_free = false;
       }
       if(table.t2_free){
-        std::cout<<"addi $sp, $gp, "<<std::to_string(table.find_symbol(fn.name).stack_pointer)<<std::endl;
+        std::cout<<"addi $sp, $gp, "<<std::to_string(table.stack_pointer)<<std::endl;
         std::cout<<"sw $2, "<<table.find_symbol("temp2").offset<<"($sp)"<<std::endl;
         std::cout<<"nop"<<std::endl;
         return "temp2";
