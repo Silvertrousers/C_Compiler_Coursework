@@ -99,16 +99,6 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
     //assign memory locations to labels has already been done since symbol table keeps track of stack
     std::cout<<temp.name<<":"<<std::endl;
     branches[1]->make_mips(new_scope, sp, pc);//arguments
-    for (int i = 0; i < (new_scope.symbols.size()-2); i++){
-        arg1 = new_scope.symbols[i].name; //assuming the argument calls added them to new scope, these should be the 4 parameters.
-        std::cout<<"addi $sp, $gp, "<<std::to_string(table.find_symbol(arg1).stack_pointer)<<std::endl;
-        std::cout<<"lw $a0, "<<new_scope.find_symbol(arg1).offset<<"($sp)"<<std::endl;
-        std::cout<<"nop"<<std::endl;
-        std::cout << "add $a0, $a1, $zero" << std::endl;
-        std::cout << "add $a1, $a2, $zero" << std::endl;
-        std::cout << "add $a2, $a3, $zero" << std::endl;
-        std::cout << "add $a0, $zero, $zero" << std::endl;
-    }
     std::cout<<branches[2]->make_mips(new_scope, sp, pc);//body
   }
 
@@ -580,6 +570,7 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
           std::cout << "add $a0, $a1, $zero" <<std::endl;
           std::cout << "add $a1, $a2, $zero" <<std::endl;
           std::cout << "add $a2, $a3, $zero" <<std::endl;
+          std::cout << "add $a3, $zero, $zero" <<std::endl;
       }
       arg1 = branches[1]->make_mips(table, sp, pc);
       std::cout<<"addi $sp, $gp, "<<std::to_string(table.find_symbol(arg1).stack_pointer)<<std::endl;
@@ -588,6 +579,7 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
       std::cout << "add $a0, $a1, $zero" <<std::endl;
       std::cout << "add $a1, $a2, $zero" <<std::endl;
       std::cout << "add $a2, $a3, $zero" <<std::endl;
+      std::cout << "add $a3, $zero, $zero" <<std::endl;
   }
   if(node_type == "PARAMETER_DECLARATION"){
     /*std::cout<<node_type<<std::endl;*/
