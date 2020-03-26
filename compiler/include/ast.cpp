@@ -685,14 +685,14 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
 
 
       if(table.t1_free == true){
-        std::cout<<"addi $sp, $gp, "<<std::to_string(table.find_symbol(arg1).stack_pointer)<<std::endl;
+        std::cout<<"addi $sp, $gp, "<<std::to_string(table.find_symbol("temp1").stack_pointer)<<std::endl;
         std::cout<<"sw $t2, "<<table.find_symbol("temp1").offset<<"($sp)"<<std::endl;
         std::cout<<"nop"<<std::endl;
         table.t1_free = false;
         return "temp1";
       }
       if(table.t2_free == true){
-        std::cout<<"addi $sp, $gp, "<<std::to_string(table.find_symbol(arg1).stack_pointer)<<std::endl;
+        std::cout<<"addi $sp, $gp, "<<std::to_string(table.find_symbol("temp2").stack_pointer)<<std::endl;
         std::cout<<"sw $t2, "<<table.find_symbol("temp2").offset<<"($sp)"<<std::endl;
         std::cout<<"nop"<<std::endl;
         table.t2_free = false;
@@ -705,7 +705,7 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
       var_or_const_instr("sub", "sub", arg1, arg2, table);
 
       if(table.t1_free == true){
-        std::cout<<"addi $sp, $gp, "<<std::to_string(table.find_symbol(arg1).stack_pointer)<<std::endl;
+        std::cout<<"addi $sp, $gp, "<<std::to_string(table.find_symbol("temp1").stack_pointer)<<std::endl;
         std::cout<<"sw $t2, "<<table.find_symbol("temp1").offset<<"($sp)"<<std::endl;
         std::cout<<"nop"<<std::endl;
         table.t1_free = false;
@@ -959,6 +959,7 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
       std::cout<<"addi $sp, $gp, "<<std::to_string(table.find_symbol(res).stack_pointer)<<std::endl;
       std::cout<<"lw $t2, "<<table.find_symbol(res).offset<<"($sp)"<<std::endl;//this is the location of temp1
       std::cout<<"nop"<<std::endl;
+      std::cout<<"addi $sp, $gp, "<<std::to_string(table.find_symbol(s).stack_pointer)<<std::endl;
       std::cout<<"sw $t2, "<<table.find_symbol(s).offset<<"($sp)"<<std::endl;
       std::cout<<"nop"<<std::endl;
       table.t1_free = true;

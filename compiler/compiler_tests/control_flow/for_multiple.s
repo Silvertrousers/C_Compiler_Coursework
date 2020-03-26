@@ -1,4 +1,3 @@
-f:
 .globl f
 f:
 addi $t2, $zero, 0
