@@ -1,6 +1,6 @@
-int g(int x, int y);
+int g();
 
 int f()
 {
-    return g(10,20);
+    return g();
 }

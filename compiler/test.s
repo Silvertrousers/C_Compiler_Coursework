@@ -3,23 +3,6 @@
 #TYPE_SPECIFIER
 #INIT_DECLARATOR
 #DIRECT_DECLARATOR
-#PARAMETER_LIST
-#PARAMETER_DECLARATION
-addi $sp, $gp, 0
-sw $a0, 20($sp)
-nop
-add $a0, $a1, $zero
-add $a1, $a2, $zero
-add $a2, $a3, $zero
-add $a3, $zero, $zero
-#PARAMETER_DECLARATION
-addi $sp, $gp, 0
-sw $a0, 24($sp)
-nop
-add $a0, $a1, $zero
-add $a1, $a2, $zero
-add $a2, $a3, $zero
-add $a3, $zero, $zero
 #NULL
 #FUNCTION_DECLARATION
 .globl f
@@ -30,41 +13,18 @@ f:
 #NULL
 #JUMP_STATEMENT
 #POSTFIX_EXPRESSION
-#ARGUMENT_EXPRESSION_LIST
-#CONSTANT
-addi $t2, $zero, 10
-addi $sp, $gp, 44
-sw $t2, 4($sp)
-nop
-add $a3, $a2, $zero
-add $a2, $a1, $zero
-add $a1, $a0, $zero
-addi $sp, $gp, 44
-lw $a0, 4($sp)
-nop
-#CONSTANT
-addi $t2, $zero, 20
-addi $sp, $gp, 44
-sw $t2, 4($sp)
-nop
-add $a3, $a2, $zero
-add $a2, $a1, $zero
-add $a1, $a0, $zero
-addi $sp, $gp, 44
-lw $a0, 4($sp)
-nop
-addi $sp, $gp, 44
+addi $sp, $gp, 36
 sw $ra, 12($sp)
 nop
 jal g
 nop
-addi $sp, $gp, 44
+addi $sp, $gp, 36
 lw $ra, 12($sp)
 nop
-addi $sp, $gp, 28
+addi $sp, $gp, 20
 sw $2, 4($sp)
 nop
-addi $sp, $gp, 28
+addi $sp, $gp, 20
 lw $2, 4($sp)
 nop
 jr $ra

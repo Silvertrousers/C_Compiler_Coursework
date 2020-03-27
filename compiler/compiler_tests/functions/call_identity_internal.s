@@ -26,6 +26,14 @@ f:
 #NULL
 #JUMP_STATEMENT
 #POSTFIX_EXPRESSION
+#CONSTANT
+addi $t2, $zero, 10
+addi $sp, $gp, 36
+sw $t2, 4($sp)
+nop
+addi $sp, $gp, 36
+lw $a0, 4($sp)
+nop
 addi $sp, $gp, 36
 sw $ra, 12($sp)
 nop

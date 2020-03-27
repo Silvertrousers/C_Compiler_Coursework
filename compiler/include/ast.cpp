@@ -311,7 +311,7 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
       if (branches[1]->node_type == "ARGUMENT_EXPRESSION_LIST"){
           branches[1]->make_mips(new_scope, sp, pc);
       }
-      if (branches[1]->node_type == "ASSIGNMENT_EXPRESSION"){
+      if (branches[1]->node_type != "ARGUMENT_EXPRESSION_LIST" && branches[1]->node_type != "NULL"){
           arg1 = branches[1]->make_mips(new_scope, sp, pc);
           std::cout<<"addi $sp, $gp, "<<std::to_string(new_scope.find_symbol(arg1).stack_pointer)<<std::endl;
           std::cout<<"lw $a0, "<<new_scope.find_symbol(arg1).offset<<"($sp)"<<std::endl;

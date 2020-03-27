@@ -1,12 +1,10 @@
 
 int f();
 
-int g(int x, int y)
-{
-    return x+y;
-}
+int g()
+{ return 20; }
 
 int main()
 {
-    return f();
+    return !(f()==20);
 }
