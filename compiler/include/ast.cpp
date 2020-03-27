@@ -228,7 +228,7 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
       return ";";
     }
     if (branches[0]-> node_type == "T_WHILE"){
-      branches[1]->make_mips(new_scope, sp, pc);
+      //branches[1]->make_mips(new_scope, sp, pc);
       std::string start = makeStart(1);
       new_scope.start_label = start;
       std::string end = makeEnd(1);
@@ -241,6 +241,8 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
       std::cout<< "beq $t0, $zero, " << end << std::endl;
       std::cout<<"nop"<<std::endl;
       std::cout<<branches[5]->make_mips(new_scope, sp, pc);
+      std::cout<< "beq $zero, $zero, " << start << std::endl;//added recently since the while loop wasnt actually going to the start
+      std::cout<<"nop"<<std::endl;
       std::cout << end<< ":" << std::endl;
     }
   }
@@ -771,12 +773,9 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
     arg1 =branches[0]->make_mips(table, sp, pc);
     arg2 =branches[1]->make_mips(table, sp, pc);
 
-    var_or_const_instr("slt", "slti", arg1, arg2, table);
-
-    if(value == "<"){}
-    if(value == ">"){
-      std::cout<<"xori $t2, $t2, 1"<<std::endl;//if set to 1, this will turn the 1 to a 0
-    }//this nots the less than to make a greater than instruction
+  
+    if(value == "<"){var_or_const_instr("slt", "slti", arg1, arg2, table);}
+    if(value == ">"){var_or_const_instr("slt", "slti", arg2, arg1, table);}//this nots the less than to make a greater than instruction
 
 
     if(table.t1_free == true){

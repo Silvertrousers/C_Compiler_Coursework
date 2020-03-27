@@ -44,7 +44,7 @@ skip3:
 addi $sp, $gp, 44
 sw $t2, 4($sp)
 nop
-addi $sp, $gp, 24
+addi $sp, $gp, 44
 lw $t0, 4($sp)
 nop
 beq $t0, $zero, skip1

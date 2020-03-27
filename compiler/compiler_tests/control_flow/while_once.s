@@ -23,7 +23,6 @@ addi $sp, $gp, 16
 sw $t2, 16($sp)
 nop
 #ITERATION_STATEMENT
-#IDENTIFIER
 start1:
 #IDENTIFIER
 addi $sp, $gp, 16
@@ -46,6 +45,8 @@ lw $t2, 4($sp)
 nop
 addi $sp, $gp, 16
 sw $t2, 16($sp)
+nop
+beq $zero, $zero, start1
 nop
 end1:
 #JUMP_STATEMENT

@@ -23,47 +23,27 @@ addi $sp, $gp, 16
 sw $t2, 16($sp)
 nop
 #ITERATION_STATEMENT
-#RELATIONAL_EXPRESSION
-#IDENTIFIER
-#CONSTANT
-addi $t2, $zero, 10
-addi $sp, $gp, 36
-sw $t2, 4($sp)
-nop
-addi $sp, $gp, 16
-lw $t0, 16($sp)
-nop
-addi $sp, $gp, 36
-lw $t1, 4($sp)
-nop
-slt $t2, $t0, $t1
-nop
-xori $t2, $t2, 1
-addi $sp, $gp, 36
-sw $t2, 4($sp)
-nop
 start1:
 #RELATIONAL_EXPRESSION
 #IDENTIFIER
 #CONSTANT
 addi $t2, $zero, 10
 addi $sp, $gp, 36
-sw $t2, 8($sp)
-nop
-addi $sp, $gp, 16
-lw $t0, 16($sp)
+sw $t2, 4($sp)
 nop
 addi $sp, $gp, 36
-lw $t1, 8($sp)
+lw $t0, 4($sp)
+nop
+addi $sp, $gp, 16
+lw $t1, 16($sp)
 nop
 slt $t2, $t0, $t1
 nop
-xori $t2, $t2, 1
 addi $sp, $gp, 36
-sw $t2, 8($sp)
+sw $t2, 4($sp)
 nop
 addi $sp, $gp, 36
-lw $t0, 8($sp)
+lw $t0, 4($sp)
 nop
 beq $t0, $zero, end1
 nop
@@ -95,6 +75,8 @@ lw $t2, 4($sp)
 nop
 addi $sp, $gp, 16
 sw $t2, 16($sp)
+nop
+beq $zero, $zero, start1
 nop
 end1:
 #JUMP_STATEMENT
