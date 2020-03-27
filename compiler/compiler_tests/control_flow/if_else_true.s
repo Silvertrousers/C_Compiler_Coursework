@@ -11,7 +11,7 @@ addi $t2, $zero, 1
 addi $sp, $gp, 32
 sw $t2, 4($sp)
 nop
-addi $sp, $gp, 16
+addi $sp, $gp, 32
 lw $t0, 4($sp)
 nop
 beq $t0, $zero, skip1

@@ -151,8 +151,8 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
       std::string skip = makeName("skip");
       std::string end = makeName("end");
       arg1 = branches[1]->make_mips(new_scope, sp, pc);
-      std::cout<<"addi $sp, $gp, "<<std::to_string(table.find_symbol(arg1).stack_pointer)<<std::endl;
-      std::cout<<"lw $t0, "<<table.find_symbol(arg1).offset<<"($sp)"<<std::endl;
+      std::cout<<"addi $sp, $gp, "<<std::to_string(new_scope.find_symbol(arg1).stack_pointer)<<std::endl;
+      std::cout<<"lw $t0, "<<new_scope.find_symbol(arg1).offset<<"($sp)"<<std::endl;
       std::cout<<"nop"<<std::endl;
       std::cout<< "beq $t0, $zero, " << skip << std::endl;
       std::cout<<"nop"<<std::endl;
