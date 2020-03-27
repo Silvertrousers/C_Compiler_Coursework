@@ -313,6 +313,7 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
         std::cout<<"sw $t0, "<<table.find_symbol("temp1").offset<<"($sp)"<<std::endl;
         std::cout<<"nop"<<std::endl;
         std::cout<<"addi $t2,$t0,1"<<std::endl;//x=x+the rest
+        std::cout<<"addi $sp, $gp, "<<std::to_string(table.find_symbol(arg1).stack_pointer)<<std::endl;
         std::cout<<"sw $t2, "<<table.find_symbol(arg1).offset<<"($sp)"<<std::endl;
         std::cout<<"nop"<<std::endl;
         table.t1_free = false;
@@ -323,6 +324,7 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
         std::cout<<"sw $t0, "<<table.find_symbol("temp2").offset<<"($sp)"<<std::endl;
         std::cout<<"nop"<<std::endl;
         std::cout<<"addi $t2,$t0,1"<<std::endl;//x=x+the rest
+        std::cout<<"addi $sp, $gp, "<<std::to_string(table.find_symbol(arg1).stack_pointer)<<std::endl;
         std::cout<<"sw $t2, "<<table.find_symbol(arg1).offset<<"($sp)"<<std::endl;
         std::cout<<"nop"<<std::endl;
         table.t2_free = false;
@@ -363,7 +365,6 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
         arg2 = branches[1]->make_mips(table, sp, pc);
         int array_index = branches[1]->eval_expr(table);
         //std::cout<<"I want to access: "<<arg1<<"_index_"<<std::to_string(array_index)<<std::endl;
-        std::cout<<"#I want to access: "<<arg1<<"_index_"<<std::to_string(array_index)<<std::endl;
         return arg1+"_index_"+std::to_string(array_index);
 
         // std::cout<<"addi $sp, $gp, "<<std::to_string(table.find_symbol(arg2).stack_pointer)<<std::endl;

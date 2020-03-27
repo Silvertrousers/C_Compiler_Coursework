@@ -59,6 +59,7 @@ addi $sp, $gp, 36
 sw $t0, 8($sp)
 nop
 addi $t2,$t0,1
+addi $sp, $gp, 16
 sw $t2, 16($sp)
 nop
 #Body
@@ -72,7 +73,7 @@ addi $sp, $gp, 48
 sw $t2, 4($sp)
 nop
 addi $sp, $gp, 48
-#name: temp1, offset: 4, value: 139237780
+#name: temp1, offset: 4, value: 1429928340
 lw $2, 4($sp)
 nop
 jr $ra

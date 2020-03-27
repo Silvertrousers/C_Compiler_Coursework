@@ -1,10 +1,14 @@
 int f()
 {
-    int x;
-    x=5678;
-    {
-        int x;
-        x=1234;
+    int i;
+    int x[8];
+    int acc;
+    for(i=8; i<16; i++){
+        x[i-8]=i;
     }
-    return x;
+    acc=0;
+    for(i=0; i<8; i++){
+        acc=acc+x[i+0];
+    }
+    return acc;
 }
