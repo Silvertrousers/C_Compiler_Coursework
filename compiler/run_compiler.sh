@@ -1,6 +1,6 @@
 #!/bin/bash
- make clean
- make
+make clean
+make
 echo "=============================="
 (./bin/compiler < ./$1.c) > ./$1.s
 mips-linux-gnu-gcc -mfp32 -o $1.o -c $1.s
@@ -328,19 +328,19 @@ mips-linux-gnu-gcc -mfp32 -static -o $a $a.o $a"_driver".c
 qemu-mips $a
 echo $a ": " $?
 echo "=============================="
-a="./compiler_tests/functions/call_mutual_recursive"
-(./bin/compiler < $a.c) > $a.s
-mips-linux-gnu-gcc -mfp32 -o $a.o -c $a.s
-mips-linux-gnu-gcc -mfp32 -static -o $a $a.o $a"_driver".c
-qemu-mips $a
-echo $a ": " $?
+# a="./compiler_tests/functions/call_mutual_recursive"
+# (./bin/compiler < $a.c) > $a.s
+# mips-linux-gnu-gcc -mfp32 -o $a.o -c $a.s
+# mips-linux-gnu-gcc -mfp32 -static -o $a $a.o $a"_driver".c
+# qemu-mips $a
+# echo $a ": " $?
 echo "=============================="
-a="./compiler_tests/functions/call_recursive_internal"
-(./bin/compiler < $a.c) > $a.s
-mips-linux-gnu-gcc -mfp32 -o $a.o -c $a.s
-mips-linux-gnu-gcc -mfp32 -static -o $a $a.o $a"_driver".c
-qemu-mips $a
-echo $a ": " $?
+# a="./compiler_tests/functions/call_recursive_internal"
+# (./bin/compiler < $a.c) > $a.s
+# mips-linux-gnu-gcc -mfp32 -o $a.o -c $a.s
+# mips-linux-gnu-gcc -mfp32 -static -o $a $a.o $a"_driver".c
+# qemu-mips $a
+# echo $a ": " $?
 echo "=============================="
 
 a="./compiler_tests/functions/call_two_args_internal"

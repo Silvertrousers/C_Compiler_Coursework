@@ -307,7 +307,7 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
     if (value == "fn_call"){
       symbol fn = table.find_symbol(branches[0]->value);
       symbol_table new_scope = symbol_table(&table);
-
+      new_scope.insert(fn);
       if (branches[1]->node_type == "ARGUMENT_EXPRESSION_LIST"){
           branches[1]->make_mips(new_scope, sp, pc);
       }
@@ -319,15 +319,15 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
       }
       if (table.find_symbol(branches[0]->value).name != "NULL"){
         //save old return address
-        std::cout<<"addi $sp, $gp, "<<std::to_string(table.find_symbol(fn.name).stack_pointer)<<std::endl;
-        std::cout<<"sw $ra, "<<table.find_symbol("return_address").offset<<"($sp)"<<std::endl;
+        std::cout<<"addi $sp, $gp, "<<std::to_string(new_scope.find_symbol(fn.name).stack_pointer)<<std::endl;
+        std::cout<<"sw $ra, "<<new_scope.find_symbol("return_address").offset<<"($sp)"<<std::endl;
         std::cout<<"nop"<<std::endl;
         //put in new return address for fn call
         std::cout << "jal " << fn.name << std::endl;
         std::cout<<"nop"<<std::endl;
         //put back old return address
-        std::cout<<"addi $sp, $gp, "<<std::to_string(table.find_symbol(fn.name).stack_pointer)<<std::endl;
-        std::cout<<"lw $ra, "<<table.find_symbol("return_address").offset<<"($sp)"<<std::endl;
+        std::cout<<"addi $sp, $gp, "<<std::to_string(new_scope.find_symbol(fn.name).stack_pointer)<<std::endl;
+        std::cout<<"lw $ra, "<<new_scope.find_symbol("return_address").offset<<"($sp)"<<std::endl;
         std::cout<<"nop"<<std::endl;
       }
       //fn call return value goes to register $v0, which is then stored in temp1/2 to be used in operations
@@ -349,17 +349,10 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
   }
 
   if(node_type == "ARGUMENT_EXPRESSION_LIST"){/*std::cout<<node_type<<std::endl;*/
-      arg1 = branches[1]->make_mips(table, sp, pc);
-      std::cout << "add $a3, $a2, $zero" <<std::endl;
-      std::cout << "add $a2, $a1, $zero" <<std::endl;
-      std::cout << "add $a1, $a0, $zero" <<std::endl;
-      std::cout<<"addi $sp, $gp, "<<std::to_string(table.find_symbol(arg1).stack_pointer)<<std::endl;
-      std::cout<<"lw $a0, "<<table.find_symbol(arg1).offset<<"($sp)"<<std::endl;
-      std::cout<<"nop"<<std::endl;
-      if (branches[0]->node_type == "ARGUMENT_EXPRESSION_LIST"){
-          branches[0]->make_mips(table, sp, pc);
-      }
-      if (branches[0]->node_type == "ASSIGNMENT_EXPRESSION"){
+
+
+
+      if (branches[0]->node_type != "ARGUMENT_EXPRESSION_LIST"){
           arg1 = branches[0]->make_mips(table, sp, pc);
           std::cout << "add $a3, $a2, $zero" <<std::endl;
           std::cout << "add $a2, $a1, $zero" <<std::endl;
@@ -368,6 +361,18 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
           std::cout<<"lw $a0, "<<table.find_symbol(arg1).offset<<"($sp)"<<std::endl;
           std::cout<<"nop"<<std::endl;
       }
+      else{
+        branches[0]->make_mips(table, sp, pc);//no need for if statement as the other option is a NULL branch which returns nothing anyway
+      }
+      arg1 = branches[1]->make_mips(table, sp, pc);
+      std::cout << "add $a3, $a2, $zero" <<std::endl;
+      std::cout << "add $a2, $a1, $zero" <<std::endl;
+      std::cout << "add $a1, $a0, $zero" <<std::endl;
+      std::cout<<"addi $sp, $gp, "<<std::to_string(table.find_symbol(arg1).stack_pointer)<<std::endl;
+      std::cout<<"lw $a0, "<<table.find_symbol(arg1).offset<<"($sp)"<<std::endl;
+      std::cout<<"nop"<<std::endl;
+
+
   }
   if(node_type == "UNARY_EXPRESSION"){/*std::cout<<node_type<<std::endl;*/
     if(value == "++"){
@@ -399,7 +404,19 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
     if(branches[0]->value == "AND"){}//pointers
     if(branches[0]->value == "times"){}//pointers so dont do yet
     if(branches[0]->value == "plus"){}//type level promotion, do later
-    if(branches[0]->value == "minus"){}//type level demotion, do later
+    if(branches[0]->value == "minus"){
+      arg1 = branches[1]->make_mips(table, sp, pc);
+      std::cout<<"addi $sp, $gp, "<<std::to_string(table.find_symbol(arg1).stack_pointer)<<std::endl;
+      std::cout<<"lw $t0, "<<table.find_symbol(arg1).offset<<"($sp)"<<std::endl;
+      std::cout<<"nop"<<std::endl;
+      std::cout<<"Nor $t2,$t0,$t0"<<std::endl;//negate value in $t0
+      std::cout<<"addi $t2,$t2,1"<<std::endl;
+      std::cout<<"sw $t2, "<<table.find_symbol(arg1).offset<<"($sp)"<<std::endl;
+      std::cout<<"nop"<<std::endl;
+      table.t1_free = true;
+      table.t2_free = true;
+      return arg1;
+    }//type level demotion, do later
     if(branches[0]->value == "bitwise_not"){
       arg1 = branches[1]->make_mips(table, sp, pc);
       std::cout<<"addi $sp, $gp, "<<std::to_string(table.find_symbol(arg1).stack_pointer)<<std::endl;
@@ -773,7 +790,7 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
     arg1 =branches[0]->make_mips(table, sp, pc);
     arg2 =branches[1]->make_mips(table, sp, pc);
 
-  
+
     if(value == "<"){var_or_const_instr("slt", "slti", arg1, arg2, table);}
     if(value == ">"){var_or_const_instr("slt", "slti", arg2, arg1, table);}//this nots the less than to make a greater than instruction
 

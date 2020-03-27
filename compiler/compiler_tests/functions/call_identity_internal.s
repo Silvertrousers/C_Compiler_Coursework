@@ -26,12 +26,12 @@ f:
 #NULL
 #JUMP_STATEMENT
 #POSTFIX_EXPRESSION
-addi $sp, $gp, 0
+addi $sp, $gp, 36
 sw $ra, 12($sp)
 nop
 jal g
 nop
-addi $sp, $gp, 0
+addi $sp, $gp, 36
 lw $ra, 12($sp)
 nop
 addi $sp, $gp, 20
