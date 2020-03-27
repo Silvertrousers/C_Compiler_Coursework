@@ -253,6 +253,7 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
     if (branches[0]->node_type == "RETURN"){
       if (branches[1]->node_type != "NULL"){
         arg1 = branches[1]->make_mips(table, sp, pc);
+        std::cout<<"#"<<arg1<<std::endl;
         std::cout<<"addi $sp, $gp, "<<std::to_string(table.find_symbol(arg1).stack_pointer)<<std::endl;
         std::cout<<"lw $2, "<<table.find_symbol(arg1).offset<<"($sp)"<<std::endl;
         std::cout<<"nop"<<std::endl;
@@ -299,14 +300,40 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
       arg1 = branches[0]->make_mips(table, sp, pc);
       if(branches[1] != NULL){
         arg2 = branches[1]->make_mips(table, sp, pc);
-        int array_index = branches[1]->eval_expr();
+        int array_index = branches[1]->eval_expr(table);
         //std::cout<<"I want to access: "<<arg1<<"_index_"<<std::to_string(array_index)<<std::endl;
+        std::cout<<"#I want to access: "<<arg1<<"_index_"<<std::to_string(array_index)<<std::endl;
         return arg1+"_index_"+std::to_string(array_index);
+
+        // std::cout<<"addi $sp, $gp, "<<std::to_string(table.find_symbol(arg2).stack_pointer)<<std::endl;
+        // std::cout<<"lw $t0, "<<table.find_symbol(arg2).offset<<"($sp)"<<std::endl;
+        // std::cout<<"sll $t0, $t0, 2"<<std::endl;
+        // std::cout<<"addi $sp, $gp, "<<std::to_string(table.find_symbol(arg1+"_index_0").stack_pointer)<<std::endl;
+        // std::cout<<"add $sp, $sp, $t0"<<std::endl;
+        // std::cout<<"lw $t2, "<<table.find_symbol(arg1+"_index_0").offset<<"($sp)"<<std::endl;
+        //
+        // if(table.t1_free == true){
+        //   std::cout<<"addi $sp, $gp, "<<std::to_string(table.stack_pointer)<<std::endl;
+        //   std::cout<<"sw $t2, "<<table.find_symbol("temp1").offset<<"($sp)"<<std::endl;
+        //   std::cout<<"nop"<<std::endl;
+        //   return "temp1";
+        //   table.t1_free = false;
+        // }
+        // if(table.t2_free == true){
+        //   std::cout<<"addi $sp, $gp, "<<std::to_string(table.stack_pointer)<<std::endl;
+        //   std::cout<<"sw $t2, "<<table.find_symbol("temp2").offset<<"($sp)"<<std::endl;
+        //   std::cout<<"nop"<<std::endl;
+        //   return "temp2";
+        //   table.t2_free = false;
+        // }
+
       }
     }
     if (value == "fn_call"){
       symbol fn = table.find_symbol(branches[0]->value);
+
       symbol_table new_scope = symbol_table(&table);
+
       new_scope.insert(fn);
       if (branches[1]->node_type == "ARGUMENT_EXPRESSION_LIST"){
           branches[1]->make_mips(new_scope, sp, pc);
@@ -482,17 +509,22 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
       s.type = "int";
       table.insert(s);
       if(branches[1]->node_type == "NULL"){
-        table.find_symbol(s.name).value = "0";
+        s.numerical_value = 0;
+        //table.replace(s);
       }
       else{
         arg1 = branches[1]->make_mips(table, sp, pc);
-        table.find_symbol(s.name).value = table.find_symbol(arg1).value;
+
         std::cout<<"addi $sp, $gp, "<<std::to_string(table.find_symbol(arg1).stack_pointer)<<std::endl;
         std::cout<<"lw $t2, "<<table.find_symbol(arg1).offset<<"($sp)"<<std::endl;
         std::cout<<"nop"<<std::endl;
         std::cout<<"sw $t2, "<<table.find_symbol(s.name).offset<<"($sp)"<<std::endl;
         std::cout<<"nop"<<std::endl;
+
+        s.numerical_value = branches[1]->eval_expr(table);
+        //table.replace(s);
       }
+
       return s.name;
     }
     else{
@@ -506,9 +538,13 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
         std::cout<<"addi $sp, $gp, "<<std::to_string(table.find_symbol(arg1).stack_pointer)<<std::endl;
         std::cout<<"sw $t2, "<<table.find_symbol(arg1).offset<<"($sp)"<<std::endl;
         std::cout<<"nop"<<std::endl;
+        symbol copy = table.find_symbol(arg1);
+        copy.numerical_value = branches[2]->eval_expr(table);
+        //table.replace(copy);
       }
       table.t1_free = true;
       table.t2_free = true;
+
       return arg1;
     }
 
@@ -558,7 +594,7 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
     /*std::cout<<node_type<<std::endl;*/
 
     if(value == "array_decl"){
-      int array_size = branches[1]->eval_expr();
+      int array_size = branches[1]->eval_expr(table);
       for(int i=0; i<array_size; i++){
         symbol * s = new symbol();
         s->name = branches[0]->value+"_index_"+std::to_string(i);
@@ -789,8 +825,7 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
     /*std::cout<<node_type<<std::endl;*/
     arg1 =branches[0]->make_mips(table, sp, pc);
     arg2 =branches[1]->make_mips(table, sp, pc);
-
-
+  
     if(value == "<"){var_or_const_instr("slt", "slti", arg1, arg2, table);}
     if(value == ">"){var_or_const_instr("slt", "slti", arg2, arg1, table);}//this nots the less than to make a greater than instruction
 
@@ -1000,6 +1035,7 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
       std::cout<<"addi $sp, $gp, "<<std::to_string(table.find_symbol(s).stack_pointer)<<std::endl;
       std::cout<<"sw $t2, "<<table.find_symbol(s).offset<<"($sp)"<<std::endl;
       std::cout<<"nop"<<std::endl;
+
       table.t1_free = true;
       table.t2_free = true;
     }
@@ -1150,12 +1186,16 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
       table.t1_free = true;
       table.t2_free = true;
     }
+    symbol copy = table.find_symbol(s);
+
+    copy.numerical_value = branches[2]->eval_expr(table);
+    table.replace(copy);
     return s;
   }
   return "";
 }
 
-int ast_node::eval_expr(){
+int ast_node::eval_expr(symbol_table table){
 
   if(node_type == "SIZE_OF"){/*std::cout<<node_type<<std::endl;*/}
 
@@ -1168,72 +1208,72 @@ int ast_node::eval_expr(){
   if(node_type == "MULTIPLICATIVE_EXPRESSION"){
     /*std::cout<<node_type<<std::endl;*/
     if(value == "*"){
-      return (branches[0]->eval_expr() * branches[1]->eval_expr());
+      return (branches[0]->eval_expr(table) * branches[1]->eval_expr(table));
     }
     if(value == "/"){
-      return (branches[0]->eval_expr() / branches[1]->eval_expr());
+      return (branches[0]->eval_expr(table) / branches[1]->eval_expr(table));
     }
     if(value =="%"){
-      return (branches[0]->eval_expr() % branches[1]->eval_expr());
+      return (branches[0]->eval_expr(table) % branches[1]->eval_expr(table));
     }
   }
   if(node_type == "ADDITIVE_EXPRESSION"){
     /*std::cout<<node_type<<std::endl;*/
     if(value == "+"){
-      return (branches[0]->eval_expr() + branches[1]->eval_expr());
+      return (branches[0]->eval_expr(table) + branches[1]->eval_expr(table));
     }
     if(value == "-"){
-      return (branches[0]->eval_expr() - branches[1]->eval_expr());
+      return (branches[0]->eval_expr(table) - branches[1]->eval_expr(table));
     }
   }
   if(node_type == "SHIFT_EXPRESSION"){/*std::cout<<node_type<<std::endl;*/
     if(value == ">>"){
-      return (branches[0]->eval_expr() >> branches[1]->eval_expr());
+      return (branches[0]->eval_expr(table) >> branches[1]->eval_expr(table));
     }
     if(value == "<<"){
-      return (branches[0]->eval_expr() << branches[1]->eval_expr());
+      return (branches[0]->eval_expr(table) << branches[1]->eval_expr(table));
     }
   }
 
   if(node_type == "RELATIONAL_EXPRESSION"){
     /*std::cout<<node_type<<std::endl;*/
     if(value == ">"){
-      return (branches[0]->eval_expr() > branches[1]->eval_expr());
+      return (branches[0]->eval_expr(table) > branches[1]->eval_expr(table));
     }
     if(value == "<"){
-      return (branches[0]->eval_expr() < branches[1]->eval_expr());
+      return (branches[0]->eval_expr(table) < branches[1]->eval_expr(table));
     }
   }
   if(node_type == "EQUALITY_EXPRESSION"){
     /*std::cout<<node_type<<std::endl;*/
-    return (branches[0]->eval_expr() == branches[1]->eval_expr());
+    return (branches[0]->eval_expr(table) == branches[1]->eval_expr(table));
   }
   if(node_type == "AND_EXPRESSION"){
     /*std::cout<<node_type<<std::endl;*/
-    return (branches[0]->eval_expr() & branches[1]->eval_expr());
+    return (branches[0]->eval_expr(table) & branches[1]->eval_expr(table));
   }
   if(node_type == "EXCLUSIVE_OR_EXPRESSION"){
     /*std::cout<<node_type<<std::endl;*/
-    return (branches[0]->eval_expr() ^ branches[1]->eval_expr());
+    return (branches[0]->eval_expr(table) ^ branches[1]->eval_expr(table));
   }
   if(node_type == "INCLUSIVE_OR_EXPRESSION"){
     /*std::cout<<node_type<<std::endl;*/
-    return (branches[0]->eval_expr() | branches[1]->eval_expr());
+    return (branches[0]->eval_expr(table) | branches[1]->eval_expr(table));
   }//hi
   if(node_type == "LOGICAL_AND_EXPRESSION"){
     /*std::cout<<node_type<<std::endl;*/
-    return (branches[0]->eval_expr() && branches[1]->eval_expr());
+    return (branches[0]->eval_expr(table) && branches[1]->eval_expr(table));
   }
   if(node_type == "LOGICAL_OR_EXPRESSION"){
     /*std::cout<<node_type<<std::endl;*/
-    return (branches[0]->eval_expr() || branches[1]->eval_expr());
+    return (branches[0]->eval_expr(table) || branches[1]->eval_expr(table));
   }
 
   if(node_type == "CONSTANT_EXPRESSION"){/*std::cout<<node_type<<std::endl;*/
 
   }
   if(node_type == "ASSIGNMENT_EXPRESSION"){/*std::cout<<node_type<<std::endl;*/
-    return branches[1]->eval_expr();
+    return branches[1]->eval_expr(table);
   }
   if(node_type == "PRIMARY_EXPRESSION"){/*std::cout<<node_type<<std::endl;*/
 
@@ -1242,7 +1282,9 @@ int ast_node::eval_expr(){
     return stoi(value);
   }
   if(node_type == "IDENTIFIER"){/*std::cout<<node_type<<std::endl;*/
+    return table.find_symbol(value).numerical_value;
   }
+  return 0;
 }
 
 std::string var_or_const_instr(std::string v_instr, std::string c_instr, std::string arg1, std::string arg2, symbol_table& table){

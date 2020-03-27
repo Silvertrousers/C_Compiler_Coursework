@@ -9,7 +9,7 @@ struct symbol{
   std::string type;
   int label; //points to somewhere in instruciton mem
   std::string value;
-  float numerical_value;
+  int numerical_value;
   int offset;
   int stack_pointer;
 };
@@ -17,6 +17,7 @@ struct symbol{
 class symbol_table{
   public:
     void insert(symbol s);
+    void replace(symbol s);
     void print_table(int depth);
     symbol find_symbol(std::string in);
     symbol_table();

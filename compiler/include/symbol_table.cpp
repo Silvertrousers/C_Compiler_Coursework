@@ -35,7 +35,18 @@ symbol symbol_table::find_symbol(std::string in){
 	  return null_symbol;
   }
 }
-
+void symbol_table::replace(symbol s){
+	for(int i=0;i<(symbols.size());i++){
+    if(symbols[i].name== s.name){
+			std::cout<<"#symbols[i]: "<<symbols[i].name<<", "<<symbols[i].numerical_value<<std::endl;
+			std::cout<<"#s: "<<s.name<<", "<<s.numerical_value<<std::endl;	
+      symbols[i] = s;
+    }
+  }
+  if (parent != NULL) {
+	  return parent->replace(s);
+  }
+}
 symbol_table::symbol_table(){
 	parent = NULL;
 	stack_pointer = 0;

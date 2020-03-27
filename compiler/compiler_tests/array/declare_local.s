@@ -27,8 +27,11 @@ nop
 addi $sp, $gp, 16
 sw $t2, 16($sp)
 nop
+#symbols[i]: y, 0
+#s: y, 13
 #JUMP_STATEMENT
 #IDENTIFIER
+#y
 addi $sp, $gp, 16
 lw $2, 16($sp)
 nop
