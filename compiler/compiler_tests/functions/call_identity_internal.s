@@ -13,6 +13,7 @@ nop
 #JUMP_STATEMENT
 #IDENTIFIER
 addi $sp, $gp, 16
+#name: x, offset: 16, value: 2058998964
 lw $2, 16($sp)
 nop
 jr $ra
@@ -46,6 +47,7 @@ addi $sp, $gp, 20
 sw $2, 4($sp)
 nop
 addi $sp, $gp, 20
+#name: temp1, offset: 4, value: -169436780
 lw $2, 4($sp)
 nop
 jr $ra

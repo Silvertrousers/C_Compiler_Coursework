@@ -22,6 +22,8 @@ nop
 addi $sp, $gp, 16
 sw $t2, 16($sp)
 nop
+#symbols[i]: x, 0
+#s: x, 1
 #ITERATION_STATEMENT
 start1:
 #IDENTIFIER
@@ -46,6 +48,8 @@ nop
 addi $sp, $gp, 16
 sw $t2, 16($sp)
 nop
+#symbols[i]: x, 1
+#s: x, 0
 beq $zero, $zero, start1
 nop
 end1:
@@ -56,6 +60,7 @@ addi $sp, $gp, 16
 sw $t2, 4($sp)
 nop
 addi $sp, $gp, 16
+#name: temp1, offset: 4, value: 0
 lw $2, 4($sp)
 nop
 jr $ra

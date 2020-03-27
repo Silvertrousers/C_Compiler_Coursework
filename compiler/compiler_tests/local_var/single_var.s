@@ -21,9 +21,12 @@ nop
 addi $sp, $gp, 16
 sw $t2, 16($sp)
 nop
+#symbols[i]: x, 0
+#s: x, 1234
 #JUMP_STATEMENT
 #IDENTIFIER
 addi $sp, $gp, 16
+#name: x, offset: 16, value: 1234
 lw $2, 16($sp)
 nop
 jr $ra

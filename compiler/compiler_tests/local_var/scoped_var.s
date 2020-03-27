@@ -22,6 +22,8 @@ nop
 addi $sp, $gp, 16
 sw $t2, 16($sp)
 nop
+#symbols[i]: x, 0
+#s: x, 5678
 #STATEMENT
 #COMPOUND_STATEMENT
 #DECLARATION
@@ -40,9 +42,12 @@ nop
 addi $sp, $gp, 36
 sw $t2, 12($sp)
 nop
+#symbols[i]: x, 0
+#s: x, 1234
 #JUMP_STATEMENT
 #IDENTIFIER
 addi $sp, $gp, 16
+#name: x, offset: 16, value: 5678
 lw $2, 16($sp)
 nop
 jr $ra

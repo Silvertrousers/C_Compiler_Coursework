@@ -47,9 +47,12 @@ nop
 addi $sp, $gp, 16
 sw $t2, 24($sp)
 nop
+#symbols[i]: z, 2
+#s: z, -2
 #JUMP_STATEMENT
 #IDENTIFIER
 addi $sp, $gp, 16
+#name: z, offset: 24, value: -2
 lw $2, 24($sp)
 nop
 jr $ra

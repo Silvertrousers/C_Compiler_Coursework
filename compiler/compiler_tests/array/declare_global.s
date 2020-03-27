@@ -17,8 +17,8 @@ addi $t2, $zero, 11
 addi $sp, $gp, 48
 sw $t2, 4($sp)
 nop
-#temp1
 addi $sp, $gp, 48
+#name: temp1, offset: 4, value: 2005391764
 lw $2, 4($sp)
 nop
 jr $ra

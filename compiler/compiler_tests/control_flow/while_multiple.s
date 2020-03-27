@@ -22,6 +22,8 @@ nop
 addi $sp, $gp, 16
 sw $t2, 16($sp)
 nop
+#symbols[i]: x, 0
+#s: x, 20
 #ITERATION_STATEMENT
 start1:
 #RELATIONAL_EXPRESSION
@@ -76,12 +78,15 @@ nop
 addi $sp, $gp, 16
 sw $t2, 16($sp)
 nop
+#symbols[i]: x, 20
+#s: x, 19
 beq $zero, $zero, start1
 nop
 end1:
 #JUMP_STATEMENT
 #IDENTIFIER
 addi $sp, $gp, 16
+#name: x, offset: 16, value: 19
 lw $2, 16($sp)
 nop
 jr $ra

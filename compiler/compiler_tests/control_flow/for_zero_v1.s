@@ -22,6 +22,8 @@ nop
 addi $sp, $gp, 16
 sw $t2, 16($sp)
 nop
+#symbols[i]: x, 0
+#s: x, 0
 start1:
 #Condition
 #RELATIONAL_EXPRESSION
@@ -74,6 +76,8 @@ nop
 addi $sp, $gp, 16
 sw $t2, 16($sp)
 nop
+#symbols[i]: x, 0
+#s: x, 1
 #Body
 #STATEMENT
 #COMPOUND_STATEMENT
@@ -85,6 +89,7 @@ addi $sp, $gp, 48
 sw $t2, 4($sp)
 nop
 addi $sp, $gp, 48
+#name: temp1, offset: 4, value: -1887729260
 lw $2, 4($sp)
 nop
 jr $ra
@@ -99,6 +104,7 @@ addi $sp, $gp, 16
 sw $t2, 4($sp)
 nop
 addi $sp, $gp, 16
+#name: temp1, offset: 4, value: 0
 lw $2, 4($sp)
 nop
 jr $ra

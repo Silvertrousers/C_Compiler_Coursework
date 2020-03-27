@@ -41,8 +41,8 @@ addi $sp, $gp, 16
 sw $t2, 4($sp)
 nop
 #I want to access: x_index_0
-#x_index_0
 addi $sp, $gp, 16
+#name: x_index_0, offset: 16, value: 23
 lw $2, 16($sp)
 nop
 jr $ra

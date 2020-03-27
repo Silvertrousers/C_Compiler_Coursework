@@ -47,6 +47,7 @@ nop
 #JUMP_STATEMENT
 #IDENTIFIER
 addi $sp, $gp, 16
+#name: x, offset: 20, value: 10
 lw $2, 20($sp)
 nop
 jr $ra

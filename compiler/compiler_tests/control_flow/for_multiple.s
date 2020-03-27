@@ -26,6 +26,8 @@ nop
 addi $sp, $gp, 16
 sw $t2, 20($sp)
 nop
+#symbols[i]: y, 0
+#s: y, 0
 #ITERATION_STATEMENT
 #ASSIGNMENT_EXPRESSION
 #IDENTIFIER
@@ -40,6 +42,8 @@ nop
 addi $sp, $gp, 16
 sw $t2, 16($sp)
 nop
+#symbols[i]: x, 0
+#s: x, 0
 start1:
 #Condition
 #RELATIONAL_EXPRESSION
@@ -92,6 +96,8 @@ nop
 addi $sp, $gp, 16
 sw $t2, 16($sp)
 nop
+#symbols[i]: x, 0
+#s: x, 1
 #Body
 #STATEMENT
 #COMPOUND_STATEMENT
@@ -122,12 +128,15 @@ nop
 addi $sp, $gp, 16
 sw $t2, 20($sp)
 nop
+#symbols[i]: y, 0
+#s: y, -1
 beq $zero, $zero, start1
 nop
 end1:
 #JUMP_STATEMENT
 #IDENTIFIER
 addi $sp, $gp, 16
+#name: y, offset: 20, value: -1
 lw $2, 20($sp)
 nop
 jr $ra
