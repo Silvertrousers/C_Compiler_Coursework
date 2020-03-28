@@ -1,4 +1,4 @@
 #!/bin/bash
-make clean
-make
+#make clean
+#make
 (./translator/bin/c_translator < ./$1) > ./$2
