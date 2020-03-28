@@ -102,8 +102,7 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
   }
 
   if(node_type == "STATEMENT"){/*std::cout<<node_type<<std::endl;*/
-    symbol_table new_scope = symbol_table(&table);
-    branches[0]->make_mips(new_scope, sp, pc);
+    branches[0]->make_mips(table, sp, pc);
   }
   if(node_type == "LABELED_STATEMENT"){/*std::cout<<node_type<<std::endl;*/
       if (branches[0]->node_type == "CASE"){
@@ -134,12 +133,8 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
   if(node_type == "CASE"){/*std::cout<<node_type<<std::endl;*/}
   if(node_type == "COMPOUND_STATEMENT"){/*std::cout<<node_type<<std::endl;*/
     //symbol_table new_scope = symbol_table(&table);
-    if (branches[0]->node_type != "NULL"){
-        branches[0]->make_mips(table, sp, pc);
-    }
-    if (branches[1]->node_type != "NULL"){
-        branches[1]->make_mips(table, sp, pc);
-    }
+    branches[0]->make_mips(table, sp, pc);
+    branches[1]->make_mips(table, sp, pc);
   }
   if(node_type == "DECLARATION_LIST"){/*std::cout<<node_type<<std::endl;*/
     if(branches[0] != NULL){branches[0]->make_mips(table, sp, pc);}
@@ -181,14 +176,14 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
         arg1 = branches[1]->make_mips(new_scope, sp, pc);
         int def_no = default_counter;
         std::cout<<"addi $sp, $gp, "<<std::to_string(new_scope.find_symbol(arg1).stack_pointer)<<std::endl;
-        std::cout<<"lw $t0, "<<table.find_symbol(arg1).offset<<"($sp)"<<std::endl;
+        std::cout<<"lw $t0, "<<new_scope.find_symbol(arg1).offset<<"($sp)"<<std::endl;
         std::cout<<"nop"<<std::endl;
         symbol temp;
         temp.name = "3";
         temp.type = "switch_value";
         table.insert(temp);
         std::cout<<"addi $sp, $gp, "<<std::to_string(new_scope.find_symbol("3").stack_pointer)<<std::endl;
-        std::cout<<"sw $t0, "<<table.find_symbol("3").offset<<"($sp)"<<std::endl;
+        std::cout<<"sw $t0, "<<new_scope.find_symbol("3").offset<<"($sp)"<<std::endl;
         std::cout<<"nop"<<std::endl;
         std::cout << "beq $zero, $zero, casestart" << std::to_string(case_counter+1)<<std::endl;
         branches[2]->make_mips(new_scope, sp, pc);
@@ -258,28 +253,30 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
   if(node_type == "T_WHILE"){/*std::cout<<node_type<<std::endl;*/}
   if(node_type == "T_DO"){/*std::cout<<node_type<<std::endl;*/}
   if(node_type == "JUMP_STATEMENT"){/*std::cout<<node_type<<std::endl;*/
-    if (branches[0]->node_type == "RETURN"){
-      if (branches[1]->node_type != "NULL"){
-        arg1 = branches[1]->make_mips(table, sp, pc);
-        if(table.find_symbol(arg1).stack_pointer > table.stack_pointer){
-          std::cout<<"addi $sp, $gp, "<<std::to_string(table.stack_pointer)<<std::endl;
+    if (branches.size() > 0){
+        if (branches[0]->node_type == "RETURN"){
+            if (branches[1]->node_type != "NULL"){
+                arg1 = branches[1]->make_mips(table, sp, pc);
+                if(table.find_symbol(arg1).stack_pointer > table.stack_pointer){
+                std::cout<<"addi $sp, $gp, "<<std::to_string(table.stack_pointer)<<std::endl;
+                }
+                else{
+                std::cout<<"addi $sp, $gp, "<<std::to_string(table.find_symbol(arg1).stack_pointer)<<std::endl;
+                }
+                std::cout<<"#name: "<<table.find_symbol(arg1).name<<", offset: "<<table.find_symbol(arg1).offset<<", value: "<<table.find_symbol(arg1).numerical_value<<std::endl;
+                std::cout<<"lw $2, "<<table.find_symbol(arg1).offset<<"($sp)"<<std::endl;
+                std::cout<<"nop"<<std::endl;
+            }
+            std::cout << "jr $ra" << std::endl;
+            std::cout<<"nop"<<std::endl;
         }
-        else{
-          std::cout<<"addi $sp, $gp, "<<std::to_string(table.find_symbol(arg1).stack_pointer)<<std::endl;
-        }
-        std::cout<<"#name: "<<table.find_symbol(arg1).name<<", offset: "<<table.find_symbol(arg1).offset<<", value: "<<table.find_symbol(arg1).numerical_value<<std::endl;
-        std::cout<<"lw $2, "<<table.find_symbol(arg1).offset<<"($sp)"<<std::endl;
-        std::cout<<"nop"<<std::endl;
-      }
-      std::cout << "jr $ra" << std::endl;
-      std::cout<<"nop"<<std::endl;
     }
     if (value == "break"){
-        std::cout << "beq $zero, $zero," << table.end_label;
+        std::cout << "beq $zero, $zero, " << table.end_label << std::endl;
         std::cout << "nop" << std::endl;
     }
     if (value == "continue"){
-        std::cout << "beq $zero, $zero," << table.start_label;
+        std::cout << "beq $zero, $zero, " << table.start_label << std::endl;
         std::cout << "nop" << std::endl;
     }
   }
