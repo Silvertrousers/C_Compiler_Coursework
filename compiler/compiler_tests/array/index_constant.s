@@ -18,7 +18,6 @@ addi $t2, $zero, 0
 addi $sp, $gp, 16
 sw $t2, 4($sp)
 nop
-#I want to access: x_index_0
 #CONSTANT
 addi $t2, $zero, 23
 addi $sp, $gp, 16
@@ -40,7 +39,6 @@ addi $t2, $zero, 0
 addi $sp, $gp, 16
 sw $t2, 4($sp)
 nop
-#I want to access: x_index_0
 addi $sp, $gp, 16
 #name: x_index_0, offset: 16, value: 23
 lw $2, 16($sp)

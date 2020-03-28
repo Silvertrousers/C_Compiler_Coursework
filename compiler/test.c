@@ -1,14 +1,10 @@
-int f()
+int g(int x)
 {
-    int i;
-    int x[8];
-    int acc;
-    for(i=8; i<16; i++){
-        x[i-8]=i;
+    switch(x)
+    {
+        case 1:
+            return 10;
+        case 2:
+            return 11;
     }
-    acc=0;
-    for(i=0; i<8; i++){
-        acc=acc+x[i+0];
-    }
-    return acc;
 }

@@ -1,0 +1,28 @@
+#FUNCTION_DECLARATION
+.globl g
+#TYPE_SPECIFIER
+g:
+#DIRECT_DECLARATOR
+#PARAMETER_DECLARATION
+addi $sp, $gp, 16
+sw $a0, 16($sp)
+nop
+#COMPOUND_STATEMENT
+#NULL
+#SELECTION_STATEMENT
+start1:
+#IDENTIFIER
+lw $t0, 16($sp)
+nop
+sw $t0, 20($sp)
+nop
+beq $zero, $zero, casestart1#STATEMENT
+#COMPOUND_STATEMENT
+#NULL
+#STATEMENT_LIST
+#LABELED_STATEMENT
+#LABELED_STATEMENT
+beq $zero, $zero, end1
+nop
+casestart1:
+end1:

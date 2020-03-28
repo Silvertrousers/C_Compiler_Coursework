@@ -106,15 +106,17 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
     branches[0]->make_mips(new_scope, sp, pc);
   }
   if(node_type == "LABELED_STATEMENT"){/*std::cout<<node_type<<std::endl;*/
-      if (branches[0]->node_type == "T_CASE"){
+      if (branches[0]->node_type == "CASE"){
           std::string casestart = makeCaseStart(1);
           std::string caseend = makeCaseEnd(0);
           std::cout << "beq $zero, $zero," << caseend << std::endl;
           std::cout<<"nop"<<std::endl;
           std::cout << casestart << ":" << std::endl;
           arg1 = branches[1]->make_mips(table, sp, pc);
+          std::cout<<"addi $sp, $gp, "<<std::to_string(table.find_symbol("3").stack_pointer)<<std::endl;
           std::cout<<"lw $t0, "<<table.find_symbol("3").offset<<"($sp)"<<std::endl;
           std::cout<<"nop"<<std::endl;
+          std::cout<<"addi $sp, $gp, "<<std::to_string(table.find_symbol(arg1).stack_pointer)<<std::endl;
           std::cout<<"lw $t1, "<<table.find_symbol(arg1).offset<<"($sp)"<<std::endl;
           std::cout<<"nop"<<std::endl;
           std::cout<<"bne $t0, $t1, casestart" << std::to_string(case_counter+1) << std::endl;
@@ -122,7 +124,7 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
           std::cout << caseend << ":" << std::endl;
           branches[2]->make_mips(table, sp, pc);
       }
-      if (branches[0]->node_type == "T_DEFAULT"){
+      if (branches[0]->node_type == "DEFAULT"){
           std::string def_start = makeDefault(1);
           std::cout << def_start << ":" << std::endl;
           branches[1]->make_mips(table, sp, pc);
@@ -174,15 +176,17 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
         std::cout << start << ":" << std::endl;
         arg1 = branches[1]->make_mips(new_scope, sp, pc);
         int def_no = default_counter;
+        std::cout<<"addi $sp, $gp, "<<std::to_string(new_scope.find_symbol(arg1).stack_pointer)<<std::endl;
         std::cout<<"lw $t0, "<<table.find_symbol(arg1).offset<<"($sp)"<<std::endl;
         std::cout<<"nop"<<std::endl;
         symbol temp;
         temp.name = "3";
         temp.type = "switch_value";
         table.insert(temp);
+        std::cout<<"addi $sp, $gp, "<<std::to_string(new_scope.find_symbol("3").stack_pointer)<<std::endl;
         std::cout<<"sw $t0, "<<table.find_symbol("3").offset<<"($sp)"<<std::endl;
         std::cout<<"nop"<<std::endl;
-        std::cout << "beq $zero, $zero, casestart" << std::to_string(case_counter+1);
+        std::cout << "beq $zero, $zero, casestart" << std::to_string(case_counter+1)<<std::endl;
         branches[2]->make_mips(new_scope, sp, pc);
         std::cout << "beq $zero, $zero, " << end << std::endl;
         std::cout << "nop" << std::endl;
