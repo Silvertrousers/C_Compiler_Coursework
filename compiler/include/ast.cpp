@@ -134,8 +134,12 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
   if(node_type == "CASE"){/*std::cout<<node_type<<std::endl;*/}
   if(node_type == "COMPOUND_STATEMENT"){/*std::cout<<node_type<<std::endl;*/
     //symbol_table new_scope = symbol_table(&table);
-    branches[0]->make_mips(table, sp, pc);
-    branches[1]->make_mips(table, sp, pc);
+    if (branches[0]->node_type != "NULL"){
+        branches[0]->make_mips(table, sp, pc);
+    }
+    if (branches[1]->node_type != "NULL"){
+        branches[1]->make_mips(table, sp, pc);
+    }
   }
   if(node_type == "DECLARATION_LIST"){/*std::cout<<node_type<<std::endl;*/
     if(branches[0] != NULL){branches[0]->make_mips(table, sp, pc);}
