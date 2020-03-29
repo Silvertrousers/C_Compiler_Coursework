@@ -1,15 +1,19 @@
+#FUNCTION_DECLARATION
+.globl main
+#TYPE_SPECIFIER
 main:
-lw r4, 4(0)
-add r4, r5, r0
-add r5, r6, r0
-add r6, r7, r0
-add r4, r0, r0
-lw r4, 8(0)
-add r4, r5, r0
-add r5, r6, r0
-add r6, r7, r0
-add r4, r0, r0
-addi r3, r0, 11
-sw r3, 4(16)
-lw $v0, 4(16)
+#DIRECT_DECLARATOR
+#COMPOUND_STATEMENT
+#NULL
+#JUMP_STATEMENT
+#CONSTANT
+addi $t2, $zero, 11
+addi $sp, $gp, 32
+sw $t2, 4($sp)
+nop
+addi $sp, $gp, 32
+#name: temp1, offset: 4, value: -1700471200
+lw $2, 4($sp)
+nop
 jr $ra
+nop

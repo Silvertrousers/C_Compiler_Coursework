@@ -174,7 +174,10 @@ POSTFIX_EXPRESSION : PRIMARY_EXPRESSION { $$  = $1;}
                                                                                          std::vector<std::string> branch_notes = {"POSTFIX_EXPRESSION", "ARGUMENT_EXPRESSION_LIST"};
                                                                                          $$ = new c2python_ast_node("POSTFIX_EXPRESSION","", branches, branch_notes);}
 
-ARGUMENT_EXPRESSION_LIST : ASSIGNMENT_EXPRESSION { $$  = $1;}
+ARGUMENT_EXPRESSION_LIST : ASSIGNMENT_EXPRESSION {   std::vector<c2python_ast_node*> branches = {NULL, $1};
+                                                             std::vector<std::string> branch_notes = {"ARGUMENT_EXPRESSION_LIST", "ASSIGNMENT_EXPRESSION"};
+                                                             $$ = new c2python_ast_node("ARGUMENT_EXPRESSION_LIST","", branches, branch_notes);}
+
                          | ARGUMENT_EXPRESSION_LIST T_COMMA ASSIGNMENT_EXPRESSION {   std::vector<c2python_ast_node*> branches = {$1, $3};
                                                                                       std::vector<std::string> branch_notes = {"ARGUMENT_EXPRESSION_LIST", "ASSIGNMENT_EXPRESSION"};
                                                                                       $$ = new c2python_ast_node("ARGUMENT_EXPRESSION_LIST","", branches, branch_notes);}

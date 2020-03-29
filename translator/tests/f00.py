@@ -1,7 +1,7 @@
 def main():
 
-	x =  1 
-	x +=  2 
+	return  11 
+
 if __name__ == "__main__":
 	import sys
 	ret=main()

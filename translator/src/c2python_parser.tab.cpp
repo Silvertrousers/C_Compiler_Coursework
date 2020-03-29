@@ -488,14 +488,14 @@ static const yytype_uint16 yyrline[] =
       88,    92,    93,    94,    95,    96,    98,   102,   106,   109,
      113,   114,   118,   119,   123,   126,   128,   132,   136,   137,
      139,   143,   145,   149,   155,   157,   158,   159,   161,   165,
-     167,   169,   173,   177,   178,   182,   184,   189,   190,   191,
-     193,   194,   198,   199,   203,   204,   208,   212,   214,   215,
-     219,   223,   227,   230,   231,   235,   239,   240,   244,   245,
-     249,   251,   252,   256,   257,   258,   259,   260,   261,   262,
-     263,   264,   265,   266,   270,   271,   275,   279,   283,   287,
-     288,   292,   293,   299,   300,   306,   310,   313,   315,   317,
-     321,   325,   330,   332,   333,   337,   341,   344,   345,   349,
-     351,   354,   356,   360,   364,   365
+     167,   169,   173,   177,   181,   185,   187,   192,   193,   194,
+     196,   197,   201,   202,   206,   207,   211,   215,   217,   218,
+     222,   226,   230,   233,   234,   238,   242,   243,   247,   248,
+     252,   254,   255,   259,   260,   261,   262,   263,   264,   265,
+     266,   267,   268,   269,   273,   274,   278,   282,   286,   290,
+     291,   295,   296,   302,   303,   309,   313,   316,   318,   320,
+     324,   328,   333,   335,   336,   340,   344,   347,   348,   352,
+     354,   357,   359,   363,   367,   368
 };
 #endif
 
@@ -1715,502 +1715,504 @@ yyreduce:
 
   case 43:
 #line 177 "src/c2python_parser.y" /* yacc.c:1646  */
-    { (yyval.nodePtr)  = (yyvsp[0].nodePtr);}
-#line 1720 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
+    {   std::vector<c2python_ast_node*> branches = {NULL, (yyvsp[0].nodePtr)};
+                                                             std::vector<std::string> branch_notes = {"ARGUMENT_EXPRESSION_LIST", "ASSIGNMENT_EXPRESSION"};
+                                                             (yyval.nodePtr) = new c2python_ast_node("ARGUMENT_EXPRESSION_LIST","", branches, branch_notes);}
+#line 1722 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 44:
-#line 178 "src/c2python_parser.y" /* yacc.c:1646  */
+#line 181 "src/c2python_parser.y" /* yacc.c:1646  */
     {   std::vector<c2python_ast_node*> branches = {(yyvsp[-2].nodePtr), (yyvsp[0].nodePtr)};
                                                                                       std::vector<std::string> branch_notes = {"ARGUMENT_EXPRESSION_LIST", "ASSIGNMENT_EXPRESSION"};
                                                                                       (yyval.nodePtr) = new c2python_ast_node("ARGUMENT_EXPRESSION_LIST","", branches, branch_notes);}
-#line 1728 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
+#line 1730 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 45:
-#line 182 "src/c2python_parser.y" /* yacc.c:1646  */
+#line 185 "src/c2python_parser.y" /* yacc.c:1646  */
     { (yyval.nodePtr)  = (yyvsp[0].nodePtr);}
-#line 1734 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
+#line 1736 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 46:
-#line 184 "src/c2python_parser.y" /* yacc.c:1646  */
+#line 187 "src/c2python_parser.y" /* yacc.c:1646  */
     {                             std::vector<c2python_ast_node*> branches = {(yyvsp[-1].nodePtr), (yyvsp[0].nodePtr)};
                                                                                 std::vector<std::string> branch_notes = {"UNARY_OPERATOR","CAST_EXPRESSION"};
                                                                                 (yyval.nodePtr) = new c2python_ast_node("UNARY_EXPRESSION","", branches, branch_notes);}
-#line 1742 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
+#line 1744 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 47:
-#line 189 "src/c2python_parser.y" /* yacc.c:1646  */
+#line 192 "src/c2python_parser.y" /* yacc.c:1646  */
     { (yyval.nodePtr) = new c2python_ast_node("UNARY_OPERATOR","*");}
-#line 1748 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
+#line 1750 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 48:
-#line 190 "src/c2python_parser.y" /* yacc.c:1646  */
+#line 193 "src/c2python_parser.y" /* yacc.c:1646  */
     { (yyval.nodePtr) = new c2python_ast_node("UNARY_OPERATOR","+");}
-#line 1754 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
+#line 1756 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 49:
-#line 191 "src/c2python_parser.y" /* yacc.c:1646  */
+#line 194 "src/c2python_parser.y" /* yacc.c:1646  */
     { (yyval.nodePtr) = new c2python_ast_node("UNARY_OPERATOR","-");}
-#line 1760 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
+#line 1762 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 50:
-#line 193 "src/c2python_parser.y" /* yacc.c:1646  */
+#line 196 "src/c2python_parser.y" /* yacc.c:1646  */
     { (yyval.nodePtr)  = (yyvsp[0].nodePtr);}
-#line 1766 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
+#line 1768 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 51:
-#line 194 "src/c2python_parser.y" /* yacc.c:1646  */
+#line 197 "src/c2python_parser.y" /* yacc.c:1646  */
     {             std::vector<c2python_ast_node*> branches = {(yyvsp[-2].nodePtr), (yyvsp[0].nodePtr)};
                                                                                 std::vector<std::string> branch_notes = {"TYPE_NAME","CAST_EXPRESSION"};
                                                                                 (yyval.nodePtr) = new c2python_ast_node("MULTIPLICATIVE_EXPRESSION","", branches, branch_notes);}
-#line 1774 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
+#line 1776 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 52:
-#line 198 "src/c2python_parser.y" /* yacc.c:1646  */
+#line 201 "src/c2python_parser.y" /* yacc.c:1646  */
     { (yyval.nodePtr)  = (yyvsp[0].nodePtr);}
-#line 1780 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
+#line 1782 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 53:
-#line 199 "src/c2python_parser.y" /* yacc.c:1646  */
+#line 202 "src/c2python_parser.y" /* yacc.c:1646  */
     { std::vector<c2python_ast_node*> branches = {(yyvsp[-2].nodePtr), (yyvsp[0].nodePtr)};
                                                                                 std::vector<std::string> branch_notes = {"MULTIPLICATIVE_EXPRESSION","CAST_EXPRESSION"};
                                                                                 (yyval.nodePtr) = new c2python_ast_node("MULTIPLICATIVE_EXPRESSION","*", branches, branch_notes);}
-#line 1788 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
+#line 1790 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 54:
-#line 203 "src/c2python_parser.y" /* yacc.c:1646  */
+#line 206 "src/c2python_parser.y" /* yacc.c:1646  */
     { (yyval.nodePtr)  = (yyvsp[0].nodePtr);}
-#line 1794 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
+#line 1796 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 55:
-#line 204 "src/c2python_parser.y" /* yacc.c:1646  */
+#line 207 "src/c2python_parser.y" /* yacc.c:1646  */
     {    std::vector<c2python_ast_node*> branches = {(yyvsp[-2].nodePtr), (yyvsp[0].nodePtr)};
                                                                                 std::vector<std::string> branch_notes = {"ADDITIVE_EXPRESSION","MULTIPLICATIVE_EXPRESSION"};
                                                                                 (yyval.nodePtr) = new c2python_ast_node("ADDITIVE_EXPRESSION","+", branches, branch_notes);}
-#line 1802 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
+#line 1804 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 56:
-#line 208 "src/c2python_parser.y" /* yacc.c:1646  */
+#line 211 "src/c2python_parser.y" /* yacc.c:1646  */
     {   std::vector<c2python_ast_node*> branches = {(yyvsp[-2].nodePtr), (yyvsp[0].nodePtr)};
                                                                                 std::vector<std::string> branch_notes = {"ADDITIVE_EXPRESSION","MULTIPLICATIVE_EXPRESSION"};
                                                                                 (yyval.nodePtr) = new c2python_ast_node("ADDITIVE_EXPRESSION","-", branches, branch_notes);}
-#line 1810 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
+#line 1812 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 57:
-#line 212 "src/c2python_parser.y" /* yacc.c:1646  */
+#line 215 "src/c2python_parser.y" /* yacc.c:1646  */
     { (yyval.nodePtr)  = (yyvsp[0].nodePtr);}
-#line 1816 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
+#line 1818 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 58:
-#line 214 "src/c2python_parser.y" /* yacc.c:1646  */
+#line 217 "src/c2python_parser.y" /* yacc.c:1646  */
     { (yyval.nodePtr)  = (yyvsp[0].nodePtr);}
-#line 1822 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
+#line 1824 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 59:
-#line 215 "src/c2python_parser.y" /* yacc.c:1646  */
+#line 218 "src/c2python_parser.y" /* yacc.c:1646  */
     {    std::vector<c2python_ast_node*> branches = {(yyvsp[-2].nodePtr), (yyvsp[0].nodePtr)};
                                                                                 std::vector<std::string> branch_notes = {"RELATIONAL_EXPRESSION","SHIFT_EXPRESSION"};
                                                                                 (yyval.nodePtr) = new c2python_ast_node("RELATIONAL_EXPRESSION","<", branches, branch_notes);}
-#line 1830 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
+#line 1832 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 60:
-#line 219 "src/c2python_parser.y" /* yacc.c:1646  */
+#line 222 "src/c2python_parser.y" /* yacc.c:1646  */
     { std::vector<c2python_ast_node*> branches = {(yyvsp[-2].nodePtr), (yyvsp[0].nodePtr)};
                                                                                                       std::vector<std::string> branch_notes = {"RELATIONAL_EXPRESSION","SHIFT_EXPRESSION"};
                                                                                                       (yyval.nodePtr) = new c2python_ast_node("RELATIONAL_EXPRESSION",">", branches, branch_notes);}
-#line 1838 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
+#line 1840 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 61:
-#line 223 "src/c2python_parser.y" /* yacc.c:1646  */
+#line 226 "src/c2python_parser.y" /* yacc.c:1646  */
     {    std::vector<c2python_ast_node*> branches = {(yyvsp[-2].nodePtr), (yyvsp[0].nodePtr)};
                                                                                             std::vector<std::string> branch_notes = {"RELATIONAL_EXPRESSION","SHIFT_EXPRESSION"};
                                                                                             (yyval.nodePtr) = new c2python_ast_node("RELATIONAL_EXPRESSION","<=", branches, branch_notes);}
-#line 1846 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
+#line 1848 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 62:
-#line 227 "src/c2python_parser.y" /* yacc.c:1646  */
+#line 230 "src/c2python_parser.y" /* yacc.c:1646  */
     {    std::vector<c2python_ast_node*> branches = {(yyvsp[-2].nodePtr), (yyvsp[0].nodePtr)};
                                                                                                std::vector<std::string> branch_notes = {"RELATIONAL_EXPRESSION","SHIFT_EXPRESSION"};
                                                                                                (yyval.nodePtr) = new c2python_ast_node("RELATIONAL_EXPRESSION",">=", branches, branch_notes);}
-#line 1854 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
+#line 1856 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 63:
-#line 230 "src/c2python_parser.y" /* yacc.c:1646  */
+#line 233 "src/c2python_parser.y" /* yacc.c:1646  */
     { (yyval.nodePtr)  = (yyvsp[0].nodePtr);}
-#line 1860 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
+#line 1862 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 64:
-#line 231 "src/c2python_parser.y" /* yacc.c:1646  */
+#line 234 "src/c2python_parser.y" /* yacc.c:1646  */
     {  std::vector<c2python_ast_node*> branches = {(yyvsp[-2].nodePtr), (yyvsp[0].nodePtr)};
                                                                                    std::vector<std::string> branch_notes = {"EQUALITY_EXPRESSION","RELATIONAL_EXPRESSION"};
                                                                                    (yyval.nodePtr) = new c2python_ast_node("EQUALITY_EXPRESSION","==", branches, branch_notes);}
-#line 1868 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
+#line 1870 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 65:
-#line 235 "src/c2python_parser.y" /* yacc.c:1646  */
+#line 238 "src/c2python_parser.y" /* yacc.c:1646  */
     {  std::vector<c2python_ast_node*> branches = {(yyvsp[-2].nodePtr), (yyvsp[0].nodePtr)};
                                                                                        std::vector<std::string> branch_notes = {"EQUALITY_EXPRESSION","RELATIONAL_EXPRESSION"};
                                                                                        (yyval.nodePtr) = new c2python_ast_node("EQUALITY_EXPRESSION","!=", branches, branch_notes);}
-#line 1876 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
+#line 1878 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 66:
-#line 239 "src/c2python_parser.y" /* yacc.c:1646  */
+#line 242 "src/c2python_parser.y" /* yacc.c:1646  */
     { (yyval.nodePtr)  = (yyvsp[0].nodePtr);}
-#line 1882 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
+#line 1884 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 67:
-#line 240 "src/c2python_parser.y" /* yacc.c:1646  */
+#line 243 "src/c2python_parser.y" /* yacc.c:1646  */
     {     std::vector<c2python_ast_node*> branches = {(yyvsp[-2].nodePtr), (yyvsp[0].nodePtr)};
                                                                                         std::vector<std::string> branch_notes = {"LOGICAL_AND_EXPRESSION","INCLUSIVE_OR_EXPRESSION"};
                                                                                         (yyval.nodePtr) = new c2python_ast_node("LOGICAL_AND_EXPRESSION","and", branches, branch_notes);}
-#line 1890 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
+#line 1892 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 68:
-#line 244 "src/c2python_parser.y" /* yacc.c:1646  */
+#line 247 "src/c2python_parser.y" /* yacc.c:1646  */
     { (yyval.nodePtr)  = (yyvsp[0].nodePtr);}
-#line 1896 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
+#line 1898 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 69:
-#line 245 "src/c2python_parser.y" /* yacc.c:1646  */
+#line 248 "src/c2python_parser.y" /* yacc.c:1646  */
     {         std::vector<c2python_ast_node*> branches = {(yyvsp[-2].nodePtr), (yyvsp[0].nodePtr)};
                                                                                         std::vector<std::string> branch_notes = {"LOGICAL_OR_EXPRESSION","LOGICAL_AND_EXPRESSION"};
                                                                                         (yyval.nodePtr) = new c2python_ast_node("LOGICAL_OR_EXPRESSION","or", branches, branch_notes);}
-#line 1904 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
+#line 1906 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 70:
-#line 249 "src/c2python_parser.y" /* yacc.c:1646  */
+#line 252 "src/c2python_parser.y" /* yacc.c:1646  */
     { (yyval.nodePtr)  = (yyvsp[0].nodePtr);}
-#line 1910 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
+#line 1912 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 71:
-#line 251 "src/c2python_parser.y" /* yacc.c:1646  */
+#line 254 "src/c2python_parser.y" /* yacc.c:1646  */
     { (yyval.nodePtr) = (yyvsp[0].nodePtr); }
-#line 1916 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
+#line 1918 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 72:
-#line 252 "src/c2python_parser.y" /* yacc.c:1646  */
+#line 255 "src/c2python_parser.y" /* yacc.c:1646  */
     {   std::vector<c2python_ast_node*> branches = {(yyvsp[-2].nodePtr), (yyvsp[-1].nodePtr), (yyvsp[0].nodePtr)};
                                                                                        std::vector<std::string> branch_notes = {"UNARY_EXPRESSION","ASSIGNMENT_OPERATOR", "ASSIGNMENT_EXPRESSION"};
                                                                                        (yyval.nodePtr) = new c2python_ast_node("ASSIGNMENT_EXPRESSION","", branches, branch_notes);}
-#line 1924 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
+#line 1926 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 73:
-#line 256 "src/c2python_parser.y" /* yacc.c:1646  */
+#line 259 "src/c2python_parser.y" /* yacc.c:1646  */
     { (yyval.nodePtr) = new c2python_ast_node("ASSIGNMENT_OPERATOR", "=");}
-#line 1930 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
+#line 1932 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 74:
-#line 257 "src/c2python_parser.y" /* yacc.c:1646  */
+#line 260 "src/c2python_parser.y" /* yacc.c:1646  */
     { (yyval.nodePtr) = new c2python_ast_node("ASSIGNMENT_OPERATOR", "*=");}
-#line 1936 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
+#line 1938 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 75:
-#line 258 "src/c2python_parser.y" /* yacc.c:1646  */
+#line 261 "src/c2python_parser.y" /* yacc.c:1646  */
     { (yyval.nodePtr) = new c2python_ast_node("ASSIGNMENT_OPERATOR", "/=");}
-#line 1942 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
+#line 1944 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 76:
-#line 259 "src/c2python_parser.y" /* yacc.c:1646  */
+#line 262 "src/c2python_parser.y" /* yacc.c:1646  */
     { (yyval.nodePtr) = new c2python_ast_node("ASSIGNMENT_OPERATOR", "%=");}
-#line 1948 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
+#line 1950 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 77:
-#line 260 "src/c2python_parser.y" /* yacc.c:1646  */
+#line 263 "src/c2python_parser.y" /* yacc.c:1646  */
     { (yyval.nodePtr) = new c2python_ast_node("ASSIGNMENT_OPERATOR", "+=");}
-#line 1954 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
+#line 1956 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 78:
-#line 261 "src/c2python_parser.y" /* yacc.c:1646  */
+#line 264 "src/c2python_parser.y" /* yacc.c:1646  */
     { (yyval.nodePtr) = new c2python_ast_node("ASSIGNMENT_OPERATOR", "-=");}
-#line 1960 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
+#line 1962 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 79:
-#line 262 "src/c2python_parser.y" /* yacc.c:1646  */
+#line 265 "src/c2python_parser.y" /* yacc.c:1646  */
     { (yyval.nodePtr) = new c2python_ast_node("ASSIGNMENT_OPERATOR", "<<=");}
-#line 1966 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
+#line 1968 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 80:
-#line 263 "src/c2python_parser.y" /* yacc.c:1646  */
+#line 266 "src/c2python_parser.y" /* yacc.c:1646  */
     { (yyval.nodePtr) = new c2python_ast_node("ASSIGNMENT_OPERATOR", ">>=");}
-#line 1972 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
+#line 1974 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 81:
-#line 264 "src/c2python_parser.y" /* yacc.c:1646  */
+#line 267 "src/c2python_parser.y" /* yacc.c:1646  */
     { (yyval.nodePtr) = new c2python_ast_node("ASSIGNMENT_OPERATOR", "&=");}
-#line 1978 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
+#line 1980 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 82:
-#line 265 "src/c2python_parser.y" /* yacc.c:1646  */
+#line 268 "src/c2python_parser.y" /* yacc.c:1646  */
     { (yyval.nodePtr) = new c2python_ast_node("ASSIGNMENT_OPERATOR", "^=");}
-#line 1984 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
+#line 1986 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 83:
-#line 266 "src/c2python_parser.y" /* yacc.c:1646  */
+#line 269 "src/c2python_parser.y" /* yacc.c:1646  */
     { (yyval.nodePtr) = new c2python_ast_node("ASSIGNMENT_OPERATOR", "|=");}
-#line 1990 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
+#line 1992 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 84:
-#line 270 "src/c2python_parser.y" /* yacc.c:1646  */
+#line 273 "src/c2python_parser.y" /* yacc.c:1646  */
     { (yyval.nodePtr) = (yyvsp[0].nodePtr); }
-#line 1996 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
+#line 1998 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 85:
-#line 271 "src/c2python_parser.y" /* yacc.c:1646  */
+#line 274 "src/c2python_parser.y" /* yacc.c:1646  */
     {                                     std::vector<c2python_ast_node*> branches = {(yyvsp[-2].nodePtr), (yyvsp[0].nodePtr)};
                                                                                 std::vector<std::string> branch_notes = {"EXPR","ASSIGNMENT_EXPRESSION"};
                                                                                 (yyval.nodePtr) = new c2python_ast_node("EXPR","", branches, branch_notes);}
-#line 2004 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
+#line 2006 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 86:
-#line 275 "src/c2python_parser.y" /* yacc.c:1646  */
+#line 278 "src/c2python_parser.y" /* yacc.c:1646  */
     {                              std::vector<c2python_ast_node*> branches = {(yyvsp[-1].nodePtr), NULL};
                                                                                 std::vector<std::string> branch_notes = {"DECLARATION_SPECIFIERS","INIT_DECLARATOR_LIST"};
                                                                                 (yyval.nodePtr) = new c2python_ast_node("DECLARATION","", branches, branch_notes);}
-#line 2012 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
+#line 2014 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 87:
-#line 279 "src/c2python_parser.y" /* yacc.c:1646  */
+#line 282 "src/c2python_parser.y" /* yacc.c:1646  */
     {         std::vector<c2python_ast_node*> branches = {(yyvsp[-2].nodePtr), (yyvsp[-1].nodePtr)};
                                                                                 std::vector<std::string> branch_notes = {"DECLARATION_SPECIFIERS","INIT_DECLARATOR_LIST"};
                                                                                 (yyval.nodePtr) = new c2python_ast_node("DECLARATION","", branches, branch_notes);}
-#line 2020 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
+#line 2022 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 88:
-#line 283 "src/c2python_parser.y" /* yacc.c:1646  */
+#line 286 "src/c2python_parser.y" /* yacc.c:1646  */
     { (yyval.nodePtr) = (yyvsp[0].nodePtr); }
-#line 2026 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
+#line 2028 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 89:
-#line 287 "src/c2python_parser.y" /* yacc.c:1646  */
+#line 290 "src/c2python_parser.y" /* yacc.c:1646  */
     { (yyval.nodePtr) = (yyvsp[0].nodePtr); }
-#line 2032 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
+#line 2034 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 90:
-#line 288 "src/c2python_parser.y" /* yacc.c:1646  */
+#line 291 "src/c2python_parser.y" /* yacc.c:1646  */
     {           std::vector<c2python_ast_node*> branches = {(yyvsp[-2].nodePtr), (yyvsp[0].nodePtr)};
                                                                                 std::vector<std::string> branch_notes = {"INIT_DECLARATOR_LIST","INIT_DECLARATOR"};
                                                                                 (yyval.nodePtr) = new c2python_ast_node("INIT_DECLARATOR_LIST","", branches, branch_notes);}
-#line 2040 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
+#line 2042 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 91:
-#line 292 "src/c2python_parser.y" /* yacc.c:1646  */
+#line 295 "src/c2python_parser.y" /* yacc.c:1646  */
     { (yyval.nodePtr) = (yyvsp[0].nodePtr); }
-#line 2046 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
+#line 2048 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 92:
-#line 293 "src/c2python_parser.y" /* yacc.c:1646  */
+#line 296 "src/c2python_parser.y" /* yacc.c:1646  */
     {                             std::vector<c2python_ast_node*> branches = {(yyvsp[-2].nodePtr), (yyvsp[0].nodePtr)};
                                                                                 std::vector<std::string> branch_notes = {"DECLARATOR","INITIALIZER"};
                                                                                 (yyval.nodePtr) = new c2python_ast_node("INIT_DECLARATOR","", branches, branch_notes);}
-#line 2054 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
+#line 2056 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 93:
-#line 299 "src/c2python_parser.y" /* yacc.c:1646  */
+#line 302 "src/c2python_parser.y" /* yacc.c:1646  */
     { (yyval.nodePtr) = new c2python_ast_node("TYPE_SPECIFIER", "void");}
-#line 2060 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
+#line 2062 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 94:
-#line 300 "src/c2python_parser.y" /* yacc.c:1646  */
+#line 303 "src/c2python_parser.y" /* yacc.c:1646  */
     { (yyval.nodePtr) = new c2python_ast_node("TYPE_SPECIFIER", "int");}
-#line 2066 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
+#line 2068 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 95:
-#line 306 "src/c2python_parser.y" /* yacc.c:1646  */
+#line 309 "src/c2python_parser.y" /* yacc.c:1646  */
     { (yyval.nodePtr) = (yyvsp[0].nodePtr); }
-#line 2072 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
+#line 2074 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 96:
-#line 310 "src/c2python_parser.y" /* yacc.c:1646  */
+#line 313 "src/c2python_parser.y" /* yacc.c:1646  */
     { (yyval.nodePtr) = (yyvsp[0].nodePtr); }
-#line 2078 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
+#line 2080 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 97:
-#line 313 "src/c2python_parser.y" /* yacc.c:1646  */
+#line 316 "src/c2python_parser.y" /* yacc.c:1646  */
     {(yyval.nodePtr) = (yyvsp[0].nodePtr); }
-#line 2084 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
+#line 2086 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 98:
-#line 315 "src/c2python_parser.y" /* yacc.c:1646  */
+#line 318 "src/c2python_parser.y" /* yacc.c:1646  */
     {(yyval.nodePtr) = (yyvsp[-1].nodePtr);}
-#line 2090 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
+#line 2092 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 99:
-#line 317 "src/c2python_parser.y" /* yacc.c:1646  */
+#line 320 "src/c2python_parser.y" /* yacc.c:1646  */
     {      std::vector<c2python_ast_node*> branches = {(yyvsp[-3].nodePtr), (yyvsp[-1].nodePtr)};
                                                                                        std::vector<std::string> branch_notes = {"DIRECT_DECLARATOR","PARAMETER_TYPE_LIST"};
                                                                                        (yyval.nodePtr) = new c2python_ast_node("DIRECT_DECLARATOR","", branches, branch_notes);}
-#line 2098 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
+#line 2100 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 100:
-#line 321 "src/c2python_parser.y" /* yacc.c:1646  */
+#line 324 "src/c2python_parser.y" /* yacc.c:1646  */
     {      std::vector<c2python_ast_node*> branches = {(yyvsp[-1].nodePtr), NULL};
                                                                                 std::vector<std::string> branch_notes = {"DIRECT_DECLARATOR","IDENTIFIER_LIST"};
                                                                                 (yyval.nodePtr) = new c2python_ast_node("DIRECT_DECLARATOR","", branches, branch_notes);}
-#line 2106 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
+#line 2108 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 101:
-#line 325 "src/c2python_parser.y" /* yacc.c:1646  */
+#line 328 "src/c2python_parser.y" /* yacc.c:1646  */
     { std::vector<c2python_ast_node*> branches = {(yyvsp[-3].nodePtr), (yyvsp[-1].nodePtr)};
                                                                                 std::vector<std::string> branch_notes = {"DIRECT_DECLARATOR","IDENTIFIER_LIST"};
                                                                                 (yyval.nodePtr) = new c2python_ast_node("DIRECT_DECLARATOR","", branches, branch_notes);}
-#line 2114 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
+#line 2116 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 102:
-#line 330 "src/c2python_parser.y" /* yacc.c:1646  */
+#line 333 "src/c2python_parser.y" /* yacc.c:1646  */
     { (yyval.nodePtr) = (yyvsp[0].nodePtr); }
-#line 2120 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
+#line 2122 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 103:
-#line 332 "src/c2python_parser.y" /* yacc.c:1646  */
+#line 335 "src/c2python_parser.y" /* yacc.c:1646  */
     { (yyval.nodePtr) = (yyvsp[0].nodePtr); }
-#line 2126 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
+#line 2128 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 104:
-#line 333 "src/c2python_parser.y" /* yacc.c:1646  */
+#line 336 "src/c2python_parser.y" /* yacc.c:1646  */
     {                 std::vector<c2python_ast_node*> branches = {(yyvsp[-2].nodePtr), (yyvsp[0].nodePtr)};
                                                                                 std::vector<std::string> branch_notes = {"PARAMETER_LIST","PARAMETER_DECLARATION"};
                                                                                 (yyval.nodePtr) = new c2python_ast_node("PARAMETER_LIST","", branches, branch_notes);}
-#line 2134 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
+#line 2136 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 105:
-#line 337 "src/c2python_parser.y" /* yacc.c:1646  */
+#line 340 "src/c2python_parser.y" /* yacc.c:1646  */
     {                     std::vector<c2python_ast_node*> branches = {(yyvsp[-1].nodePtr), (yyvsp[0].nodePtr)};
                                                                                 std::vector<std::string> branch_notes = {"DECLARATION_SPECIFIERS","DECLARATOR"};
                                                                                 (yyval.nodePtr) = new c2python_ast_node("PARAMETER_DECLARATION","", branches, branch_notes);}
-#line 2142 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
+#line 2144 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 106:
-#line 341 "src/c2python_parser.y" /* yacc.c:1646  */
+#line 344 "src/c2python_parser.y" /* yacc.c:1646  */
     { (yyval.nodePtr) = (yyvsp[0].nodePtr); }
-#line 2148 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
+#line 2150 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 107:
-#line 344 "src/c2python_parser.y" /* yacc.c:1646  */
+#line 347 "src/c2python_parser.y" /* yacc.c:1646  */
     { (yyval.nodePtr) = (yyvsp[0].nodePtr); }
-#line 2154 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
+#line 2156 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 108:
-#line 345 "src/c2python_parser.y" /* yacc.c:1646  */
+#line 348 "src/c2python_parser.y" /* yacc.c:1646  */
     {                         std::vector<c2python_ast_node*> branches = {(yyvsp[-2].nodePtr), (yyvsp[0].nodePtr)};
                                                                                 std::vector<std::string> branch_notes = {"IDENTIFIER_LIST","IDENTIFIER"};
                                                                                 (yyval.nodePtr) = new c2python_ast_node("IDENTIFIER_LIST","", branches, branch_notes);}
-#line 2162 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
+#line 2164 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 109:
-#line 349 "src/c2python_parser.y" /* yacc.c:1646  */
+#line 352 "src/c2python_parser.y" /* yacc.c:1646  */
     {(yyval.nodePtr) = new c2python_ast_node("IDENTIFIER",*(yyvsp[0]._text));}
-#line 2168 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
+#line 2170 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 110:
-#line 351 "src/c2python_parser.y" /* yacc.c:1646  */
+#line 354 "src/c2python_parser.y" /* yacc.c:1646  */
     { (yyval.nodePtr) = (yyvsp[0].nodePtr); }
-#line 2174 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
+#line 2176 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 111:
-#line 354 "src/c2python_parser.y" /* yacc.c:1646  */
+#line 357 "src/c2python_parser.y" /* yacc.c:1646  */
     { (yyval.nodePtr) = (yyvsp[0].nodePtr); }
-#line 2180 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
+#line 2182 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 112:
-#line 356 "src/c2python_parser.y" /* yacc.c:1646  */
+#line 359 "src/c2python_parser.y" /* yacc.c:1646  */
     {              std::vector<c2python_ast_node*> branches = {(yyvsp[-1].nodePtr)};
                                                                                 std::vector<std::string> branch_notes = {"INITIALIZER_LIST"};
                                                                                 (yyval.nodePtr) = new c2python_ast_node("INITIALIZER","", branches, branch_notes);}
-#line 2188 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
+#line 2190 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 113:
-#line 360 "src/c2python_parser.y" /* yacc.c:1646  */
+#line 363 "src/c2python_parser.y" /* yacc.c:1646  */
     {      std::vector<c2python_ast_node*> branches = {(yyvsp[-2].nodePtr)};
                                                                                 std::vector<std::string> branch_notes = {"INITIALIZER_LIST"};
                                                                                 (yyval.nodePtr) = new c2python_ast_node("INITIALIZER","", branches, branch_notes);}
-#line 2196 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
+#line 2198 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 114:
-#line 364 "src/c2python_parser.y" /* yacc.c:1646  */
+#line 367 "src/c2python_parser.y" /* yacc.c:1646  */
     {(yyval.nodePtr) = (yyvsp[0].nodePtr);}
-#line 2202 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
+#line 2204 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
   case 115:
-#line 365 "src/c2python_parser.y" /* yacc.c:1646  */
+#line 368 "src/c2python_parser.y" /* yacc.c:1646  */
     {                       std::vector<c2python_ast_node*> branches = {(yyvsp[-2].nodePtr), (yyvsp[0].nodePtr)};
                                                                                 std::vector<std::string> branch_notes = {"INITIALIZER_LIST","INITIALIZER"};
                                                                                 (yyval.nodePtr) = new c2python_ast_node("INITIALIZER_LIST","", branches, branch_notes);}
-#line 2210 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
+#line 2212 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
     break;
 
 
-#line 2214 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
+#line 2216 "src/c2python_parser.tab.cpp" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -2438,7 +2440,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 372 "src/c2python_parser.y" /* yacc.c:1906  */
+#line 375 "src/c2python_parser.y" /* yacc.c:1906  */
 
 
 c2python_ast_node *g_root;

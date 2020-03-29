@@ -6,9 +6,9 @@ int main(int argc, char *argv[])
 {
 
     int tab_count = 0;
-    symbol_table sym_tab;
+    c2python_symbol_table sym_tab;
 
-    ast_node *ast=parseAST();
+    c2python_ast_node *ast=parseAST();
     ast->print_python(tab_count, sym_tab);
 
     std::cout<<std::endl;

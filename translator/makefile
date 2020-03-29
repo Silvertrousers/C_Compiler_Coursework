@@ -16,6 +16,7 @@ bin/c_translator : c_translator.o src/c2python_parser.tab.o src/c2python_lexer.y
 
 
 clean :
+	rm *.o
 	rm src/*.o
 	rm bin/*
 	rm src/*.tab.cpp
