@@ -1,0 +1,39 @@
+#FUNCTION_DECLARATION
+.globl f
+#TYPE_SPECIFIER
+f:
+#DIRECT_DECLARATOR
+#COMPOUND_STATEMENT
+#DECLARATION_LIST
+#DECLARATION
+#TYPE_SPECIFIER
+#INIT_DECLARATOR
+#DECLARATION
+#TYPE_SPECIFIER
+#INIT_DECLARATOR
+#DIRECT_DECLARATOR
+#NULL
+#STATEMENT_LIST
+#ASSIGNMENT_EXPRESSION
+#IDENTIFIER
+#CONSTANT
+addi $t2, $zero, 13
+addi $sp, $gp, 32
+sw $t2, 4($sp)
+nop
+addi $sp, $gp, 32
+lw $t2, 4($sp)
+nop
+addi $sp, $gp, 32
+sw $t2, 12($sp)
+nop
+#symbols[i]: y, 0
+#s: y, 13
+#JUMP_STATEMENT
+#IDENTIFIER
+addi $sp, $gp, 32
+#name: y, offset: 12, value: 13
+lw $2, 12($sp)
+nop
+jr $ra
+nop

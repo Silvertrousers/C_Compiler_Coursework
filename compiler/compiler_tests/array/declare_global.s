@@ -1,0 +1,25 @@
+#TRANSLATION_UNIT
+#DECLARATION
+#TYPE_SPECIFIER
+#INIT_DECLARATOR
+#DIRECT_DECLARATOR
+#NULL
+#FUNCTION_DECLARATION
+.globl f
+#TYPE_SPECIFIER
+f:
+#DIRECT_DECLARATOR
+#COMPOUND_STATEMENT
+#NULL
+#JUMP_STATEMENT
+#CONSTANT
+addi $t2, $zero, 11
+addi $sp, $gp, 64
+sw $t2, 4($sp)
+nop
+addi $sp, $gp, 64
+#name: temp1, offset: 4, value: -755190608
+lw $2, 4($sp)
+nop
+jr $ra
+nop
