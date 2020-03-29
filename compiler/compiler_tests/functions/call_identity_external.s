@@ -19,25 +19,25 @@ f:
 #POSTFIX_EXPRESSION
 #CONSTANT
 addi $t2, $zero, 10
-addi $sp, $gp, 40
+addi $sp, $gp, 52
 sw $t2, 4($sp)
 nop
-addi $sp, $gp, 40
+addi $sp, $gp, 52
 lw $a0, 4($sp)
 nop
-addi $sp, $gp, 40
+addi $sp, $gp, 52
 sw $ra, 12($sp)
 nop
 jal g
 nop
-addi $sp, $gp, 40
+addi $sp, $gp, 52
 lw $ra, 12($sp)
 nop
-addi $sp, $gp, 24
+addi $sp, $gp, 40
 sw $2, 4($sp)
 nop
-addi $sp, $gp, 24
-#name: temp1, offset: 4, value: -1082369644
+addi $sp, $gp, 40
+#name: temp1, offset: 4, value: 1922513808
 lw $2, 4($sp)
 nop
 jr $ra

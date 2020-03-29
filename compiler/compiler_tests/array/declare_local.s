@@ -18,22 +18,22 @@ f:
 #IDENTIFIER
 #CONSTANT
 addi $t2, $zero, 13
-addi $sp, $gp, 16
+addi $sp, $gp, 32
 sw $t2, 4($sp)
 nop
-addi $sp, $gp, 16
+addi $sp, $gp, 32
 lw $t2, 4($sp)
 nop
-addi $sp, $gp, 16
-sw $t2, 16($sp)
+addi $sp, $gp, 32
+sw $t2, 12($sp)
 nop
 #symbols[i]: y, 0
 #s: y, 13
 #JUMP_STATEMENT
 #IDENTIFIER
-addi $sp, $gp, 16
-#name: y, offset: 16, value: 13
-lw $2, 16($sp)
+addi $sp, $gp, 32
+#name: y, offset: 12, value: 13
+lw $2, 12($sp)
 nop
 jr $ra
 nop

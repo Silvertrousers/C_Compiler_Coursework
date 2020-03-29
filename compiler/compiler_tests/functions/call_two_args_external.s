@@ -33,39 +33,39 @@ f:
 #ARGUMENT_EXPRESSION_LIST
 #CONSTANT
 addi $t2, $zero, 10
-addi $sp, $gp, 44
+addi $sp, $gp, 56
 sw $t2, 4($sp)
 nop
 add $a3, $a2, $zero
 add $a2, $a1, $zero
 add $a1, $a0, $zero
-addi $sp, $gp, 44
+addi $sp, $gp, 56
 lw $a0, 4($sp)
 nop
 #CONSTANT
 addi $t2, $zero, 20
-addi $sp, $gp, 44
+addi $sp, $gp, 56
 sw $t2, 4($sp)
 nop
 add $a3, $a2, $zero
 add $a2, $a1, $zero
 add $a1, $a0, $zero
-addi $sp, $gp, 44
+addi $sp, $gp, 56
 lw $a0, 4($sp)
 nop
-addi $sp, $gp, 44
+addi $sp, $gp, 56
 sw $ra, 12($sp)
 nop
 jal g
 nop
-addi $sp, $gp, 44
+addi $sp, $gp, 56
 lw $ra, 12($sp)
 nop
-addi $sp, $gp, 28
+addi $sp, $gp, 44
 sw $2, 4($sp)
 nop
-addi $sp, $gp, 28
-#name: temp1, offset: 4, value: 1866164628
+addi $sp, $gp, 44
+#name: temp1, offset: 4, value: -1688239824
 lw $2, 4($sp)
 nop
 jr $ra

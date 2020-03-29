@@ -34,11 +34,11 @@ lw $t1, 20($sp)
 nop
 AND $t2, $t0, $t1
 nop
-addi $sp, $gp, 16
+addi $sp, $gp, 40
 sw $t2, 4($sp)
 nop
-addi $sp, $gp, 16
-#name: temp1, offset: 4, value: 0
+addi $sp, $gp, 40
+#name: temp1, offset: 4, value: -1412693056
 lw $2, 4($sp)
 nop
 jr $ra

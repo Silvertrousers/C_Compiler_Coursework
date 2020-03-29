@@ -10,13 +10,13 @@ f:
 #INIT_DECLARATOR
 #CONSTANT
 addi $t2, $zero, 10
-addi $sp, $gp, 16
+addi $sp, $gp, 32
 sw $t2, 4($sp)
 nop
-addi $sp, $gp, 16
+addi $sp, $gp, 32
 lw $t2, 4($sp)
 nop
-sw $t2, 16($sp)
+sw $t2, 12($sp)
 nop
 #DECLARATION
 #TYPE_SPECIFIER
@@ -24,31 +24,31 @@ nop
 #ADDITIVE_EXPRESSION
 #CONSTANT
 addi $t2, $zero, 20
-addi $sp, $gp, 16
+addi $sp, $gp, 32
 sw $t2, 4($sp)
 nop
 #IDENTIFIER
-addi $sp, $gp, 16
+addi $sp, $gp, 32
 lw $t0, 4($sp)
 nop
-addi $sp, $gp, 16
-lw $t1, 16($sp)
+addi $sp, $gp, 32
+lw $t1, 12($sp)
 nop
 add $t2, $t0, $t1
 nop
-addi $sp, $gp, 16
+addi $sp, $gp, 32
 sw $t2, 4($sp)
 nop
-addi $sp, $gp, 16
+addi $sp, $gp, 32
 lw $t2, 4($sp)
 nop
-sw $t2, 20($sp)
+sw $t2, 16($sp)
 nop
 #JUMP_STATEMENT
 #IDENTIFIER
-addi $sp, $gp, 16
-#name: x, offset: 20, value: 10
-lw $2, 20($sp)
+addi $sp, $gp, 32
+#name: x, offset: 16, value: 10
+lw $2, 16($sp)
 nop
 jr $ra
 nop

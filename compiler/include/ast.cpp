@@ -90,7 +90,6 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
     if(table.stack_pointer == 0){
       std::cout<<".globl "<<temp.name<<std::endl;
     }
-    //symbol_table new_scope = symbol_table(&newscope);
 
     /*std::cout<<node_type<<std::endl;*/
     branches[0]->make_mips(new_scope, sp, pc);//reutrn type
@@ -132,9 +131,9 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
   if(node_type == "DEFAULT"){/*std::cout<<node_type<<std::endl;*/}
   if(node_type == "CASE"){/*std::cout<<node_type<<std::endl;*/}
   if(node_type == "COMPOUND_STATEMENT"){/*std::cout<<node_type<<std::endl;*/
-    //symbol_table new_scope = symbol_table(&table);
-    branches[0]->make_mips(table, sp, pc);
-    branches[1]->make_mips(table, sp, pc);
+    symbol_table new_scope = symbol_table(&table);
+    branches[0]->make_mips(new_scope, sp, pc);
+    branches[1]->make_mips(new_scope, sp, pc);
   }
   if(node_type == "DECLARATION_LIST"){/*std::cout<<node_type<<std::endl;*/
     if(branches[0] != NULL){branches[0]->make_mips(table, sp, pc);}
@@ -257,11 +256,12 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
         if (branches[0]->node_type == "RETURN"){
             if (branches[1]->node_type != "NULL"){
                 arg1 = branches[1]->make_mips(table, sp, pc);
+
                 if(table.find_symbol(arg1).stack_pointer > table.stack_pointer){
-                std::cout<<"addi $sp, $gp, "<<std::to_string(table.stack_pointer)<<std::endl;
+                  std::cout<<"addi $sp, $gp, "<<std::to_string(table.stack_pointer)<<std::endl;
                 }
                 else{
-                std::cout<<"addi $sp, $gp, "<<std::to_string(table.find_symbol(arg1).stack_pointer)<<std::endl;
+                  std::cout<<"addi $sp, $gp, "<<std::to_string(table.find_symbol(arg1).stack_pointer)<<std::endl;
                 }
                 std::cout<<"#name: "<<table.find_symbol(arg1).name<<", offset: "<<table.find_symbol(arg1).offset<<", value: "<<table.find_symbol(arg1).numerical_value<<std::endl;
                 std::cout<<"lw $2, "<<table.find_symbol(arg1).offset<<"($sp)"<<std::endl;
@@ -1280,6 +1280,8 @@ std::string ast_node::make_mips(symbol_table &table, int &sp, int &pc){
 
     copy.numerical_value = branches[2]->eval_expr(table);
     table.replace(copy);
+    table.t1_free = true;
+    table.t2_free = true;
     return s;
   }
   return "";

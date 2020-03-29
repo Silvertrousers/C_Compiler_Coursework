@@ -14,11 +14,11 @@ f:
 #JUMP_STATEMENT
 #CONSTANT
 addi $t2, $zero, 11
-addi $sp, $gp, 48
+addi $sp, $gp, 64
 sw $t2, 4($sp)
 nop
-addi $sp, $gp, 48
-#name: temp1, offset: 4, value: 973412756
+addi $sp, $gp, 64
+#name: temp1, offset: 4, value: -755190608
 lw $2, 4($sp)
 nop
 jr $ra

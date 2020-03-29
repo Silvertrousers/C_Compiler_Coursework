@@ -13,7 +13,7 @@ nop
 #JUMP_STATEMENT
 #IDENTIFIER
 addi $sp, $gp, 16
-#name: x, offset: 16, value: -36854264
+#name: x, offset: 16, value: -728712454
 lw $2, 16($sp)
 nop
 jr $ra
@@ -29,25 +29,25 @@ f:
 #POSTFIX_EXPRESSION
 #CONSTANT
 addi $t2, $zero, 10
-addi $sp, $gp, 36
+addi $sp, $gp, 48
 sw $t2, 4($sp)
 nop
-addi $sp, $gp, 36
+addi $sp, $gp, 48
 lw $a0, 4($sp)
 nop
-addi $sp, $gp, 36
+addi $sp, $gp, 48
 sw $ra, 12($sp)
 nop
 jal g
 nop
-addi $sp, $gp, 36
+addi $sp, $gp, 48
 lw $ra, 12($sp)
 nop
-addi $sp, $gp, 20
+addi $sp, $gp, 36
 sw $2, 4($sp)
 nop
-addi $sp, $gp, 20
-#name: temp1, offset: 4, value: -1008694892
+addi $sp, $gp, 36
+#name: temp1, offset: 4, value: -705896432
 lw $2, 4($sp)
 nop
 jr $ra

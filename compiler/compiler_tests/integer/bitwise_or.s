@@ -38,22 +38,22 @@ lw $t1, 20($sp)
 nop
 or $t2, $t0, $t1
 nop
-addi $sp, $gp, 16
+addi $sp, $gp, 40
 sw $t2, 4($sp)
 nop
-addi $sp, $gp, 16
+addi $sp, $gp, 40
 lw $t2, 4($sp)
 nop
-addi $sp, $gp, 16
-sw $t2, 24($sp)
+addi $sp, $gp, 40
+sw $t2, 12($sp)
 nop
 #symbols[i]: z, 2
 #s: z, 2
 #JUMP_STATEMENT
 #IDENTIFIER
-addi $sp, $gp, 16
-#name: z, offset: 24, value: 2
-lw $2, 24($sp)
+addi $sp, $gp, 40
+#name: z, offset: 12, value: 2
+lw $2, 12($sp)
 nop
 jr $ra
 nop

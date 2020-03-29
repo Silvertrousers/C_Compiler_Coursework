@@ -77,6 +77,8 @@ symbol_table::symbol_table(symbol_table *parent_scope){
 	var_pointer = 0;
 	stack_pointer = 4+ parent->var_pointer + parent->stack_pointer;
 	global_scope = parent_scope->global_scope;
+	end_label = parent ->end_label;
+	start_label = parent ->start_label;
 	symbol temp1, temp2;
 	temp1.name = "temp1";
 	temp1.value = "0";

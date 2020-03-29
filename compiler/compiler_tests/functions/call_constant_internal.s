@@ -9,11 +9,11 @@ g:
 #JUMP_STATEMENT
 #CONSTANT
 addi $t2, $zero, 20
-addi $sp, $gp, 16
+addi $sp, $gp, 32
 sw $t2, 4($sp)
 nop
-addi $sp, $gp, 16
-#name: temp1, offset: 4, value: 1469753748
+addi $sp, $gp, 32
+#name: temp1, offset: 4, value: -1659832192
 lw $2, 4($sp)
 nop
 jr $ra
@@ -27,19 +27,19 @@ f:
 #NULL
 #JUMP_STATEMENT
 #POSTFIX_EXPRESSION
-addi $sp, $gp, 36
+addi $sp, $gp, 48
 sw $ra, 12($sp)
 nop
 jal g
 nop
-addi $sp, $gp, 36
+addi $sp, $gp, 48
 lw $ra, 12($sp)
 nop
-addi $sp, $gp, 20
+addi $sp, $gp, 36
 sw $2, 4($sp)
 nop
-addi $sp, $gp, 20
-#name: temp1, offset: 4, value: 1469753748
+addi $sp, $gp, 36
+#name: temp1, offset: 4, value: -1659830960
 lw $2, 4($sp)
 nop
 jr $ra

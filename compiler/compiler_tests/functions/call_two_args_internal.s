@@ -35,11 +35,11 @@ lw $t1, 20($sp)
 nop
 add $t2, $t0, $t1
 nop
-addi $sp, $gp, 16
+addi $sp, $gp, 40
 sw $t2, 4($sp)
 nop
-addi $sp, $gp, 16
-#name: temp1, offset: 4, value: -2088347244
+addi $sp, $gp, 40
+#name: temp1, offset: 4, value: 16245008
 lw $2, 4($sp)
 nop
 jr $ra
@@ -56,39 +56,39 @@ f:
 #ARGUMENT_EXPRESSION_LIST
 #CONSTANT
 addi $t2, $zero, 10
-addi $sp, $gp, 36
+addi $sp, $gp, 48
 sw $t2, 4($sp)
 nop
 add $a3, $a2, $zero
 add $a2, $a1, $zero
 add $a1, $a0, $zero
-addi $sp, $gp, 36
+addi $sp, $gp, 48
 lw $a0, 4($sp)
 nop
 #CONSTANT
 addi $t2, $zero, 20
-addi $sp, $gp, 36
+addi $sp, $gp, 48
 sw $t2, 4($sp)
 nop
 add $a3, $a2, $zero
 add $a2, $a1, $zero
 add $a1, $a0, $zero
-addi $sp, $gp, 36
+addi $sp, $gp, 48
 lw $a0, 4($sp)
 nop
-addi $sp, $gp, 36
+addi $sp, $gp, 48
 sw $ra, 12($sp)
 nop
 jal g
 nop
-addi $sp, $gp, 36
+addi $sp, $gp, 48
 lw $ra, 12($sp)
 nop
-addi $sp, $gp, 20
+addi $sp, $gp, 36
 sw $2, 4($sp)
 nop
-addi $sp, $gp, 20
-#name: temp1, offset: 4, value: -2088347244
+addi $sp, $gp, 36
+#name: temp1, offset: 4, value: 16249968
 lw $2, 4($sp)
 nop
 jr $ra

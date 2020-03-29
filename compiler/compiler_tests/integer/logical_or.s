@@ -47,11 +47,11 @@ short_circuit1:
 addi $t1,$zero,1
 not_short_circuit2:
 add $t2,$t1, $zero
-addi $sp, $gp, 16
+addi $sp, $gp, 40
 sw $t2, 4($sp)
 nop
-addi $sp, $gp, 16
-#name: temp1, offset: 4, value: 0
+addi $sp, $gp, 40
+#name: temp1, offset: 4, value: 1817072656
 lw $2, 4($sp)
 nop
 jr $ra

@@ -15,19 +15,19 @@ f:
 #IDENTIFIER
 #CONSTANT
 addi $t2, $zero, 0
-addi $sp, $gp, 16
+addi $sp, $gp, 32
 sw $t2, 4($sp)
 nop
 #CONSTANT
 addi $t2, $zero, 23
-addi $sp, $gp, 16
+addi $sp, $gp, 32
 sw $t2, 4($sp)
 nop
-addi $sp, $gp, 16
+addi $sp, $gp, 32
 lw $t2, 4($sp)
 nop
-addi $sp, $gp, 16
-sw $t2, 16($sp)
+addi $sp, $gp, 32
+sw $t2, 12($sp)
 nop
 #symbols[i]: x_index_0, 0
 #s: x_index_0, 23
@@ -36,12 +36,12 @@ nop
 #IDENTIFIER
 #CONSTANT
 addi $t2, $zero, 0
-addi $sp, $gp, 16
+addi $sp, $gp, 32
 sw $t2, 4($sp)
 nop
-addi $sp, $gp, 16
-#name: x_index_0, offset: 16, value: 23
-lw $2, 16($sp)
+addi $sp, $gp, 32
+#name: x_index_0, offset: 12, value: 23
+lw $2, 12($sp)
 nop
 jr $ra
 nop
