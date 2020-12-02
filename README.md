@@ -31,10 +31,10 @@ The compilation function is invoked using the flag -S, with the source file and 
 Command-line arguments should always be in the above order, and there should be no spaces in source or destination paths.
 # Coursework Specifications
 The specifications provided by the lecturer in charge of this coursework are provided as follows:
--[General](https://github.com/Silvertrousers/C_Compiler_Coursework/blob/master/READMES/CW_spec_readme.md)
--[C to Python Translator](https://github.com/Silvertrousers/C_Compiler_Coursework/blob/master/READMES/c_translator.md)
--[Problem scope and templates for C to python translation
+- [General](https://github.com/Silvertrousers/C_Compiler_Coursework/blob/master/READMES/CW_spec_readme.md)
+- [C to Python Translator](https://github.com/Silvertrousers/C_Compiler_Coursework/blob/master/READMES/c_translator.md)
+- [Problem scope and templates for C to python translation
 ](https://github.com/Silvertrousers/C_Compiler_Coursework/blob/master/READMES/c_translator_templates.md)
--[C to MIPS 1 compiler](https://github.com/Silvertrousers/C_Compiler_Coursework/blob/master/READMES/c_compiler.md)
+- [C to MIPS 1 compiler](https://github.com/Silvertrousers/C_Compiler_Coursework/blob/master/READMES/c_compiler.md)
 
 These can alose be located in the [READMES](https://github.com/Silvertrousers/C_Compiler_Coursework/tree/master/READMES) folder.
